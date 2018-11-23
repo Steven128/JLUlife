@@ -1,0 +1,28 @@
+<resources>
+	<!-- Base application theme. -->
+	<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+		<!-- Customize your theme here. -->
+		<item name="android:windowTranslucentStatus">
+			true
+		</item>
+		<item name="android:spinnerItemStyle">
+			@style/SpinnerItem
+		</item>
+		<item name="android:spinnerDropDownItemStyle">
+			@style/SpinnerDropDownItem
+		</item>
+	</style>
+	<style name="SpinnerItem">
+		<item name="android:textSize">
+			14dp
+		</item>
+		<item name="colorControlNormal">
+			#ffffff
+		</item>
+	</style>
+	<style name="SpinnerDropDownItem" parent="Theme.AppCompat.Light.NoActionBar">
+		<item name="android:textSize">
+			14dp
+		</item>
+	</style>
+</resources>

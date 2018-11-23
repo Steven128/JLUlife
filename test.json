@@ -1,0 +1,7 @@
+[
+    { "count": 0, "label": "'优秀(>90)'", "percent": 21.875, "seq": 0 },
+    { "count": 0, "label": "'良好(80-90)'", "percent": 50, "seq": 1 },
+    { "count": 0, "label": "'中等(70-80)'", "percent": 25, "seq": 2 },
+    { "count": 0, "label": "'及格(60-70)'", "percent": 0, "seq": 3 },
+    { "count": 0, "label": "'不及格(<60)'", "percent": 3.125, "seq": 4 }
+]

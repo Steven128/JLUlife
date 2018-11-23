@@ -1,0 +1,172 @@
+import React, { Component } from "react";
+import Storage from "react-native-storage";
+import { AsyncStorage } from "react-native";
+import Global from "./Global";
+
+var storage;
+var defaultExpires = 1000 * 30 * 3600 * 24;
+var size = 1000;
+
+export default class AppStorage extends Component {
+    static _getStorage() {
+        if (storage == undefined) {
+            storage = new Storage({
+                size: size,
+                storageBackend: AsyncStorage,
+                defaultExpires: defaultExpires,
+                enableCache: true
+                // sync: SYNC
+            });
+        }
+        return storage;
+    }
+
+    static isInit() {
+        if (storage == undefined) {
+            throw "请先调用_getStorage()进行初始化";
+        }
+    }
+    /**
+    key:保存的key值
+    object：保存的value
+    expires：有效时间，
+  */
+
+    static _save_with_expires(key, object, expires) {
+        this.isInit();
+        storage.save({
+            key: key, // 注意:请不要在key中使用_下划线符号!
+            data: object,
+            // 如果不指定过期时间，则会使用defaultExpires参数
+            // 如果设为null，则永不过期
+            expires: expires
+        });
+    }
+
+    static _save(key, object) {
+        this._save_with_expires(key, object, defaultExpires);
+    }
+
+    static _remove(key) {
+        this.isInit();
+        // 删除单个数据
+        storage.remove({
+            key: key
+        });
+    }
+
+    static _removeAll() {
+        this.isInit();
+        // 移除所有"key-id"数据（但会保留只有key的数据）
+        storage.clearMap();
+    }
+
+    static _clearDataByKey(key) {
+        this.isInit();
+        // !! 清除某个key下的所有数据
+        storage.clearMapForKey(key);
+    }
+
+    /**
+    查询数据
+  */
+
+    static _load(key, callBack) {
+        this.isInit();
+        storage
+            .load({
+                key: key,
+                autoSync: true,
+                syncInBackground: true
+            })
+            .then(res => {
+                callBack(res);
+                return res;
+            })
+            .catch(err => {
+                console.warn("warn in AppStorage （" + key + "）");
+                console.warn(err.message);
+                switch (err.name) {
+                    case "NotFoundError":
+                        // TODO;
+                        break;
+                    case "ExpiredError":
+                        // TODO
+                        break;
+                }
+            });
+    }
+
+    /**
+     * 获取数据并写入全局变量
+     * @param {string} key key值
+     * @param {string} globalValueName 全局变量名称（Global.*）
+     */
+
+    static _load1(key, globalValueName) {
+        this.isInit();
+        storage
+            .load({
+                key: key,
+                autoSync: true,
+                syncInBackground: true
+            })
+            .then(ret => {
+                globalValueName = ret;
+                return ret;
+            })
+            .catch(err => {
+                console.warn(err.message);
+                switch (err.name) {
+                    case "NotFoundError":
+                        // TODO;
+                        break;
+                    case "ExpiredError":
+                        // TODO
+                        break;
+                }
+            });
+    }
+}
+
+// let  SYNC = {};
+// SYNC.user3 =(params)=>{
+
+//     if(params == null) return;
+//     // sync方法的名字必须和所存数据的key完全相同
+//     // 方法接受的参数为一整个object，所有参数从object中解构取出
+//     // 这里可以使用promise。或是使用普通回调函数，但需要调用resolve或reject。
+//       let { id, resolve, reject, syncParams: { extraFetchOptions, someFlag } } = params;
+//       fetch('user/', {
+//         method: 'GET',
+//         body: 'id=' + id,
+//         ...extraFetchOptions,
+//       }).then(response => {
+//         return response.json();
+//       }).then(json => {
+//         //console.log(json);
+//         if(json && json.user){
+//           storage.save({
+//             key: 'user',
+//             id,
+//             data: json.user
+//           });
+
+//           if (someFlag) {
+//             // 根据syncParams中的额外参数做对应处理
+//           }
+
+//           // 成功则调用resolve
+//           resolve && resolve(json.user);
+//         }
+//         else{
+//           // 失败则调用reject
+//           reject && reject(new Error('data parse error'));
+//         }
+//       }).catch(err => {
+//         console.warn(err);
+//         reject && reject(err);
+//       });
+//     }
+
+// export default SYNC
