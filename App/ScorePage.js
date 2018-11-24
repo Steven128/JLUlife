@@ -80,7 +80,7 @@ export default class HomeScreen extends Component {
                     <View
                         style={{
                             paddingVertical: height / 2 - 150,
-                            backgroundColor: "#eee"
+                            backgroundColor: "transparent"
                         }}
                     >
                         <ActivityIndicator
