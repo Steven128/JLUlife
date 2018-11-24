@@ -131,6 +131,9 @@ export default class LoginPage extends Component {
     render() {
         const { navigate } = this.props.navigation;
         var image = null;
+        var headers = {
+            Cookie: this.state.cookie
+        };
         if (this.state.cookie != "") {
             image = (
                 <Image
@@ -139,7 +142,11 @@ export default class LoginPage extends Component {
                         uri:
                             "http://dsf.jlu.edu.cn/Account/GetCheckCodeImg/Flag=" +
                             this.state.rand,
-                        cache: "reload"
+                        method: "POST",
+                        headers: {
+                            Cookie: this.state.cookie
+                        },
+                        body: ""
                     }}
                 />
             );
@@ -221,6 +228,17 @@ export default class LoginPage extends Component {
                         onPress={this.loginTapped}
                     />
                 </View>
+                <Image
+                    source={{
+                        uri: "https://reactjs.org/logo-og.png",
+                        method: "POST",
+                        headers: {
+                            Pragma: "no-cache"
+                        },
+                        body: ""
+                    }}
+                    style={{ width: 400, height: 400 }}
+                />
             </View>
         );
     }

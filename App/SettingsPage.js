@@ -40,7 +40,29 @@ export default class SettingsPage extends Component {
                         style: { color: "#fff", fontSize: 16 }
                     }}
                 />
-                <SettingItem navigation={this.props.navigation} nextPage="About" />
+                <View
+                    style={{
+                        marginTop: 30,
+                        borderTopWidth: 1,
+                        borderTopColor: "#ccc"
+                    }}
+                >
+                    <SettingItem
+                        navigation={this.props.navigation}
+                        title="关于 JLU Life"
+                        nextPage="About"
+                    />
+                    <SettingItem
+                        navigation={this.props.navigation}
+                        title="隐私政策"
+                        nextPage="Privacy"
+                    />
+                    <SettingItem
+                        navigation={this.props.navigation}
+                        title="问题反馈&amp;建议"
+                        nextPage="FeedBack"
+                    />
+                </View>
             </View>
         );
     }

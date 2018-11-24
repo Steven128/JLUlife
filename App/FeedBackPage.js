@@ -6,8 +6,7 @@ import {
     WebView,
     StyleSheet,
     Linking,
-    TouchableNativeFeedback,
-    Image
+    TouchableNativeFeedback
 } from "react-native";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
@@ -31,6 +30,9 @@ export default class HomeScreen extends Component {
         // 打开抽屉式导航
         this.props.navigation.openDrawer();
     }
+    goToGithub() {
+        Linking.openURL("https://github.com/Steven128/JLUlife");
+    }
     render() {
         const { navigate } = this.props.navigation;
         return (
@@ -52,30 +54,26 @@ export default class HomeScreen extends Component {
                         />
                     }
                     centerComponent={{
-                        text: "关于",
+                        text: "问题反馈&建议",
                         style: { color: "#fff", fontSize: 16 }
                     }}
                 />
                 <View style={styles.main}>
-                    <Image
-                        style={{ width: 100, height: 100 }}
-                        source={require("../App/assets/ic_logo.png")}
-                    />
-                    <View style={{ padding: 15 }}>
-                        <Text style={[styles.text, styles.title]}>
-                            JLU Life
+                    <Text style={[styles.text]}>
+                        问题反馈及建议，或合作意向，请发邮件至
+                    </Text>
+                    <Text style={[styles.text]}>Steven128@outlook.com</Text>
+                    <Text style={{ height: 30 }} />
+                    <Text style={[styles.text]}>
+                        本项目开源，欢迎Star或Fork
+                    </Text>
+                    <TouchableNativeFeedback
+                        onPress={this.goToGithub.bind(this)}
+                    >
+                        <Text style={[styles.text, styles.link]}>
+                            https://github.com/Steven128/JLUlife
                         </Text>
-                        <Text style={[styles.text]}>版本号 2.0</Text>
-                    </View>
-                    <Text style={[styles.text, { width: width * 0.8 }]}>
-                        &nbsp;&nbsp;&nbsp;&nbsp;JLU
-                        Life是一款面向吉林大学学生的服务型APP，目前包含查看课表、成绩、校内通知、教务通知等功能，希望能够帮助到同学们，为同学们的学习、生活提供便利。
-                    </Text>
-                </View>
-                <View style={{ padding: 15 }}>
-                    <Text style={[styles.text, { width: width * 0.8 }]} >
-                        
-                    </Text>
+                    </TouchableNativeFeedback>
                 </View>
             </View>
         );
@@ -98,5 +96,11 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         paddingBottom: 5
+    },
+    link: {
+        color: "#2089dc",
+        textDecorationColor: "#2089dc",
+        textDecorationLine: "underline",
+        textDecorationStyle: "solid"
     }
 });

@@ -57,7 +57,12 @@ export default class HomeScreen extends Component {
                         navigation={this.props.navigation}
                     />
                 ) : (
-                    <View style={{ paddingVertical: height / 2 - 150 }}>
+                    <View
+                        style={{
+                            paddingVertical: height / 2 - 150,
+                            backgroundColor: "#eee"
+                        }}
+                    >
                         <ActivityIndicator
                             style={{}}
                             size="large"

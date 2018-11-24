@@ -80,10 +80,13 @@ export default class AppStorage extends Component {
                 syncInBackground: true
             })
             .then(res => {
+                res = { message: "success", content: res };
                 callBack(res);
                 return res;
             })
             .catch(err => {
+                err = { message: "error", content: err };
+                callBack(err);
                 console.warn("warn in AppStorage （" + key + "）");
                 console.warn(err.message);
                 switch (err.name) {

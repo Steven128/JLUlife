@@ -56,20 +56,11 @@ export class ScoreChart extends Component {
                         normal: {
                             color: function(params) {
                                 var colorList = [
-                                    "#C1232B",
-                                    "#B5C334",
-                                    "#FCCE10",
-                                    "#E87C25",
-                                    "#FE8463",
-                                    "#9BCA63",
-                                    "#FAD860",
-                                    "#F3A43B",
-                                    "#60C0DD",
-                                    "#D7504B",
-                                    "#C6E579",
-                                    "#F4E001",
-                                    "#F0805A",
-                                    "#26C0C0"
+                                    "#fdad8b",
+                                    "#6cc2e6",
+                                    "#a0d462",
+                                    "#ea98b5",
+                                    "#b6a4db"
                                 ];
                                 return colorList[params.dataIndex];
                             }

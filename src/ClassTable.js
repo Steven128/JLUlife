@@ -89,7 +89,7 @@ export default class ClassTable extends Component {
         }
         //添加到组件中
         var singleWeekItem = (
-            <View style={{ width: width }}>
+            <View style={{ flex: 1 }}>
                 <View
                     style={{
                         height: 50,
@@ -130,9 +130,7 @@ export default class ClassTable extends Component {
                     </View>
                 </View>
                 <ScrollView
-                    style={{
-                        height: height / width < 1.8 ? height - 50 : height - 30
-                    }}
+                    style={{ flex: 1 }}
                     contentContainerStyle={styles.contentContainer}
                 >
                     <View
@@ -189,18 +187,7 @@ export default class ClassTable extends Component {
         );
         outerContainer.push(singleWeekItem);
 
-        return (
-            <ScrollView
-                style={{
-                    height: height / width < 1.8 ? height - 80 : height - 50
-                }}
-                horizontal
-                pagingEnabled
-                bounces
-            >
-                {outerContainer}
-            </ScrollView>
-        );
+        return <View style={{ flex: 1 }}>{outerContainer}</View>;
     }
 }
 

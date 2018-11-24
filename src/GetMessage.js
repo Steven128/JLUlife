@@ -52,30 +52,45 @@ export default class GetMessage extends Component {
     render() {
         var items = [];
         if (this.state.getMessage) {
-            for (var i = 0; i < this.state.messageList.length; i++) {
-                var date = this.state.messageList[i].message.dateCreate;
-                var single = (
-                    <View
-                        styles={{
-                            borderBottomWidth: 1,
-                            borderBottomColor: "#ccc"
-                        }}
-                    >
-                        <Text style={styles.text}>
-                            {this.state.messageList[i].message.body}
-                        </Text>
-                        <View style={{ paddingTop: 5, flexDirection: "row" }}>
+            if (this.state.messageList.length > 0) {
+                for (var i = 0; i < this.state.messageList.length; i++) {
+                    var date = this.state.messageList[i].message.dateCreate;
+                    var single = (
+                        <View
+                            styles={{
+                                borderBottomWidth: 1,
+                                borderBottomColor: "#ccc"
+                            }}
+                        >
                             <Text style={styles.text}>
-                                {date.substring(0, 4)}年{date.substring(5, 7)}月
-                                {date.substring(8, 10)}日
+                                {this.state.messageList[i].message.body}
                             </Text>
-                            <Text style={[styles.text, { textAlign: "right" }]}>
-                                {this.state.messageList[i].hasReaded == "Y"
-                                    ? "已读"
-                                    : "未读"}
-                            </Text>
+                            <View
+                                style={{ paddingTop: 5, flexDirection: "row" }}
+                            >
+                                <Text style={styles.text}>
+                                    {date.substring(0, 4)}年
+                                    {date.substring(5, 7)}月
+                                    {date.substring(8, 10)}日
+                                </Text>
+                                <Text
+                                    style={[
+                                        styles.text,
+                                        { textAlign: "right" }
+                                    ]}
+                                >
+                                    {this.state.messageList[i].hasReaded == "Y"
+                                        ? "已读"
+                                        : "未读"}
+                                </Text>
+                            </View>
                         </View>
-                    </View>
+                    );
+                    items.push(single);
+                }
+            }else {
+                var single = (
+                    <Text style={styles.text}>并没有什么通知┐(￣ー￣)┌</Text>
                 );
                 items.push(single);
             }
@@ -105,7 +120,7 @@ export default class GetMessage extends Component {
                     消息通知
                 </Text>
                 <View>
-                    <Text style={styles.text}>消息加载中...</Text>
+                    <Text style={styles.text}>消息加载中 (・｀ω´・)</Text>
                 </View>
             </View>
         );

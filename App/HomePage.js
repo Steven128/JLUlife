@@ -16,6 +16,7 @@ import AppStorage from "../src/AppStorage";
 import Weather from "../src/Weather";
 import NextClass from "../src/NextClass";
 import GetMessage from "../src/GetMessage";
+import SplashScreen from "rn-splash-screen";
 
 const { width, height } = Dimensions.get("window");
 export default class HomePage extends Component {
@@ -42,63 +43,81 @@ export default class HomePage extends Component {
         });
     }
     componentDidMount() {
+        SplashScreen.hide();
         //加载各种信息
         if (Global.loginInfo.j_username == "") {
             AppStorage._load("currentStuName", res => {
-                Global.currentStuName = res;
+                if (res.message == "success") {
+                    Global.currentStuName = res.content;
+                }
             });
             AppStorage._load("startDate", res => {
-                Global.startDate = res;
+                if (res.message == "success") {
+                    Global.startDate = res.content;
+                }
             });
             AppStorage._load("termName", res => {
-                Global.termName = res;
+                if (res.message == "success") {
+                    Global.termName = res.content;
+                }
             });
             AppStorage._load("weekLength", res => {
-                Global.weekLength = res;
+                if (res.message == "success") {
+                    Global.weekLength = res.content;
+                }
             });
             AppStorage._load("defRes", res => {
-                Global.defRes = res;
+                if (res.message == "success") {
+                    Global.defRes = res.content;
+                }
             });
             AppStorage._load("loginInfo", res => {
-                Global.loginInfo.j_username = res.jUsername;
-                Global.loginInfo.j_password = res.jPassword;
-                this.setState({
-                    checkingOnline: true
-                });
-                //
-                if (!Global.isOnline) {
-                    ToastAndroid.show("正在登录，请稍后", ToastAndroid.SHORT);
-                    Global.checkingOnline = true;
-                    LoginInterface(
-                        Global.loginInfo.j_username,
-                        Global.loginInfo.j_password,
-                        res => {
-                            this.setState({
-                                checkingOnline: false
-                            });
-                            if (res.message == "success") {
-                                ToastAndroid.show(
-                                    "登录成功",
-                                    ToastAndroid.LONG
-                                );
-                                Global.isOnline = true;
-                                Global.checkingOnline = false;
-                                this.setState({
-                                    isOnline: true,
-                                    checkingOnline: false
-                                });
-                            } else {
-                                ToastAndroid.show(
-                                    "出错啦，再试一次吧~",
-                                    ToastAndroid.LONG
-                                );
-                                Global.checkingOnline = false;
+                if (res.message == "success") {
+                    Global.loginInfo.j_username = res.content.jUsername;
+                    Global.loginInfo.j_password = res.content.jPassword;
+                    this.setState({
+                        checkingOnline: true
+                    });
+                    //
+                    if (!Global.isOnline) {
+                        ToastAndroid.show(
+                            "正在登录，请稍后",
+                            ToastAndroid.SHORT
+                        );
+                        Global.checkingOnline = true;
+                        LoginInterface(
+                            Global.loginInfo.j_username,
+                            Global.loginInfo.j_password,
+                            res => {
                                 this.setState({
                                     checkingOnline: false
                                 });
+                                if (res.message == "success") {
+                                    ToastAndroid.show(
+                                        "登录成功",
+                                        ToastAndroid.LONG
+                                    );
+                                    Global.isOnline = true;
+                                    Global.checkingOnline = false;
+                                    this.setState({
+                                        isOnline: true,
+                                        checkingOnline: false
+                                    });
+                                } else {
+                                    ToastAndroid.show(
+                                        "出错啦，再试一次吧~",
+                                        ToastAndroid.LONG
+                                    );
+                                    Global.checkingOnline = false;
+                                    this.setState({
+                                        checkingOnline: false
+                                    });
+                                }
                             }
-                        }
-                    );
+                        );
+                    }
+                } else if (res.message == "error") {
+                    this.props.navigation.navigate("Login");
                 }
             });
         }
@@ -296,7 +315,7 @@ export default class HomePage extends Component {
                                     <Weather />
                                 ) : (
                                     <Text style={{ color: "#888" }}>
-                                        数据加载中...
+                                        {"玩命加载中 >.<"}
                                     </Text>
                                 )}
                             </View>
@@ -325,7 +344,7 @@ export default class HomePage extends Component {
                                     </Text>
                                     <View>
                                         <Text style={styles.text}>
-                                            消息加载中...
+                                            消息加载中 (・｀ω´・)
                                         </Text>
                                     </View>
                                 </View>

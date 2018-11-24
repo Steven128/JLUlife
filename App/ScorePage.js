@@ -26,12 +26,16 @@ export default class HomeScreen extends Component {
     }
     componentDidMount() {
         AppStorage._load("scoreJson", res => {
-            this.setState({
-                scoreList: res
-            });
-            this.setState({
-                getScore: true
-            });
+            if (res.message == "success") {
+                this.setState({
+                    scoreList: res.content
+                });
+                this.setState({
+                    getScore: true
+                });
+            } else if (res.message == "error" && !Global.isOnline) {
+                this.props.navigation.navigate("Login");
+            }
         });
         if (!this.state.getScore) {
             if (Global.isOnline)

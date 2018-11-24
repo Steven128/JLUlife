@@ -16,31 +16,35 @@ export default class NextClass extends Component {
     }
     componentDidMount() {
         AppStorage._load("classJson", res => {
-            classJson = res;
-            this.getNextClass(classJson, this.getCurrentClass());
+            if (res.message == "success") {
+                classJson = res.content;
+                this.getNextClass(classJson, this.getCurrentClass());
+            }
         });
     }
     getNextClass(classJson, currentClass) {
         AppStorage._load("startDate", res => {
-            var weekDay = new Date().getDay();
-            if (weekDay == 0) weekDay = 7;
-            var todayList =
-                classJson[global.getCurrentWeek(Global.startDate) - 1][
-                    weekDay - 1
-                ];
-            for (var i in todayList) {
-                if (
-                    todayList[i].hasLesson == true &&
-                    parseInt(todayList[i].schedule.time[0]) >
-                        parseInt(currentClass) &&
-                    parseInt(currentClass) != null
-                ) {
-                    var classInfo = todayList[i];
-                    this.setState({
-                        classInfo: classInfo,
-                        getClass: true
-                    });
-                    break;
+            if (res.message == "success") {
+                var weekDay = new Date().getDay();
+                if (weekDay == 0) weekDay = 7;
+                var todayList =
+                    classJson[global.getCurrentWeek(Global.startDate) - 1][
+                        weekDay - 1
+                    ];
+                for (var i in todayList) {
+                    if (
+                        todayList[i].hasLesson == true &&
+                        parseInt(todayList[i].schedule.time[0]) >
+                            parseInt(currentClass) &&
+                        parseInt(currentClass) != null
+                    ) {
+                        var classInfo = todayList[i];
+                        this.setState({
+                            classInfo: classInfo,
+                            getClass: true
+                        });
+                        break;
+                    }
                 }
             }
         });

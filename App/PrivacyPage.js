@@ -6,12 +6,11 @@ import {
     WebView,
     StyleSheet,
     Linking,
-    TouchableNativeFeedback,
-    Image
+    TouchableNativeFeedback
 } from "react-native";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
-import FIcon from "react-native-vector-icons/Feather";
+import AIcon from "react-native-vector-icons/AntDesign";
 import Global from "../src/Global";
 const { width, height } = Dimensions.get("window");
 
@@ -52,30 +51,36 @@ export default class HomeScreen extends Component {
                         />
                     }
                     centerComponent={{
-                        text: "关于",
+                        text: "隐私政策",
                         style: { color: "#fff", fontSize: 16 }
                     }}
                 />
                 <View style={styles.main}>
-                    <Image
-                        style={{ width: 100, height: 100 }}
-                        source={require("../App/assets/ic_logo.png")}
-                    />
+                    <Text style={[styles.title]}>
+                        当您使用本APP，即表示您同意以下声明：
+                    </Text>
                     <View style={{ padding: 15 }}>
-                        <Text style={[styles.text, styles.title]}>
-                            JLU Life
+                        <Text style={[styles.text]}>
+                            <EIcon name="dot-single" color="#2089dc" />
+                            使用课程表和查询成绩功能时，需要您的信息来访问教务系统，并在教务系统中留下登录痕迹
                         </Text>
-                        <Text style={[styles.text]}>版本号 2.0</Text>
+                        <Text style={[styles.text]}>
+                            <EIcon name="dot-single" color="#2089dc" />
+                            登录用户名和密码将保存在应用缓存中，以后打开APP时用此信息自动登录
+                        </Text>
+                        <Text style={[styles.text]}>
+                            <EIcon name="dot-single" color="#2089dc" />
+                            查看校内通知和教务通知时将访问相应网址并留下痕迹
+                        </Text>
+                        <Text style={[styles.text]}>
+                            <EIcon name="dot-single" color="#2089dc" />
+                            本APP为纯客户端应用，保证不上传您的任何数据
+                        </Text>
+                        <Text style={[styles.text]}>
+                            <EIcon name="dot-single" color="#2089dc" />
+                            本条款更新于2018年11月23日，后续更新可能修改条款
+                        </Text>
                     </View>
-                    <Text style={[styles.text, { width: width * 0.8 }]}>
-                        &nbsp;&nbsp;&nbsp;&nbsp;JLU
-                        Life是一款面向吉林大学学生的服务型APP，目前包含查看课表、成绩、校内通知、教务通知等功能，希望能够帮助到同学们，为同学们的学习、生活提供便利。
-                    </Text>
-                </View>
-                <View style={{ padding: 15 }}>
-                    <Text style={[styles.text, { width: width * 0.8 }]} >
-                        
-                    </Text>
                 </View>
             </View>
         );
@@ -87,13 +92,15 @@ const styles = StyleSheet.create({
     },
     main: {
         flex: 1,
-        alignItems: "center",
-        paddingTop: 50
+        textAlign: "left",
+        paddingTop: 50,
+        padding: 15
     },
     text: {
         color: "#777",
         lineHeight: 24,
-        fontWeight: "100"
+        fontWeight: "100",
+        paddingBottom: 5
     },
     title: {
         fontSize: 18,

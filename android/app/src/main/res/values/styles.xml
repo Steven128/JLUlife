@@ -2,27 +2,45 @@
 	<!-- Base application theme. -->
 	<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 		<!-- Customize your theme here. -->
+		<item name="android:statusBarColor">
+			@android:color/transparent
+		</item>
 		<item name="android:windowTranslucentStatus">
 			true
 		</item>
-		<item name="android:spinnerItemStyle">
-			@style/SpinnerItem
-		</item>
-		<item name="android:spinnerDropDownItemStyle">
-			@style/SpinnerDropDownItem
+		<item name="android:windowBackground">
+			@drawable/launch_screen
 		</item>
 	</style>
-	<style name="SpinnerItem">
-		<item name="android:textSize">
-			14dp
+	<style name="Base.App.Theme" parent="AppTheme">
+		<item name="android:statusBarColor">
+			@android:color/transparent
 		</item>
-		<item name="colorControlNormal">
-			#ffffff
+		<item name="windowActionBar">
+			false
+		</item>
+		<item name="windowNoTitle">
+			true
 		</item>
 	</style>
-	<style name="SpinnerDropDownItem" parent="Theme.AppCompat.Light.NoActionBar">
-		<item name="android:textSize">
-			14dp
+	<style name="App.Theme.Launch" parent="Base.App.Theme">
+		<item name="android:statusBarColor">
+			@android:color/transparent
+		</item>
+		<item name="android:windowTranslucentStatus">
+			true
+		</item>
+		<item name="android:windowBackground">
+			@drawable/launch_screen
+		</item>
+		<item name="android:windowNoTitle">
+			true
+		</item>
+		<item name="android:windowFullscreen">
+			true
+		</item>
+		<item name="android:windowContentOverlay">
+			@null
 		</item>
 	</style>
 </resources>

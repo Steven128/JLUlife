@@ -29,10 +29,12 @@ export default class ScoreItem extends Component {
     }
     componentDidMount() {
         AppStorage._load("scoreStat" + this.props.asId, res => {
-            this.setState({
-                scoreStat: res,
-                getStat: true
-            });
+            if (res.message == "success") {
+                this.setState({
+                    scoreStat: res.content,
+                    getStat: true
+                });
+            }
         });
     }
     render() {

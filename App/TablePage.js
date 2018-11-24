@@ -73,10 +73,14 @@ export default class HomeScreen extends Component {
             });
         }
         AppStorage._load("classJson", res => {
-            classJson = res;
-            this.setState({
-                getClassTable: true
-            });
+            if (res.message == "success") {
+                classJson = res.content;
+                this.setState({
+                    getClassTable: true
+                });
+            } else if (res.message == "error" && !Global.isOnline) {
+                this.props.navigation.navigate("Login");
+            }
         });
         if (!this.state.getClassTable) {
             if (Global.isOnline) this.getInfo();
@@ -159,7 +163,7 @@ export default class HomeScreen extends Component {
                         {weekContainer}
                     </ScrollView>
                 </View>
-                <View style={{ flexDirection: "row", flex: 1 }}>
+                <View style={{ flex: 1 }}>
                     {this.state.getClassTable ? (
                         <ClassTable
                             classList={classJson}

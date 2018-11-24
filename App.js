@@ -17,6 +17,8 @@ import CardPage from "./App/CardPage";
 import CardLoginPage from "./App/CardLoginPage";
 import SettingsPage from "./App/SettingsPage";
 import AboutPage from "./App/AboutPage";
+import PrivacyPage from "./App/PrivacyPage";
+import FeedBackPage from "./App/FeedBackPage";
 import LoginPage from "./App/LoginPage";
 import Sidebar from "./App/Sidebar";
 
@@ -122,6 +124,18 @@ const SettingsStack = createStackNavigator({
         navigationOptions: {
             header: null
         }
+    },
+    Privacy: {
+        screen: PrivacyPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    FeedBack: {
+        screen: FeedBackPage,
+        navigationOptions: {
+            header: null
+        }
     }
 });
 
@@ -180,19 +194,19 @@ const Drawer = createDrawerNavigator(
                 )
             }
         },
-        Card: {
-            screen: CardStack,
-            navigationOptions: {
-                drawerLabel: "一卡通",
-                drawerIcon: () => (
-                    <AIcon
-                        name={"creditcard"}
-                        size={18}
-                        style={{ color: "#000" }}
-                    />
-                )
-            }
-        },
+        // Card: {
+        //     screen: CardStack,
+        //     navigationOptions: {
+        //         drawerLabel: "一卡通",
+        //         drawerIcon: () => (
+        //             <AIcon
+        //                 name={"creditcard"}
+        //                 size={18}
+        //                 style={{ color: "#000" }}
+        //             />
+        //         )
+        //     }
+        // },
         Setting: {
             screen: SettingsStack,
             navigationOptions: {

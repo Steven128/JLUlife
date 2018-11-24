@@ -25,8 +25,8 @@ export default class LoginPage extends Component {
             buttonTapped: false,
             showLoading: false,
             cookie: "",
-            j_username: "",
-            j_password: "",
+            j_username: Global.loginInfo.j_username,
+            j_password: Global.loginInfo.j_password,
             nameColor: "#888",
             pwdColor: "#888"
         };
