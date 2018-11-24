@@ -18,7 +18,7 @@ JLU Life 是一款面向吉林大学学生的服务型APP，目前包含查看�
 
 * Tab页切换  [react-native-scrollable-tab-view](https://github.com/ptomasroos/react-native-scrollable-tab-view)
 
-* 本地持久存储  [react-native-storage](https://github.com/sunnylqm/react-native-storage)
+* 数据存储  [react-native-storage](https://github.com/sunnylqm/react-native-storage)
 
 * 图标库  [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
 
