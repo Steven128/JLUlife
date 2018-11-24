@@ -8,6 +8,7 @@ var Global = {
         j_password: ""
     },
     currentStuName: "",
+    userId: "",
     startDate: "",
     termName: "",
     weekLength: "",

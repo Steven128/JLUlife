@@ -92,7 +92,7 @@ function loginMain(j_username, j_password, cookie, callback) {
                     jUsername: j_username,
                     jPassword: j_password
                 });
-                console.log(Global.loginInfo)
+                console.log(Global.loginInfo);
                 getStuInfo(j_username, cookie, callback);
             } else {
                 callback({ message: "error" });
@@ -132,6 +132,7 @@ function getStuInfo(j_username, cookie, callback) {
     })
         .then(response => response.json())
         .then(responseJson => {
+            Global.userId = responseJson.userId;
             Global.defRes.adcId = responseJson.defRes.adcId;
             Global.defRes.campus = responseJson.defRes.campus;
             Global.defRes.department = responseJson.defRes.department;

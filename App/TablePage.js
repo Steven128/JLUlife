@@ -173,7 +173,8 @@ export default class HomeScreen extends Component {
                         <View
                             style={{
                                 flex: 1,
-                                paddingVertical: height / 2 - 150
+                                paddingVertical: height / 2 - 150,
+                                backgroundColor: "transparent"
                             }}
                         >
                             <ActivityIndicator
@@ -210,11 +211,15 @@ export default class HomeScreen extends Component {
             body: JSON.stringify({
                 tag: "teachClassStud@schedule",
                 branch: "default",
-                params: { termId: Global.defRes.teachingTerm, studId: 266661 }
+                params: {
+                    termId: Global.defRes.teachingTerm,
+                    studId: Global.userId
+                }
             })
         })
             .then(response => response.json())
             .then(responseJson => {
+                console.log(responseJson);
                 classJson = this.parseclassJson(responseJson.value);
                 AppStorage._save("classJson", classJson);
                 this.setState({
