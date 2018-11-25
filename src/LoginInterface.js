@@ -1,6 +1,7 @@
 import md5, { hex_md5 } from "react-native-md5";
 import Global from "./Global";
 import AppStorage from "./AppStorage";
+import cheerio from "cheerio";
 
 var setCookieURL = "http://10.60.65.8/ntms/userLogin.jsp";
 var loginURL = "http://10.60.65.8/ntms/j_spring_security_check";
@@ -61,7 +62,6 @@ function loginMain(j_username, j_password, cookie, callback) {
         headers: {
             Accept:
                 "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-            "Accept-Encoding": "gzip, deflate",
             "Accept-Language": "zh-CN,zh;q=0.9",
             "Cache-Control": "max-age=0",
             Connection: "keep-alive",
@@ -83,8 +83,8 @@ function loginMain(j_username, j_password, cookie, callback) {
             "&mousePath=RHQABTAQAnTAgAwTCQBBTFABQTIABhTLQBzTPACDTSgCVTVQCkTXwC0TagDFTdwDWTgADmTigD5TkwEJTngEZTqgEpTtQE6TvQFKTxgFbTzQFsT0wF%2BT1QGNT1wGeT3QGvT5AHBT6wHRCwgGz"
     })
         .then(response => response)
-        .then(responseJson => {
-            if (responseJson.url.indexOf("ntms/index.do") > -1) {
+        .then(response => {
+            if (response.url.indexOf("ntms/index.do") > -1) {
                 Global.loginInfo.j_username = j_username;
                 Global.j_password = j_password;
                 //存入缓存
@@ -92,10 +92,23 @@ function loginMain(j_username, j_password, cookie, callback) {
                     jUsername: j_username,
                     jPassword: j_password
                 });
-                console.log(Global.loginInfo);
                 getStuInfo(j_username, cookie, callback);
             } else {
-                callback({ message: "error" });
+                response = response._bodyInit;
+
+                const $ = cheerio.load(response);
+                console.log("login error");
+                var reason = $("#error_message").html();
+                reason = unescape(
+                    reason.replace(/&#x/g, "%u").replace(/;/g, "")
+                );
+                if (reason.indexOf("用户名或者密码错误") > -1) {
+                    callback({ message: "error", reason: "wrong_password" });
+                } else if (reason.indexOf("超时") > -1) {
+                    callback({ message: "error", reason: "overtime" });
+                } else {
+                    callback({ message: "error", reason: "no_reason" });
+                }
             }
         })
         .catch(error => {

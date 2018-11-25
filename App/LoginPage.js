@@ -168,11 +168,34 @@ export default class LoginPage extends Component {
                     currentStuName: Global.currentStuName,
                     termName: Global.termName
                 });
+            } else if (res.message == "error") {
+                this.setState({
+                    showLoading: !this.state.showLoading
+                });
+                if (res.reason == "wrong_password") {
+                    Alert.alert(
+                        "出错啦",
+                        "用户名或密码错了惹，仔细检查一下吧~",
+                        [{ text: "确定" }]
+                    );
+                } else if (res.reason == "overtime") {
+                    Alert.alert("出错啦", "貌似超时啦，再试一次吧~", [
+                        { text: "确定" }
+                    ]);
+                } else {
+                    Alert.alert(
+                        "出错啦",
+                        "网络开小差啦，看看是不是连上校园网了呢~",
+                        [{ text: "确定" }]
+                    );
+                }
             } else {
                 this.setState({
                     showLoading: !this.state.showLoading
                 });
-                Alert.alert("出错啦，再试一次吧~");
+                Alert.alert("出错啦", "网络开小差啦，过一会儿再试吧~", [
+                    { text: "确定" }
+                ]);
             }
         });
     }
