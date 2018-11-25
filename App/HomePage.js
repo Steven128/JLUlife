@@ -331,7 +331,7 @@ export default class HomePage extends Component {
                         <View style={styles.greetingWrap}>
                             {this.state.isOnline ? (
                                 <GetMessage />
-                            ) : (
+                            ) : Global.checkingOnline ? (
                                 <View>
                                     <Text
                                         style={{
@@ -345,6 +345,23 @@ export default class HomePage extends Component {
                                     <View>
                                         <Text style={styles.text}>
                                             消息加载中 (・｀ω´・)
+                                        </Text>
+                                    </View>
+                                </View>
+                            ) : (
+                                <View>
+                                    <Text
+                                        style={{
+                                            color: "#555",
+                                            fontSize: 18,
+                                            paddingBottom: 15
+                                        }}
+                                    >
+                                        消息通知
+                                    </Text>
+                                    <View>
+                                        <Text style={styles.text}>
+                                            请先登录哟~
                                         </Text>
                                     </View>
                                 </View>

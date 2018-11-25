@@ -29,7 +29,7 @@ export default class HomeScreen extends Component {
         this.parseclassJson = this.parseclassJson.bind(this);
         this.state = {
             getClassTable: false,
-            currentWeek: "  ",
+            currentWeek: " - ",
             pickerOpen: false
         };
 

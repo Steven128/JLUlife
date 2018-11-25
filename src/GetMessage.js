@@ -88,13 +88,14 @@ export default class GetMessage extends Component {
                     );
                     items.push(single);
                 }
-            }else {
+            } else {
                 var single = (
                     <Text style={styles.text}>并没有什么通知┐(￣ー￣)┌</Text>
                 );
                 items.push(single);
             }
         }
+
         return this.state.getMessage ? (
             <View>
                 <Text

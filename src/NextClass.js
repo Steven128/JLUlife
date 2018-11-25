@@ -81,54 +81,75 @@ export default class NextClass extends Component {
         }
     }
     render() {
-        return this.state.getClass ? (
-            <View>
-                <Text
-                    style={{
-                        color: "#555",
-                        fontSize: 18,
-                        paddingBottom: 15
-                    }}
-                >
-                    接下来
-                </Text>
+        if (!Global.isOnline && !Global.checkingOnline)
+            return (
                 <View>
-                    <Text style={styles.text}>
-                        {this.state.classInfo.lessonName}
+                    <Text
+                        style={{
+                            color: "#555",
+                            fontSize: 18,
+                            paddingBottom: 15
+                        }}
+                    >
+                        接下来
                     </Text>
-                    <Text style={styles.text}>
-                        {this.state.classInfo.schedule.classroom}
-                    </Text>
-                    <Text style={styles.text}>
-                        {this.state.classInfo.teachers[0]}
-                    </Text>
-                    <Text style={styles.text}>
-                        第{this.state.classInfo.schedule.time[0]} -{" "}
-                        {
-                            this.state.classInfo.schedule.time[
-                                this.state.classInfo.schedule.time.length - 1
-                            ]
-                        }
-                        节
-                    </Text>
+                    <View>
+                        <Text style={styles.text}>请先登录哟~</Text>
+                    </View>
                 </View>
-            </View>
-        ) : (
-            <View>
-                <Text
-                    style={{
-                        color: "#555",
-                        fontSize: 18,
-                        paddingBottom: 15
-                    }}
-                >
-                    接下来
-                </Text>
+            );
+        else
+            return this.state.getClass ? (
                 <View>
-                    <Text style={styles.text}>今天没有课啦，休息一下吧~</Text>
+                    <Text
+                        style={{
+                            color: "#555",
+                            fontSize: 18,
+                            paddingBottom: 15
+                        }}
+                    >
+                        接下来
+                    </Text>
+                    <View>
+                        <Text style={styles.text}>
+                            {this.state.classInfo.lessonName}
+                        </Text>
+                        <Text style={styles.text}>
+                            {this.state.classInfo.schedule.classroom}
+                        </Text>
+                        <Text style={styles.text}>
+                            {this.state.classInfo.teachers[0]}
+                        </Text>
+                        <Text style={styles.text}>
+                            第{this.state.classInfo.schedule.time[0]} -{" "}
+                            {
+                                this.state.classInfo.schedule.time[
+                                    this.state.classInfo.schedule.time.length -
+                                        1
+                                ]
+                            }
+                            节
+                        </Text>
+                    </View>
                 </View>
-            </View>
-        );
+            ) : (
+                <View>
+                    <Text
+                        style={{
+                            color: "#555",
+                            fontSize: 18,
+                            paddingBottom: 15
+                        }}
+                    >
+                        接下来
+                    </Text>
+                    <View>
+                        <Text style={styles.text}>
+                            今天没有课啦，休息一下吧~
+                        </Text>
+                    </View>
+                </View>
+            );
     }
 }
 const styles = StyleSheet.create({
