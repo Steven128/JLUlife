@@ -213,7 +213,7 @@ export default class HomeScreen extends Component {
                 branch: "default",
                 params: {
                     termId: Global.defRes.teachingTerm,
-                    studId: Global.userId
+                    studId: Global.defRes.personId
                 }
             })
         })

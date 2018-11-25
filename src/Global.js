@@ -8,7 +8,6 @@ var Global = {
         j_password: ""
     },
     currentStuName: "",
-    userId: "",
     startDate: "",
     termName: "",
     weekLength: "",
@@ -39,7 +38,6 @@ var Global = {
         "#93c6ea"
     ],
     tips: {},
-    classTable: [],
     card: {
         isOnline: false,
         username: "",

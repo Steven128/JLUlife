@@ -132,7 +132,6 @@ function getStuInfo(j_username, cookie, callback) {
     })
         .then(response => response.json())
         .then(responseJson => {
-            Global.userId = responseJson.userId;
             Global.defRes.adcId = responseJson.defRes.adcId;
             Global.defRes.campus = responseJson.defRes.campus;
             Global.defRes.department = responseJson.defRes.department;
