@@ -18,7 +18,7 @@ export default class SettingsPage extends Component {
     constructor(props) {
         super(props);
         this.openDrawer = this.openDrawer.bind(this);
-        this.state = { language: "" };
+        this.state = { isOnline: Global.isOnline };
     }
 
     openDrawer() {
@@ -28,25 +28,27 @@ export default class SettingsPage extends Component {
     componentDidMount() {}
 
     logoutTapped() {
-        Alert.alert(
-            "真的要退出登录吗？",
-            "退出登录会清空你的一切信息",
-            [
-                {
-                    text: "取消",
-                    style: "cancel"
-                },
-                {
-                    text: "确定",
-                    onPress: () =>
-                        LogoutInterface(res => {
-                            if (res.message == "success") {
-                                Alert.alert("已退出登录");
-                            }
-                        })
-                }
-            ]
-        );
+        Alert.alert("真的要退出登录吗？", "退出登录会清空你的一切信息", [
+            {
+                text: "取消",
+                style: "cancel"
+            },
+            {
+                text: "确定",
+                onPress: () =>
+                    LogoutInterface(res => {
+                        if (res.message == "success") {
+                            Alert.alert(
+                                "提示",
+                                "你已退出登录啦，换个账号吧~",
+                                [{ text: "确定" }],
+                                { cancelable: false }
+                            );
+                        }
+                        this.setState({ isOnline: false });
+                    })
+            }
+        ]);
     }
 
     render() {
@@ -68,21 +70,24 @@ export default class SettingsPage extends Component {
                         style: { color: "#fff", fontSize: 16 }
                     }}
                 />
-                <View
-                    style={{
-                        marginTop: 30,
-                        borderTopWidth: 1,
-                        borderTopColor: "#ccc"
-                    }}
-                >
-                    <TouchableNativeFeedback
-                        onPress={this.logoutTapped.bind(this)}
+                {this.state.isOnline ? (
+                    <View
+                        style={{
+                            marginTop: 30,
+                            borderTopWidth: 1,
+                            borderTopColor: "#ccc"
+                        }}
                     >
-                        <View style={styles.item}>
-                            <Text>退出登录</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-                </View>
+                        <TouchableNativeFeedback
+                            onPress={this.logoutTapped.bind(this)}
+                        >
+                            <View style={styles.item}>
+                                <Text>退出登录</Text>
+                            </View>
+                        </TouchableNativeFeedback>
+                    </View>
+                ) : null}
+
                 <View
                     style={{
                         marginTop: 30,
