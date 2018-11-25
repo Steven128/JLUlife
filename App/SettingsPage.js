@@ -1,9 +1,17 @@
 import React, { Component } from "react";
-import { View, Text, Dimensions, StyleSheet } from "react-native";
+import {
+    View,
+    Text,
+    Dimensions,
+    StyleSheet,
+    TouchableNativeFeedback,
+    Alert
+} from "react-native";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../src/Global";
 import SettingItem from "../src/SettingItem";
+import LogoutInterface from "../src/LogoutInterface";
 const { width, height } = Dimensions.get("window");
 
 export default class SettingsPage extends Component {
@@ -18,9 +26,29 @@ export default class SettingsPage extends Component {
         this.props.navigation.openDrawer();
     }
     componentDidMount() {}
-    onPress(language) {
-        alert(language);
+
+    logoutTapped() {
+        Alert.alert(
+            "真的要退出登录吗？",
+            "退出登录会清空你的一切信息",
+            [
+                {
+                    text: "取消",
+                    style: "cancel"
+                },
+                {
+                    text: "确定",
+                    onPress: () =>
+                        LogoutInterface(res => {
+                            if (res.message == "success") {
+                                Alert.alert("已退出登录");
+                            }
+                        })
+                }
+            ]
+        );
     }
+
     render() {
         const { navigate } = this.props.navigation;
         return (
@@ -40,6 +68,21 @@ export default class SettingsPage extends Component {
                         style: { color: "#fff", fontSize: 16 }
                     }}
                 />
+                <View
+                    style={{
+                        marginTop: 30,
+                        borderTopWidth: 1,
+                        borderTopColor: "#ccc"
+                    }}
+                >
+                    <TouchableNativeFeedback
+                        onPress={this.logoutTapped.bind(this)}
+                    >
+                        <View style={styles.item}>
+                            <Text>退出登录</Text>
+                        </View>
+                    </TouchableNativeFeedback>
+                </View>
                 <View
                     style={{
                         marginTop: 30,
@@ -71,5 +114,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#eee"
+    },
+    item: {
+        height: 60,
+        textAlign: "left",
+        justifyContent: "center",
+        textAlignVertical: "center",
+        backgroundColor: "#fff",
+        borderBottomWidth: 1,
+        borderBottomColor: "#ccc",
+        paddingHorizontal: 30
     }
 });
