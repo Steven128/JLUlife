@@ -35,8 +35,9 @@ export default class HomeScreen extends Component {
     render() {
         const { navigate } = this.props.navigation;
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, backgroundColor: "#efefef" }}>
                 <Header
+                    containerStyle={{ borderBottomColor: "#2089dc" }}
                     placement="left"
                     leftComponent={
                         <Button

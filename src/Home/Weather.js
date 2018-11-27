@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, Dimensions, StyleSheet } from "react-native";
-import Global from "./Global";
+import Global from "../Global";
 
 export default class Weather extends Component {
     constructor(props) {

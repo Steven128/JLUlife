@@ -13,6 +13,9 @@ import NotificationDetailPage from "./App/NotificationDetailPage";
 import EducationPage from "./App/EducationPage";
 import EducationDetailPage from "./App/EducationDetailPage";
 import ScorePage from "./App/ScorePage";
+import QueryPage from "./App/QueryPage";
+import EmptyRoomPage from "./App/Query/EmptyRoomPage";
+import LibraryPage from "./App/Query/LibraryPage";
 import CardPage from "./App/CardPage";
 import CardLoginPage from "./App/CardLoginPage";
 import SettingsPage from "./App/SettingsPage";
@@ -91,6 +94,27 @@ const EducationStack = createStackNavigator({
     },
     Item: {
         screen: EducationDetailPage,
+        navigationOptions: {
+            header: null
+        }
+    }
+});
+
+const QueryStack = createStackNavigator({
+    Main: {
+        screen: QueryPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    EmptyRoom: {
+        screen: EmptyRoomPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    Library: {
+        screen: LibraryPage,
         navigationOptions: {
             header: null
         }
@@ -191,6 +215,15 @@ const Drawer = createDrawerNavigator(
                 drawerLabel: "成绩查询",
                 drawerIcon: () => (
                     <AIcon name={"tago"} size={18} style={{ color: "#000" }} />
+                )
+            }
+        },
+        Query: {
+            screen: QueryStack,
+            navigationOptions: {
+                drawerLabel: "信息查询",
+                drawerIcon: () => (
+                    <AIcon name={"search1"} size={18} style={{ color: "#000" }} />
                 )
             }
         },

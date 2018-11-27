@@ -1,6 +1,6 @@
 import md5, { hex_md5 } from "react-native-md5";
-import Global from "./Global";
-import AppStorage from "./AppStorage";
+import Global from "../Global";
+import AppStorage from "../AppStorage";
 import cheerio from "cheerio";
 
 var setCookieURL = "http://10.60.65.8/ntms/userLogin.jsp";

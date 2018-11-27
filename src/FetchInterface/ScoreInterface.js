@@ -1,5 +1,5 @@
-import AppStorage from "./AppStorage";
-import Global from "./Global";
+import AppStorage from "../AppStorage";
+import Global from "../Global";
 
 var statCount = 0;
 

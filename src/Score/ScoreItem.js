@@ -11,9 +11,9 @@ import Dialog, {
     ScaleAnimation,
     DialogContent
 } from "react-native-popup-dialog";
-import Global from "./Global";
-import ScoreChart from "../src/ScoreChart";
-import AppStorage from "../src/AppStorage";
+import Global from "../Global";
+import ScoreChart from "./ScoreChart";
+import AppStorage from "../AppStorage";
 
 const { width, height } = Dimensions.get("window");
 

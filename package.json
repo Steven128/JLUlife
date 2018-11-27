@@ -20,13 +20,16 @@
         "react-native-communications": "^2.2.1",
         "react-native-elements": "^1.0.0-beta7",
         "react-native-md5": "^1.0.0",
+        "react-native-pickers": "^2.0.0",
         "react-native-popup-dialog": "^0.16.3",
         "react-native-refresh-list-view": "^1.0.10",
         "react-native-scrollable-tab-view": "^0.10.0",
         "react-native-storage": "^0.2.3",
+        "react-native-svg": "^8.0.8",
         "react-native-vector-icons": "^6.0.2",
         "react-native-webview": "^2.5.0",
         "react-navigation": "^2.18.2",
+        "rn-fetch-blob": "^0.10.13",
         "rn-splash-screen": "^5.2.0"
     },
     "devDependencies": {

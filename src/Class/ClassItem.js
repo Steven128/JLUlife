@@ -11,9 +11,9 @@ import Dialog, {
     ScaleAnimation,
     DialogContent
 } from "react-native-popup-dialog";
-import Global from "../src/Global";
-import Icon from "react-native-vector-icons/AntDesign";
-import MIcon from "react-native-vector-icons/MaterialIcons";
+import Global from "../Global";
+import EIcon from "react-native-vector-icons/Entypo";
+import MIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const { width, height } = Dimensions.get("window");
 
@@ -85,13 +85,15 @@ export default class ClassItem extends Component {
                                             styles.textInDialog
                                         ]}
                                     >
-                                        <Icon
+                                        <EIcon
                                             style={{ flex: 1 }}
                                             name="calendar"
-                                            size={28}
+                                            size={26}
                                             color="lightgreen"
                                         />
-                                        <Text style={{ flex: 5 }}>
+                                        <Text
+                                            style={{ flex: 5, paddingTop: 3 }}
+                                        >
                                             第{this.props.beginWeek} -{" "}
                                             {this.props.endWeek}周
                                         </Text>
@@ -102,13 +104,15 @@ export default class ClassItem extends Component {
                                             styles.textInDialog
                                         ]}
                                     >
-                                        <Icon
+                                        <MIcon
                                             style={{ flex: 1 }}
-                                            name="clockcircle"
-                                            size={28}
+                                            name="clock"
+                                            size={26}
                                             color="orange"
                                         />
-                                        <Text style={{ flex: 5 }}>
+                                        <Text
+                                            style={{ flex: 5, paddingTop: 3 }}
+                                        >
                                             周
                                             {this.numToChinese(
                                                 this.props.dayOfWeek
@@ -128,13 +132,15 @@ export default class ClassItem extends Component {
                                             styles.textInDialog
                                         ]}
                                     >
-                                        <MIcon
+                                        <EIcon
                                             style={{ flex: 1 }}
-                                            name="person"
+                                            name="user"
                                             size={26}
                                             color="lightblue"
                                         />
-                                        <Text style={{ flex: 5 }}>
+                                        <Text
+                                            style={{ flex: 5, paddingTop: 3 }}
+                                        >
                                             {this.printTeachers(
                                                 this.props.teachers
                                             )}
@@ -146,13 +152,15 @@ export default class ClassItem extends Component {
                                             styles.textInDialog
                                         ]}
                                     >
-                                        <MIcon
+                                        <EIcon
                                             style={{ flex: 1 }}
-                                            name="location-on"
-                                            size={28}
+                                            name="location-pin"
+                                            size={26}
                                             color="red"
                                         />
-                                        <Text style={{ flex: 5 }}>
+                                        <Text
+                                            style={{ flex: 5, paddingTop: 3 }}
+                                        >
                                             {this.props.classroom}
                                         </Text>
                                     </View>
@@ -184,7 +192,7 @@ export default class ClassItem extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 1
+        padding: 2
     },
     innerItem: {
         flex: 1,

@@ -101,7 +101,7 @@ android {
         applicationId "com.brady.jlulife"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode 2
         versionName "2.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -147,6 +147,8 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-svg')
+    compile project(':rn-fetch-blob')
     compile project(':rn-splash-screen')
     compile project(':react-native-webview')
     compile project(':react-native-vector-icons')

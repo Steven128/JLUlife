@@ -11,11 +11,11 @@ import {
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../src/Global";
-import LoginInterface from "../src/LoginInterface";
+import LoginInterface from "../src/FetchInterface/LoginInterface";
 import AppStorage from "../src/AppStorage";
-import Weather from "../src/Weather";
-import NextClass from "../src/NextClass";
-import GetMessage from "../src/GetMessage";
+import Weather from "../src/Home/Weather";
+import NextClass from "../src/Home/NextClass";
+import GetMessage from "../src/Home/GetMessage";
 import SplashScreen from "rn-splash-screen";
 
 const { width, height } = Dimensions.get("window");
@@ -43,7 +43,9 @@ export default class HomePage extends Component {
         });
     }
     componentDidMount() {
-        SplashScreen.hide();
+        setTimeout(() => {
+            SplashScreen.hide();
+        }, 1000);
         //加载各种信息
         if (Global.loginInfo.j_username == "") {
             AppStorage._load("currentStuName", res => {
@@ -105,7 +107,7 @@ export default class HomePage extends Component {
                                     });
                                 } else {
                                     ToastAndroid.show(
-                                        "出错啦，再试一次吧~",
+                                        "网络开小差啦，看看是不是连上校园网了呢~",
                                         ToastAndroid.LONG
                                     );
                                     Global.checkingOnline = false;
@@ -135,7 +137,6 @@ export default class HomePage extends Component {
                     Global.tips.weatherInfo = responseJson;
                     this.setState({ tipsCount: this.state.tipsCount + 1 });
                     this.addTips();
-                    console.log("Global.tips.weatherInfo");
                 });
             //获取明日天气
             url = "http://api.help.bj.cn/apis/weather2d?id=长春";
@@ -150,7 +151,6 @@ export default class HomePage extends Component {
                     Global.tips.tomorrowWeather = responseJson.tomorrow;
                     this.setState({ tipsCount: this.state.tipsCount + 1 });
                     this.addTips();
-                    console.log("Global.tips.tomorrowWeather");
                 });
             //获取农历
             url =
@@ -168,7 +168,6 @@ export default class HomePage extends Component {
                         responseJson.data[16].val + responseJson.data[21].val;
                     this.setState({ tipsCount: this.state.tipsCount + 1 });
                     this.addTips();
-                    console.log("Global.tips.lunarCalendar");
                 });
             //获取空气质量
             url = "http://api.help.bj.cn/apis/aqi2?id=101060101";
@@ -183,7 +182,6 @@ export default class HomePage extends Component {
                     Global.tips.aqi = responseJson;
                     this.setState({ tipsCount: this.state.tipsCount + 1 });
                     this.addTips();
-                    console.log("Global.tips.aqi");
                 })
                 .catch(error => {
                     console.log("aqi error");
@@ -211,13 +209,16 @@ export default class HomePage extends Component {
     render() {
         const { navigate } = this.props.navigation;
         var item;
-        if (this.state.isOnline && !this.state.checkingOnline) {
+        if (
+            (this.state.isOnline || Global.isOnline) &&
+            (!this.state.checkingOnline || !Global.checkingOnline)
+        ) {
             item = (
                 <View>
                     <Text style={styles.greeting}>
                         {"你好，" + Global.currentStuName}
                     </Text>
-                    <Text>
+                    <Text style={{ color: "#888" }}>
                         {"现在是 " +
                             Global.termName.substring(0, 9) +
                             " 学年度 " +
@@ -229,7 +230,10 @@ export default class HomePage extends Component {
                     </Text>
                 </View>
             );
-        } else if (!this.state.isOnline && this.state.checkingOnline) {
+        } else if (
+            (!this.state.isOnline || !Global.isOnline) &&
+            (this.state.checkingOnline || Global.checkingOnline)
+        ) {
             item = (
                 <View>
                     <Text style={styles.greeting}>
@@ -245,8 +249,8 @@ export default class HomePage extends Component {
                 </View>
             );
         } else if (
-            !this.state.isOnline &&
-            !this.state.checkingOnline &&
+            (!this.state.isOnline || !Global.isOnline) &&
+            (!this.state.checkingOnline || !Global.checkingOnline) &&
             Global.currentStuName != ""
         ) {
             item = (

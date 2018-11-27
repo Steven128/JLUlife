@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, Dimensions, ToastAndroid } from "react-native";
 import RefreshListView, { RefreshState } from "react-native-refresh-list-view";
 import ScoreItem from "./ScoreItem";
-import Global from "./Global";
-import ScoreInterface from "./ScoreInterface";
+import Global from "../Global";
+import ScoreInterface from "../FetchInterface/ScoreInterface";
 
 const { width, height } = Dimensions.get("window");
 export default class ScoreView extends Component {

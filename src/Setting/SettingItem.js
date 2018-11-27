@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
-import Global from "../src/Global";
+import Global from "../Global";
 import Communications from "react-native-communications";
 const { width, height } = Dimensions.get("window");
 

@@ -11,7 +11,7 @@ import {
 import { Header, Input, Button, CheckBox } from "react-native-elements";
 import Icon from "react-native-vector-icons/AntDesign";
 import Global from "../src/Global";
-import LoginInterface from "../src/LoginInterface";
+import LoginInterface from "../src/FetchInterface/LoginInterface";
 const { width, height } = Dimensions.get("window");
 
 export default class LoginPage extends Component {
@@ -52,7 +52,7 @@ export default class LoginPage extends Component {
     render() {
         const { navigate } = this.props.navigation;
         return (
-            <View>
+            <View style={{ flex: 1, backgroundColor: "#efefef" }}>
                 <Header
                     placement="left"
                     leftComponent={
@@ -103,30 +103,22 @@ export default class LoginPage extends Component {
                                 value={this.state.j_password}
                                 onChangeText={this.handlePwdChange}
                                 returnKeyType="done"
-                                keyboardType="numeric"
                                 selectTextOnFocus={true}
                             />
                         </View>
-                        <Button
-                            title="登录"
-                            loading={this.state.showLoading}
-                            loadingProps={{
-                                size: "large",
-                                color: "rgba(111, 202, 186, 1)"
-                            }}
-                            titleStyle={{ fontWeight: "700" }}
-                            buttonStyle={{
-                                backgroundColor: "#2089dc",
-                                marginLeft: width * 0.07,
-                                marginRight: width * 0.07,
-                                height: 45,
-                                borderColor: "transparent",
-                                borderWidth: 0,
-                                borderRadius: 5
-                            }}
-                            containerStyle={{ marginTop: 20 }}
-                            onPress={this.loginTapped}
-                        />
+                        <View style={{ paddingHorizontal: 40, paddingTop: 60 }}>
+                            <Button
+                                title="登录"
+                                loading={this.state.showLoading}
+                                loadingProps={{
+                                    size: "large",
+                                    color: "#fff"
+                                }}
+                                titleStyle={{ fontWeight: "700" }}
+                                buttonStyle={{ height: 45 }}
+                                onPress={this.loginTapped}
+                            />
+                        </View>
                     </View>
                 </ScrollView>
             </View>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, Dimensions, ScrollView } from "react-native";
-import Global from "../src/Global";
-import ClassItem from "../src/ClassItem";
+import Global from "../Global";
+import ClassItem from "./ClassItem";
 
 const { width, height } = Dimensions.get("window");
 
@@ -60,7 +60,6 @@ export default class ClassTable extends Component {
                 if (dayList[j].hasLesson) {
                     dayItem.push(
                         <ClassItem
-                            key={i + ":" + j}
                             color={dayList[j].color}
                             length={length}
                             innerText={
@@ -81,11 +80,7 @@ export default class ClassTable extends Component {
                     dayItem.push(<ClassItem blank length={length} />);
                 }
             }
-            items.push(
-                <View key={i} style={styles.column}>
-                    {dayItem}
-                </View>
-            );
+            items.push(<View style={styles.column}>{dayItem}</View>);
         }
         //添加到组件中
         var singleWeekItem = (
@@ -135,6 +130,7 @@ export default class ClassTable extends Component {
                 >
                     <View
                         style={{
+                            flex: 1,
                             flexDirection: "row",
                             height: 770,
                             backgroundColor: "#fff"
@@ -180,7 +176,9 @@ export default class ClassTable extends Component {
                                 <Text>11</Text>
                             </View>
                         </View>
-                        {items}
+                        <View style={{ flex: 7, flexDirection: "row" }}>
+                            {items}
+                        </View>
                     </View>
                 </ScrollView>
             </View>

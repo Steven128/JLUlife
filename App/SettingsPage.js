@@ -10,8 +10,8 @@ import {
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../src/Global";
-import SettingItem from "../src/SettingItem";
-import LogoutInterface from "../src/LogoutInterface";
+import SettingItem from "../src/Setting/SettingItem";
+import LogoutInterface from "../src/FetchInterface/LogoutInterface";
 const { width, height } = Dimensions.get("window");
 
 export default class SettingsPage extends Component {
@@ -30,18 +30,18 @@ export default class SettingsPage extends Component {
     logoutTapped() {
         Alert.alert("真的要退出登录吗？", "退出登录会清空你的一切信息", [
             {
-                text: "取消",
+                text: "我再想想",
                 style: "cancel"
             },
             {
-                text: "确定",
+                text: "下定决心了",
                 onPress: () =>
                     LogoutInterface(res => {
                         if (res.message == "success") {
                             Alert.alert(
                                 "提示",
                                 "你已退出登录啦，换个账号吧~",
-                                [{ text: "确定" }],
+                                [{ text: "知道啦" }],
                                 { cancelable: false }
                             );
                         }
@@ -118,7 +118,7 @@ export default class SettingsPage extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#eee"
+        backgroundColor: "#efefef"
     },
     item: {
         height: 60,

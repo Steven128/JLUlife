@@ -13,12 +13,11 @@ import {
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../src/Global";
-import ClassTable from "../src/ClassTable";
+import ClassTable from "../src/Class/ClassTable";
 import AppStorage from "../src/AppStorage";
 const { width, height } = Dimensions.get("window");
 
 var classJson = [];
-var weekContainer = [];
 export default class HomeScreen extends Component {
     constructor(props) {
         super(props);
@@ -32,20 +31,6 @@ export default class HomeScreen extends Component {
             currentWeek: " - ",
             pickerOpen: false
         };
-
-        for (var i = 1; i <= Global.weekLength; i++) {
-            var weekItem = (
-                <TouchableNativeFeedback
-                    onPress={this.changeWeek.bind(this, i)}
-                    key={i}
-                >
-                    <View style={styles.weekWrap}>
-                        <Text style={styles.weekText}>第{i}周</Text>
-                    </View>
-                </TouchableNativeFeedback>
-            );
-            weekContainer.push(weekItem);
-        }
     }
 
     openDrawer() {
@@ -106,6 +91,23 @@ export default class HomeScreen extends Component {
             (this.state.currentWeek != global.getCurrentWeek(Global.startDate)
                 ? "(非本周)"
                 : "");
+
+        var weekContainer = [];
+        if (this.state.getClassTable) {
+            for (var i = 1; i <= Global.weekLength; i++) {
+                var weekItem = (
+                    <TouchableNativeFeedback
+                        onPress={this.changeWeek.bind(this, i)}
+                        key={i}
+                    >
+                        <View style={styles.weekWrap}>
+                            <Text style={styles.weekText}>第{i}周</Text>
+                        </View>
+                    </TouchableNativeFeedback>
+                );
+                weekContainer.push(weekItem);
+            }
+        }
         return (
             <View style={{ flex: 1, backgroundColor: "#fff" }}>
                 <Header

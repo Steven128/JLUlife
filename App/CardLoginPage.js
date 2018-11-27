@@ -12,7 +12,8 @@ import {
 import { Header, Input, Button, CheckBox } from "react-native-elements";
 import Icon from "react-native-vector-icons/AntDesign";
 import Global from "../src/Global";
-import LoginInterface from "../src/LoginInterface";
+import RNFetchBlob from "rn-fetch-blob";
+
 const { width, height } = Dimensions.get("window");
 
 export default class LoginPage extends Component {
@@ -24,12 +25,12 @@ export default class LoginPage extends Component {
         this.handleCodeChange = this.handleCodeChange.bind(this);
         this.refreshCode = this.refreshCode.bind(this);
         this.state = {
-            rand: "",
             showLoading: false,
             cookie: "",
             username: "",
             password: "",
-            code: ""
+            code: "",
+            base64: ""
         };
     }
 
@@ -50,14 +51,33 @@ export default class LoginPage extends Component {
         });
     }
     componentDidMount() {
-        this.setState({
-            rand: new Date().getTime()
-        });
         this.getCookie(cookie => {
             this.setState({
                 cookie: cookie
             });
-            console.log(this.state.cookie);
+            console.log(cookie);
+            RNFetchBlob.fetch(
+                "POST",
+                "http://dsf.jlu.edu.cn/Account/GetCheckCodeImg/Flag=" +
+                    new Date().getTime(),
+                {
+                    Accept: " image/webp,image/apng,image/*,*/*;q=0.8",
+                    "Accept-Language": " zh-CN,zh;q=0.9",
+                    Cookie: this.state.cookie + "; Path=/",
+                    Host: " dsf.jlu.edu.cn",
+                    "Proxy-Connection": " keep-alive",
+                    Referer: " http://dsf.jlu.edu.cn/"
+                }
+            )
+                .then(res => {
+                    let base64Str = res.base64();
+                    this.setState({
+                        base64: "data:image/gif;base64," + base64Str
+                    });
+                })
+                .catch((errorMessage, statusCode) => {
+                    console.log(errorMessage);
+                });
         });
     }
 
@@ -75,7 +95,7 @@ export default class LoginPage extends Component {
               });
     }
     getCookie(callback) {
-        var loginURL = "http://dsf.jlu.edu.cn/";
+        var loginURL = "http://dsf.jlu.edu.cn/Account/GetCheckCodeImg/";
         fetch(loginURL, {
             method: "GET"
         })
@@ -123,30 +143,35 @@ export default class LoginPage extends Component {
     }
 
     refreshCode() {
-        this.setState({
-            rand: new Date().getTime()
-        });
+        RNFetchBlob.fetch(
+            "GET",
+            "http://dsf.jlu.edu.cn/Account/GetCheckCodeImg/Flag=" +
+                new Date().getTime(),
+            {
+                Cookie: this.state.cookie
+            }
+        )
+            .then(res => {
+                console.log(res);
+                let base64Str = res.base64();
+                this.setState({
+                    base64: "data:image/gif;base64," + base64Str
+                });
+            })
+            .catch((errorMessage, statusCode) => {
+                console.log(errorMessage);
+            });
     }
 
     render() {
         const { navigate } = this.props.navigation;
         var image = null;
-        var headers = {
-            Cookie: this.state.cookie
-        };
-        if (this.state.cookie != "") {
+        if (this.state.base64 != "") {
             image = (
                 <Image
                     style={styles.image}
                     source={{
-                        uri:
-                            "http://dsf.jlu.edu.cn/Account/GetCheckCodeImg/Flag=" +
-                            this.state.rand,
-                        method: "POST",
-                        headers: {
-                            Cookie: this.state.cookie
-                        },
-                        body: ""
+                        uri: this.state.base64
                     }}
                 />
             );
@@ -228,17 +253,6 @@ export default class LoginPage extends Component {
                         onPress={this.loginTapped}
                     />
                 </View>
-                <Image
-                    source={{
-                        uri: "https://reactjs.org/logo-og.png",
-                        method: "POST",
-                        headers: {
-                            Pragma: "no-cache"
-                        },
-                        body: ""
-                    }}
-                    style={{ width: 400, height: 400 }}
-                />
             </View>
         );
     }

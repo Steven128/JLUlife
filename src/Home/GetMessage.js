@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, Dimensions, StyleSheet } from "react-native";
-import Global from "./Global";
-import AppStorage from "../src/AppStorage";
+import Global from "../Global";
+import AppStorage from "../AppStorage";
 
 var classJson = [];
 
@@ -56,17 +56,18 @@ export default class GetMessage extends Component {
                 for (var i = 0; i < this.state.messageList.length; i++) {
                     var date = this.state.messageList[i].message.dateCreate;
                     var single = (
-                        <View
-                            styles={{
-                                borderBottomWidth: 1,
-                                borderBottomColor: "#ccc"
-                            }}
-                        >
-                            <Text style={styles.text}>
+                        <View styles={{}}>
+                            <Text style={[styles.text, { paddingTop: 10 }]}>
                                 {this.state.messageList[i].message.body}
                             </Text>
                             <View
-                                style={{ paddingTop: 5, flexDirection: "row" }}
+                                style={{
+                                    paddingTop: 5,
+                                    flexDirection: "row",
+                                    borderBottomWidth: 1,
+                                    borderBottomColor: "#ccc",
+                                    paddingBottom: 10
+                                }}
                             >
                                 <Text style={styles.text}>
                                     {date.substring(0, 4)}年

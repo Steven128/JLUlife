@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, Dimensions, FlatList } from "react-native";
 import NotificationItem from "./NotificationItem";
 import RefreshListView, { RefreshState } from "react-native-refresh-list-view";
-import NotificationInterface from "./NotificationInterface";
+import NotificationInterface from "../FetchInterface/NotificationInterface";
 
 const { width, height } = Dimensions.get("window");
 

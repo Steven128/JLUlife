@@ -3,8 +3,8 @@ import { View, Dimensions, ActivityIndicator } from "react-native";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../src/Global";
-import NotificationInterface from "../src/NotificationInterface";
-import NotificationView from "../src/NotificationView";
+import NotificationInterface from "../src/FetchInterface/NotificationInterface";
+import NotificationView from "../src/Notification/NotificationView";
 
 const { width, height } = Dimensions.get("window");
 export default class HomeScreen extends Component {
@@ -35,7 +35,7 @@ export default class HomeScreen extends Component {
     render() {
         const { navigate } = this.props.navigation;
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, backgroundColor: "#efefef" }}>
                 <Header
                     placement="left"
                     leftComponent={

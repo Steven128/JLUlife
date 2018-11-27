@@ -7,7 +7,7 @@ import {
     View,
     Text
 } from "react-native";
-import Global from "./Global";
+import Global from "../Global";
 
 const { width, height } = Dimensions.get("window");
 

@@ -8,9 +8,9 @@ import {
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../src/Global";
-import ScoreView from "../src/ScoreView";
+import ScoreView from "../src/Score/ScoreView";
 import AppStorage from "../src/AppStorage";
-import ScoreInterface from "../src/ScoreInterface";
+import ScoreInterface from "../src/FetchInterface/ScoreInterface";
 
 const { width, height } = Dimensions.get("window");
 

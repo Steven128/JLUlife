@@ -1,12 +1,11 @@
 /**
  * 退出登录
  */
-import Global from "./Global";
-import AppStorage from "./AppStorage";
+import Global from "../Global";
+import AppStorage from "../AppStorage";
 
 function logout(callback) {
     //首先清除全局变量
-    console.log("logging out............");
     Global.isOnline = false;
     Global.cookie = "";
     Global.loginInfo.j_username = "";

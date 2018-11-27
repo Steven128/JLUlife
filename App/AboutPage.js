@@ -73,9 +73,7 @@ export default class HomeScreen extends Component {
                     </Text>
                 </View>
                 <View style={{ padding: 15 }}>
-                    <Text style={[styles.text, { width: width * 0.8 }]} >
-                        
-                    </Text>
+                    <Text style={[styles.text, { width: width * 0.8 }]} />
                 </View>
             </View>
         );
@@ -83,7 +81,8 @@ export default class HomeScreen extends Component {
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: "#efefef"
     },
     main: {
         flex: 1,
