@@ -11,6 +11,15 @@
 		<item name="android:windowBackground">
 			@drawable/launch_screen
 		</item>
+		<item name="android:colorPrimaryDark">
+			#2089dc
+		</item>
+		<item name="android:navigationBarColor">
+			#efefef
+		</item>
+		<item name="android:windowLightStatusBar">
+			true
+		</item>
 	</style>
 	<style name="Base.App.Theme" parent="AppTheme">
 		<item name="android:statusBarColor">
