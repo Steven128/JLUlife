@@ -1,6 +1,6 @@
 # JLU Life (v 2.0)
 
-<div style="border: 1px solid #ccc">
+<div style="border-width: 1px; border-color: #ccc; border-style: solid">
   <img src="https://github.com/Steven128/JLUlife/blob/master/App/assets/ic_logo.png" alt="logo" width="128px">
 </div>
 
