@@ -1,5 +1,5 @@
 # JLU Life (v 2.0)
-![logo](https://github.com/Steven128/JLUlife/blob/master/App/assets/ic_logo.png)
+<img style="border: 1px solid #ccc" src="https://github.com/Steven128/JLUlife/blob/master/App/assets/ic_logo.png" alt="logo" width="128px">
 
 简介
 ============
