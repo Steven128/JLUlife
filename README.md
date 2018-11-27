@@ -1,10 +1,6 @@
 # JLU Life (v 2.0)
 ![logo](https://github.com/Steven128/JLUlife/blob/master/App/assets/ic_logo.png)
 
-<div>
-  <img style="display: lnline-block" src="https://github.com/Steven128/JLUlife/blob/master/android/ScreenShots/1.png" alt="截图1" width="300px">
-</div>
-
 简介
 ============
 
