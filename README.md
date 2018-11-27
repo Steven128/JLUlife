@@ -1,6 +1,10 @@
 # JLU Life (v 2.0)
 ![logo](https://github.com/Steven128/JLUlife/blob/master/App/assets/ic_logo.png)
 
+<div>
+  <img style="display: lnline-block" src="https://github.com/Steven128/JLUlife/blob/master/android/ScreenShots/1.png" alt="截图1" width="300px">
+</div>
+
 简介
 ============
 
@@ -12,26 +16,24 @@ JLU Life 是一款面向吉林大学学生的服务型APP，目前包含查看�
 
 下面是一些截图
 
+
 <div>
-  <img style="display: lnline-block" src="https://github.com/Steven128/JLUlife/blob/master/android/ScreenShots/1.png" alt="截图1" width="250px">
-</div>
-<div>
-  <span style="padding: 15px; display: lnline-block">
+  <span style="padding: 30px; display: lnline-block">
     <img src="https://github.com/Steven128/JLUlife/blob/master/android/ScreenShots/2.png" alt="截图2" width="250px">
   </span>
-  <span style="padding: 15px; display: lnline-block">
+  <span style="padding: 30px; display: lnline-block">
     <img src="https://github.com/Steven128/JLUlife/blob/master/android/ScreenShots/3.png" alt="截图3" width="250px">
   </span>
-  <span style="padding: 15px; display: lnline-block">
+  <span style="padding: 30px; display: lnline-block">
     <img src="https://github.com/Steven128/JLUlife/blob/master/android/ScreenShots/4.png" alt="截图4" width="250px">
   </span>
-  <span style="padding: 15px; display: lnline-block">
+  <span style="padding: 30px; display: lnline-block">
     <img src="https://github.com/Steven128/JLUlife/blob/master/android/ScreenShots/5.png" alt="截图5" width="250px">
   </span>
-  <span style="padding: 15px; display: lnline-block">
+  <span style="padding: 30px; display: lnline-block">
     <img src="https://github.com/Steven128/JLUlife/blob/master/android/ScreenShots/6.png" alt="截图6" width="250px">
   </span>
-  <span style="padding 15px; display: lnline-block">
+  <span style="padding 30px; display: lnline-block">
     <img src="https://github.com/Steven128/JLUlife/blob/master/android/ScreenShots/7.png" alt="截图7" width="250px">
    </span>
 </div>
