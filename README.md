@@ -10,8 +10,21 @@ JLU Life 是一款面向吉林大学学生的服务型APP，目前包含查看�
 
 1.0版本地址 [GitHub@bradywwang/JLUlife](https://github.com/bradywwang/JLUlife)
 
+下面是一些截图
+![截图](https://github.com/Steven128/JLUlife/tree/master/android/ScreenShots/1.png)
+![截图](https://github.com/Steven128/JLUlife/tree/master/android/ScreenShots/2.png)
+![截图](https://github.com/Steven128/JLUlife/tree/master/android/ScreenShots/3.png)
+![截图](https://github.com/Steven128/JLUlife/tree/master/android/ScreenShots/4.png)
+![截图](https://github.com/Steven128/JLUlife/tree/master/android/ScreenShots/5.png)
+![截图](https://github.com/Steven128/JLUlife/tree/master/android/ScreenShots/6.png)
+![截图](https://github.com/Steven128/JLUlife/tree/master/android/ScreenShots/7.png)
+
 开源相关
 ===========
+
+使用的开源库
+-----------
+
 * 弹框  [react-native-popup-dialog](https://github.com/jacklam718/react-native-popup-dialog)
 
 * 上拉加载/下拉刷新  [react-native-refresh-list-view](https://github.com/huanxsd/react-native-refresh-list-view)
