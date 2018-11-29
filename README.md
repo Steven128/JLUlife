@@ -58,3 +58,5 @@ JLU Life 是一款面向吉林大学学生的服务型APP，目前包含查看�
 * 图标库  [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
 
 * 启动页  [rn-splash-screen](https://github.com/mehcode/rn-splash-screen)
+
+* cheerio jQuery核心功能实现，抓取页面信息使用 [cheerio](https://github.com/cheeriojs/cheerio)
