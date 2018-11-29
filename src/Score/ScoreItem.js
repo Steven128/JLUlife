@@ -171,7 +171,10 @@ export default class ScoreItem extends Component {
                                             : "否"}
                                     </Text>
                                 </View>
-                                <View style={{ paddingTop: 10 }}>
+                                <ScrollView
+                                    horizontal
+                                    style={{ paddingTop: 10 }}
+                                >
                                     {this.state.getStat ? (
                                         <ScoreChart
                                             scoreStat={this.state.scoreStat}
@@ -179,7 +182,7 @@ export default class ScoreItem extends Component {
                                     ) : (
                                         <View />
                                     )}
-                                </View>
+                                </ScrollView>
                             </ScrollView>
                         </DialogContent>
                     </Dialog>

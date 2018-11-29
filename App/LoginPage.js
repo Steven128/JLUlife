@@ -22,13 +22,12 @@ export default class LoginPage extends Component {
         this.handlePwdChange = this.handlePwdChange.bind(this);
         this.validate = this.validate.bind(this);
         this.state = {
-            buttonTapped: false,
             showLoading: false,
             cookie: "",
             j_username: Global.loginInfo.j_username,
             j_password: Global.loginInfo.j_password,
-            nameColor: "#888",
-            pwdColor: "#888"
+            showErrMsg: false,
+            errMsgList: []
         };
     }
 
@@ -37,23 +36,19 @@ export default class LoginPage extends Component {
         this.setState({
             j_username: newName
         });
-        if (this.state.buttonTapped) {
-            this.validate();
-        }
     }
     handlePwdChange(pwd) {
         this.setState({
             j_password: pwd
         });
-        if (this.state.buttonTapped) {
-            this.validate();
-        }
     }
     render() {
         const { navigate } = this.props.navigation;
+        var contentPaddingTop = this.state.showErrMsg ? 50 : 80;
         return (
             <View style={{ flex: 1, backgroundColor: "#efefef" }}>
                 <Header
+                    containerStyle={{ borderBottomColor: "#2089dc" }}
                     placement="left"
                     leftComponent={
                         <Icon
@@ -69,13 +64,29 @@ export default class LoginPage extends Component {
                     }}
                 />
                 <ScrollView style={{ height: height - 80 }}>
+                    {this.state.showErrMsg ? (
+                        <View
+                            style={{
+                                height: 30,
+                                backgroundColor: "#d10000",
+                                padding: 5,
+                                justifyContent: "center",
+                                textAlignVertical: "center"
+                            }}
+                        >
+                            <Text
+                                style={{ color: "#fff", textAlign: "center" }}
+                            >
+                                {this.state.errMsgList[0]}
+                            </Text>
+                        </View>
+                    ) : null}
                     <View style={{ alignSelf: "center" }}>
-                        <View style={{ paddingTop: 50 }}>
+                        <View style={{ paddingTop: contentPaddingTop }}>
                             <Input
                                 containerStyle={styles.input}
                                 inputContainerStyle={{
-                                    borderBottomWidth: 1,
-                                    borderBottomColor: this.state.nameColor
+                                    borderBottomWidth: 1
                                 }}
                                 placeholder="教学号"
                                 leftIcon={
@@ -92,8 +103,7 @@ export default class LoginPage extends Component {
                             <Input
                                 containerStyle={styles.input}
                                 inputContainerStyle={{
-                                    borderBottomWidth: 1,
-                                    borderBottomColor: this.state.pwdColor
+                                    borderBottomWidth: 1
                                 }}
                                 placeholder="密码"
                                 secureTextEntry={true}
@@ -126,28 +136,37 @@ export default class LoginPage extends Component {
     }
 
     validate() {
-        var nameValidate = false;
-        var pwdValidate = false;
-        if (this.state.j_username.length < 8)
-            this.setState({ nameColor: "red" });
-        else {
-            nameValidate = true;
-            this.setState({ nameColor: "#888" });
+        var flag = true;
+        var errorText = [];
+        if (this.state.j_username == "") {
+            flag = false;
+            errorText.push("教学号不能为空");
+        } else if (this.state.j_username.length < 8) {
+            flag = false;
+            errorText.push("教学号不合法，请检查");
         }
-        if (this.state.j_password == "") this.setState({ pwdColor: "red" });
-        else {
-            pwdValidate = true;
-            this.setState({ pwdeColor: "#888" });
+        if (this.state.j_password == "") {
+            flag = false;
+            errorText.push("密码不能为空");
         }
-
-        if (nameValidate && pwdValidate) return true;
-        else return false;
+        if (flag) {
+            this.setState({
+                errMsgList: [],
+                showErrMsg: false
+            });
+            return true;
+        } else {
+            this.setState({
+                errMsgList: errorText,
+                showErrMsg: true
+            });
+            return false;
+        }
     }
 
     loginTapped() {
-        this.setState({ buttonTapped: true });
         if (this.state.showLoading || !this.validate()) {
-            return;
+            return false;
         }
         this.setState({
             showLoading: !this.state.showLoading

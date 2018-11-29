@@ -19,7 +19,7 @@ import JobBriefing from "../src/Education/JobBriefing";
 import TeachingExploration from "../src/Education/TeachingExploration";
 
 const { width, height } = Dimensions.get("window");
-export default class HomeScreen extends Component {
+export default class EducationPage extends Component {
     constructor(props) {
         super(props);
         this.openDrawer = this.openDrawer.bind(this);

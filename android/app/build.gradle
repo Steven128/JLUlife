@@ -148,7 +148,6 @@ android {
 
 dependencies {
     compile project(':react-native-svg')
-    compile project(':rn-fetch-blob')
     compile project(':rn-splash-screen')
     compile project(':react-native-webview')
     compile project(':react-native-vector-icons')

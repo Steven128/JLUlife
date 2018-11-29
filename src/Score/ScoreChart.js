@@ -78,7 +78,7 @@ export class ScoreChart extends Component {
         };
 
         return (
-            <View>
+            <View style={{ paddingHorizontal: 10 }}>
                 <Echarts
                     option={option}
                     height={250}

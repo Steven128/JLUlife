@@ -18,7 +18,7 @@ import AppStorage from "../src/AppStorage";
 const { width, height } = Dimensions.get("window");
 
 var classJson = [];
-export default class HomeScreen extends Component {
+export default class TablePage extends Component {
     constructor(props) {
         super(props);
         this.openDrawer = this.openDrawer.bind(this);
@@ -29,8 +29,36 @@ export default class HomeScreen extends Component {
         this.state = {
             getClassTable: false,
             currentWeek: " - ",
-            pickerOpen: false
+            pickerOpen: false,
+            itemHeight: 70,
+            fontSize: 14
         };
+    }
+
+    componentDidMount() {
+        if (Global.startDate != "") {
+            this.setState({
+                currentWeek: global.getCurrentWeek(Global.startDate)
+            });
+        }
+        this.setState({
+            itemHeight: Global.settings.class.itemHeight,
+            fontSize: Global.settings.class.fontSize
+        });
+        AppStorage._load("classJson", res => {
+            if (res.message == "success") {
+                classJson = res.content;
+                this.setState({
+                    getClassTable: true
+                });
+            } else if (res.message == "error" && !Global.isOnline) {
+                this.props.navigation.navigate("Login");
+            }
+        });
+        if (!this.state.getClassTable) {
+            if (Global.isOnline) this.getInfo();
+            else ToastAndroid.show("登录后才能刷新课表哟~", ToastAndroid.LONG);
+        }
     }
 
     openDrawer() {
@@ -49,28 +77,6 @@ export default class HomeScreen extends Component {
             currentWeek: _week
         });
         this.setState({ pickerOpen: !this.state.pickerOpen });
-    }
-
-    componentDidMount() {
-        if (Global.startDate != "") {
-            this.setState({
-                currentWeek: global.getCurrentWeek(Global.startDate)
-            });
-        }
-        AppStorage._load("classJson", res => {
-            if (res.message == "success") {
-                classJson = res.content;
-                this.setState({
-                    getClassTable: true
-                });
-            } else if (res.message == "error" && !Global.isOnline) {
-                this.props.navigation.navigate("Login");
-            }
-        });
-        if (!this.state.getClassTable) {
-            if (Global.isOnline) this.getInfo();
-            else ToastAndroid.show("登录后才能刷新课表哟~", ToastAndroid.LONG);
-        }
     }
 
     goBack() {
@@ -170,6 +176,8 @@ export default class HomeScreen extends Component {
                         <ClassTable
                             classList={classJson}
                             week={this.state.currentWeek}
+                            itemHeight={this.state.itemHeight}
+                            fontSize={this.state.fontSize}
                         />
                     ) : (
                         <View
@@ -179,11 +187,7 @@ export default class HomeScreen extends Component {
                                 backgroundColor: "transparent"
                             }}
                         >
-                            <ActivityIndicator
-                                style={{}}
-                                size="large"
-                                color="#2089dc"
-                            />
+                            <ActivityIndicator size="large" color="#2089dc" />
                         </View>
                     )}
                 </View>

@@ -17,7 +17,7 @@ import Global from "../../src/Global";
 const { width, height } = Dimensions.get("window");
 
 var { height: deviceHeight, width: deviceWidth } = Dimensions.get("window");
-export default class HomeScreen extends Component {
+export default class LibraryPage extends Component {
     constructor(props) {
         super(props);
         this.state = {};

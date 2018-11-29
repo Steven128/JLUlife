@@ -46,6 +46,12 @@ export default class HomePage extends Component {
         setTimeout(() => {
             SplashScreen.hide();
         }, 1000);
+        //加载设置
+        AppStorage._load("settings", res => {
+            if (res.message == "success") {
+                Global.settings = res.content;
+            }
+        });
         //加载各种信息
         if (Global.loginInfo.j_username == "") {
             AppStorage._load("currentStuName", res => {

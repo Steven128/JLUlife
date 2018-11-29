@@ -11,7 +11,7 @@ import EduInterface from "./EduInterface";
 import EducationItem from "./EducationItem";
 
 const { width, height } = Dimensions.get("window");
-export default class NotificationView extends Component {
+export default class JobBriefing extends Component {
     constructor(props) {
         super(props);
         this.onHeaderRefresh = this.onHeaderRefresh.bind(this);

@@ -10,7 +10,7 @@ import Global from "../Global";
 
 const { width, height } = Dimensions.get("window");
 
-export default class NotificationItem extends Component {
+export default class EducationItem extends Component {
     constructor(props) {
         super(props);
 

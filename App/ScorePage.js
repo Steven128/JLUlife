@@ -14,7 +14,7 @@ import ScoreInterface from "../src/FetchInterface/ScoreInterface";
 
 const { width, height } = Dimensions.get("window");
 
-export default class HomeScreen extends Component {
+export default class ScorePage extends Component {
     constructor(props) {
         super(props);
         this.openDrawer = this.openDrawer.bind(this);

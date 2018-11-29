@@ -13,7 +13,7 @@ import Global from "../src/Global";
 import QueryItem from "../src/Query/QueryItem";
 const { width, height } = Dimensions.get("window");
 
-export default class SettingsPage extends Component {
+export default class QueryPage extends Component {
     constructor(props) {
         super(props);
         this.openDrawer = this.openDrawer.bind(this);

@@ -26,7 +26,7 @@ import campus from "../../src/Query/data/campus.json";
 import building from "../../src/Query/data/building.json";
 const { width, height } = Dimensions.get("window");
 
-export default class HomeScreen extends Component {
+export default class EmptyRoomPage extends Component {
     constructor(props) {
         super(props);
         this.state = {

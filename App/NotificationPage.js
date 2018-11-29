@@ -7,7 +7,7 @@ import NotificationInterface from "../src/FetchInterface/NotificationInterface";
 import NotificationView from "../src/Notification/NotificationView";
 
 const { width, height } = Dimensions.get("window");
-export default class HomeScreen extends Component {
+export default class NotificationPage extends Component {
     constructor(props) {
         super(props);
         this.openDrawer = this.openDrawer.bind(this);
