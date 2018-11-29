@@ -30,7 +30,7 @@ export default class ClassItem extends Component {
     };
 
     getHeight() {
-        return this.props.length * 70;
+        return this.props.length * this.props.itemHeight;
     }
 
     render() {
@@ -50,7 +50,12 @@ export default class ClassItem extends Component {
                                 { backgroundColor: this.props.color }
                             ]}
                         >
-                            <Text style={styles.innerItemText}>
+                            <Text
+                                style={[
+                                    styles.innerItemText,
+                                    { fontSize: this.props.fontSize }
+                                ]}
+                            >
                                 {this.props.innerText}
                             </Text>
                         </View>
@@ -70,14 +75,21 @@ export default class ClassItem extends Component {
                         containerStyle={styles.dialog}
                     >
                         <DialogContent>
-                            <Text style={styles.dialogTitle}>
-                                {this.props.lessonName}
-                            </Text>
                             <ScrollView
                                 style={{
-                                    height: height * 0.5
+                                    height: height * 0.4,
+                                    paddingHorizontal: 10
                                 }}
                             >
+                                <Text
+                                    style={[
+                                        styles.dialogTitle,
+                                        { fontSize: this.props.fontSize + 8 }
+                                    ]}
+                                >
+                                    {this.props.lessonName}
+                                </Text>
+
                                 <View style={styles.dialogInnerWrap}>
                                     <View
                                         style={[
@@ -88,11 +100,15 @@ export default class ClassItem extends Component {
                                         <EIcon
                                             style={{ flex: 1 }}
                                             name="calendar"
-                                            size={26}
+                                            size={(this.props.fontSize - 1) * 2}
                                             color="lightgreen"
                                         />
                                         <Text
-                                            style={{ flex: 5, paddingTop: 3 }}
+                                            style={{
+                                                flex: 5,
+                                                paddingTop: 3,
+                                                fontSize: this.props.fontSize
+                                            }}
                                         >
                                             第{this.props.beginWeek} -{" "}
                                             {this.props.endWeek}周
@@ -107,11 +123,15 @@ export default class ClassItem extends Component {
                                         <MIcon
                                             style={{ flex: 1 }}
                                             name="clock"
-                                            size={26}
+                                            size={(this.props.fontSize - 1) * 2}
                                             color="orange"
                                         />
                                         <Text
-                                            style={{ flex: 5, paddingTop: 3 }}
+                                            style={{
+                                                flex: 5,
+                                                paddingTop: 3,
+                                                fontSize: this.props.fontSize
+                                            }}
                                         >
                                             周
                                             {this.numToChinese(
@@ -135,11 +155,15 @@ export default class ClassItem extends Component {
                                         <EIcon
                                             style={{ flex: 1 }}
                                             name="user"
-                                            size={26}
+                                            size={(this.props.fontSize - 1) * 2}
                                             color="lightblue"
                                         />
                                         <Text
-                                            style={{ flex: 5, paddingTop: 3 }}
+                                            style={{
+                                                flex: 5,
+                                                paddingTop: 3,
+                                                fontSize: this.props.fontSize
+                                            }}
                                         >
                                             {this.printTeachers(
                                                 this.props.teachers
@@ -155,11 +179,15 @@ export default class ClassItem extends Component {
                                         <EIcon
                                             style={{ flex: 1 }}
                                             name="location-pin"
-                                            size={26}
+                                            size={(this.props.fontSize - 1) * 2}
                                             color="red"
                                         />
                                         <Text
-                                            style={{ flex: 5, paddingTop: 3 }}
+                                            style={{
+                                                flex: 5,
+                                                paddingTop: 3,
+                                                fontSize: this.props.fontSize
+                                            }}
                                         >
                                             {this.props.classroom}
                                         </Text>
@@ -197,7 +225,8 @@ const styles = StyleSheet.create({
     innerItem: {
         flex: 1,
         borderRadius: 5,
-        padding: 3
+        padding: 3,
+        overflow: "hidden"
     },
     innerItemText: {
         color: "#fff"
@@ -205,7 +234,7 @@ const styles = StyleSheet.create({
     dialog: {
         borderRadius: 0,
         paddingVertical: 15,
-        paddingHorizontal: 10
+        overflow: "scroll"
     },
     dialogTitle: {
         fontSize: 22,

@@ -13,7 +13,6 @@ export default class ClassTable extends Component {
 
     getWeekDayList(targetDate, week) {
         week = week - 1;
-        var currentFirstDate;
         function formatDate(date) {
             var json = {};
             date = date.toJSON();
@@ -62,6 +61,8 @@ export default class ClassTable extends Component {
                         <ClassItem
                             color={dayList[j].color}
                             length={length}
+                            itemHeight={this.props.itemHeight}
+                            fontSize={this.props.fontSize}
                             innerText={
                                 dayList[j].lessonName +
                                 "@" +
@@ -77,7 +78,14 @@ export default class ClassTable extends Component {
                         />
                     );
                 } else {
-                    dayItem.push(<ClassItem blank length={length} />);
+                    dayItem.push(
+                        <ClassItem
+                            blank
+                            length={length}
+                            itemHeight={this.props.itemHeight}
+                            fontSize={this.props.fontSize}
+                        />
+                    );
                 }
             }
             items.push(<View style={styles.column}>{dayItem}</View>);
@@ -132,45 +140,95 @@ export default class ClassTable extends Component {
                         style={{
                             flex: 1,
                             flexDirection: "row",
-                            height: 770,
+                            height: 11 * this.props.itemHeight,
                             backgroundColor: "#fff"
                         }}
                     >
                         <View style={[styles.column, { flex: 0.5 }]}>
-                            <View style={styles.leftNav}>
+                            <View
+                                style={[
+                                    styles.leftNav,
+                                    { height: this.props.itemHeight }
+                                ]}
+                            >
                                 <Text>1</Text>
                             </View>
-                            <View style={styles.leftNav}>
+                            <View
+                                style={[
+                                    styles.leftNav,
+                                    { height: this.props.itemHeight }
+                                ]}
+                            >
                                 <Text>2</Text>
                             </View>
-                            <View style={styles.leftNav}>
+                            <View
+                                style={[
+                                    styles.leftNav,
+                                    { height: this.props.itemHeight }
+                                ]}
+                            >
                                 <Text>3</Text>
                             </View>
-                            <View style={styles.leftNav}>
+                            <View
+                                style={[
+                                    styles.leftNav,
+                                    { height: this.props.itemHeight }
+                                ]}
+                            >
                                 <Text>4</Text>
                             </View>
-                            <View style={styles.leftNav}>
+                            <View
+                                style={[
+                                    styles.leftNav,
+                                    { height: this.props.itemHeight }
+                                ]}
+                            >
                                 <Text>5</Text>
                             </View>
-                            <View style={styles.leftNav}>
+                            <View
+                                style={[
+                                    styles.leftNav,
+                                    { height: this.props.itemHeight }
+                                ]}
+                            >
                                 <Text>6</Text>
                             </View>
-                            <View style={styles.leftNav}>
+                            <View
+                                style={[
+                                    styles.leftNav,
+                                    { height: this.props.itemHeight }
+                                ]}
+                            >
                                 <Text>7</Text>
                             </View>
-                            <View style={styles.leftNav}>
+                            <View
+                                style={[
+                                    styles.leftNav,
+                                    { height: this.props.itemHeight }
+                                ]}
+                            >
                                 <Text>8</Text>
                             </View>
-                            <View style={styles.leftNav}>
+                            <View
+                                style={[
+                                    styles.leftNav,
+                                    { height: this.props.itemHeight }
+                                ]}
+                            >
                                 <Text>9</Text>
                             </View>
-                            <View style={styles.leftNav}>
+                            <View
+                                style={[
+                                    styles.leftNav,
+                                    { height: this.props.itemHeight }
+                                ]}
+                            >
                                 <Text>10</Text>
                             </View>
                             <View
                                 style={[
                                     styles.leftNav,
-                                    { borderBottomWidth: 0 }
+                                    { height: this.props.itemHeight }
                                 ]}
                             >
                                 <Text>11</Text>
@@ -208,7 +266,7 @@ const styles = StyleSheet.create({
     },
     leftNav: {
         backgroundColor: "#fff",
-        height: 70,
+        height: 80,
         borderRightColor: "#ccc",
         borderRightWidth: 1,
         borderBottomColor: "#ccc",

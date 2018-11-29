@@ -40,8 +40,15 @@ var Global = {
     tips: {},
     card: {
         isOnline: false,
+        cookie: "",
         username: "",
         password: ""
+    },
+    settings: {
+        class: {
+            itemHeight: 70,
+            fontSize: 14
+        }
     }
 };
 
