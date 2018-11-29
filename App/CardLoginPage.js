@@ -7,16 +7,18 @@ import {
     Alert,
     ToastAndroid,
     Image,
-    TouchableOpacity
+    TouchableWithoutFeedback,
+    ScrollView
 } from "react-native";
 import { Header, Input, Button, CheckBox } from "react-native-elements";
 import Icon from "react-native-vector-icons/AntDesign";
 import Global from "../src/Global";
-import RNFetchBlob from "rn-fetch-blob";
+import AppStorage from "../src/AppStorage";
+import Base64 from "base-64";
 
 const { width, height } = Dimensions.get("window");
 
-export default class LoginPage extends Component {
+export default class CardLoginPage extends Component {
     constructor(props) {
         super(props);
         this.loginTapped = this.loginTapped.bind(this);
@@ -24,24 +26,29 @@ export default class LoginPage extends Component {
         this.handlePwdChange = this.handlePwdChange.bind(this);
         this.handleCodeChange = this.handleCodeChange.bind(this);
         this.refreshCode = this.refreshCode.bind(this);
+        this.validate = this.validate.bind(this);
         this.state = {
             showLoading: false,
             cookie: "",
             username: "",
             password: "",
             code: "",
-            base64: ""
+            uri: "",
+            showErrMsg: false,
+            errMsgList: []
         };
     }
 
     handleNameChange(name) {
+        var newName = name.replace(/[^\d]+/, "");
         this.setState({
-            username: name
+            username: newName
         });
     }
     handlePwdChange(pwd) {
+        var newPwd = pwd.replace(/[^\d]+/, "");
         this.setState({
-            password: pwd
+            password: newPwd
         });
     }
 
@@ -51,39 +58,31 @@ export default class LoginPage extends Component {
         });
     }
     componentDidMount() {
+        AppStorage._load("cardLoginInfo", res => {
+            console.log(res);
+            if (res.message == "success") {
+                Global.card.username = res.content.username;
+                Global.card.password = res.content.password;
+                this.setState({
+                    username: res.content.username,
+                    password: res.content.password
+                });
+            }
+        });
         this.getCookie(cookie => {
             this.setState({
-                cookie: cookie
+                cookie: cookie,
+                uri:
+                    "http://ykt.jlu.edu.cn:8070/Account/GetCheckCodeImg/Flag=" +
+                    new Date().getTime()
             });
             console.log(cookie);
-            RNFetchBlob.fetch(
-                "POST",
-                "http://dsf.jlu.edu.cn/Account/GetCheckCodeImg/Flag=" +
-                    new Date().getTime(),
-                {
-                    Accept: " image/webp,image/apng,image/*,*/*;q=0.8",
-                    "Accept-Language": " zh-CN,zh;q=0.9",
-                    Cookie: this.state.cookie + "; Path=/",
-                    Host: " dsf.jlu.edu.cn",
-                    "Proxy-Connection": " keep-alive",
-                    Referer: " http://dsf.jlu.edu.cn/"
-                }
-            )
-                .then(res => {
-                    let base64Str = res.base64();
-                    this.setState({
-                        base64: "data:image/gif;base64," + base64Str
-                    });
-                })
-                .catch((errorMessage, statusCode) => {
-                    console.log(errorMessage);
-                });
         });
     }
 
     loginTapped() {
-        if (this.state.showLoading) {
-            return null;
+        if (this.state.showLoading || !this.validate()) {
+            return false;
         }
         this.setState({
             showLoading: !this.state.showLoading
@@ -92,10 +91,33 @@ export default class LoginPage extends Component {
             ? null
             : this.loginMain(this.state.cookie, res => {
                   console.log(res);
+                  if (res.response.success == true) {
+                      Global.card.isOnline = true;
+                      Global.card.cookie =
+                          res.cookie + "; " + this.state.cookie;
+                      Global.card.username = this.state.username;
+                      Global.card.password = this.state.password;
+                      AppStorage._save("cardLoginInfo", {
+                          username: this.state.username,
+                          password: this.state.password
+                      });
+                      ToastAndroid.show("登录成功", ToastAndroid.LONG);
+                      this.props.navigation.navigate("Main", {
+                          message: "success"
+                      });
+                  } else {
+                      this.refreshCode();
+                      this.setState({
+                          showLoading: !this.state.showLoading
+                      });
+                      Alert.alert("出错啦", res.response.msg, [
+                          { text: "确定" }
+                      ]);
+                  }
               });
     }
     getCookie(callback) {
-        var loginURL = "http://dsf.jlu.edu.cn/Account/GetCheckCodeImg/";
+        var loginURL = "http://ykt.jlu.edu.cn:8070/";
         fetch(loginURL, {
             method: "GET"
         })
@@ -112,8 +134,9 @@ export default class LoginPage extends Component {
             });
     }
     loginMain(cookie, callback) {
-        console.log(this.state.code);
-        var loginURL = "http://dsf.jlu.edu.cn/Account/MiniCheckIn";
+        var name = this.state.username;
+        var password = Base64.encode(this.state.password);
+        var loginURL = "http://ykt.jlu.edu.cn:8070/Account/Login";
         fetch(loginURL, {
             method: "POST",
             headers: {
@@ -121,20 +144,31 @@ export default class LoginPage extends Component {
                 "Accept-Language": " zh-CN,zh;q=0.9",
                 Cookie: cookie,
                 Connection: " keep-alive",
-                Host: " dsf.jlu.edu.cn",
-                Origin: " http://dsf.jlu.edu.cn",
-                Referer: " http://dsf.jlu.edu.cn/",
-                "Content-Type": " application/x-www-form-urlencoded",
-                "X-Requested-With": " XMLHttpRequest"
+                Host: "ykt.jlu.edu.cn:8070",
+                Origin: "http://ykt.jlu.edu.cn:8070",
+                Referer: "http://ykt.jlu.edu.cn:8070/Account/Login",
+                "Content-Type": " application/x-www-form-urlencoded"
             },
             body:
-                "signtype=SynSno&username=20160100645&password=061071&checkcode=" +
+                "SignType=SynSno&UserAccount=" +
+                name +
+                "&Password=" +
+                password +
+                "&NextUrl=&CheckCode=" +
                 this.state.code +
-                "&isUsedKeyPad=false"
+                "&openid=&Schoolcode=JLU"
         })
             .then(response => response)
             .then(response => {
                 console.log(response);
+                var cookie = "";
+                var responseJson = JSON.parse(response._bodyInit);
+                if (responseJson.success == true) {
+                    cookie = response.headers.get("set-cookie");
+                    cookie = cookie.match(/iPlanetDirectoryPro(.*?);/)[0];
+                    cookie = cookie.replace(";", "");
+                }
+                callback({ cookie: cookie, response: responseJson });
             })
             .catch(error => {
                 console.error(error);
@@ -143,42 +177,56 @@ export default class LoginPage extends Component {
     }
 
     refreshCode() {
-        RNFetchBlob.fetch(
-            "GET",
-            "http://dsf.jlu.edu.cn/Account/GetCheckCodeImg/Flag=" +
-                new Date().getTime(),
-            {
-                Cookie: this.state.cookie
-            }
-        )
-            .then(res => {
-                console.log(res);
-                let base64Str = res.base64();
-                this.setState({
-                    base64: "data:image/gif;base64," + base64Str
-                });
-            })
-            .catch((errorMessage, statusCode) => {
-                console.log(errorMessage);
+        this.setState({
+            uri:
+                "http://ykt.jlu.edu.cn:8070/Account/GetCheckCodeImg/Flag=" +
+                new Date().getTime()
+        });
+    }
+
+    validate() {
+        var flag = true;
+        var errorText = [];
+        if (this.state.username == "") {
+            flag = false;
+            errorText.push("校园卡账号不能为空");
+        } else if (this.state.username.length < 11) {
+            flag = false;
+            errorText.push("校园卡账号不合法，请检查");
+        }
+        if (this.state.password == "") {
+            flag = false;
+            errorText.push("查询密码不能为空");
+        } else if (this.state.password.length < 6) {
+            flag = false;
+            errorText.push("查询密码不合法，请检查");
+        }
+        if (this.state.code == "") {
+            flag = false;
+            errorText.push("验证码不能为空");
+        }
+        if (flag) {
+            this.setState({
+                errMsgList: [],
+                showErrMsg: false
             });
+            return true;
+        } else {
+            this.setState({
+                errMsgList: errorText,
+                showErrMsg: true
+            });
+            return false;
+        }
     }
 
     render() {
         const { navigate } = this.props.navigation;
-        var image = null;
-        if (this.state.base64 != "") {
-            image = (
-                <Image
-                    style={styles.image}
-                    source={{
-                        uri: this.state.base64
-                    }}
-                />
-            );
-        }
+        var contentPaddingTop = this.state.showErrMsg ? 50 : 80;
         return (
-            <View>
+            <View style={{ flex: 1, backgroundColor: "#efefef" }}>
                 <Header
+                    containerStyle={{ borderBottomColor: "#2089dc" }}
                     placement="left"
                     leftComponent={
                         <Icon
@@ -193,66 +241,107 @@ export default class LoginPage extends Component {
                         style: { color: "#fff", fontSize: 16 }
                     }}
                 />
-                <View style={{ alignSelf: "center" }}>
-                    <View style={{ paddingTop: 50 }}>
-                        <Input
-                            containerStyle={styles.input}
-                            placeholder="一卡通帐号"
-                            leftIcon={
-                                <Icon name="user" size={22} color="#888" />
-                            }
-                            value={this.state.username}
-                            onChangeText={this.handleNameChange}
-                            returnKeyType="next"
-                        />
-                        <Input
-                            containerStyle={styles.input}
-                            placeholder="查询密码"
-                            secureTextEntry={true}
-                            leftIcon={
-                                <Icon name="lock1" size={22} color="#888" />
-                            }
-                            value={this.state.password}
-                            onChangeText={this.handlePwdChange}
-                            returnKeyType="next"
-                        />
-                        <View style={{ flexDirection: "row" }}>
+                <ScrollView style={{ flex: 1 }}>
+                    {this.state.showErrMsg ? (
+                        <View
+                            style={{
+                                height: 30,
+                                backgroundColor: "#d10000",
+                                padding: 5,
+                                justifyContent: "center",
+                                textAlignVertical: "center"
+                            }}
+                        >
+                            <Text
+                                style={{ color: "#fff", textAlign: "center" }}
+                            >
+                                {this.state.errMsgList[0]}
+                            </Text>
+                        </View>
+                    ) : null}
+                    <View style={{ alignSelf: "center" }}>
+                        <View style={{ paddingTop: contentPaddingTop }}>
                             <Input
-                                containerStyle={[styles.input, { flex: 3 }]}
-                                placeholder="验证码"
+                                containerStyle={styles.input}
+                                inputContainerStyle={{
+                                    borderBottomWidth: 1
+                                }}
+                                placeholder="校园卡账号（11位学工号）"
                                 leftIcon={
-                                    <Icon name="key" size={22} color="#888" />
+                                    <Icon name="user" size={22} color="#888" />
                                 }
-                                value={this.state.code}
-                                onChangeText={this.handleCodeChange}
-                                returnKeyType="done"
+                                value={this.state.username}
+                                onChangeText={this.handleNameChange}
+                                returnKeyType="next"
+                                maxLength={11}
+                                keyboardType="numeric"
+                                selectTextOnFocus={true}
                             />
-                            <TouchableOpacity onPress={this.refreshCode}>
-                                <View style={styles.imgWrap}>{image}</View>
-                            </TouchableOpacity>
+                            <Input
+                                containerStyle={styles.input}
+                                inputContainerStyle={{
+                                    borderBottomWidth: 1
+                                }}
+                                placeholder="查询密码"
+                                secureTextEntry={true}
+                                leftIcon={
+                                    <Icon name="lock1" size={22} color="#888" />
+                                }
+                                value={this.state.password}
+                                onChangeText={this.handlePwdChange}
+                                maxLength={6}
+                                returnKeyType="next"
+                                keyboardType="numeric"
+                                selectTextOnFocus={true}
+                            />
+                            <View style={{ flexDirection: "row" }}>
+                                <Input
+                                    containerStyle={[styles.input, { flex: 3 }]}
+                                    placeholder="验证码"
+                                    leftIcon={
+                                        <Icon
+                                            name="key"
+                                            size={22}
+                                            color="#888"
+                                        />
+                                    }
+                                    value={this.state.code}
+                                    onChangeText={this.handleCodeChange}
+                                    maxLength={4}
+                                    keyboardType="numeric"
+                                    returnKeyType="done"
+                                    selectTextOnFocus={true}
+                                />
+                                <TouchableWithoutFeedback
+                                    onPress={this.refreshCode}
+                                >
+                                    <Image
+                                        style={styles.image}
+                                        source={{
+                                            uri: this.state.uri,
+                                            headers: {
+                                                Cookie: this.state.cookie
+                                            }
+                                        }}
+                                    />
+                                </TouchableWithoutFeedback>
+                            </View>
+                        </View>
+                        <View style={{ padding: 40, paddingTop: 20 }}>
+                            <Button
+                                title="登录"
+                                loading={this.state.showLoading}
+                                loadingProps={{
+                                    size: "large",
+                                    color: "#fff"
+                                }}
+                                titleStyle={{ fontWeight: "700" }}
+                                buttonStyle={{ height: 45 }}
+                                onPress={this.loginTapped}
+                            />
                         </View>
                     </View>
-                    <Button
-                        title="登录"
-                        loading={this.state.showLoading}
-                        loadingProps={{
-                            size: "large",
-                            color: "rgba(111, 202, 186, 1)"
-                        }}
-                        titleStyle={{ fontWeight: "700" }}
-                        buttonStyle={{
-                            backgroundColor: "#2089dc",
-                            marginLeft: width * 0.07,
-                            marginRight: width * 0.07,
-                            height: 45,
-                            borderColor: "transparent",
-                            borderWidth: 0,
-                            borderRadius: 5
-                        }}
-                        containerStyle={{ marginTop: 20 }}
-                        onPress={this.loginTapped}
-                    />
-                </View>
+                </ScrollView>
             </View>
         );
     }
@@ -270,8 +359,6 @@ const styles = StyleSheet.create({
     },
     image: {
         width: 90,
-        height: 30,
-        borderColor: "#000",
-        borderWidth: 2
+        height: 30
     }
 });

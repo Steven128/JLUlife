@@ -227,19 +227,19 @@ const Drawer = createDrawerNavigator(
                 )
             }
         },
-        // Card: {
-        //     screen: CardStack,
-        //     navigationOptions: {
-        //         drawerLabel: "一卡通",
-        //         drawerIcon: () => (
-        //             <AIcon
-        //                 name={"creditcard"}
-        //                 size={18}
-        //                 style={{ color: "#000" }}
-        //             />
-        //         )
-        //     }
-        // },
+        Card: {
+            screen: CardStack,
+            navigationOptions: {
+                drawerLabel: "一卡通",
+                drawerIcon: () => (
+                    <AIcon
+                        name={"creditcard"}
+                        size={18}
+                        style={{ color: "#000" }}
+                    />
+                )
+            }
+        },
         Setting: {
             screen: SettingsStack,
             navigationOptions: {
