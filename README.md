@@ -15,6 +15,9 @@ JLU Life 是一款面向吉林大学学生的服务型APP，目前包含查看�
 
 
 <div>
+  <span style="padding 30px; display: lnline-block">
+    <img src="https://github.com/Steven128/JLUlife/blob/master/android/ScreenShots/1.png" alt="截图1" width="250px">
+   </span>
   <span style="padding: 30px; display: lnline-block">
     <img src="https://github.com/Steven128/JLUlife/blob/master/android/ScreenShots/2.png" alt="截图2" width="250px">
   </span>
