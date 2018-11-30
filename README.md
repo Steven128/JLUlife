@@ -2,6 +2,13 @@
 
 <img src="https://github.com/Steven128/JLUlife/blob/master/App/assets/ic_logo.png" alt="logo" width="128px">
 
+下载地址
+============
+
+[酷安](https://www.coolapk.com/apk/210060)
+
+未来会上架更多商店
+
 简介
 ============
 
