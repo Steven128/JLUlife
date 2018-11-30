@@ -112,6 +112,11 @@ export default class ClassItem extends Component {
                                         >
                                             第{this.props.beginWeek} -{" "}
                                             {this.props.endWeek}周
+                                            {this.props.weekOddEven == "O"
+                                                ? "（单周）"
+                                                : this.props.weekOddEven == "E"
+                                                ? "（双周）"
+                                                : ""}
                                         </Text>
                                     </View>
                                     <View

@@ -57,6 +57,11 @@ export default class ClassTable extends Component {
             for (var j in dayList) {
                 var length = dayList[j].schedule.time.length;
                 if (dayList[j].hasLesson) {
+                    var weekOddEven = "";
+                    if (dayList[j].schedule.weekOddEven == "O")
+                        weekOddEven = "(单周)";
+                    else if (dayList[j].schedule.weekOddEven == "E")
+                        weekOddEven = "(双周)";
                     dayItem.push(
                         <ClassItem
                             color={dayList[j].color}
@@ -66,7 +71,8 @@ export default class ClassTable extends Component {
                             innerText={
                                 dayList[j].lessonName +
                                 "@" +
-                                dayList[j].schedule.classroom
+                                dayList[j].schedule.classroom +
+                                weekOddEven
                             }
                             lessonName={dayList[j].lessonName}
                             classroom={dayList[j].schedule.classroom}
@@ -75,6 +81,7 @@ export default class ClassTable extends Component {
                             dayOfWeek={dayList[j].schedule.dayOfWeek}
                             time={dayList[j].schedule.time}
                             teachers={dayList[j].teachers}
+                            weekOddEven={dayList[j].schedule.weekOddEven}
                         />
                     );
                 } else {

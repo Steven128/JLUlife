@@ -225,7 +225,6 @@ export default class TablePage extends Component {
         })
             .then(response => response.json())
             .then(responseJson => {
-                console.log(responseJson);
                 classJson = this.parseclassJson(responseJson.value);
                 AppStorage._save("classJson", classJson);
                 this.setState({
@@ -248,22 +247,19 @@ export default class TablePage extends Component {
                 var classroom = lessonSchedules[j].classroom.fullName;
                 var timeBlock = lessonSchedules[j].timeBlock;
                 var time = "[" + timeBlock.name.match(/第(.*?)节/)[1] + "]";
+                time = JSON.parse(time);
                 var endWeek = timeBlock.endWeek;
                 var beginWeek = timeBlock.beginWeek;
                 var dayOfWeek = timeBlock.dayOfWeek;
-                var singleLesson =
-                    '{"classroom": "' +
-                    classroom +
-                    '", "beginWeek": ' +
-                    beginWeek +
-                    ', "endWeek": ' +
-                    endWeek +
-                    ', "dayOfWeek": ' +
-                    dayOfWeek +
-                    ', "time": ' +
-                    time +
-                    "}";
-                singleLesson = JSON.parse(singleLesson);
+                var weekOddEven = timeBlock.weekOddEven;
+                if (weekOddEven == undefined) weekOddEven = "";
+                var singleLesson = {};
+                singleLesson.classroom = classroom;
+                singleLesson.beginWeek = beginWeek;
+                singleLesson.endWeek = endWeek;
+                singleLesson.dayOfWeek = dayOfWeek;
+                singleLesson.time = time;
+                singleLesson.weekOddEven = weekOddEven;
                 var teachers = [];
                 var lessonTeachers =
                     classJson[i].teachClassMaster.lessonTeachers;
@@ -274,15 +270,10 @@ export default class TablePage extends Component {
                 //课程名称
                 var lessonName =
                     classJson[i].teachClassMaster.lessonSegment.fullName;
-                var singleData =
-                    '{"schedule": ' +
-                    JSON.stringify(singleLesson) +
-                    ', "teachers": ' +
-                    JSON.stringify(teachers) +
-                    ', "lessonName": ' +
-                    JSON.stringify(lessonName) +
-                    "}";
-                singleData = JSON.parse(singleData);
+                var singleData = {};
+                singleData.schedule = singleLesson;
+                singleData.teachers = teachers;
+                singleData.lessonName = lessonName;
                 parsedData.push(singleData);
             }
             //教师
@@ -296,13 +287,16 @@ export default class TablePage extends Component {
     }
 
     getClassTable(classJson, week) {
-        //拿到提取出的课表JSON
-        // var classJson = this.parseclassJson(classJson);
         var classList = [];
         for (var i in classJson) {
             var schedule = classJson[i].schedule;
             if (schedule.beginWeek <= week && schedule.endWeek >= week) {
-                classList.push(classJson[i]);
+                if (
+                    (schedule.weekOddEven == "O" && week % 2 == 1) ||
+                    (schedule.weekOddEven == "E" && week % 2 == 0) ||
+                    schedule.weekOddEven == ""
+                )
+                    classList.push(classJson[i]);
             }
         }
         var classTable = [];

@@ -81,7 +81,7 @@ export default class NextClass extends Component {
         }
     }
     render() {
-        if (!Global.isOnline && !Global.checkingOnline)
+        if (JSON.stringify(classJson) == "[]")
             return (
                 <View>
                     <Text
