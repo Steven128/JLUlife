@@ -5,7 +5,7 @@
 简介
 ============
 
-JLU Life 是一款面向吉林大学学生的服务型APP，目前包含查看课表、成绩、校内通知、教务通知等功能，希望能够帮助到同学们，为同学们的学习、生活提供便利。
+JLU Life 是一款面向吉林大学学生的服务型APP，目前包含查看课表、成绩、校内通知、教务通知、查询空教室及图书馆馆藏、校园一卡通查询充值转账等功能，希望能够帮助到同学们，为同学们的学习、生活提供便利。
 
 此版本为2.0版本，使用React Native全新开发，由于个人精力所限，目前只有Android版本，欢迎有对RN感兴趣的小伙伴可以加入进来
 
@@ -15,6 +15,9 @@ JLU Life 是一款面向吉林大学学生的服务型APP，目前包含查看�
 
 
 <div>
+  <span style="padding 30px; display: lnline-block">
+    <img src="https://github.com/Steven128/JLUlife/blob/master/android/ScreenShots/1.png" alt="截图1" width="250px">
+   </span>
   <span style="padding: 30px; display: lnline-block">
     <img src="https://github.com/Steven128/JLUlife/blob/master/android/ScreenShots/2.png" alt="截图2" width="250px">
   </span>
@@ -32,6 +35,9 @@ JLU Life 是一款面向吉林大学学生的服务型APP，目前包含查看�
   </span>
   <span style="padding 30px; display: lnline-block">
     <img src="https://github.com/Steven128/JLUlife/blob/master/android/ScreenShots/7.png" alt="截图7" width="250px">
+   </span>
+  <span style="padding 30px; display: lnline-block">
+    <img src="https://github.com/Steven128/JLUlife/blob/master/android/ScreenShots/8.png" alt="截图8" width="250px">
    </span>
 </div>
 
@@ -52,3 +58,5 @@ JLU Life 是一款面向吉林大学学生的服务型APP，目前包含查看�
 * 图标库  [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
 
 * 启动页  [rn-splash-screen](https://github.com/mehcode/rn-splash-screen)
+
+* cheerio jQuery核心功能实现，抓取页面信息使用 [cheerio](https://github.com/cheeriojs/cheerio)
