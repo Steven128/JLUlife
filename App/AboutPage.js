@@ -20,11 +20,7 @@ export default class AboutPage extends Component {
     constructor(props) {
         super(props);
         this.openDrawer = this.openDrawer.bind(this);
-        this.state = {
-            getOa: false,
-            oaDetail: {},
-            showTag: false
-        };
+        this.state = {};
     }
 
     openDrawer() {
@@ -61,7 +57,7 @@ export default class AboutPage extends Component {
                         style={{ width: 100, height: 100 }}
                         source={require("../App/assets/ic_logo.png")}
                     />
-                    <View style={{ padding: 15 }}>
+                    <View style={{ paddingTop: 40, paddingBottom: 30 }}>
                         <Text style={[styles.text, styles.title]}>
                             JLU Life
                         </Text>
@@ -69,7 +65,7 @@ export default class AboutPage extends Component {
                     </View>
                     <Text style={[styles.text, { width: width * 0.8 }]}>
                         &nbsp;&nbsp;&nbsp;&nbsp;JLU
-                        Life是一款面向吉林大学学生的服务型APP，目前包含查看课表、成绩、校内通知、教务通知等功能，希望能够帮助到同学们，为同学们的学习、生活提供便利。
+                        Life是一款面向吉林大学学生的服务型APP，目前包含查看课表、成绩、校内通知、教务通知、查询空教室及图书馆馆藏、一卡通查询转账挂失等功能，希望能够帮助到同学们，为同学们的学习、生活提供便利。
                     </Text>
                 </View>
                 <View style={{ padding: 15 }}>

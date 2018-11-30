@@ -148,9 +148,14 @@ export default class CardTransfer extends Component {
                         selectTextOnFocus={true}
                     />
                 </View>
-                <View>
-                    <Text>• 向校园卡转账成功后所转金额将显示在过渡余额中，在餐厅等处的卡机上进行刷卡操作后，过渡余额即会转入校园卡</Text>
-                    <Text>• 单笔转账最大限额 200 元</Text>
+                <View style={{ paddingHorizontal: 30 }}>
+                    <Text style={{ color: "#888", paddingBottom: 10 }}>
+                        •
+                        向校园卡转账成功后所转金额将显示在过渡余额中，在餐厅等处的卡机上进行刷卡操作后，过渡余额即会转入校园卡
+                    </Text>
+                    <Text style={{ color: "#888" }}>
+                        • 单笔转账最大限额 200 元
+                    </Text>
                 </View>
                 <View style={{ padding: 40, paddingTop: 20 }}>
                     <Button

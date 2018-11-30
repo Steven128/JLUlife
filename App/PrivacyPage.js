@@ -19,11 +19,7 @@ export default class PrivacyPage extends Component {
     constructor(props) {
         super(props);
         this.openDrawer = this.openDrawer.bind(this);
-        this.state = {
-            getOa: false,
-            oaDetail: {},
-            showTag: false
-        };
+        this.state = {};
     }
 
     openDrawer() {
@@ -62,6 +58,10 @@ export default class PrivacyPage extends Component {
                     <View style={{ padding: 15 }}>
                         <Text style={[styles.text]}>
                             <EIcon name="dot-single" color="#2089dc" />
+                            此APP中所有功能的实现均使用吉大相关系统的接口
+                        </Text>
+                        <Text style={[styles.text]}>
+                            <EIcon name="dot-single" color="#2089dc" />
                             使用课程表和查询成绩功能时，需要您的信息来访问教务系统，并在教务系统中留下登录痕迹
                         </Text>
                         <Text style={[styles.text]}>
@@ -74,11 +74,19 @@ export default class PrivacyPage extends Component {
                         </Text>
                         <Text style={[styles.text]}>
                             <EIcon name="dot-single" color="#2089dc" />
+                            校园一卡通功能涉及金融，将不会缓存重要信息，并保证不上传任何数据
+                        </Text>
+                        <Text style={[styles.text]}>
+                            <EIcon name="dot-single" color="#2089dc" />
                             本APP为纯客户端应用，保证不上传您的任何数据
                         </Text>
                         <Text style={[styles.text]}>
                             <EIcon name="dot-single" color="#2089dc" />
-                            本条款更新于2018年11月23日，后续更新可能修改条款
+                            本条款更新于2018年12月1日，后续更新可能修改条款
+                        </Text>
+                        <Text style={[styles.text]}>
+                            <EIcon name="dot-single" color="#2089dc" />
+                            &copy; 2018~2019 by GitHub@Steven128，保留所有权利
                         </Text>
                     </View>
                 </View>

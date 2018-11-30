@@ -44,7 +44,7 @@ export default class LoginPage extends Component {
     }
     render() {
         const { navigate } = this.props.navigation;
-        var contentPaddingTop = this.state.showErrMsg ? 50 : 80;
+        var contentPaddingTop = this.state.showErrMsg ? 20 : 50;
         return (
             <View style={{ flex: 1, backgroundColor: "#efefef" }}>
                 <Header
@@ -85,9 +85,7 @@ export default class LoginPage extends Component {
                         <View style={{ paddingTop: contentPaddingTop }}>
                             <Input
                                 containerStyle={styles.input}
-                                inputContainerStyle={{
-                                    borderBottomWidth: 1
-                                }}
+                                inputStyle={styles.inputStyle}
                                 placeholder="教学号"
                                 leftIcon={
                                     <Icon name="user" size={22} color="#888" />
@@ -102,9 +100,7 @@ export default class LoginPage extends Component {
                             />
                             <Input
                                 containerStyle={styles.input}
-                                inputContainerStyle={{
-                                    borderBottomWidth: 1
-                                }}
+                                inputStyle={styles.inputStyle}
                                 placeholder="密码"
                                 secureTextEntry={true}
                                 leftIcon={
@@ -213,7 +209,11 @@ export default class LoginPage extends Component {
 }
 const styles = StyleSheet.create({
     input: {
-        height: 90,
+        paddingVertical: 15,
         width: width * 0.86
+    },
+    inputStyle: {
+        height: 50,
+        overflow: "hidden"
     }
 });

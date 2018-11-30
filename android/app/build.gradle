@@ -101,10 +101,10 @@ android {
         applicationId "com.brady.jlulife"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "2.0"
+        versionCode 200
+        versionName "2.0.0"
         ndk {
-            abiFilters "armeabi-v7a", "x86"
+            abiFilters "armeabi-v7a"
         }
     }
     signingConfigs {

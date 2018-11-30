@@ -46,14 +46,15 @@ export default class HomePage extends Component {
         setTimeout(() => {
             SplashScreen.hide();
         }, 1000);
-        //加载设置
-        AppStorage._load("settings", res => {
-            if (res.message == "success") {
-                Global.settings = res.content;
-            }
-        });
+
         //加载各种信息
         if (Global.loginInfo.j_username == "") {
+            //加载设置
+            AppStorage._load("settings", res => {
+                if (res.message == "success") {
+                    Global.settings = res.content;
+                }
+            });
             AppStorage._load("currentStuName", res => {
                 if (res.message == "success") {
                     Global.currentStuName = res.content;
@@ -393,8 +394,6 @@ const styles = StyleSheet.create({
         marginBottom: 0,
         padding: 15,
         backgroundColor: "#fff"
-        // borderWidth: 1,
-        // borderColor: "#2089dc"
     },
     greeting: {
         fontSize: 20,

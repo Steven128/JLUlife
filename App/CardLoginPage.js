@@ -222,7 +222,7 @@ export default class CardLoginPage extends Component {
 
     render() {
         const { navigate } = this.props.navigation;
-        var contentPaddingTop = this.state.showErrMsg ? 50 : 80;
+        var contentPaddingTop = this.state.showErrMsg ? 20 : 50;
         return (
             <View style={{ flex: 1, backgroundColor: "#efefef" }}>
                 <Header
@@ -263,9 +263,7 @@ export default class CardLoginPage extends Component {
                         <View style={{ paddingTop: contentPaddingTop }}>
                             <Input
                                 containerStyle={styles.input}
-                                inputContainerStyle={{
-                                    borderBottomWidth: 1
-                                }}
+                                inputStyle={styles.inputStyle}
                                 placeholder="校园卡账号（11位学工号）"
                                 leftIcon={
                                     <Icon name="user" size={22} color="#888" />
@@ -279,9 +277,7 @@ export default class CardLoginPage extends Component {
                             />
                             <Input
                                 containerStyle={styles.input}
-                                inputContainerStyle={{
-                                    borderBottomWidth: 1
-                                }}
+                                inputStyle={styles.inputStyle}
                                 placeholder="查询密码"
                                 secureTextEntry={true}
                                 leftIcon={
@@ -297,6 +293,7 @@ export default class CardLoginPage extends Component {
                             <View style={{ flexDirection: "row" }}>
                                 <Input
                                     containerStyle={[styles.input, { flex: 3 }]}
+                                    inputStyle={styles.inputStyle}
                                     placeholder="验证码"
                                     leftIcon={
                                         <Icon
@@ -348,8 +345,12 @@ export default class CardLoginPage extends Component {
 }
 const styles = StyleSheet.create({
     input: {
-        height: 80,
+        paddingVertical: 5,
         width: width * 0.86
+    },
+    inputStyle: {
+        height: 50,
+        overflow: "hidden"
     },
     imgWrap: {
         flex: 2,
@@ -359,6 +360,8 @@ const styles = StyleSheet.create({
     },
     image: {
         width: 90,
-        height: 30
+        height: 30,
+        marginTop: 25,
+        marginLeft: 10
     }
 });
