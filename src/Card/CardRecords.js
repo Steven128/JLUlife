@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import cheerio from "cheerio";
 import Global from "../Global";
+import RefreshListView, { RefreshState } from "react-native-refresh-list-view";
 const { width, height } = Dimensions.get("window");
 export default class CardRecords extends Component {
     constructor(props) {
@@ -18,7 +19,8 @@ export default class CardRecords extends Component {
             recordsList: [],
             cardNumber: "",
             beginTime: "",
-            endTime: ""
+            endTime: "",
+            refreshState: RefreshState.Idle
         };
     }
 
@@ -39,9 +41,7 @@ export default class CardRecords extends Component {
                 res => {
                     this.setState({
                         recordsList: res,
-                        getList: true,
-                        endTime: this.state.beginTime,
-                        beginTime: this.getDateBefore(this.state.beginTime)
+                        getList: true
                     });
                 }
             );
@@ -67,7 +67,7 @@ export default class CardRecords extends Component {
                 callback(cardNumber);
             })
             .catch(error => {
-                console.error(error);
+                if (__DEV__) console.error(error);
                 callback({ message: "error" });
             });
     }
@@ -124,7 +124,7 @@ export default class CardRecords extends Component {
                 callback(recordList);
             })
             .catch(error => {
-                console.error(error);
+                if (__DEV__) console.error(error);
                 callback({ message: "error" });
             });
     }
@@ -159,6 +159,29 @@ export default class CardRecords extends Component {
         return listContainer;
     }
 
+    onHeaderRefresh() {
+        this.setState({
+            refreshState: RefreshState.HeaderRefreshing
+        });
+        this.getRecordsList(
+            Global.card.cookie,
+            this.state.cardNumber,
+            this.state.beginTime,
+            this.state.endTime,
+            res => {
+                this.setState({
+                    recordsList: res
+                });
+            }
+        );
+    }
+
+    onFooterRefresh() {
+        this.setState({
+            refreshState: RefreshState.NoMoreData
+        });
+    }
+
     render() {
         return (
             <View
@@ -188,6 +211,13 @@ export default class CardRecords extends Component {
                                 </Text>
                             </View>
                         )}
+                        // refreshState={this.state.refreshState}
+                        // onHeaderRefresh={this.onHeaderRefresh}
+                        // onFooterRefresh={this.onFooterRefresh}
+                        // footerRefreshingText="玩命加载中 >.<"
+                        // footerFailureText="我擦嘞，居然失败了 =.=!"
+                        // footerNoMoreDataText="-我是有底线的-"
+                        // footerEmptyDataText="-好像什么东西都没有-"
                     />
                 ) : (
                     <View style={{ paddingVertical: height / 2 - 150 }}>

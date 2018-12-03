@@ -44,9 +44,9 @@ export default class NotificationDetailPage extends Component {
     }
 
     openBroser(href) {
-        Linking.openURL(href).catch(err =>
-            console.error("An error occurred", err)
-        );
+        Linking.openURL(href).catch(err => {
+            if (__DEV__) console.error("An error occurred", err);
+        });
     }
 
     render() {

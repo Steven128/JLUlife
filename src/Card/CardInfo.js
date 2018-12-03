@@ -44,7 +44,7 @@ export default class CardInfo extends Component {
                 callback(info);
             })
             .catch(error => {
-                console.error(error);
+                if (__DEV__) console.error(error);
                 callback({ message: "error" });
             });
     }

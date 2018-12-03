@@ -39,7 +39,7 @@ function getInfo(callback) {
             }
         })
         .catch(error => {
-            console.error(error);
+            if (__DEV__) console.error(error);
             callback("error");
         });
 }
@@ -101,7 +101,7 @@ function storeStatData(asId, scoreJson, callback) {
             hasGetScore(scoreJson, callback);
         })
         .catch(error => {
-            console.error(error);
+            if (__DEV__) console.error(error);
             callback("error");
         });
 }

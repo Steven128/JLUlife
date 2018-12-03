@@ -19,7 +19,7 @@ function getOaList(page, callback) {
             return notificationJson;
         })
         .catch(error => {
-            console.error(error);
+            if (__DEV__) console.error(error);
         });
 }
 

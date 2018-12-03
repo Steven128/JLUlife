@@ -39,6 +39,7 @@ export class Sidebar extends Component {
                             <Text />
                         </View>
                         <DrawerItems {...this.props.items} />
+                        <View style={{ height: 50 }} />
                     </SafeAreaView>
                 </ScrollView>
             </View>

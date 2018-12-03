@@ -44,7 +44,7 @@ function login(j_username, j_password, callback) {
             }
         })
         .catch(error => {
-            console.error(error);
+            if (__DEV__) console.error(error);
             callback({ message: "error" });
         });
 }
@@ -97,7 +97,6 @@ function loginMain(j_username, j_password, cookie, callback) {
                 response = response._bodyInit;
 
                 const $ = cheerio.load(response);
-                console.log("login error");
                 var reason = $("#error_message").html();
                 reason = unescape(
                     reason.replace(/&#x/g, "%u").replace(/;/g, "")
@@ -112,7 +111,7 @@ function loginMain(j_username, j_password, cookie, callback) {
             }
         })
         .catch(error => {
-            console.error(error);
+            if (__DEV__) console.error(error);
             callback({ message: "error" });
         });
 }
@@ -169,8 +168,10 @@ function getStuInfo(j_username, cookie, callback) {
             );
         })
         .catch(error => {
-            console.log("getCurrentStuInfo error");
-            console.error(error);
+            if (__DEV__) {
+                console.log("getCurrentStuInfo error");
+                console.error(error);
+            }
             callback({ message: "error" });
         });
 }
@@ -211,11 +212,7 @@ function getTermInfo(j_username, cookie, teachingTerm, callback) {
             var startDate = responseJson.value[0].startDate;
             startDate = startDate.substring(0, 10);
             Global.startDate = startDate;
-            if (Global.termName.substring(10, 11) == 1) {
-                Global.weekLength = 19;
-            } else {
-                Global.weekLength = 17;
-            }
+            Global.weekLength = responseJson.value[0].weeks;
             //存入缓存
             AppStorage._save("termName", Global.termName);
             AppStorage._save("startDate", Global.startDate);
@@ -224,8 +221,10 @@ function getTermInfo(j_username, cookie, teachingTerm, callback) {
             callback({ message: "success" });
         })
         .catch(error => {
-            console.log("getTermInfo error");
-            console.error(error);
+            if (__DEV__) {
+                console.log("getTermInfo error");
+                console.error(error);
+            }
             callback({ message: "error" });
         });
 }

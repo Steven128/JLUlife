@@ -43,7 +43,6 @@ export default class CardLoss extends Component {
                             cardNumber,
                             Global.card.password,
                             res => {
-                                console.log(res);
                                 if (res.msg.indexOf("该校园卡已挂失") < 0) {
                                     Alert.alert(
                                         "挂失成功",
@@ -100,7 +99,7 @@ export default class CardLoss extends Component {
                 callback(response);
             })
             .catch(error => {
-                console.error(error);
+                if (__DEV__) console.error(error);
                 callback({ message: "error" });
             });
     }
@@ -124,7 +123,7 @@ export default class CardLoss extends Component {
                 callback(cardNumber);
             })
             .catch(error => {
-                console.error(error);
+                if (__DEV__) console.error(error);
                 callback({ message: "error" });
             });
     }

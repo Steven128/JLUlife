@@ -17,6 +17,7 @@ import Weather from "../src/Home/Weather";
 import NextClass from "../src/Home/NextClass";
 import GetMessage from "../src/Home/GetMessage";
 import SplashScreen from "rn-splash-screen";
+import HandleNewSettings from "../src/HandleNewSettings";
 
 const { width, height } = Dimensions.get("window");
 export default class HomePage extends Component {
@@ -29,6 +30,16 @@ export default class HomePage extends Component {
             getTips: false,
             tipsCount: 0
         };
+    }
+
+    componentWillMount() {
+        //加载设置
+        AppStorage._load("settings", res => {
+            if (res.message == "success") {
+                Global.settings = res.content;
+            }
+            HandleNewSettings();
+        });
     }
 
     componentWillReceiveProps() {
@@ -49,12 +60,6 @@ export default class HomePage extends Component {
 
         //加载各种信息
         if (Global.loginInfo.j_username == "") {
-            //加载设置
-            AppStorage._load("settings", res => {
-                if (res.message == "success") {
-                    Global.settings = res.content;
-                }
-            });
             AppStorage._load("currentStuName", res => {
                 if (res.message == "success") {
                     Global.currentStuName = res.content;
@@ -191,8 +196,7 @@ export default class HomePage extends Component {
                     this.addTips();
                 })
                 .catch(error => {
-                    console.log("aqi error");
-                    console.error(error);
+                    if (__DEV__) console.error(error);
                 });
         } else {
             this.setState({

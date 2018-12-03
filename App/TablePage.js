@@ -30,8 +30,7 @@ export default class TablePage extends Component {
             getClassTable: false,
             currentWeek: " - ",
             pickerOpen: false,
-            itemHeight: 70,
-            fontSize: 14
+            settings: {}
         };
     }
 
@@ -42,9 +41,9 @@ export default class TablePage extends Component {
             });
         }
         this.setState({
-            itemHeight: Global.settings.class.itemHeight,
-            fontSize: Global.settings.class.fontSize
+            settings: Global.settings.class
         });
+        console.log(Global.settings.class);
         AppStorage._load("classJson", res => {
             if (res.message == "success") {
                 classJson = res.content;
@@ -159,9 +158,10 @@ export default class TablePage extends Component {
                         indicatorStyle="white"
                         ref={scrollView => {
                             if (scrollView !== null) {
-                                console.log("scrollview ref");
                                 scrollView.scrollTo({
-                                    x: 78 * this.state.currentWeek - width / 2,
+                                    x:
+                                        100 * this.state.currentWeek -
+                                        width / 2.1,
                                     y: 0,
                                     animated: true
                                 });
@@ -176,8 +176,7 @@ export default class TablePage extends Component {
                         <ClassTable
                             classList={classJson}
                             week={this.state.currentWeek}
-                            itemHeight={this.state.itemHeight}
-                            fontSize={this.state.fontSize}
+                            settings={this.state.settings}
                         />
                     ) : (
                         <View
@@ -232,9 +231,11 @@ export default class TablePage extends Component {
                 });
             })
             .catch(error => {
-                console.log("error");
-                console.error(error);
-                console.log(responseJson);
+                if (__DEV__) {
+                    console.log("error");
+                    console.error(error);
+                    console.log(responseJson);
+                }
             });
     }
 
@@ -346,6 +347,7 @@ export default class TablePage extends Component {
 const styles = StyleSheet.create({
     weekWrap: {
         height: 60,
+        width: 100,
         paddingHorizontal: 20,
         textAlign: "center",
         alignItems: "center",

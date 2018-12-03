@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-    TouchableOpacity,
+    TouchableNativeFeedback,
     Dimensions,
     StyleSheet,
     ScrollView,
@@ -28,7 +28,7 @@ export default class NotificationItem extends Component {
         }
         title.push(<Text style={styles.title}>{this.props.title}</Text>);
         return (
-            <TouchableOpacity
+            <TouchableNativeFeedback
                 onPress={() => {
                     this.props.navigation.navigate("Item", {
                         title: this.props.title,
@@ -57,7 +57,7 @@ export default class NotificationItem extends Component {
                         </Text>
                     </View>
                 </View>
-            </TouchableOpacity>
+            </TouchableNativeFeedback>
         );
     }
 }

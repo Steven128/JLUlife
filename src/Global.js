@@ -46,6 +46,11 @@ var Global = {
     },
     settings: {
         class: {
+            classLength: 11,
+            navColor: "#888",
+            navBackgroundColor: "transparent",
+            navOpacity: 1,
+            itemOpacity: 1,
             itemHeight: 70,
             fontSize: 14
         }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-    TouchableOpacity,
+    TouchableNativeFeedback,
     Dimensions,
     StyleSheet,
     View,
@@ -19,7 +19,7 @@ export default class EducationItem extends Component {
 
     render() {
         return (
-            <TouchableOpacity
+            <TouchableNativeFeedback
                 onPress={() => {
                     this.props.navigation.navigate("Item", {
                         title: this.props.title,
@@ -44,7 +44,7 @@ export default class EducationItem extends Component {
                         </Text>
                     </View>
                 </View>
-            </TouchableOpacity>
+            </TouchableNativeFeedback>
         );
     }
 }

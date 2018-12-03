@@ -51,7 +51,6 @@ export default class CardTransfer extends Component {
                             this.state.amount,
                             Global.card.password,
                             res => {
-                                console.log(res);
                                 if (res.success == true) {
                                     Alert.alert(
                                         "转账成功",
@@ -110,7 +109,7 @@ export default class CardTransfer extends Component {
                 callback(response);
             })
             .catch(error => {
-                console.error(error);
+                if (__DEV__) console.error(error);
                 callback({ message: "error" });
             });
     }

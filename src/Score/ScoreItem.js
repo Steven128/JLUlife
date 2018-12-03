@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-    TouchableOpacity,
+    TouchableNativeFeedback,
     ScrollView,
     Dimensions,
     StyleSheet,
@@ -46,7 +46,7 @@ export default class ScoreItem extends Component {
         else lessonType = "其他";
 
         return (
-            <TouchableOpacity
+            <TouchableNativeFeedback
                 onPress={() => {
                     this.setState({ dialogVisible: true });
                 }}
@@ -171,10 +171,15 @@ export default class ScoreItem extends Component {
                                             : "否"}
                                     </Text>
                                 </View>
-                                <ScrollView
-                                    horizontal
-                                    style={{ paddingTop: 10 }}
-                                >
+                                <View horizontal style={{ paddingTop: 10 }}>
+                                    <Text
+                                        style={[
+                                            styles.title,
+                                            { color: "#555" }
+                                        ]}
+                                    >
+                                        成绩查询
+                                    </Text>
                                     {this.state.getStat ? (
                                         <ScoreChart
                                             scoreStat={this.state.scoreStat}
@@ -182,12 +187,12 @@ export default class ScoreItem extends Component {
                                     ) : (
                                         <View />
                                     )}
-                                </ScrollView>
+                                </View>
                             </ScrollView>
                         </DialogContent>
                     </Dialog>
                 </View>
-            </TouchableOpacity>
+            </TouchableNativeFeedback>
         );
     }
 }

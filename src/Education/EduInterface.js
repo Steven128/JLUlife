@@ -25,7 +25,7 @@ function getEduList(targetPage, index, callback) {
                 callback(educationText);
             })
             .catch(error => {
-                console.error(error);
+                if (__DEV__) console.error(error);
             });
     });
 }
@@ -47,7 +47,7 @@ function getPageLength(targetPage, callback) {
             callback(pageLength);
         })
         .catch(error => {
-            console.error(error);
+            if (__DEV__) console.error(error);
         });
 }
 

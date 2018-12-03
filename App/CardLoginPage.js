@@ -8,7 +8,8 @@ import {
     ToastAndroid,
     Image,
     TouchableWithoutFeedback,
-    ScrollView
+    ScrollView,
+    KeyboardAvoidingView
 } from "react-native";
 import { Header, Input, Button, CheckBox } from "react-native-elements";
 import Icon from "react-native-vector-icons/AntDesign";
@@ -59,7 +60,6 @@ export default class CardLoginPage extends Component {
     }
     componentDidMount() {
         AppStorage._load("cardLoginInfo", res => {
-            console.log(res);
             if (res.message == "success") {
                 Global.card.username = res.content.username;
                 Global.card.password = res.content.password;
@@ -76,7 +76,6 @@ export default class CardLoginPage extends Component {
                     "http://ykt.jlu.edu.cn:8070/Account/GetCheckCodeImg/Flag=" +
                     new Date().getTime()
             });
-            console.log(cookie);
         });
     }
 
@@ -90,7 +89,6 @@ export default class CardLoginPage extends Component {
         this.state.cookie == ""
             ? null
             : this.loginMain(this.state.cookie, res => {
-                  console.log(res);
                   if (res.response.success == true) {
                       Global.card.isOnline = true;
                       Global.card.cookie =
@@ -129,7 +127,7 @@ export default class CardLoginPage extends Component {
                 callback(cookie);
             })
             .catch(error => {
-                console.error(error);
+                if (__DEV__) console.error(error);
                 callback({ message: "error" });
             });
     }
@@ -160,7 +158,6 @@ export default class CardLoginPage extends Component {
         })
             .then(response => response)
             .then(response => {
-                console.log(response);
                 var cookie = "";
                 var responseJson = JSON.parse(response._bodyInit);
                 if (responseJson.success == true) {
@@ -171,7 +168,7 @@ export default class CardLoginPage extends Component {
                 callback({ cookie: cookie, response: responseJson });
             })
             .catch(error => {
-                console.error(error);
+                if (__DEV__) console.error(error);
                 callback({ message: "error" });
             });
     }
@@ -259,7 +256,7 @@ export default class CardLoginPage extends Component {
                             </Text>
                         </View>
                     ) : null}
-                    <View style={{ alignSelf: "center" }}>
+                    <KeyboardAvoidingView style={{ alignSelf: "center" }}>
                         <View style={{ paddingTop: contentPaddingTop }}>
                             <Input
                                 containerStyle={styles.input}
@@ -337,7 +334,7 @@ export default class CardLoginPage extends Component {
                                 onPress={this.loginTapped}
                             />
                         </View>
-                    </View>
+                    </KeyboardAvoidingView>
                 </ScrollView>
             </View>
         );

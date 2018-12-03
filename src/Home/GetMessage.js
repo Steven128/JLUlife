@@ -46,7 +46,7 @@ export default class GetMessage extends Component {
                 });
             })
             .catch(err => {
-                console.log(err);
+                if (__DEV__) console.log(err);
             });
     }
     render() {

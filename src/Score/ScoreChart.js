@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dimensions, View } from "react-native";
+import { Dimensions, ScrollView } from "react-native";
 import Echarts from "native-echarts";
 
 const { width, height } = Dimensions.get("window");
@@ -13,12 +13,7 @@ export class ScoreChart extends Component {
     render() {
         var option = {
             title: {
-                text: "成绩统计",
-                textStyle: {
-                    fontSize: 16,
-                    fontStyle: "normal",
-                    fontWeight: "normal"
-                }
+                show: false
             },
             tooltip: {
                 trigger: "axis",
@@ -78,13 +73,19 @@ export class ScoreChart extends Component {
         };
 
         return (
-            <View style={{ paddingHorizontal: 10 }}>
+            <ScrollView
+                horizontal
+                style={{
+                    marginHorizontal: 10,
+                    height: height * 0.4
+                }}
+            >
                 <Echarts
                     option={option}
-                    height={250}
-                    width={width * 0.9 - 10}
+                    height={height * 0.4}
+                    width={width * 0.8}
                 />
-            </View>
+            </ScrollView>
         );
     }
 }
