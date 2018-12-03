@@ -50,59 +50,47 @@ export default class ClassPicker extends BaseDialog {
         return (
             <View
                 style={{
-                    height:
-                        this.props.itemHeight * 5 +
-                        this.getSize(15) +
-                        this.getSize(44),
-                    width: this.mScreenWidth
+                    width: this.mScreenWidth,
+                    flexDirection: "row"
                 }}
             >
-                <View
-                    style={{
-                        width: this.mScreenWidth,
-                        height: this.props.itemHeight * 5 + this.getSize(15),
-                        flexDirection: "row",
-                        position: "absolute",
-                        bottom: 0
-                    }}
-                >
-                    <PickerView
-                        title="从第    节"
-                        list={this.props.list}
-                        onPickerSelected={toValue => {
-                            this.setState({
-                                classBegin: toValue
-                            });
-                            if (toValue > this.state.classEnd) {
-                                this.setState({
-                                    classEnd: toValue
-                                });
-                            }
-                        }}
-                        selectedIndex={this.state.classBegin - 1}
-                        fontSize={this.getSize(14)}
-                        itemWidth={this.mScreenWidth / 2}
-                        itemHeight={this.getSize(40)}
-                    />
-                    <PickerView
-                        title="到第    节"
-                        list={this.props.list}
-                        onPickerSelected={toValue => {
+                <PickerView
+                    title="从第    节"
+                    list={this.props.list}
+                    onPickerSelected={toValue => {
+                        this.setState({
+                            classBegin: toValue
+                        });
+                        if (toValue > this.state.classEnd) {
                             this.setState({
                                 classEnd: toValue
                             });
-                            if (toValue < this.state.classBegin) {
-                                this.setState({
-                                    classBegin: toValue
-                                });
-                            }
-                        }}
-                        selectedIndex={this.state.classEnd - 1}
-                        fontSize={this.getSize(14)}
-                        itemWidth={this.mScreenWidth / 2}
-                        itemHeight={this.getSize(40)}
-                    />
-                </View>
+                        }
+                    }}
+                    selectedIndex={this.state.classBegin - 1}
+                    fontSize={this.getSize(14)}
+                    itemWidth={this.mScreenWidth / 2}
+                    itemHeight={this.getSize(40)}
+                />
+                <PickerView
+                    title="到第    节"
+                    list={this.props.list}
+                    onPickerSelected={toValue => {
+                        this.setState({
+                            classEnd: toValue
+                        });
+                        if (toValue < this.state.classBegin) {
+                            this.setState({
+                                classBegin: toValue
+                            });
+                        }
+                    }}
+                    selectedIndex={this.state.classEnd - 1}
+                    fontSize={this.getSize(14)}
+                    itemWidth={this.mScreenWidth / 2}
+                    itemHeight={this.getSize(40)}
+                />
+
                 <View
                     style={{
                         width: this.mScreenWidth,

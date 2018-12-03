@@ -24,6 +24,7 @@ import ClassPicker from "../../src/Query/ClassPicker";
 //data
 import campus from "../../src/Query/data/campus.json";
 import building from "../../src/Query/data/building.json";
+
 const { width, height } = Dimensions.get("window");
 
 export default class EmptyRoomPage extends Component {
@@ -53,11 +54,11 @@ export default class EmptyRoomPage extends Component {
                 "登录后才能查空教室哟~",
                 [
                     {
-                        text: "知道啦",
-                        onPress: () => this.props.navigation.goBack()
+                        text: "知道啦"
+                        // onPress: () => this.props.navigation.goBack()
                     }
-                ],
-                { cancelable: false }
+                ]
+                // { cancelable: false }
             );
         }
         var campusNameList = [];
@@ -140,7 +141,7 @@ export default class EmptyRoomPage extends Component {
                         style: { color: "#fff", fontSize: 16 }
                     }}
                 />
-                {Global.isOnline ? (
+                {Global.isOnline || 1 ? (
                     <View style={{ flex: 1 }}>
                         <View style={{ flex: 1 }}>
                             {this.renderButton(
@@ -172,7 +173,6 @@ export default class EmptyRoomPage extends Component {
                                     this.ClassPicker.show();
                                 }
                             )}
-
                             <EmptyRoomPicker
                                 list={this.state.campusNameList}
                                 ref={ref => (this.EmptyRoomPicker1 = ref)}
@@ -271,6 +271,14 @@ export default class EmptyRoomPage extends Component {
                                 }}
                             >
                                 <Button
+                                    containerStyle={{
+                                        position: "absolute",
+                                        left: 0,
+                                        right: 0,
+                                        zIndex: 0,
+                                        paddingHorizontal: 30,
+                                        paddingVertical: 30
+                                    }}
                                     title="查询"
                                     buttonStyle={{ height: 40 }}
                                     loading={this.state.showLoading}
@@ -489,9 +497,11 @@ export default class EmptyRoomPage extends Component {
                 });
             })
             .catch(error => {
-                console.log("getCampus error");
-                console.error(error);
-                console.log(responseJson);
+                if (__DEV__) {
+                    console.log("getCampus error");
+                    console.error(error);
+                    console.log(responseJson);
+                }
             });
     }
 }

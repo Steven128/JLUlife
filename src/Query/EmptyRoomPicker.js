@@ -48,33 +48,20 @@ export default class EmptyRoomPicker extends BaseDialog {
         return (
             <View
                 style={{
-                    height:
-                        this.props.itemHeight * 5 +
-                        this.getSize(15) +
-                        this.getSize(44),
-                    width: this.mScreenWidth
+                    width: this.mScreenWidth,
+                    flexDirection: "row"
                 }}
             >
-                <View
-                    style={{
-                        width: this.mScreenWidth,
-                        height: this.props.itemHeight * 5 + this.getSize(15),
-                        flexDirection: "row",
-                        position: "absolute",
-                        bottom: 0
+                <PickerView
+                    list={this.props.list}
+                    onPickerSelected={toValue => {
+                        this.setState({ selectedValue: toValue });
                     }}
-                >
-                    <PickerView
-                        list={this.props.list}
-                        onPickerSelected={toValue => {
-                            this.setState({ selectedValue: toValue });
-                        }}
-                        selectedIndex={this.props.selectedIndex}
-                        fontSize={this.getSize(14)}
-                        itemWidth={this.mScreenWidth}
-                        itemHeight={this.getSize(40)}
-                    />
-                </View>
+                    selectedIndex={this.props.selectedIndex}
+                    fontSize={this.getSize(14)}
+                    itemWidth={this.mScreenWidth}
+                    itemHeight={this.getSize(40)}
+                />
                 <View
                     style={{
                         width: this.mScreenWidth,
