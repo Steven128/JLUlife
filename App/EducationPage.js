@@ -11,6 +11,7 @@ import EIcon from "react-native-vector-icons/Entypo";
 import ScrollableTabView, {
     ScrollableTabBar
 } from "react-native-scrollable-tab-view";
+import Global from "../src/Global";
 import EduInfo from "../src/Education/EduInfo";
 import EduAnnounce from "../src/Education/EduAnnounce";
 import NoticeAnnounce from "../src/Education/NoticeAnnounce";
@@ -37,7 +38,10 @@ export default class EducationPage extends Component {
         return (
             <View style={{ flex: 1, backgroundColor: "#efefef" }}>
                 <Header
-                    containerStyle={{ borderBottomColor: "#2089dc" }}
+                    containerStyle={{
+                        borderBottomColor: Global.settings.theme.backgroundColor
+                    }}
+                    backgroundColor={Global.settings.theme.backgroundColor}
                     placement="left"
                     leftComponent={
                         <Button
@@ -57,7 +61,7 @@ export default class EducationPage extends Component {
                         backgroundColor: "#efefef",
                         borderWidth: 0
                     }}
-                    tabBarBackgroundColor="#2089dc"
+                    tabBarBackgroundColor={Global.settings.theme.backgroundColor}
                     tabBarActiveTextColor="#fff"
                     tabBarInactiveTextColor="#fff"
                     tabBarTextStyle={{ fontWeight: "normal", fontSize: 14 }}

@@ -3,14 +3,28 @@ import Global from "./Global";
  * 处理没有改动过的新设置
  */
 export default function handleNewSettings() {
-    var settings = Global.settings;
+    var settings = {};
+    if (Global.settings != undefined) settings = Global.settings;
+    //Theme
+    if (settings.theme == undefined) Global.settings.theme = {};
+    if (settings.theme.index == undefined) Global.settings.theme.index = 0;
+    if (settings.theme.color == undefined)
+        Global.settings.theme.color = "#ffffff";
+    if (settings.theme.backgroundColor == undefined)
+        Global.settings.theme.backgroundColor = "#2089dc";
+    console.log("set theme");
+    //ClassTable
+    if (settings.class == undefined) Global.settings.class = {};
     if (settings.class.classLength == undefined)
-        settings.class.classLength = 11;
-    if (settings.class.navColor == undefined) settings.class.navColor = "#888";
-    if (settings.class.navBackgroundColor == undefined)
-        settings.class.navBackgroundColor = "transparent";
-    if (settings.class.navOpacity == undefined) settings.class.navOpacity = 1;
-    if (settings.class.itemOpacity == undefined) settings.class.itemOpacity = 1;
-    if (settings.class.itemHeight == undefined) settings.class.itemHeight = 70;
-    if (settings.class.fontSize == undefined) settings.class.fontSize = 14;
+        Global.settings.class.classLength = 11;
+    if (settings.class.navColor == undefined)
+        Global.settings.class.navColor = "#808080";
+    if (settings.class.opacity == undefined) Global.settings.class.opacity = 0;
+    if (settings.class.itemHeight == undefined)
+        Global.settings.class.itemHeight = 70;
+    if (settings.class.fontSize == undefined)
+        Global.settings.class.fontSize = 14;
+    if (settings.class.backgroundImage == undefined)
+        Global.settings.class.backgroundImage = "";
+    return;
 }

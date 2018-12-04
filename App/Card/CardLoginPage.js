@@ -13,8 +13,8 @@ import {
 } from "react-native";
 import { Header, Input, Button, CheckBox } from "react-native-elements";
 import Icon from "react-native-vector-icons/AntDesign";
-import Global from "../src/Global";
-import AppStorage from "../src/AppStorage";
+import Global from "../../src/Global";
+import AppStorage from "../../src/AppStorage";
 import Base64 from "base-64";
 
 const { width, height } = Dimensions.get("window");
@@ -223,7 +223,10 @@ export default class CardLoginPage extends Component {
         return (
             <View style={{ flex: 1, backgroundColor: "#efefef" }}>
                 <Header
-                    containerStyle={{ borderBottomColor: "#2089dc" }}
+                    containerStyle={{
+                        borderBottomColor: Global.settings.theme.backgroundColor
+                    }}
+                    backgroundColor={Global.settings.theme.backgroundColor}
                     placement="left"
                     leftComponent={
                         <Icon
@@ -330,7 +333,10 @@ export default class CardLoginPage extends Component {
                                     color: "#fff"
                                 }}
                                 titleStyle={{ fontWeight: "700" }}
-                                buttonStyle={{ height: 45 }}
+                                buttonStyle={{
+                                    height: 45,
+                                    backgroundColor: Global.settings.theme.backgroundColor
+                                }}
                                 onPress={this.loginTapped}
                             />
                         </View>

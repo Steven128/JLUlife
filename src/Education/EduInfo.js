@@ -7,6 +7,7 @@ import {
     ActivityIndicator
 } from "react-native";
 import RefreshListView, { RefreshState } from "react-native-refresh-list-view";
+import Global from "../Global";
 import EduInterface from "./EduInterface";
 import EducationItem from "./EducationItem";
 
@@ -99,7 +100,7 @@ export default class EduInfo extends Component {
                             <ActivityIndicator
                                 style={{}}
                                 size="large"
-                                color="#2089dc"
+                                color={Global.settings.theme.backgroundColor}
                             />
                         </View>
                     )}

@@ -46,7 +46,10 @@ export default class CardPage extends Component {
         return (
             <View style={{ flex: 1, backgroundColor: "#efefef" }}>
                 <Header
-                    containerStyle={{ borderBottomColor: "#2089dc" }}
+                    containerStyle={{
+                        borderBottomColor: Global.settings.theme.backgroundColor
+                    }}
+                    backgroundColor={Global.settings.theme.backgroundColor}
                     placement="left"
                     leftComponent={
                         <Button
@@ -66,7 +69,9 @@ export default class CardPage extends Component {
                         backgroundColor: "#efefef",
                         borderWidth: 0
                     }}
-                    tabBarBackgroundColor="#2089dc"
+                    tabBarBackgroundColor={
+                        Global.settings.theme.backgroundColor
+                    }
                     tabBarActiveTextColor="#fff"
                     tabBarInactiveTextColor="#fff"
                     tabBarTextStyle={{ fontWeight: "normal", fontSize: 14 }}

@@ -17,15 +17,7 @@ export class TopNav extends Component {
         var container = [];
         for (var i = 0; i < 7; i++) {
             container.push(
-                <View
-                    style={[
-                        styles.topNav,
-                        {
-                            backgroundColor: this.props.backgroundColor,
-                            opacity: this.props.opacity
-                        }
-                    ]}
-                >
+                <View style={[styles.topNav, { opacity: this.props.opacity }]}>
                     <Text style={{ color: this.props.color }}>
                         {this.state.weekList[i]}
                     </Text>
@@ -47,9 +39,7 @@ export class TopNav extends Component {
                     style={[
                         styles.topNav,
                         {
-                            flex: 0.5,
-                            backgroundColor: this.props.backgroundColor,
-                            opacity: this.props.opacity
+                            flex: 0.5
                         }
                     ]}
                 >
@@ -80,9 +70,7 @@ export class LeftNav extends Component {
                     style={[
                         styles.leftNav,
                         {
-                            height: this.props.itemHeight,
-                            backgroundColor: this.props.backgroundColor,
-                            opacity: this.props.opacity
+                            height: this.props.itemHeight
                         }
                     ]}
                 >

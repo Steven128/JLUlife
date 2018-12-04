@@ -6,7 +6,8 @@ import {
     StyleSheet,
     ScrollView,
     ToastAndroid,
-    ActivityIndicator
+    ActivityIndicator,
+    StatusBar
 } from "react-native";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
@@ -17,7 +18,6 @@ import Weather from "../src/Home/Weather";
 import NextClass from "../src/Home/NextClass";
 import GetMessage from "../src/Home/GetMessage";
 import SplashScreen from "rn-splash-screen";
-import HandleNewSettings from "../src/HandleNewSettings";
 
 const { width, height } = Dimensions.get("window");
 export default class HomePage extends Component {
@@ -30,16 +30,6 @@ export default class HomePage extends Component {
             getTips: false,
             tipsCount: 0
         };
-    }
-
-    componentWillMount() {
-        //加载设置
-        AppStorage._load("settings", res => {
-            if (res.message == "success") {
-                Global.settings = res.content;
-            }
-            HandleNewSettings();
-        });
     }
 
     componentWillReceiveProps() {
@@ -255,7 +245,7 @@ export default class HomePage extends Component {
                     <ActivityIndicator
                         style={{ width: 50 }}
                         size="small"
-                        color="#2089dc"
+                        color={Global.settings.theme.backgroundColor}
                     />
                 </View>
             );
@@ -272,7 +262,7 @@ export default class HomePage extends Component {
                     <Button
                         buttonStyle={styles.loginBtn}
                         titleStyle={{
-                            color: "#2089dc"
+                            color: Global.settings.theme.backgroundColor
                         }}
                         title="登录"
                         onPress={() => {
@@ -286,9 +276,15 @@ export default class HomePage extends Component {
                 <View>
                     <Text style={styles.greeting}>{"你好，游客"}</Text>
                     <Button
-                        buttonStyle={styles.loginBtn}
+                        buttonStyle={[
+                            styles.loginBtn,
+                            {
+                                borderColor:
+                                    Global.settings.theme.backgroundColor
+                            }
+                        ]}
                         titleStyle={{
-                            color: "#2089dc"
+                            color: Global.settings.theme.backgroundColor
                         }}
                         title="登录"
                         onPress={() => {
@@ -300,7 +296,15 @@ export default class HomePage extends Component {
         }
         return (
             <View style={{ backgroundColor: "#efefef", flex: 1 }}>
+                <StatusBar
+                    backgroundColor={Global.settings.theme.backgroundColor}
+                    translucent={false}
+                />
                 <Header
+                    containerStyle={{
+                        borderBottomColor: Global.settings.theme.backgroundColor
+                    }}
+                    backgroundColor={Global.settings.theme.backgroundColor}
                     placement="left"
                     leftComponent={
                         <Button
@@ -324,6 +328,11 @@ export default class HomePage extends Component {
                     </View>
                     <View>
                         <View style={styles.greetingWrap}>
+                            <NextClass />
+                        </View>
+                    </View>
+                    <View>
+                        <View style={styles.greetingWrap}>
                             <Text style={styles.tipsTitle}>生活小贴士</Text>
                             <View>
                                 {this.state.getTips ? (
@@ -335,11 +344,6 @@ export default class HomePage extends Component {
                                 )}
                             </View>
                             <View style={{ height: 15 }} />
-                        </View>
-                    </View>
-                    <View>
-                        <View style={styles.greetingWrap}>
-                            <NextClass />
                         </View>
                     </View>
                     <View>
@@ -408,8 +412,7 @@ const styles = StyleSheet.create({
     loginBtn: {
         backgroundColor: "#fff",
         width: 90,
-        borderWidth: 1,
-        borderColor: "#2089dc"
+        borderWidth: 1
     },
     tipsTitle: {
         color: "#555",

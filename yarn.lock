@@ -5304,7 +5304,7 @@ prompts@^0.1.9:
     kleur "^2.0.1"
     sisteransi "^0.1.1"
 
-prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.6.2"
   resolved "http://registry.npm.taobao.org/prop-types/download/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   integrity sha1-BdXKd7RFPphdYPx/+MhZCUpJcQI=
@@ -5423,10 +5423,14 @@ react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.4:
   resolved "http://registry.npm.taobao.org/react-lifecycles-compat/download/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha1-TxonOv38jzSIqMUWv9p4+HI1I2I=
 
-react-native-communications@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/react-native-communications/-/react-native-communications-2.2.1.tgz#7883b56b20a002eeb790c113f8616ea8692ca795"
-  integrity sha1-eIO1ayCgAu63kMET+GFuqGksp5U=
+react-native-color@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/react-native-color/-/react-native-color-0.0.10.tgz#9cbc0da191c67ae4fc3a04bef7bc54a685784c7d"
+  integrity sha512-MrYIaWH/fiRXBhfJBVG7vtNF5cQQKg1rK16pU8xtlKne2Ipu+Inki1Gb/oFvaOu+zNXb5/6tss467k8zYIvMwA==
+  dependencies:
+    prop-types "^15.6.0"
+    react-native-slider "^0.11.0"
+    tinycolor2 "^1.4.1"
 
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
@@ -5457,12 +5461,22 @@ react-native-elements@^1.0.0-beta7:
     opencollective-postinstall "^2.0.0"
     prop-types "^15.5.8"
 
+react-native-flexi-radio-button@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-flexi-radio-button/-/react-native-flexi-radio-button-0.2.2.tgz#a0180393c531ba3477722c6e42a31ceb1c11623b"
+  integrity sha1-oBgDk8UxujR3cixuQqMc6xwRYjs=
+
 react-native-general-siblings@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-native-general-siblings/-/react-native-general-siblings-1.0.0.tgz#fe19d2fb589fd482bedcf5e725d3855060c7febd"
   integrity sha512-V6aqrGnVBeUPwnMG56NwyUl8Nqwax1M8gbzINAWgnBnUAqj7wBb6jxvOmAdtsUyV7yMhz+bu1a3hiGZKw7hRyQ==
   dependencies:
     static-container "^1.0.0"
+
+react-native-image-crop-picker@^0.21.3:
+  version "0.21.3"
+  resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.21.3.tgz#04457a3f2a888949f51be4a670dcf2520b9994f8"
+  integrity sha512-qzY8aSYZxH4L9XYRk4V1n8x1gfq+ykNG0Kc0a9ne+JWwAQkf2P8aTKeNd4noNFZEOSJBiD4XXE/pbX55dQ5F3g==
 
 react-native-md5@^1.0.0:
   version "1.0.0"
@@ -5508,6 +5522,13 @@ react-native-scrollable-tab-view@^0.10.0:
     create-react-class "^15.6.2"
     prop-types "^15.6.0"
     react-timer-mixin "^0.13.3"
+
+react-native-slider@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/react-native-slider/-/react-native-slider-0.11.0.tgz#b68a0bc43c8422b24cd57947cc5ac2bcdb58fadc"
+  integrity sha512-jV9K87eu9uWr0uJIyrSpBLnCKvVlOySC2wynq9TFCdV9oGgjt7Niq8Q1A8R8v+5GHsuBw/s8vEj1AAkkUi+u+w==
+  dependencies:
+    prop-types "^15.5.6"
 
 react-native-storage@^0.2.3:
   version "0.2.3"
@@ -6533,6 +6554,11 @@ time-stamp@^1.0.0:
   version "1.1.0"
   resolved "http://registry.npm.taobao.org/time-stamp/download/time-stamp-1.1.0.tgz#764a5a11af50561921b133f3b44e618687e0f5c3"
   integrity sha1-dkpaEa9QVhkhsTPztE5hhofg9cM=
+
+tinycolor2@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.1.tgz#f4fad333447bc0b07d4dc8e9209d8f39a8ac77e8"
+  integrity sha1-9PrTM0R7wLB9TcjpIJ2POaisd+g=
 
 tmp@^0.0.33:
   version "0.0.33"

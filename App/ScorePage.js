@@ -60,6 +60,10 @@ export default class ScorePage extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <Header
+                    containerStyle={{
+                        borderBottomColor: Global.settings.theme.backgroundColor
+                    }}
+                    backgroundColor={Global.settings.theme.backgroundColor}
                     placement="left"
                     leftComponent={
                         <Button
@@ -86,7 +90,7 @@ export default class ScorePage extends Component {
                         <ActivityIndicator
                             style={{}}
                             size="large"
-                            color="#2089dc"
+                            color={Global.settings.theme.backgroundColor}
                         />
                     </View>
                 )}

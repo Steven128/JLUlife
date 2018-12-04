@@ -6,32 +6,42 @@ import {
     WebView,
     StyleSheet,
     Linking,
-    TouchableNativeFeedback,
-    Image
+    TouchableNativeFeedback
 } from "react-native";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import FIcon from "react-native-vector-icons/Feather";
-import Global from "../src/Global";
+import Global from "../../src/Global";
 const { width, height } = Dimensions.get("window");
 
 var { height: deviceHeight, width: deviceWidth } = Dimensions.get("window");
-export default class AboutPage extends Component {
+export default class FeedBackPage extends Component {
     constructor(props) {
         super(props);
         this.openDrawer = this.openDrawer.bind(this);
-        this.state = {};
+        this.state = {
+            getOa: false,
+            oaDetail: {},
+            showTag: false
+        };
     }
 
     openDrawer() {
         // 打开抽屉式导航
         this.props.navigation.openDrawer();
     }
+    goToGithub() {
+        Linking.openURL("https://github.com/Steven128/JLUlife");
+    }
     render() {
         const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
                 <Header
+                    containerStyle={{
+                        borderBottomColor: Global.settings.theme.backgroundColor
+                    }}
+                    backgroundColor={Global.settings.theme.backgroundColor}
                     placement="left"
                     leftComponent={
                         <Button
@@ -48,28 +58,36 @@ export default class AboutPage extends Component {
                         />
                     }
                     centerComponent={{
-                        text: "关于",
+                        text: "问题反馈&建议",
                         style: { color: "#fff", fontSize: 16 }
                     }}
                 />
                 <View style={styles.main}>
-                    <Image
-                        style={{ width: 100, height: 100 }}
-                        source={require("../App/assets/ic_logo.png")}
-                    />
-                    <View style={{ paddingTop: 40, paddingBottom: 30 }}>
-                        <Text style={[styles.text, styles.title]}>
-                            JLU Life
-                        </Text>
-                        <Text style={[styles.text]}>版本号 2.0</Text>
-                    </View>
-                    <Text style={[styles.text, { width: width * 0.8 }]}>
-                        &nbsp;&nbsp;&nbsp;&nbsp;JLU
-                        Life是一款面向吉林大学学生的服务型APP，目前包含查看课表、成绩、校内通知、教务通知、查询空教室及图书馆馆藏、一卡通查询转账挂失等功能，希望能够帮助到同学们，为同学们的学习、生活提供便利。
+                    <Text style={[styles.text]}>
+                        问题反馈及建议，或合作意向，请发邮件至
                     </Text>
-                </View>
-                <View style={{ padding: 15 }}>
-                    <Text style={[styles.text, { width: width * 0.8 }]} />
+                    <Text style={[styles.text]}>Steven128@outlook.com</Text>
+                    <Text style={{ height: 30 }} />
+                    <Text style={[styles.text]}>
+                        本项目开源，欢迎Star或Fork
+                    </Text>
+                    <TouchableNativeFeedback
+                        onPress={this.goToGithub.bind(this)}
+                    >
+                        <Text
+                            style={[
+                                styles.text,
+                                styles.link,
+                                {
+                                    color: Global.settings.theme.backgroundColor,
+                                    textDecorationColor:
+                                        Global.settings.theme.backgroundColor
+                                }
+                            ]}
+                        >
+                            https://github.com/Steven128/JLUlife
+                        </Text>
+                    </TouchableNativeFeedback>
                 </View>
             </View>
         );
@@ -77,8 +95,7 @@ export default class AboutPage extends Component {
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: "#efefef"
+        flex: 1
     },
     main: {
         flex: 1,
@@ -93,5 +110,9 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         paddingBottom: 5
+    },
+    link: {
+        textDecorationLine: "underline",
+        textDecorationStyle: "solid"
     }
 });

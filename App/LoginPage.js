@@ -48,7 +48,10 @@ export default class LoginPage extends Component {
         return (
             <View style={{ flex: 1, backgroundColor: "#efefef" }}>
                 <Header
-                    containerStyle={{ borderBottomColor: "#2089dc" }}
+                    containerStyle={{
+                        borderBottomColor: Global.settings.theme.backgroundColor
+                    }}
+                    backgroundColor={Global.settings.theme.backgroundColor}
                     placement="left"
                     leftComponent={
                         <Icon
@@ -121,7 +124,10 @@ export default class LoginPage extends Component {
                                     color: "#fff"
                                 }}
                                 titleStyle={{ fontWeight: "700" }}
-                                buttonStyle={{ height: 45 }}
+                                buttonStyle={{
+                                    height: 45,
+                                    backgroundColor: Global.settings.theme.backgroundColor
+                                }}
                                 onPress={this.loginTapped}
                             />
                         </View>

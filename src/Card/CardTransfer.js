@@ -165,7 +165,10 @@ export default class CardTransfer extends Component {
                             color: "#fff"
                         }}
                         titleStyle={{ fontWeight: "700" }}
-                        buttonStyle={{ height: 45 }}
+                        buttonStyle={{
+                            height: 45,
+                            backgroundColor: Global.settings.theme.backgroundColor
+                        }}
                         onPress={this.buttonTapped}
                     />
                 </View>

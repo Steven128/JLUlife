@@ -11,7 +11,7 @@ import {
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import AIcon from "react-native-vector-icons/AntDesign";
-import Global from "../src/Global";
+import Global from "../../src/Global";
 const { width, height } = Dimensions.get("window");
 
 var { height: deviceHeight, width: deviceWidth } = Dimensions.get("window");
@@ -31,6 +31,10 @@ export default class PrivacyPage extends Component {
         return (
             <View style={styles.container}>
                 <Header
+                    containerStyle={{
+                        borderBottomColor: Global.settings.theme.backgroundColor
+                    }}
+                    backgroundColor={Global.settings.theme.backgroundColor}
                     placement="left"
                     leftComponent={
                         <Button
@@ -57,35 +61,35 @@ export default class PrivacyPage extends Component {
                     </Text>
                     <View style={{ padding: 15 }}>
                         <Text style={[styles.text]}>
-                            <EIcon name="dot-single" color="#2089dc" />
+                            <EIcon name="dot-single" color={Global.settings.theme.backgroundColor} />
                             此APP中所有功能的实现均使用吉大相关系统的接口
                         </Text>
                         <Text style={[styles.text]}>
-                            <EIcon name="dot-single" color="#2089dc" />
+                            <EIcon name="dot-single" color={Global.settings.theme.backgroundColor} />
                             使用课程表和查询成绩功能时，需要您的信息来访问教务系统，并在教务系统中留下登录痕迹
                         </Text>
                         <Text style={[styles.text]}>
-                            <EIcon name="dot-single" color="#2089dc" />
+                            <EIcon name="dot-single" color={Global.settings.theme.backgroundColor} />
                             登录用户名和密码将保存在应用缓存中，以后打开APP时用此信息自动登录
                         </Text>
                         <Text style={[styles.text]}>
-                            <EIcon name="dot-single" color="#2089dc" />
+                            <EIcon name="dot-single" color={Global.settings.theme.backgroundColor} />
                             查看校内通知和教务通知时将访问相应网址并留下痕迹
                         </Text>
                         <Text style={[styles.text]}>
-                            <EIcon name="dot-single" color="#2089dc" />
+                            <EIcon name="dot-single" color={Global.settings.theme.backgroundColor} />
                             校园一卡通功能涉及金融，将不会缓存重要信息，并保证不上传任何数据
                         </Text>
                         <Text style={[styles.text]}>
-                            <EIcon name="dot-single" color="#2089dc" />
+                            <EIcon name="dot-single" color={Global.settings.theme.backgroundColor} />
                             本APP为纯客户端应用，保证不上传您的任何数据
                         </Text>
                         <Text style={[styles.text]}>
-                            <EIcon name="dot-single" color="#2089dc" />
+                            <EIcon name="dot-single" color={Global.settings.theme.backgroundColor} />
                             本条款更新于2018年12月1日，后续更新可能修改条款
                         </Text>
                         <Text style={[styles.text]}>
-                            <EIcon name="dot-single" color="#2089dc" />
+                            <EIcon name="dot-single" color={Global.settings.theme.backgroundColor} />
                             &copy; 2018~2019 by GitHub@Steven128，保留所有权利
                         </Text>
                     </View>

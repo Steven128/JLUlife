@@ -101,11 +101,12 @@ android {
         applicationId "com.brady.jlulife"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 201
-        versionName "2.0.1"
+        versionCode 210
+        versionName "2.1.0"
         ndk {
             abiFilters "armeabi-v7a"
         }
+        vectorDrawables.useSupportLibrary = true
     }
     signingConfigs {
         release {
@@ -147,6 +148,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-image-crop-picker')
     compile project(':react-native-svg')
     compile project(':rn-splash-screen')
     compile project(':react-native-webview')

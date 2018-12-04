@@ -11,7 +11,7 @@ import {
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import FIcon from "react-native-vector-icons/Feather";
-import Global from "../src/Global";
+import Global from "../../src/Global";
 const { width, height } = Dimensions.get("window");
 
 var { height: deviceHeight, width: deviceWidth } = Dimensions.get("window");
@@ -75,6 +75,10 @@ export default class NotificationDetailPage extends Component {
                     </TouchableNativeFeedback>
                 ) : null}
                 <Header
+                    containerStyle={{
+                        borderBottomColor: Global.settings.theme.backgroundColor
+                    }}
+                    backgroundColor={Global.settings.theme.backgroundColor}
                     placement="left"
                     leftComponent={
                         <Button

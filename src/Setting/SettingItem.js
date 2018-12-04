@@ -4,12 +4,11 @@ import {
     Text,
     Dimensions,
     StyleSheet,
-    TouchableOpacity
+    TouchableNativeFeedback
 } from "react-native";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../Global";
-import Communications from "react-native-communications";
 const { width, height } = Dimensions.get("window");
 
 export default class SettingsItem extends Component {
@@ -20,7 +19,7 @@ export default class SettingsItem extends Component {
     }
     render() {
         return (
-            <TouchableOpacity
+            <TouchableNativeFeedback
                 onPress={() =>
                     this.props.navigation.navigate(this.props.nextPage)
                 }
@@ -36,7 +35,7 @@ export default class SettingsItem extends Component {
                         />
                     </View>
                 </View>
-            </TouchableOpacity>
+            </TouchableNativeFeedback>
         );
     }
 }

@@ -45,14 +45,18 @@ var Global = {
         password: ""
     },
     settings: {
+        theme: {
+            index: 0,
+            color: "#ffffff",
+            backgroundColor: "#ffffff"
+        },
         class: {
             classLength: 11,
-            navColor: "#888",
-            navBackgroundColor: "transparent",
-            navOpacity: 1,
-            itemOpacity: 1,
+            navColor: "#808080",
+            opacity: 0,
             itemHeight: 70,
-            fontSize: 14
+            fontSize: 14,
+            backgroundImage: ""
         }
     }
 };

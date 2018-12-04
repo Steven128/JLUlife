@@ -37,6 +37,10 @@ export default class NotificationPage extends Component {
         return (
             <View style={{ flex: 1, backgroundColor: "#efefef" }}>
                 <Header
+                    containerStyle={{
+                        borderBottomColor: Global.settings.theme.backgroundColor
+                    }}
+                    backgroundColor={Global.settings.theme.backgroundColor}
                     placement="left"
                     leftComponent={
                         <Button
@@ -66,7 +70,7 @@ export default class NotificationPage extends Component {
                         <ActivityIndicator
                             style={{}}
                             size="large"
-                            color="#2089dc"
+                            color={Global.settings.theme.backgroundColor}
                         />
                     </View>
                 )}

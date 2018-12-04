@@ -9,19 +9,21 @@ import Global from "./src/Global";
 import HomePage from "./App/HomePage";
 import TablePage from "./App/TablePage";
 import NotificationPage from "./App/NotificationPage";
-import NotificationDetailPage from "./App/NotificationDetailPage";
+import NotificationDetailPage from "./App/Notification/NotificationDetailPage";
 import EducationPage from "./App/EducationPage";
-import EducationDetailPage from "./App/EducationDetailPage";
+import EducationDetailPage from "./App/Education/EducationDetailPage";
 import ScorePage from "./App/ScorePage";
 import QueryPage from "./App/QueryPage";
 import EmptyRoomPage from "./App/Query/EmptyRoomPage";
 import LibraryPage from "./App/Query/LibraryPage";
 import CardPage from "./App/CardPage";
-import CardLoginPage from "./App/CardLoginPage";
+import CardLoginPage from "./App/Card/CardLoginPage";
 import SettingsPage from "./App/SettingsPage";
-import AboutPage from "./App/AboutPage";
-import PrivacyPage from "./App/PrivacyPage";
-import FeedBackPage from "./App/FeedBackPage";
+import ThemeSettingsPage from "./App/Settings/ThemeSettingsPage";
+import ClassSettingsPage from "./App/Settings/ClassSettingsPage";
+import AboutPage from "./App/Settings/AboutPage";
+import PrivacyPage from "./App/Settings/PrivacyPage";
+import FeedBackPage from "./App/Settings/FeedBackPage";
 import LoginPage from "./App/LoginPage";
 import Sidebar from "./App/Sidebar";
 
@@ -143,6 +145,18 @@ const SettingsStack = createStackNavigator({
             header: null
         }
     },
+    Theme: {
+        screen: ThemeSettingsPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    Class: {
+        screen: ClassSettingsPage,
+        navigationOptions: {
+            header: null
+        }
+    },
     About: {
         screen: AboutPage,
         navigationOptions: {
@@ -223,7 +237,11 @@ const Drawer = createDrawerNavigator(
             navigationOptions: {
                 drawerLabel: "信息查询",
                 drawerIcon: () => (
-                    <AIcon name={"search1"} size={18} style={{ color: "#000" }} />
+                    <AIcon
+                        name={"search1"}
+                        size={18}
+                        style={{ color: "#000" }}
+                    />
                 )
             }
         },

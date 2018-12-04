@@ -54,11 +54,11 @@ export default class EmptyRoomPage extends Component {
                 "登录后才能查空教室哟~",
                 [
                     {
-                        text: "知道啦"
-                        // onPress: () => this.props.navigation.goBack()
+                        text: "知道啦",
+                        onPress: () => this.props.navigation.goBack()
                     }
-                ]
-                // { cancelable: false }
+                ],
+                { cancelable: false }
             );
         }
         var campusNameList = [];
@@ -121,6 +121,10 @@ export default class EmptyRoomPage extends Component {
         return (
             <View style={styles.container}>
                 <Header
+                    containerStyle={{
+                        borderBottomColor: Global.settings.theme.backgroundColor
+                    }}
+                    backgroundColor={Global.settings.theme.backgroundColor}
                     placement="left"
                     leftComponent={
                         <Button
@@ -280,7 +284,10 @@ export default class EmptyRoomPage extends Component {
                                         paddingVertical: 30
                                     }}
                                     title="查询"
-                                    buttonStyle={{ height: 40 }}
+                                    buttonStyle={{
+                                        height: 45,
+                                        backgroundColor: Global.settings.theme.backgroundColor
+                                    }}
                                     loading={this.state.showLoading}
                                     outline={true}
                                     onPress={this.getRoomList.bind(this)}
@@ -432,7 +439,7 @@ export default class EmptyRoomPage extends Component {
                         <ActivityIndicator
                             style={{}}
                             size="large"
-                            color="#2089dc"
+                            color={Global.settings.theme.backgroundColor}
                         />
                     </View>
                 )}

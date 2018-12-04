@@ -102,7 +102,7 @@ export default class CardInfo extends Component {
                         <ActivityIndicator
                             style={{}}
                             size="large"
-                            color="#2089dc"
+                            color={Global.settings.theme.backgroundColor}
                         />
                     </View>
                 )}

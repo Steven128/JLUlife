@@ -20,16 +20,9 @@ export default class SettingsPage extends Component {
     constructor(props) {
         super(props);
         this.openDrawer = this.openDrawer.bind(this);
-        this.handleClassItemHeightChange = this.handleClassItemHeightChange.bind(
-            this
-        );
-        this.handleClassFontSizeChange = this.handleClassFontSizeChange.bind(
-            this
-        );
         this.state = {
             isOnline: Global.isOnline,
-            classItemHeight: 70,
-            classFontSize: 14
+            backgroundColor: ""
         };
     }
 
@@ -37,36 +30,17 @@ export default class SettingsPage extends Component {
         // 打开抽屉式导航
         this.props.navigation.openDrawer();
     }
-    componentDidMount() {
+    componentWillMount() {
+        console.log("componentWillMount");
+    }
+    componentWillReceiveProps() {
         this.setState({
-            classItemHeight: Global.settings.class.itemHeight,
-            classFontSize: Global.settings.class.fontSize
+            backgroundColor: Global.settings.theme.backgroundColor
         });
     }
-
     componentWillUnmount() {
-        Global.settings.class.itemHeight = this.state.classItemHeight;
-        Global.settings.class.fontSize = this.state.classFontSize;
-        AppStorage._save("settings", {
-            class: {
-                itemHeight: this.state.classItemHeight,
-                fontSize: this.state.classFontSize
-            }
-        });
+        console.log("componentWillUnmount");
     }
-    component;
-
-    handleClassItemHeightChange(height) {
-        this.setState({
-            classItemHeight: height
-        });
-    }
-    handleClassFontSizeChange(fontSize) {
-        this.setState({
-            classFontSize: fontSize
-        });
-    }
-
     logoutTapped() {
         Alert.alert("真的要退出登录吗？", "退出登录会清空你的一切信息", [
             {
@@ -96,6 +70,10 @@ export default class SettingsPage extends Component {
         return (
             <View style={styles.container}>
                 <Header
+                    containerStyle={{
+                        borderBottomColor: Global.settings.theme.backgroundColor
+                    }}
+                    backgroundColor={Global.settings.theme.backgroundColor}
                     placement="left"
                     leftComponent={
                         <Button
@@ -117,54 +95,16 @@ export default class SettingsPage extends Component {
                         borderTopColor: "#eee"
                     }}
                 />
-                <View style={styles.sliderWrap}>
-                    <Text style={styles.sliderText}>
-                        课程格子高度：{" "}
-                        <Text style={styles.sliderSubText}>
-                            {this.state.classItemHeight}
-                        </Text>
-                    </Text>
-                    <Slider
-                        thumbTintColor="#2089dc"
-                        minimumTrackTintColor="#2089dc"
-                        minimumValue={20}
-                        maximumValue={120}
-                        value={this.state.classItemHeight}
-                        onValueChange={this.handleClassItemHeightChange}
-                        step={5}
-                    />
-                </View>
-                <View style={styles.sliderWrap}>
-                    <Text style={styles.sliderText}>
-                        课程字体大小：{" "}
-                        <Text style={styles.sliderSubText}>
-                            {this.state.classFontSize}
-                        </Text>
-                    </Text>
-                    <Slider
-                        thumbTintColor="#2089dc"
-                        minimumTrackTintColor="#2089dc"
-                        minimumValue={9}
-                        maximumValue={18}
-                        value={this.state.classFontSize}
-                        onValueChange={this.handleClassFontSizeChange}
-                        step={1}
-                    />
-                </View>
-                <View
-                    style={{
-                        paddingHorizontal: 30,
-                        paddingVertical: 5,
-                        backgroundColor: "#fff",
-                        borderBottomColor: "#eee",
-                        borderBottomWidth: 1
-                    }}
-                >
-                    <Text style={{ color: "#888" }}>
-                        提示： 部分设置在退出此页面后才会生效哦~
-                    </Text>
-                </View>
-
+                <SettingItem
+                    navigation={this.props.navigation}
+                    title="主题皮肤"
+                    nextPage="Theme"
+                />
+                <SettingItem
+                    navigation={this.props.navigation}
+                    title="课程表设置"
+                    nextPage="Class"
+                />
                 <View
                     style={{
                         marginTop: 30,
@@ -172,15 +112,6 @@ export default class SettingsPage extends Component {
                         borderTopColor: "#eee"
                     }}
                 >
-                    {this.state.isOnline ? (
-                        <TouchableNativeFeedback
-                            onPress={this.logoutTapped.bind(this)}
-                        >
-                            <View style={styles.item}>
-                                <Text>退出登录</Text>
-                            </View>
-                        </TouchableNativeFeedback>
-                    ) : null}
                     <SettingItem
                         navigation={this.props.navigation}
                         title="关于 JLU Life"
@@ -196,6 +127,15 @@ export default class SettingsPage extends Component {
                         title="问题反馈&amp;建议"
                         nextPage="FeedBack"
                     />
+                    {this.state.isOnline ? (
+                        <TouchableNativeFeedback
+                            onPress={this.logoutTapped.bind(this)}
+                        >
+                            <View style={styles.item}>
+                                <Text>退出登录</Text>
+                            </View>
+                        </TouchableNativeFeedback>
+                    ) : null}
                 </View>
             </View>
         );
@@ -215,19 +155,5 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: "#eee",
         paddingHorizontal: 30
-    },
-    sliderWrap: {
-        padding: 15,
-        backgroundColor: "#fff",
-        borderBottomColor: "#eee",
-        borderBottomWidth: 1,
-        alignItems: "stretch",
-        justifyContent: "center"
-    },
-    sliderText: {
-        paddingLeft: 15,
-        paddingTop: 10,
-        color: "#555"
-    },
-    sliderSubText: { color: "#888" }
+    }
 });
