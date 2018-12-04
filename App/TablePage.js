@@ -106,7 +106,14 @@ export default class TablePage extends Component {
                         key={i}
                     >
                         <View style={styles.weekWrap}>
-                            <Text style={styles.weekText}>第{i}周</Text>
+                            <Text
+                                style={[
+                                    styles.weekText,
+                                    { color: Global.settings.theme.backgroundColor }
+                                ]}
+                            >
+                                第{i}周
+                            </Text>
                         </View>
                     </TouchableNativeFeedback>
                 );
@@ -116,6 +123,10 @@ export default class TablePage extends Component {
         return (
             <View style={{ flex: 1, backgroundColor: "#fff" }}>
                 <Header
+                    containerStyle={{
+                        borderBottomColor: Global.settings.theme.backgroundColor
+                    }}
+                    backgroundColor={Global.settings.theme.backgroundColor}
                     placement="left"
                     leftComponent={
                         <Button
@@ -186,7 +197,10 @@ export default class TablePage extends Component {
                                 backgroundColor: "transparent"
                             }}
                         >
-                            <ActivityIndicator size="large" color="#2089dc" />
+                            <ActivityIndicator
+                                size="large"
+                                color={Global.settings.theme.backgroundColor}
+                            />
                         </View>
                     )}
                 </View>
@@ -357,7 +371,6 @@ const styles = StyleSheet.create({
         borderBottomColor: "#ccc"
     },
     weekText: {
-        fontSize: 16,
-        color: "#2089dc"
+        fontSize: 16
     }
 });

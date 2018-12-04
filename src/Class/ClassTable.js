@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, Dimensions, ScrollView } from "react-native";
+import {
+    StyleSheet,
+    Text,
+    View,
+    Dimensions,
+    ScrollView,
+    ImageBackground
+} from "react-native";
 import Global from "../Global";
 import { TopNav, LeftNav } from "./NavView";
 import ClassItem from "./ClassItem";
@@ -9,7 +16,15 @@ const { width, height } = Dimensions.get("window");
 export default class ClassTable extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = { backgroundImage: "" };
+    }
+
+    componentWillMount() {
+        if (Global.settings.class.backgroundImage != "") {
+            this.setState({
+                backgroundImage: Global.settings.class.backgroundImage
+            });
+        }
     }
 
     getWeekDayList(targetDate, week) {
@@ -97,83 +112,72 @@ export default class ClassTable extends Component {
             }
             items.push(<View style={styles.column}>{dayItem}</View>);
         }
-        //添加到组件中
-        var singleWeekItem = (
-            <View style={{ flex: 1 }}>
-                <TopNav
-                    weekDayList={weekDayList}
-                    color={this.props.settings.navColor}
-                    backgroundColor={this.props.settings.navBackgroundColor}
-                    opacity={this.props.settings.navOpacity}
-                />
-                <ScrollView
-                    style={{ flex: 1 }}
-                    contentContainerStyle={styles.contentContainer}
+
+        return (
+            <View style={{ flex: 1, backgroundColor: "fff" }}>
+                <ImageBackground
+                    source={{ uri: this.state.backgroundImage }}
+                    style={{ width: "100%", height: "100%" }}
                 >
                     <View
                         style={{
-                            flex: 1,
-                            flexDirection: "row",
-                            height:
-                                this.props.classLength *
-                                this.props.settings.itemHeight,
-                            backgroundColor: "#fff"
+                            backgroundColor: "#fff",
+                            opacity: this.props.settings.opacity,
+                            position: "absolute",
+                            top: 0,
+                            right: 0,
+                            bottom: 0,
+                            left: 0
                         }}
+                    />
+                    <TopNav
+                        weekDayList={weekDayList}
+                        color={this.props.settings.navColor}
+                    />
+                    <ScrollView
+                        style={{
+                            flex: 1
+                        }}
+                        contentContainerStyle={styles.contentContainer}
                     >
-                        <LeftNav
-                            itemHeight={this.props.settings.itemHeight}
-                            classLength={this.props.settings.classLength}
-                            color={this.props.settings.navColor}
-                            backgroundColor={
-                                this.props.settings.navBackgroundColor
-                            }
-                            opacity={this.props.settings.navOpacity}
-                        />
-                        <View style={{ flex: 7, flexDirection: "row" }}>
-                            {items}
+                        <View
+                            style={{
+                                flex: 1,
+                                flexDirection: "row",
+                                height:
+                                    this.props.classLength *
+                                    this.props.settings.itemHeight
+                            }}
+                        >
+                            <LeftNav
+                                itemHeight={this.props.settings.itemHeight}
+                                classLength={this.props.settings.classLength}
+                                color={this.props.settings.navColor}
+                                opacity={this.props.settings.navOpacity}
+                            />
+                            <View
+                                style={{
+                                    flex: 7,
+                                    flexDirection: "row"
+                                }}
+                            >
+                                {items}
+                            </View>
                         </View>
-                    </View>
-                </ScrollView>
+                    </ScrollView>
+                </ImageBackground>
             </View>
         );
-
-        return <View style={{ flex: 1 }}>{singleWeekItem}</View>;
     }
 }
 
 const styles = StyleSheet.create({
     contentContainer: {
-        backgroundColor: "#888"
-    },
-    topNav: {
-        height: 50,
-        backgroundColor: "#fff",
-        flex: 1,
-        borderRightColor: "#ccc",
-        borderRightWidth: 1,
-        borderBottomColor: "#ccc",
-        borderBottomWidth: 1,
-        textAlign: "center",
-        alignItems: "center",
-        justifyContent: "center",
-        textAlignVertical: "center"
-    },
-    leftNav: {
-        backgroundColor: "#fff",
-        height: 80,
-        borderRightColor: "#ccc",
-        borderRightWidth: 1,
-        borderBottomColor: "#ccc",
-        borderBottomWidth: 1,
-        textAlign: "center",
-        alignItems: "center",
-        justifyContent: "center",
-        textAlignVertical: "center"
+        backgroundColor: "transparent"
     },
     column: {
         flexDirection: "column",
-        flex: 1,
-        backgroundColor: "#fff"
+        flex: 1
     },
     columnItem: {
         borderRightColor: "#ccc",

@@ -44,7 +44,9 @@ export default class ClassItem extends Component {
                     {this.props.blank ? (
                         <View />
                     ) : (
-                        <View style={{ flex: 1 }}>
+                        <View
+                            style={{ flex: 1 }}
+                        >
                             <View
                                 style={[
                                     styles.innerItem,
