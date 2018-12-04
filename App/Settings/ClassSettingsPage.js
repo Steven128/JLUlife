@@ -28,7 +28,10 @@ export default class ClassSettingsPage extends Component {
         this.handleClassFontSizeChange = this.handleClassFontSizeChange.bind(
             this
         );
-        this.handleClassOpacityChange = this.handleClassOpacityChange.bind(
+        this.handleClassBgOpacityChange = this.handleClassBgOpacityChange.bind(
+            this
+        );
+        this.handleClassItemOpacityChange = this.handleClassItemOpacityChange.bind(
             this
         );
         this.state = {
@@ -36,26 +39,30 @@ export default class ClassSettingsPage extends Component {
             navColor: false,
             classItemHeight: 70,
             classFontSize: 14,
-            classOpacity: 0
+            classBgOpacity: 0,
+            classItemOpacity: 1
         };
     }
 
     componentDidMount() {
         this.setState({
+            navColor:
+                Global.settings.class.navColor == "#ffffff" ? true : false,
             classItemHeight: Global.settings.class.itemHeight,
             classFontSize: Global.settings.class.fontSize,
-            classOpacity: Global.settings.class.opacity,
-            navColor: Global.settings.class.navColor == "#ffffff" ? true : false
+            classBgOpacity: Global.settings.class.backgroundOpacity,
+            classItemOpacity: 1 - Global.settings.class.itemOpacity
         });
     }
 
     componentWillUnmount() {
-        Global.settings.class.itemHeight = this.state.classItemHeight;
-        Global.settings.class.fontSize = this.state.classFontSize;
-        Global.settings.class.opacity = this.state.classOpacity;
         Global.settings.class.navColor = this.state.navColor
             ? "#ffffff"
             : "#808080";
+        Global.settings.class.itemHeight = this.state.classItemHeight;
+        Global.settings.class.fontSize = this.state.classFontSize;
+        Global.settings.class.backgroundOpacity = this.state.classBgOpacity;
+        Global.settings.class.itemOpacity = 1 - this.state.classItemOpacity;
         AppStorage._save("settings", Global.settings);
     }
 
@@ -75,8 +82,11 @@ export default class ClassSettingsPage extends Component {
             classFontSize: fontSize
         });
     }
-    handleClassOpacityChange(opacity) {
-        this.setState({ classOpacity: opacity });
+    handleClassBgOpacityChange(opacity) {
+        this.setState({ classBgOpacity: opacity });
+    }
+    handleClassItemOpacityChange(opacity) {
+        this.setState({ classItemOpacity: opacity });
     }
     async requestStoragePermission(callback) {
         try {
@@ -241,9 +251,9 @@ export default class ClassSettingsPage extends Component {
                 </TouchableNativeFeedback>
                 <View style={styles.settingWrap}>
                     <Text style={styles.settingText}>
-                        背景不透明度：{" "}
+                        背景透明度：{" "}
                         <Text style={styles.sliderSubText}>
-                            {Math.ceil(this.state.classOpacity * 100)}%
+                            {Math.ceil(this.state.classBgOpacity * 100)}%
                         </Text>
                     </Text>
                     <Slider
@@ -253,8 +263,26 @@ export default class ClassSettingsPage extends Component {
                         }
                         minimumValue={0}
                         maximumValue={1}
-                        value={this.state.classOpacity}
-                        onValueChange={this.handleClassOpacityChange}
+                        value={this.state.classBgOpacity}
+                        onValueChange={this.handleClassBgOpacityChange}
+                    />
+                </View>
+                <View style={styles.settingWrap}>
+                    <Text style={styles.settingText}>
+                        课程格子透明度：{" "}
+                        <Text style={styles.sliderSubText}>
+                            {Math.ceil(this.state.classItemOpacity * 100)}%
+                        </Text>
+                    </Text>
+                    <Slider
+                        thumbTintColor={Global.settings.theme.backgroundColor}
+                        minimumTrackTintColor={
+                            Global.settings.theme.backgroundColor
+                        }
+                        minimumValue={0}
+                        maximumValue={1}
+                        value={this.state.classItemOpacity}
+                        onValueChange={this.handleClassItemOpacityChange}
                     />
                 </View>
             </View>

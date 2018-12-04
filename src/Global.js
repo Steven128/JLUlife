@@ -53,7 +53,8 @@ var Global = {
         class: {
             classLength: 11,
             navColor: "#808080",
-            opacity: 0,
+            backgroundOpacity: 0,
+            itemOpacity: 1,
             itemHeight: 70,
             fontSize: 14,
             backgroundImage: ""

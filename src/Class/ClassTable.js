@@ -83,6 +83,7 @@ export default class ClassTable extends Component {
                             length={length}
                             itemHeight={this.props.settings.itemHeight}
                             fontSize={this.props.settings.fontSize}
+                            opacity={this.props.settings.itemOpacity}
                             innerText={
                                 dayList[j].lessonName +
                                 "@" +
@@ -122,7 +123,7 @@ export default class ClassTable extends Component {
                     <View
                         style={{
                             backgroundColor: "#fff",
-                            opacity: this.props.settings.opacity,
+                            opacity: this.props.settings.backgroundOpacity,
                             position: "absolute",
                             top: 0,
                             right: 0,

@@ -44,15 +44,17 @@ export default class ClassItem extends Component {
                     {this.props.blank ? (
                         <View />
                     ) : (
-                        <View
-                            style={{ flex: 1 }}
-                        >
+                        <View style={{ flex: 1 }}>
                             <View
                                 style={[
-                                    styles.innerItem,
-                                    { backgroundColor: this.props.color }
+                                    styles.itemWrap,
+                                    {
+                                        backgroundColor: this.props.color,
+                                        opacity: this.props.opacity
+                                    }
                                 ]}
-                            >
+                            />
+                            <View style={[styles.innerItem]}>
                                 <Text
                                     style={[
                                         styles.innerItemText,
@@ -254,9 +256,16 @@ const styles = StyleSheet.create({
     container: {
         padding: 1
     },
+    itemWrap: {
+        borderRadius: 5,
+        position: "absolute",
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0
+    },
     innerItem: {
         flex: 1,
-        borderRadius: 5,
         padding: 3,
         overflow: "hidden"
     },

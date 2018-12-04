@@ -12,14 +12,16 @@ export default function handleNewSettings() {
         Global.settings.theme.color = "#ffffff";
     if (settings.theme.backgroundColor == undefined)
         Global.settings.theme.backgroundColor = "#2089dc";
-    console.log("set theme");
     //ClassTable
     if (settings.class == undefined) Global.settings.class = {};
     if (settings.class.classLength == undefined)
         Global.settings.class.classLength = 11;
     if (settings.class.navColor == undefined)
         Global.settings.class.navColor = "#808080";
-    if (settings.class.opacity == undefined) Global.settings.class.opacity = 0;
+    if (settings.class.backgroundOpacity == undefined)
+        Global.settings.class.backgroundOpacity = 0;
+    if (settings.class.itemOpacity == undefined)
+        Global.settings.class.itemOpacity = 1;
     if (settings.class.itemHeight == undefined)
         Global.settings.class.itemHeight = 70;
     if (settings.class.fontSize == undefined)

@@ -90,7 +90,7 @@ export default class SettingsPage extends Component {
                 />
                 <View
                     style={{
-                        marginTop: 30,
+                        marginTop: 20,
                         borderTopWidth: 1,
                         borderTopColor: "#eee"
                     }}
@@ -107,7 +107,7 @@ export default class SettingsPage extends Component {
                 />
                 <View
                     style={{
-                        marginTop: 30,
+                        marginTop: 20,
                         borderTopWidth: 1,
                         borderTopColor: "#eee"
                     }}

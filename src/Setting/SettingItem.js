@@ -27,12 +27,6 @@ export default class SettingsItem extends Component {
                 <View style={styles.container}>
                     <View style={{ flexDirection: "row" }}>
                         <Text style={{ flex: 9 }}>{this.props.title}</Text>
-                        <EIcon
-                            style={{ flex: 1 }}
-                            name="chevron-thin-right"
-                            size={18}
-                            color="#555"
-                        />
                     </View>
                 </View>
             </TouchableNativeFeedback>

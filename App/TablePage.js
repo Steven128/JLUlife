@@ -8,13 +8,15 @@ import {
     ScrollView,
     TouchableOpacity,
     TouchableNativeFeedback,
-    StyleSheet
+    StyleSheet,
+    StatusBar
 } from "react-native";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../src/Global";
 import ClassTable from "../src/Class/ClassTable";
 import AppStorage from "../src/AppStorage";
+import ClassTip from "../src/Tips/ClassTip";
 const { width, height } = Dimensions.get("window");
 
 var classJson = [];
@@ -109,7 +111,11 @@ export default class TablePage extends Component {
                             <Text
                                 style={[
                                     styles.weekText,
-                                    { color: Global.settings.theme.backgroundColor }
+                                    {
+                                        color:
+                                            Global.settings.theme
+                                                .backgroundColor
+                                    }
                                 ]}
                             >
                                 第{i}周
@@ -122,9 +128,20 @@ export default class TablePage extends Component {
         }
         return (
             <View style={{ flex: 1, backgroundColor: "#fff" }}>
+                <StatusBar
+                    backgroundColor={Global.settings.theme.backgroundColor}
+                    translucent={false}
+                />
+                <ClassTip />
                 <Header
                     containerStyle={{
-                        borderBottomColor: Global.settings.theme.backgroundColor
+                        borderBottomColor:
+                            Global.settings.theme.backgroundColor,
+                        position: "absolute",
+                        top: 0,
+                        right: 0,
+                        left: 0,
+                        zIndex: 0
                     }}
                     backgroundColor={Global.settings.theme.backgroundColor}
                     placement="left"
