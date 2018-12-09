@@ -34,7 +34,7 @@ export default class HomePage extends Component {
         this.state = {
             showSplashTips: false,
             isOnline: Global.isOnline,
-            checkingOnline: false,
+            checkingOnline: Global.checkingOnline,
             getTips: false,
             tipsCount: 0
         };

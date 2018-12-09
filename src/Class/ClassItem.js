@@ -78,6 +78,7 @@ export default class ClassItem extends Component {
                             >
                                 <DialogContent>
                                     <ScrollView
+                                        showsVerticalScrollIndicator={false}
                                         style={{
                                             height: height * 0.4,
                                             padding: 10
@@ -276,6 +277,7 @@ export default class ClassItem extends Component {
                             >
                                 <DialogContent>
                                     <ScrollView
+                                        showsVerticalScrollIndicator={false}
                                         style={{
                                             height: height * 0.4,
                                             padding: 10

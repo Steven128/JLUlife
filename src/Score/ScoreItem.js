@@ -87,6 +87,7 @@ export default class ScoreItem extends Component {
                                 }}
                             />
                             <ScrollView
+                                showsVerticalScrollIndicator={false}
                                 style={{
                                     height: height * 0.7 - 100
                                 }}
@@ -235,6 +236,7 @@ export default class ScoreItem extends Component {
                                 }}
                             />
                             <ScrollView
+                                showsVerticalScrollIndicator={false}
                                 style={{
                                     height: height * 0.7 - 100
                                 }}

@@ -94,8 +94,7 @@ export default class AboutPage extends Component {
                             <Text style={[styles.text]}>版本号 2.1.0</Text>
                         </View>
                         <Text style={[styles.text, { width: width * 0.8 }]}>
-                            &nbsp;&nbsp;&nbsp;&nbsp;JLU
-                            Life是一款面向吉林大学学生的服务型APP，目前包含查看课表、成绩、校内通知、教务通知、查询空教室及图书馆馆藏、一卡通查询转账挂失等功能，希望能够帮助到同学们，为同学们的学习、生活提供便利。
+                            &nbsp;&nbsp;&nbsp;&nbsp;JLU Life 是一款面向吉林大学学生的服务型APP。此应用并非官方应用，为个人开发，使用的接口均为学校官方开放接口，旨在帮助到同学们，为同学们的学习、生活提供便利。
                         </Text>
                     </View>
                     <View style={{ padding: 15 }}>
