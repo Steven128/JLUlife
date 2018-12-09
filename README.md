@@ -5,9 +5,15 @@
 下载地址
 ============
 
+Android
+------------
+
 [酷安](https://www.coolapk.com/apk/210060)
 
-未来会上架更多商店
+[华为应用市场](http://appstore.huawei.com/app/C100513429)
+
+[应用宝](http://app.qq.com/#id=detail&appid=1104913434)
+
 
 简介
 ============
@@ -48,6 +54,14 @@ JLU Life 是一款面向吉林大学学生的服务型APP，目前包含查看�
    </span>
 </div>
 
+开发者
+===========
+
+[Github@Steven128](https://github.com/Steven128/)
+
+[Github@CloudMagician](https://github.com/CloudMagician)
+
+
 开源相关
 ===========
 
@@ -67,3 +81,7 @@ JLU Life 是一款面向吉林大学学生的服务型APP，目前包含查看�
 * 启动页  [rn-splash-screen](https://github.com/mehcode/rn-splash-screen)
 
 * cheerio jQuery核心功能实现，抓取页面信息使用 [cheerio](https://github.com/cheeriojs/cheerio)
+
+* 选取图片&裁剪 [react-native-image-crop-picker](https://github.com/ivpusic/react-native-image-crop-picker)
+
+* 集成bugly [react-native-bugly](https://github.com/canyara/react-native-bugly)
