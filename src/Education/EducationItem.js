@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import {
     TouchableNativeFeedback,
+    TouchableHighlight,
+    Platform,
     Dimensions,
     StyleSheet,
     View,
@@ -18,7 +20,34 @@ export default class EducationItem extends Component {
     }
 
     render() {
-        return (
+        return Platform.OS === "ios" ? (
+            <TouchableHighlight
+                onPress={() => {
+                    this.props.navigation.navigate("Item", {
+                        title: this.props.title,
+                        href: this.props.href,
+                        time: this.props.time
+                    });
+                }}
+            >
+                <View style={styles.container}>
+                    <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+                        <Text style={styles.title}>{this.props.title}</Text>
+                    </View>
+
+                    <View style={{ flexDirection: "row" }}>
+                        <Text
+                            style={[
+                                styles.text,
+                                { flex: 1, textAlign: "right" }
+                            ]}
+                        >
+                            {this.props.time}
+                        </Text>
+                    </View>
+                </View>
+            </TouchableHighlight>
+        ) : (
             <TouchableNativeFeedback
                 onPress={() => {
                     this.props.navigation.navigate("Item", {

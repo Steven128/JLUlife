@@ -1,11 +1,12 @@
 {
     "name": "jlulife",
-    "version": "0.0.1",
+    "version": "2.1.0",
     "private": true,
     "scripts": {
         "start": "node node_modules/react-native/local-cli/cli.js start",
         "test": "jest",
-        "devtools": "react-devtools"
+        "devtools": "react-devtools",
+        "bundle-ios": "node node_modules/react-native/local-cli/cli.js bundle --entry-file index.js --platform ios --dev false --bundle-output ./ios/bundle/index.jsbundle --assets-dest ./ios/bundle"
     },
     "dependencies": {
         "asap": "^2.0.6",
@@ -19,6 +20,7 @@
         "react": "16.6.1",
         "react-native": "0.57.7",
         "react-native-color": "^0.0.10",
+        "react-native-easy-toast": "^1.1.0",
         "react-native-elements": "^1.0.0-beta7",
         "react-native-flexi-radio-button": "^0.2.2",
         "react-native-image-crop-picker": "^0.21.3",

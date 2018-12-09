@@ -28,7 +28,7 @@ export default class Weather extends Component {
                 <Text style={[styles.subTitle]}>天气</Text>
                 <View>
                     <Text style={[styles.text]}>
-                        <Text style={{ fontSize: 36, fontWeight: "100" }}>
+                        <Text style={{ fontSize: 36, fontWeight: "300" }}>
                             {Global.tips.weatherInfo.temp}℃{" "}
                         </Text>
                         {Global.tips.weatherInfo.weather}{" "}

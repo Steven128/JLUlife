@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import RefreshListView, { RefreshState } from "react-native-refresh-list-view";
 import Global from "../Global";
-import EduInterface from "./EduInterface";
+import EduInterface from "../FetchInterface/EduInterface";
 import EducationItem from "./EducationItem";
 
 const { width, height } = Dimensions.get("window");

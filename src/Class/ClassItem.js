@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import {
     TouchableNativeFeedback,
+    TouchableOpacity,
+    Platform,
     StyleSheet,
     Text,
     View,
@@ -34,7 +36,205 @@ export default class ClassItem extends Component {
     }
 
     render() {
-        return (
+        return Platform.OS === "ios" ? (
+            <TouchableOpacity
+                onPress={() => {
+                    this.setState({ dialogVisible: true });
+                }}
+            >
+                <View style={[styles.container, { height: this.getHeight() }]}>
+                    {this.props.blank ? (
+                        <View />
+                    ) : (
+                        <View style={{ flex: 1 }}>
+                            <View
+                                style={[
+                                    styles.itemWrap,
+                                    {
+                                        backgroundColor: this.props.color,
+                                        opacity: this.props.opacity
+                                    }
+                                ]}
+                            />
+                            <View style={[styles.innerItem]}>
+                                <Text
+                                    style={[
+                                        styles.innerItemText,
+                                        { fontSize: this.props.fontSize }
+                                    ]}
+                                >
+                                    {this.props.innerText}
+                                </Text>
+                            </View>
+                            <Dialog
+                                visible={this.state.dialogVisible}
+                                dialogAnimation={new ScaleAnimation()}
+                                onTouchOutside={() => {
+                                    this.setState({ dialogVisible: false });
+                                }}
+                                width={0.7}
+                                height={0.4}
+                                containerStyle={styles.dialog}
+                            >
+                                <DialogContent>
+                                    <ScrollView
+                                        style={{
+                                            height: height * 0.4,
+                                            padding: 10
+                                        }}
+                                    >
+                                        <Text
+                                            style={[
+                                                styles.dialogTitle,
+                                                {
+                                                    fontSize:
+                                                        this.props.fontSize + 8
+                                                }
+                                            ]}
+                                        >
+                                            {this.props.lessonName}
+                                        </Text>
+
+                                        <View style={styles.dialogInnerWrap}>
+                                            <View
+                                                style={[
+                                                    styles.text,
+                                                    styles.textInDialog
+                                                ]}
+                                            >
+                                                <EIcon
+                                                    style={{ flex: 1 }}
+                                                    name="calendar"
+                                                    size={
+                                                        (this.props.fontSize -
+                                                            1) *
+                                                        2
+                                                    }
+                                                    color="lightgreen"
+                                                />
+                                                <Text
+                                                    style={{
+                                                        flex: 5,
+                                                        paddingTop: 3,
+                                                        fontSize: this.props
+                                                            .fontSize
+                                                    }}
+                                                >
+                                                    第{this.props.beginWeek} -{" "}
+                                                    {this.props.endWeek}周
+                                                    {this.props.weekOddEven ==
+                                                    "O"
+                                                        ? "（单周）"
+                                                        : this.props
+                                                              .weekOddEven ==
+                                                          "E"
+                                                        ? "（双周）"
+                                                        : ""}
+                                                </Text>
+                                            </View>
+                                            <View
+                                                style={[
+                                                    styles.text,
+                                                    styles.textInDialog
+                                                ]}
+                                            >
+                                                <MIcon
+                                                    style={{ flex: 1 }}
+                                                    name="clock"
+                                                    size={
+                                                        (this.props.fontSize -
+                                                            1) *
+                                                        2
+                                                    }
+                                                    color="orange"
+                                                />
+                                                <Text
+                                                    style={{
+                                                        flex: 5,
+                                                        paddingTop: 3,
+                                                        fontSize: this.props
+                                                            .fontSize
+                                                    }}
+                                                >
+                                                    周
+                                                    {this.numToChinese(
+                                                        this.props.dayOfWeek
+                                                    )}{" "}
+                                                    第{this.props.time[0]} -{" "}
+                                                    {
+                                                        this.props.time[
+                                                            this.props.time
+                                                                .length - 1
+                                                        ]
+                                                    }
+                                                    节
+                                                </Text>
+                                            </View>
+                                            <View
+                                                style={[
+                                                    styles.text,
+                                                    styles.textInDialog
+                                                ]}
+                                            >
+                                                <EIcon
+                                                    style={{ flex: 1 }}
+                                                    name="user"
+                                                    size={
+                                                        (this.props.fontSize -
+                                                            1) *
+                                                        2
+                                                    }
+                                                    color="lightblue"
+                                                />
+                                                <Text
+                                                    style={{
+                                                        flex: 5,
+                                                        paddingTop: 3,
+                                                        fontSize: this.props
+                                                            .fontSize
+                                                    }}
+                                                >
+                                                    {this.printTeachers(
+                                                        this.props.teachers
+                                                    )}
+                                                </Text>
+                                            </View>
+                                            <View
+                                                style={[
+                                                    styles.text,
+                                                    styles.textInDialog
+                                                ]}
+                                            >
+                                                <EIcon
+                                                    style={{ flex: 1 }}
+                                                    name="location-pin"
+                                                    size={
+                                                        (this.props.fontSize -
+                                                            1) *
+                                                        2
+                                                    }
+                                                    color="red"
+                                                />
+                                                <Text
+                                                    style={{
+                                                        flex: 5,
+                                                        paddingTop: 3,
+                                                        fontSize: this.props
+                                                            .fontSize
+                                                    }}
+                                                >
+                                                    {this.props.classroom}
+                                                </Text>
+                                            </View>
+                                        </View>
+                                    </ScrollView>
+                                </DialogContent>
+                            </Dialog>
+                        </View>
+                    )}
+                </View>
+            </TouchableOpacity>
+        ) : (
             <TouchableNativeFeedback
                 onPress={() => {
                     this.setState({ dialogVisible: true });

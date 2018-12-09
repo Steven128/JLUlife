@@ -1,3 +1,6 @@
+/**
+ * 教务系统登录页
+ */
 import React, { Component } from "react";
 import {
     Dimensions,
@@ -6,12 +9,18 @@ import {
     View,
     Alert,
     ToastAndroid,
-    ScrollView
+    ScrollView,
+    StatusBar,
+    Platform
 } from "react-native";
+import { SafeAreaView } from "react-navigation";
 import { Header, Input, Button, CheckBox } from "react-native-elements";
 import Icon from "react-native-vector-icons/AntDesign";
 import Global from "../src/Global";
 import LoginInterface from "../src/FetchInterface/LoginInterface";
+import isIphoneX from "../src/isIphoneX";
+import Toast, { DURATION } from "react-native-easy-toast";
+
 const { width, height } = Dimensions.get("window");
 
 export default class LoginPage extends Component {
@@ -44,99 +53,137 @@ export default class LoginPage extends Component {
     }
     render() {
         const { navigate } = this.props.navigation;
+        var headerStyle = {
+            borderBottomColor: Global.settings.theme.backgroundColor
+        };
+        if (isIphoneX()) {
+            headerStyle.paddingTop = 0;
+            headerStyle.height = 44;
+        }
         var contentPaddingTop = this.state.showErrMsg ? 20 : 50;
         return (
-            <View style={{ flex: 1, backgroundColor: "#efefef" }}>
-                <Header
-                    containerStyle={{
-                        borderBottomColor: Global.settings.theme.backgroundColor
-                    }}
+            <SafeAreaView
+                style={{
+                    flex: 1,
+                    backgroundColor: Global.settings.theme.backgroundColor
+                }}
+            >
+                <StatusBar
                     backgroundColor={Global.settings.theme.backgroundColor}
-                    placement="left"
-                    leftComponent={
-                        <Icon
-                            name="left"
-                            size={20}
-                            color="#ffffff"
-                            onPress={() => this.props.navigation.goBack()}
-                        />
-                    }
-                    centerComponent={{
-                        text: "教务系统登录",
-                        style: { color: "#fff", fontSize: 16 }
-                    }}
+                    barStyle="light-content"
+                    translucent={false}
                 />
-                <ScrollView style={{ height: height - 80 }}>
-                    {this.state.showErrMsg ? (
-                        <View
-                            style={{
-                                height: 30,
-                                backgroundColor: "#d10000",
-                                padding: 5,
-                                justifyContent: "center",
-                                textAlignVertical: "center"
-                            }}
-                        >
-                            <Text
-                                style={{ color: "#fff", textAlign: "center" }}
+                <Toast ref="toast" />
+                <View style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
+                    <Header
+                        containerStyle={headerStyle}
+                        backgroundColor={Global.settings.theme.backgroundColor}
+                        placement="left"
+                        leftComponent={
+                            <Icon
+                                name="left"
+                                size={20}
+                                color="#ffffff"
+                                onPress={() => this.props.navigation.goBack()}
+                            />
+                        }
+                        centerComponent={{
+                            text: "教务系统登录",
+                            style: { color: "#fff", fontSize: 16 }
+                        }}
+                    />
+                    <ScrollView style={{ height: height - 80 }}>
+                        {this.state.showErrMsg ? (
+                            <View
+                                style={{
+                                    height: 30,
+                                    backgroundColor: "#d10000",
+                                    padding: 5,
+                                    justifyContent: "center",
+                                    textAlignVertical: "center"
+                                }}
                             >
-                                {this.state.errMsgList[0]}
-                            </Text>
-                        </View>
-                    ) : null}
-                    <View style={{ alignSelf: "center" }}>
-                        <View style={{ paddingTop: contentPaddingTop }}>
-                            <Input
-                                containerStyle={styles.input}
-                                inputStyle={styles.inputStyle}
-                                placeholder="教学号"
-                                leftIcon={
-                                    <Icon name="user" size={22} color="#888" />
-                                }
-                                value={this.state.j_username}
-                                onChangeText={this.handleNameChange}
-                                returnKeyType="next"
-                                autoFocus={true}
-                                maxLength={8}
-                                keyboardType="numeric"
-                                selectTextOnFocus={true}
-                            />
-                            <Input
-                                containerStyle={styles.input}
-                                inputStyle={styles.inputStyle}
-                                placeholder="密码"
-                                secureTextEntry={true}
-                                leftIcon={
-                                    <Icon name="lock1" size={22} color="#888" />
-                                }
-                                value={this.state.j_password}
-                                onChangeText={this.handlePwdChange}
-                                returnKeyType="done"
-                                selectTextOnFocus={true}
-                            />
-                        </View>
-                        <View style={{ paddingHorizontal: 40, paddingTop: 60 }}>
-                            <Button
-                                title="登录"
-                                loading={this.state.showLoading}
-                                loadingProps={{
-                                    size: "large",
-                                    color: "#fff"
+                                <Text
+                                    style={{
+                                        color: "#fff",
+                                        textAlign: "center"
+                                    }}
+                                >
+                                    {this.state.errMsgList[0]}
+                                </Text>
+                            </View>
+                        ) : null}
+                        <View style={{ alignSelf: "center" }}>
+                            <View style={{ paddingTop: contentPaddingTop }}>
+                                <Input
+                                    containerStyle={styles.input}
+                                    inputStyle={styles.inputStyle}
+                                    placeholder="教学号"
+                                    leftIcon={
+                                        <Icon
+                                            name="user"
+                                            size={22}
+                                            color="#888"
+                                        />
+                                    }
+                                    value={this.state.j_username}
+                                    onChangeText={this.handleNameChange}
+                                    returnKeyType="next"
+                                    autoFocus={true}
+                                    maxLength={8}
+                                    keyboardType="numeric"
+                                    selectTextOnFocus={true}
+                                />
+                                <Input
+                                    containerStyle={styles.input}
+                                    inputStyle={styles.inputStyle}
+                                    placeholder="密码"
+                                    secureTextEntry={true}
+                                    leftIcon={
+                                        <Icon
+                                            name="lock1"
+                                            size={22}
+                                            color="#888"
+                                        />
+                                    }
+                                    value={this.state.j_password}
+                                    onChangeText={this.handlePwdChange}
+                                    returnKeyType="done"
+                                    selectTextOnFocus={true}
+                                />
+                            </View>
+                            <View
+                                style={{
+                                    paddingHorizontal: 40,
+                                    paddingTop: 60
                                 }}
-                                titleStyle={{ fontWeight: "700" }}
-                                buttonStyle={{
-                                    height: 45,
-                                    backgroundColor: Global.settings.theme.backgroundColor
-                                }}
-                                onPress={this.loginTapped}
-                            />
+                            >
+                                <Button
+                                    title="登录"
+                                    loading={this.state.showLoading}
+                                    loadingProps={{
+                                        size: "large",
+                                        color: "#fff"
+                                    }}
+                                    titleStyle={{ fontWeight: "700" }}
+                                    buttonStyle={{
+                                        height: 45,
+                                        backgroundColor:
+                                            Global.settings.theme
+                                                .backgroundColor
+                                    }}
+                                    onPress={this.loginTapped}
+                                />
+                            </View>
                         </View>
-                    </View>
-                </ScrollView>
-            </View>
+                    </ScrollView>
+                </View>
+            </SafeAreaView>
         );
     }
-
+    /**
+     * 表单验证
+     */
     validate() {
         var flag = true;
         var errorText = [];
@@ -165,7 +212,9 @@ export default class LoginPage extends Component {
             return false;
         }
     }
-
+    /**
+     * 按登录键后处理
+     */
     loginTapped() {
         if (this.state.showLoading || !this.validate()) {
             return false;
@@ -175,11 +224,12 @@ export default class LoginPage extends Component {
         });
         LoginInterface(this.state.j_username, this.state.j_password, res => {
             if (res.message == "success") {
-                ToastAndroid.show("登录成功", ToastAndroid.LONG);
+                Platform.OS === "ios"
+                    ? this.refs.toast.show("登录成功", 2000)
+                    : ToastAndroid.show("登录成功", ToastAndroid.LONG);
                 this.props.navigation.navigate("Home", {
-                    message: "success",
-                    currentStuName: Global.currentStuName,
-                    termName: Global.termName
+                    from: "Login",
+                    message: "success"
                 });
             } else if (res.message == "error") {
                 this.setState({
@@ -214,6 +264,9 @@ export default class LoginPage extends Component {
     }
 }
 const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
     input: {
         paddingVertical: 15,
         width: width * 0.86

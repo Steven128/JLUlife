@@ -1,3 +1,6 @@
+/**
+ * 信息查询 -> 空教室查询页
+ */
 import React, { Component } from "react";
 import {
     View,
@@ -9,8 +12,11 @@ import {
     TouchableOpacity,
     ActivityIndicator,
     FlatList,
-    Alert
+    Alert,
+    StatusBar,
+    Platform
 } from "react-native";
+import { SafeAreaView } from "react-navigation";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Dialog, {
@@ -21,6 +27,7 @@ import Global from "../../src/Global";
 import { DatePicker } from "react-native-pickers";
 import EmptyRoomPicker from "../../src/Query/EmptyRoomPicker";
 import ClassPicker from "../../src/Query/ClassPicker";
+import isIphoneX from "../../src/isIphoneX";
 //data
 import campus from "../../src/Query/data/campus.json";
 import building from "../../src/Query/data/building.json";
@@ -55,7 +62,7 @@ export default class EmptyRoomPage extends Component {
                 [
                     {
                         text: "知道啦",
-                        onPress: () => this.props.navigation.goBack()
+                        onPress: () => this.props.navigation.navigate("Main")
                     }
                 ],
                 { cancelable: false }
@@ -71,7 +78,9 @@ export default class EmptyRoomPage extends Component {
         });
         this.changeCampus(campus[0].value);
     }
-
+    /**
+     * 处理换校区后切换教学楼
+     */
     changeCampus(campusId) {
         var _buildingNameList = [];
         _campusId = parseInt(campusId.substring(3, 4));
@@ -118,334 +127,378 @@ export default class EmptyRoomPage extends Component {
 
     render() {
         const { navigate } = this.props.navigation;
+        var headerStyle = {
+            borderBottomColor: Global.settings.theme.backgroundColor
+        };
+        if (isIphoneX()) {
+            headerStyle.paddingTop = 0;
+            headerStyle.height = 44;
+        }
         return (
-            <View style={styles.container}>
-                <Header
-                    containerStyle={{
-                        borderBottomColor: Global.settings.theme.backgroundColor
-                    }}
+            <SafeAreaView
+                style={{
+                    flex: 1,
+                    backgroundColor: Global.settings.theme.backgroundColor
+                }}
+            >
+                <StatusBar
                     backgroundColor={Global.settings.theme.backgroundColor}
-                    placement="left"
-                    leftComponent={
-                        <Button
-                            title=""
-                            icon={
-                                <EIcon
-                                    name="chevron-left"
-                                    size={28}
-                                    color="white"
-                                />
-                            }
-                            clear
-                            onPress={() => this.props.navigation.goBack()}
-                        />
-                    }
-                    centerComponent={{
-                        text: "空教室查询",
-                        style: { color: "#fff", fontSize: 16 }
-                    }}
+                    barStyle="light-content"
+                    translucent={false}
                 />
-                {Global.isOnline || 1 ? (
-                    <View style={{ flex: 1 }}>
-                        <View style={{ flex: 1 }}>
-                            {this.renderButton(
-                                this.state.campusNameList[
-                                    this.state.campusSelected
-                                ],
-                                () => {
-                                    this.EmptyRoomPicker1.show();
+                <View style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
+                    <Header
+                        containerStyle={headerStyle}
+                        backgroundColor={Global.settings.theme.backgroundColor}
+                        placement="left"
+                        leftComponent={
+                            <Button
+                                title=""
+                                icon={
+                                    <EIcon
+                                        name="chevron-left"
+                                        size={28}
+                                        color="white"
+                                    />
                                 }
-                            )}
-                            {this.renderButton(
-                                this.state.buildingNameList[
-                                    this.state.buildingSelected
-                                ],
-                                () => {
-                                    this.EmptyRoomPicker2.show();
+                                clear
+                                onPress={() =>
+                                    this.props.navigation.navigate("Main")
                                 }
-                            )}
-                            {this.renderButton(this.state.date, () => {
-                                this.DatePicker.show();
-                            })}
-                            {this.renderButton(
-                                "从第" +
-                                    this.state.classBegin +
-                                    "节    到第" +
-                                    this.state.classEnd +
-                                    "节",
-                                () => {
-                                    this.ClassPicker.show();
-                                }
-                            )}
-                            <EmptyRoomPicker
-                                list={this.state.campusNameList}
-                                ref={ref => (this.EmptyRoomPicker1 = ref)}
-                                onPickerCancel={() => {}}
-                                onPickerConfirm={value => {
-                                    var campusSelected = 0;
-                                    var campusId = "";
-                                    while (campus[campusSelected]) {
-                                        if (
-                                            campus[campusSelected].name == value
-                                        ) {
-                                            campusId =
-                                                campus[campusSelected].value;
-                                            break;
-                                        }
-                                        campusSelected++;
-                                    }
-                                    this.setState({
-                                        campusSelected: campusSelected
-                                    });
-                                    this.changeCampus(campusId);
-                                }}
-                                itemHeight={50}
                             />
-                            <EmptyRoomPicker
-                                list={this.state.buildingNameList}
-                                ref={ref => (this.EmptyRoomPicker2 = ref)}
-                                onPickerCancel={() => {}}
-                                onPickerConfirm={value => {
-                                    var buildingSelected = 0;
-                                    var buildingId = "";
-                                    var campusId = this.state.campusId;
-                                    campusId = parseInt(
-                                        campusId.substring(3, 4)
-                                    );
-                                    while (
-                                        building[campusId - 1][buildingSelected]
-                                    ) {
-                                        if (
+                        }
+                        centerComponent={{
+                            text: "空教室查询",
+                            style: { color: "#fff", fontSize: 16 }
+                        }}
+                    />
+                    {Global.isOnline || 1 ? (
+                        <View style={{ flex: 1 }}>
+                            <View style={{ flex: 1 }}>
+                                {this.renderButton(
+                                    this.state.campusNameList[
+                                        this.state.campusSelected
+                                    ],
+                                    () => {
+                                        this.EmptyRoomPicker1.show();
+                                    }
+                                )}
+                                {this.renderButton(
+                                    this.state.buildingNameList[
+                                        this.state.buildingSelected
+                                    ],
+                                    () => {
+                                        this.EmptyRoomPicker2.show();
+                                    }
+                                )}
+                                {this.renderButton(this.state.date, () => {
+                                    this.DatePicker.show();
+                                })}
+                                {this.renderButton(
+                                    "从第" +
+                                        this.state.classBegin +
+                                        "节    到第" +
+                                        this.state.classEnd +
+                                        "节",
+                                    () => {
+                                        this.ClassPicker.show();
+                                    }
+                                )}
+                                <EmptyRoomPicker
+                                    list={this.state.campusNameList}
+                                    ref={ref => (this.EmptyRoomPicker1 = ref)}
+                                    onPickerCancel={() => {}}
+                                    onPickerConfirm={value => {
+                                        var campusSelected = 0;
+                                        var campusId = "";
+                                        while (campus[campusSelected]) {
+                                            if (
+                                                campus[campusSelected].name ==
+                                                value
+                                            ) {
+                                                campusId =
+                                                    campus[campusSelected]
+                                                        .value;
+                                                break;
+                                            }
+                                            campusSelected++;
+                                        }
+                                        this.setState({
+                                            campusSelected: campusSelected
+                                        });
+                                        this.changeCampus(campusId);
+                                    }}
+                                    itemHeight={50}
+                                />
+                                <EmptyRoomPicker
+                                    list={this.state.buildingNameList}
+                                    ref={ref => (this.EmptyRoomPicker2 = ref)}
+                                    onPickerCancel={() => {}}
+                                    onPickerConfirm={value => {
+                                        var buildingSelected = 0;
+                                        var buildingId = "";
+                                        var campusId = this.state.campusId;
+                                        campusId = parseInt(
+                                            campusId.substring(3, 4)
+                                        );
+                                        while (
                                             building[campusId - 1][
                                                 buildingSelected
-                                            ].name == value
+                                            ]
                                         ) {
-                                            buildingId =
+                                            if (
                                                 building[campusId - 1][
                                                     buildingSelected
-                                                ].value;
+                                                ].name == value
+                                            ) {
+                                                buildingId =
+                                                    building[campusId - 1][
+                                                        buildingSelected
+                                                    ].value;
 
-                                            break;
+                                                break;
+                                            }
+                                            buildingSelected++;
                                         }
-                                        buildingSelected++;
-                                    }
-                                    this.setState({
-                                        buildingId: buildingId,
-                                        buildingSelected: buildingSelected
-                                    });
-                                }}
-                                itemHeight={50}
-                            />
-                            <DatePicker
-                                unit={this.state.unit}
-                                HH={false}
-                                mm={false}
-                                ss={false}
-                                onPickerConfirm={value => {
-                                    var year = value[0].substring(0, 4);
-                                    var month = "";
-                                    if (value[1].length == 2) {
-                                        month = "0" + value[1].substring(0, 1);
-                                    } else {
-                                        month = value[1].substring(0, 2);
-                                    }
-                                    var day = value[2].substring(0, 2);
-                                    this.setState({
-                                        date: year + "-" + month + "-" + day
-                                    });
-                                }}
-                                onPickerCancel={() => {}}
-                                ref={ref => (this.DatePicker = ref)}
-                            />
-                            <ClassPicker
-                                ref={ref => (this.ClassPicker = ref)}
-                                onPickerCancel={() => {}}
-                                onPickerConfirm={value => {
-                                    this.setState({
-                                        classBegin: value.begin,
-                                        classEnd: value.end
-                                    });
-                                }}
-                                itemHeight={50}
-                            />
-                            <View
-                                style={{
-                                    paddingHorizontal: 15,
-                                    paddingVertical: 20
-                                }}
-                            >
-                                <Button
-                                    containerStyle={{
-                                        position: "absolute",
-                                        left: 0,
-                                        right: 0,
-                                        zIndex: 0,
-                                        paddingHorizontal: 30,
-                                        paddingVertical: 30
+                                        this.setState({
+                                            buildingId: buildingId,
+                                            buildingSelected: buildingSelected
+                                        });
                                     }}
-                                    title="查询"
-                                    buttonStyle={{
-                                        height: 45,
-                                        backgroundColor: Global.settings.theme.backgroundColor
-                                    }}
-                                    loading={this.state.showLoading}
-                                    outline={true}
-                                    onPress={this.getRoomList.bind(this)}
+                                    itemHeight={50}
                                 />
-                            </View>
-                            <Dialog
-                                visible={this.state.dialogVisible}
-                                dialogAnimation={new ScaleAnimation()}
-                                onTouchOutside={() => {
-                                    this.setState({ dialogVisible: false });
-                                }}
-                                width={0.9}
-                                height={0.75}
-                                containerStyle={styles.dialog}
-                            >
-                                <DialogContent>
-                                    <View style={{ paddingVertical: 25 }}>
-                                        <View
-                                            style={{
-                                                flexDirection: "row"
-                                            }}
-                                        >
+                                <DatePicker
+                                    unit={this.state.unit}
+                                    HH={false}
+                                    mm={false}
+                                    ss={false}
+                                    onPickerConfirm={value => {
+                                        var year = value[0].substring(0, 4);
+                                        var month = "";
+                                        if (value[1].length == 2) {
+                                            month =
+                                                "0" + value[1].substring(0, 1);
+                                        } else {
+                                            month = value[1].substring(0, 2);
+                                        }
+                                        var day = value[2].substring(0, 2);
+                                        this.setState({
+                                            date: year + "-" + month + "-" + day
+                                        });
+                                    }}
+                                    onPickerCancel={() => {}}
+                                    ref={ref => (this.DatePicker = ref)}
+                                />
+                                <ClassPicker
+                                    ref={ref => (this.ClassPicker = ref)}
+                                    onPickerCancel={() => {}}
+                                    onPickerConfirm={value => {
+                                        this.setState({
+                                            classBegin: value.begin,
+                                            classEnd: value.end
+                                        });
+                                    }}
+                                    itemHeight={50}
+                                />
+                                <View
+                                    style={{
+                                        paddingHorizontal: 15,
+                                        paddingVertical: 20
+                                    }}
+                                >
+                                    <Button
+                                        containerStyle={{
+                                            position: "absolute",
+                                            left: 0,
+                                            right: 0,
+                                            zIndex: 0,
+                                            paddingHorizontal: 30,
+                                            paddingVertical: 30
+                                        }}
+                                        title="查询"
+                                        buttonStyle={{
+                                            height: 45,
+                                            backgroundColor:
+                                                Global.settings.theme
+                                                    .backgroundColor
+                                        }}
+                                        loading={this.state.showLoading}
+                                        outline={true}
+                                        onPress={this.getRoomList.bind(this)}
+                                    />
+                                </View>
+                                <Dialog
+                                    visible={this.state.dialogVisible}
+                                    dialogAnimation={new ScaleAnimation()}
+                                    onTouchOutside={() => {
+                                        this.setState({
+                                            dialogVisible: false
+                                        });
+                                    }}
+                                    width={0.9}
+                                    height={0.75}
+                                    containerStyle={styles.dialog}
+                                >
+                                    <DialogContent>
+                                        <View style={{ paddingVertical: 25 }}>
                                             <View
                                                 style={{
-                                                    flex: 3,
-                                                    padding: 10,
-                                                    borderBottomWidth: 2,
-                                                    borderBottomColor: "#ccc",
-                                                    textAlign: "center",
-                                                    alignItems: "center",
-                                                    justifyContent: "center",
-                                                    textAlignVertical: "center"
+                                                    flexDirection: "row"
                                                 }}
                                             >
-                                                <Text>教室名称</Text>
-                                            </View>
-                                            <View
-                                                style={{
-                                                    flex: 2,
-                                                    padding: 10,
-                                                    borderBottomWidth: 2,
-                                                    borderBottomColor: "#ccc",
-                                                    textAlign: "center",
-                                                    alignItems: "center",
-                                                    justifyContent: "center",
-                                                    textAlignVertical: "center"
-                                                }}
-                                            >
-                                                <Text>容量（人）</Text>
-                                            </View>
-                                            <View
-                                                style={{
-                                                    flex: 2,
-                                                    padding: 10,
-                                                    borderBottomWidth: 2,
-                                                    borderBottomColor: "#ccc",
-                                                    textAlign: "center",
-                                                    alignItems: "center",
-                                                    justifyContent: "center",
-                                                    textAlignVertical: "center"
-                                                }}
-                                            >
-                                                <Text>注释</Text>
-                                            </View>
-                                        </View>
-                                        <FlatList
-                                            data={this.state.roomList}
-                                            renderItem={({ item }) => (
                                                 <View
                                                     style={{
-                                                        flexDirection: "row"
+                                                        flex: 3,
+                                                        padding: 10,
+                                                        borderBottomWidth: 2,
+                                                        borderBottomColor:
+                                                            "#ccc",
+                                                        textAlign: "center",
+                                                        alignItems: "center",
+                                                        justifyContent:
+                                                            "center",
+                                                        textAlignVertical:
+                                                            "center"
                                                     }}
                                                 >
-                                                    <View
-                                                        style={{
-                                                            flex: 3,
-                                                            padding: 10,
-                                                            borderBottomWidth: 2,
-                                                            borderBottomColor:
-                                                                "#eee",
-                                                            textAlign: "center",
-                                                            alignItems:
-                                                                "center",
-                                                            justifyContent:
-                                                                "center",
-                                                            textAlignVertical:
-                                                                "center"
-                                                        }}
-                                                    >
-                                                        <Text>{item.name}</Text>
-                                                    </View>
-                                                    <View
-                                                        style={{
-                                                            flex: 2,
-                                                            padding: 10,
-                                                            borderBottomWidth: 2,
-                                                            borderBottomColor:
-                                                                "#eee",
-                                                            textAlign: "center",
-                                                            alignItems:
-                                                                "center",
-                                                            justifyContent:
-                                                                "center",
-                                                            textAlignVertical:
-                                                                "center"
-                                                        }}
-                                                    >
-                                                        <Text>
-                                                            {item.volume}
-                                                        </Text>
-                                                    </View>
-                                                    <View
-                                                        style={{
-                                                            flex: 2,
-                                                            padding: 10,
-                                                            borderBottomWidth: 2,
-                                                            borderBottomColor:
-                                                                "#eee",
-                                                            textAlign: "center",
-                                                            alignItems:
-                                                                "center",
-                                                            justifyContent:
-                                                                "center",
-                                                            textAlignVertical:
-                                                                "center"
-                                                        }}
-                                                    >
-                                                        <Text>
-                                                            {item.notes}
-                                                        </Text>
-                                                    </View>
+                                                    <Text>教室名称</Text>
                                                 </View>
-                                            )}
-                                        />
-                                    </View>
-                                </DialogContent>
-                                <View style={{ height: 15 }} />
-                            </Dialog>
+                                                <View
+                                                    style={{
+                                                        flex: 2,
+                                                        padding: 10,
+                                                        borderBottomWidth: 2,
+                                                        borderBottomColor:
+                                                            "#ccc",
+                                                        textAlign: "center",
+                                                        alignItems: "center",
+                                                        justifyContent:
+                                                            "center",
+                                                        textAlignVertical:
+                                                            "center"
+                                                    }}
+                                                >
+                                                    <Text>容量（人）</Text>
+                                                </View>
+                                                <View
+                                                    style={{
+                                                        flex: 2,
+                                                        padding: 10,
+                                                        borderBottomWidth: 2,
+                                                        borderBottomColor:
+                                                            "#ccc",
+                                                        textAlign: "center",
+                                                        alignItems: "center",
+                                                        justifyContent:
+                                                            "center",
+                                                        textAlignVertical:
+                                                            "center"
+                                                    }}
+                                                >
+                                                    <Text>注释</Text>
+                                                </View>
+                                            </View>
+                                            <FlatList
+                                                data={this.state.roomList}
+                                                renderItem={({ item }) => (
+                                                    <View
+                                                        style={{
+                                                            flexDirection: "row"
+                                                        }}
+                                                    >
+                                                        <View
+                                                            style={{
+                                                                flex: 3,
+                                                                padding: 10,
+                                                                borderBottomWidth: 2,
+                                                                borderBottomColor:
+                                                                    "#eee",
+                                                                textAlign:
+                                                                    "center",
+                                                                alignItems:
+                                                                    "center",
+                                                                justifyContent:
+                                                                    "center",
+                                                                textAlignVertical:
+                                                                    "center"
+                                                            }}
+                                                        >
+                                                            <Text>
+                                                                {item.name}
+                                                            </Text>
+                                                        </View>
+                                                        <View
+                                                            style={{
+                                                                flex: 2,
+                                                                padding: 10,
+                                                                borderBottomWidth: 2,
+                                                                borderBottomColor:
+                                                                    "#eee",
+                                                                textAlign:
+                                                                    "center",
+                                                                alignItems:
+                                                                    "center",
+                                                                justifyContent:
+                                                                    "center",
+                                                                textAlignVertical:
+                                                                    "center"
+                                                            }}
+                                                        >
+                                                            <Text>
+                                                                {item.volume}
+                                                            </Text>
+                                                        </View>
+                                                        <View
+                                                            style={{
+                                                                flex: 2,
+                                                                padding: 10,
+                                                                borderBottomWidth: 2,
+                                                                borderBottomColor:
+                                                                    "#eee",
+                                                                textAlign:
+                                                                    "center",
+                                                                alignItems:
+                                                                    "center",
+                                                                justifyContent:
+                                                                    "center",
+                                                                textAlignVertical:
+                                                                    "center"
+                                                            }}
+                                                        >
+                                                            <Text>
+                                                                {item.notes}
+                                                            </Text>
+                                                        </View>
+                                                    </View>
+                                                )}
+                                            />
+                                        </View>
+                                    </DialogContent>
+                                    <View style={{ height: 15 }} />
+                                </Dialog>
+                            </View>
                         </View>
-                    </View>
-                ) : (
-                    <View
-                        style={{
-                            flex: 1,
-                            paddingVertical: height / 2 - 150,
-                            backgroundColor: "transparent"
-                        }}
-                    >
-                        <ActivityIndicator
-                            style={{}}
-                            size="large"
-                            color={Global.settings.theme.backgroundColor}
-                        />
-                    </View>
-                )}
-            </View>
+                    ) : (
+                        <View
+                            style={{
+                                flex: 1,
+                                paddingVertical: height / 2 - 150,
+                                backgroundColor: "transparent"
+                            }}
+                        >
+                            <ActivityIndicator
+                                size="large"
+                                color={Global.settings.theme.backgroundColor}
+                            />
+                        </View>
+                    )}
+                </View>
+            </SafeAreaView>
         );
     }
+    /**
+     * 点击查询后，拿到空教室列表
+     */
     getRoomList() {
         if (this.state.showLoading) return;
         this.setState({ showLoading: true });
@@ -514,7 +567,6 @@ export default class EmptyRoomPage extends Component {
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: "#fff"
+        flex: 1
     }
 });

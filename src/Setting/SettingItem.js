@@ -4,7 +4,9 @@ import {
     Text,
     Dimensions,
     StyleSheet,
-    TouchableNativeFeedback
+    TouchableNativeFeedback,
+    TouchableHighlight,
+    Platform
 } from "react-native";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
@@ -18,7 +20,19 @@ export default class SettingsItem extends Component {
         this.state = {};
     }
     render() {
-        return (
+        return Platform.OS === "ios" ? (
+            <TouchableHighlight
+                onPress={() =>
+                    this.props.navigation.navigate(this.props.nextPage)
+                }
+            >
+                <View style={styles.container}>
+                    <View style={{ flexDirection: "row" }}>
+                        <Text style={{ flex: 9 }}>{this.props.title}</Text>
+                    </View>
+                </View>
+            </TouchableHighlight>
+        ) : (
             <TouchableNativeFeedback
                 onPress={() =>
                     this.props.navigation.navigate(this.props.nextPage)

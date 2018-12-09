@@ -1,3 +1,6 @@
+/**
+ * 首页
+ */
 import React, { Component } from "react";
 import {
     View,
@@ -7,8 +10,10 @@ import {
     ScrollView,
     ToastAndroid,
     ActivityIndicator,
-    StatusBar
+    StatusBar,
+    Platform
 } from "react-native";
+import { SafeAreaView } from "react-navigation";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../src/Global";
@@ -18,6 +23,8 @@ import Weather from "../src/Home/Weather";
 import NextClass from "../src/Home/NextClass";
 import GetMessage from "../src/Home/GetMessage";
 import SplashScreen from "rn-splash-screen";
+import isIphoneX from "../src/isIphoneX";
+import Toast, { DURATION } from "react-native-easy-toast";
 
 const { width, height } = Dimensions.get("window");
 export default class HomePage extends Component {
@@ -25,6 +32,7 @@ export default class HomePage extends Component {
         super(props);
         this.openDrawer = this.openDrawer.bind(this);
         this.state = {
+            showSplashTips: false,
             isOnline: Global.isOnline,
             checkingOnline: false,
             getTips: false,
@@ -37,16 +45,51 @@ export default class HomePage extends Component {
             isOnline: Global.isOnline
         });
     }
+    componentDidUpdate() {
+        var params = this.props.navigation.state.params;
+        console.log(params);
+        if (params != undefined)
+            if (params.from == "SplashTips") {
+                if (!this.state.isOnline && !this.state.checkingOnline) {
+                    if (Global.loginInfo.j_username == "") {
+                        this.props.navigation.navigate("Login");
+                    }
+                }
+            }
+    }
 
     ComponentWillUpdate() {
         this.setState({
             isOnline: Global.isOnline
         });
     }
+
+    handleShowTips() {
+        var flag = false;
+        AppStorage._load("showTips", res => {
+            if (res.message == "success") {
+                if (res.content.splashV210 != undefined) {
+                    if (res.content.splashV210) {
+                        flag = true;
+                    }
+                }
+            }
+            if (!flag) {
+                this.setState({
+                    showSplashTips: true
+                });
+                this.props.navigation.navigate("SplashTips");
+            }
+        });
+    }
+
     componentDidMount() {
+        //延时1秒关闭启动页
         setTimeout(() => {
             SplashScreen.hide();
-        }, 1000);
+        }, 1500);
+
+        this.handleShowTips();
 
         //加载各种信息
         if (Global.loginInfo.j_username == "") {
@@ -84,11 +127,17 @@ export default class HomePage extends Component {
                     });
                     //
                     if (!Global.isOnline) {
-                        ToastAndroid.show(
-                            "正在登录，请稍后",
-                            ToastAndroid.SHORT
-                        );
+                        Platform.OS === "ios"
+                            ? this.refs.toast.show("正在登录，请稍后", 2000)
+                            : ToastAndroid.show(
+                                  "正在登录，请稍后",
+                                  ToastAndroid.SHORT
+                              );
+
                         Global.checkingOnline = true;
+                        /**
+                         * 拿到用户名和密码后自动登录
+                         */
                         LoginInterface(
                             Global.loginInfo.j_username,
                             Global.loginInfo.j_password,
@@ -97,10 +146,12 @@ export default class HomePage extends Component {
                                     checkingOnline: false
                                 });
                                 if (res.message == "success") {
-                                    ToastAndroid.show(
-                                        "登录成功",
-                                        ToastAndroid.LONG
-                                    );
+                                    Platform.OS === "ios"
+                                        ? this.refs.toast.show("登录成功", 2000)
+                                        : ToastAndroid.show(
+                                              "登录成功",
+                                              ToastAndroid.LONG
+                                          );
                                     Global.isOnline = true;
                                     Global.checkingOnline = false;
                                     this.setState({
@@ -108,10 +159,15 @@ export default class HomePage extends Component {
                                         checkingOnline: false
                                     });
                                 } else {
-                                    ToastAndroid.show(
-                                        "网络开小差啦，看看是不是连上校园网了呢~",
-                                        ToastAndroid.LONG
-                                    );
+                                    Platform.OS === "ios"
+                                        ? this.refs.toast.show(
+                                              "网络开小差啦，看看是不是连上校园网了呢~",
+                                              2000
+                                          )
+                                        : ToastAndroid.show(
+                                              "网络开小差啦，看看是不是连上校园网了呢~",
+                                              ToastAndroid.LONG
+                                          );
                                     Global.checkingOnline = false;
                                     this.setState({
                                         checkingOnline: false
@@ -121,7 +177,8 @@ export default class HomePage extends Component {
                         );
                     }
                 } else if (res.message == "error") {
-                    this.props.navigation.navigate("Login");
+                    if (!this.state.showSplashTips)
+                        this.props.navigation.navigate("Login");
                 }
             });
         }
@@ -209,6 +266,13 @@ export default class HomePage extends Component {
     }
     render() {
         const { navigate } = this.props.navigation;
+        var headerStyle = {
+            borderBottomColor: Global.settings.theme.backgroundColor
+        };
+        if (isIphoneX()) {
+            headerStyle.paddingTop = 0;
+            headerStyle.height = 44;
+        }
         var item;
         if (
             (this.state.isOnline || Global.isOnline) &&
@@ -240,13 +304,16 @@ export default class HomePage extends Component {
                     <Text style={styles.greeting}>
                         {"你好，" + Global.currentStuName}
                     </Text>
-                    <View style={{}} />
-                    <Text style={{ color: "#888" }}>正在登录</Text>
-                    <ActivityIndicator
-                        style={{ width: 50 }}
-                        size="small"
-                        color={Global.settings.theme.backgroundColor}
-                    />
+                    <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+                        <View>
+                            <Text style={{ color: "#888" }}>正在登录</Text>
+                        </View>
+                        <ActivityIndicator
+                            style={{ width: 50 }}
+                            size="small"
+                            color={Global.settings.theme.backgroundColor}
+                        />
+                    </View>
                 </View>
             );
         } else if (
@@ -295,108 +362,132 @@ export default class HomePage extends Component {
             );
         }
         return (
-            <View style={{ backgroundColor: "#efefef", flex: 1 }}>
+            <SafeAreaView
+                style={{
+                    flex: 1,
+                    backgroundColor: Global.settings.theme.backgroundColor
+                }}
+            >
                 <StatusBar
                     backgroundColor={Global.settings.theme.backgroundColor}
+                    barStyle="light-content"
                     translucent={false}
                 />
-                <Header
-                    containerStyle={{
-                        borderBottomColor: Global.settings.theme.backgroundColor
-                    }}
-                    backgroundColor={Global.settings.theme.backgroundColor}
-                    placement="left"
-                    leftComponent={
-                        <Button
-                            title=""
-                            icon={<EIcon name="menu" size={28} color="white" />}
-                            clear
-                            onPress={this.openDrawer}
-                        />
-                    }
-                    centerComponent={{
-                        text: "首页",
-                        style: { color: "#fff", fontSize: 16 }
-                    }}
-                />
-                <ScrollView style={{ height: height - 80 }}>
-                    <View>
-                        <View style={styles.greetingWrap}>
-                            {item}
-                            <View style={{ height: 15 }} />
+                <Toast ref="toast" />
+                <View style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
+                    <Header
+                        containerStyle={headerStyle}
+                        backgroundColor={Global.settings.theme.backgroundColor}
+                        placement="left"
+                        leftComponent={
+                            <Button
+                                title=""
+                                icon={
+                                    <EIcon
+                                        name="menu"
+                                        size={28}
+                                        color="white"
+                                    />
+                                }
+                                clear
+                                onPress={this.openDrawer}
+                            />
+                        }
+                        centerComponent={{
+                            text: "首页",
+                            style: { color: "#fff", fontSize: 16 }
+                        }}
+                    />
+                    <ScrollView style={{ height: height - 80 }}>
+                        <View>
+                            <View style={styles.greetingWrap}>
+                                {item}
+                                <View style={{ height: 5 }} />
+                            </View>
                         </View>
-                    </View>
-                    <View>
-                        <View style={styles.greetingWrap}>
-                            <NextClass />
+                        <View>
+                            <View style={styles.greetingWrap}>
+                                <NextClass />
+                            </View>
                         </View>
-                    </View>
-                    <View>
-                        <View style={styles.greetingWrap}>
-                            <Text style={styles.tipsTitle}>生活小贴士</Text>
-                            <View>
-                                {this.state.getTips ? (
-                                    <Weather />
+                        <View>
+                            <View style={styles.greetingWrap}>
+                                <Text style={styles.tipsTitle}>生活小贴士</Text>
+                                <View>
+                                    {this.state.getTips ? (
+                                        <Weather />
+                                    ) : (
+                                        <Text
+                                            style={{
+                                                color: "#888",
+                                                paddingLeft: 15
+                                            }}
+                                        >
+                                            {"玩命加载中 >.<"}
+                                        </Text>
+                                    )}
+                                </View>
+                                <View style={{ height: 15 }} />
+                            </View>
+                        </View>
+                        <View>
+                            <View style={styles.greetingWrap}>
+                                {this.state.isOnline ? (
+                                    <GetMessage />
+                                ) : Global.checkingOnline ? (
+                                    <View>
+                                        <Text
+                                            style={{
+                                                color: "#555",
+                                                fontSize: 18,
+                                                paddingBottom: 15
+                                            }}
+                                        >
+                                            消息通知
+                                        </Text>
+                                        <View>
+                                            <Text style={styles.text}>
+                                                消息加载中 (・｀ω´・)
+                                            </Text>
+                                        </View>
+                                    </View>
                                 ) : (
-                                    <Text style={{ color: "#888" }}>
-                                        {"玩命加载中 >.<"}
-                                    </Text>
+                                    <View>
+                                        <Text
+                                            style={{
+                                                color: "#555",
+                                                fontSize: 18,
+                                                paddingBottom: 15
+                                            }}
+                                        >
+                                            消息通知
+                                        </Text>
+                                        <View>
+                                            <Text style={styles.text}>
+                                                请先登录哟~
+                                            </Text>
+                                        </View>
+                                    </View>
                                 )}
                             </View>
-                            <View style={{ height: 15 }} />
+                            <View
+                                style={{
+                                    height: 15,
+                                    backgroundColor: "#f5f5f5"
+                                }}
+                            />
                         </View>
-                    </View>
-                    <View>
-                        <View style={styles.greetingWrap}>
-                            {this.state.isOnline ? (
-                                <GetMessage />
-                            ) : Global.checkingOnline ? (
-                                <View>
-                                    <Text
-                                        style={{
-                                            color: "#555",
-                                            fontSize: 18,
-                                            paddingBottom: 15
-                                        }}
-                                    >
-                                        消息通知
-                                    </Text>
-                                    <View>
-                                        <Text style={styles.text}>
-                                            消息加载中 (・｀ω´・)
-                                        </Text>
-                                    </View>
-                                </View>
-                            ) : (
-                                <View>
-                                    <Text
-                                        style={{
-                                            color: "#555",
-                                            fontSize: 18,
-                                            paddingBottom: 15
-                                        }}
-                                    >
-                                        消息通知
-                                    </Text>
-                                    <View>
-                                        <Text style={styles.text}>
-                                            请先登录哟~
-                                        </Text>
-                                    </View>
-                                </View>
-                            )}
-                        </View>
-                        <View
-                            style={{ height: 15, backgroundColor: "#efefef" }}
-                        />
-                    </View>
-                </ScrollView>
-            </View>
+                    </ScrollView>
+                </View>
+            </SafeAreaView>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
     greetingWrap: {
         margin: 10,
         marginBottom: 0,
@@ -404,10 +495,11 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff"
     },
     greeting: {
+        color: "#555",
         fontSize: 20,
-        fontWeight: "normal",
-        paddingTop: 15,
-        paddingBottom: 15
+        fontWeight: "300",
+        paddingTop: 10,
+        paddingBottom: 10
     },
     loginBtn: {
         backgroundColor: "#fff",

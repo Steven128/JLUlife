@@ -1,3 +1,6 @@
+/**
+ * 教务通知 -> 通知详情页
+ */
 import React, { Component } from "react";
 import {
     View,
@@ -6,12 +9,17 @@ import {
     WebView,
     StyleSheet,
     Linking,
-    TouchableNativeFeedback
+    TouchableNativeFeedback,
+    StatusBar,
+    Platform
 } from "react-native";
+import { SafeAreaView } from "react-navigation";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import FIcon from "react-native-vector-icons/Feather";
 import Global from "../../src/Global";
+import isIphoneX from "../../src/isIphoneX";
+
 const { width, height } = Dimensions.get("window");
 
 var { height: deviceHeight, width: deviceWidth } = Dimensions.get("window");
@@ -19,11 +27,7 @@ export default class EducationDetailPage extends Component {
     constructor(props) {
         super(props);
         this.openDrawer = this.openDrawer.bind(this);
-        this.state = {
-            getOa: false,
-            oaDetail: {},
-            showTag: false
-        };
+        this.state = {};
     }
 
     openDrawer() {
@@ -31,76 +35,77 @@ export default class EducationDetailPage extends Component {
         this.props.navigation.openDrawer();
     }
 
-    showTag() {
-        this.setState({
-            showTag: true
-        });
-    }
-
-    closeTag() {
-        this.setState({
-            showTag: false
-        });
-    }
-
-    openBroser(href) {
-        Linking.openURL(href).catch(err => {
-            if (__DEV__) console.error("An error occurred", err);
-        });
-    }
-
     render() {
         const { navigate } = this.props.navigation;
+        var headerStyle = {
+            borderBottomColor: Global.settings.theme.backgroundColor
+        };
+        if (isIphoneX()) {
+            headerStyle.paddingTop = 0;
+            headerStyle.height = 44;
+        }
         return (
-            <View style={styles.container}>
-                <Header
-                    containerStyle={{
-                        borderBottomColor: Global.settings.theme.backgroundColor
-                    }}
+            <SafeAreaView
+                style={{
+                    flex: 1,
+                    backgroundColor: Global.settings.theme.backgroundColor
+                }}
+            >
+                <StatusBar
                     backgroundColor={Global.settings.theme.backgroundColor}
-                    placement="left"
-                    leftComponent={
-                        <Button
-                            title=""
-                            icon={
-                                <EIcon
-                                    name="chevron-left"
-                                    size={28}
-                                    color="white"
-                                />
-                            }
-                            clear
-                            onPress={() => this.props.navigation.goBack()}
-                        />
-                    }
-                    centerComponent={{
-                        text: "通知详情",
-                        style: { color: "#fff", fontSize: 16 }
-                    }}
+                    barStyle="light-content"
+                    translucent={false}
                 />
-                <View style={styles.titleWrap}>
-                    <Text style={styles.title}>
-                        {this.props.navigation.state.params.title}
-                    </Text>
-                    <Text style={styles.subTitle}>
-                        {this.props.navigation.state.params.time}
-                    </Text>
+                <View style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
+                    <Header
+                        containerStyle={headerStyle}
+                        backgroundColor={Global.settings.theme.backgroundColor}
+                        placement="left"
+                        leftComponent={
+                            <Button
+                                title=""
+                                icon={
+                                    <EIcon
+                                        name="chevron-left"
+                                        size={28}
+                                        color="white"
+                                    />
+                                }
+                                clear
+                                onPress={() =>
+                                    this.props.navigation.navigate("List")
+                                }
+                            />
+                        }
+                        centerComponent={{
+                            text: "通知详情",
+                            style: { color: "#fff", fontSize: 16 }
+                        }}
+                    />
+                    <View style={styles.titleWrap}>
+                        <Text style={styles.title}>
+                            {this.props.navigation.state.params.title}
+                        </Text>
+                        <Text style={styles.subTitle}>
+                            {this.props.navigation.state.params.time}
+                        </Text>
+                    </View>
+                    <WebView
+                        bounces={false}
+                        scalesPageToFit={true}
+                        source={{
+                            uri: this.props.navigation.state.params.href
+                        }}
+                        automaticallyAdjustContentInsets={true}
+                        injectedJavaScript={`document.querySelector('body').innerHTML=document.querySelector('.con_con').innerHTML;var list = document.querySelectorAll('span');for(var i=0;i<list.length;i++){list[i].style.fontSize='16px';list[i].style.lineHeight='24px';list[i].style.color='#454545'};document.querySelector('body').style.padding='15px';document.querySelector('body').style.paddingBottom='30px';window.scrollTo(0,0) `}
+                        style={{
+                            width: deviceWidth,
+                            height: deviceHeight - 100
+                        }}
+                        startInLoadingState={true}
+                    />
                 </View>
-                <WebView
-                    bounces={false}
-                    scalesPageToFit={true}
-                    source={{
-                        uri: this.props.navigation.state.params.href
-                    }}
-                    automaticallyAdjustContentInsets={true}
-                    injectedJavaScript={`document.querySelector('body').innerHTML=document.querySelector('.con_con').innerHTML;var list = document.querySelectorAll('span');for(var i=0;i<list.length;i++){list[i].style.fontSize='16px';list[i].style.lineHeight='24px';list[i].style.color='#454545'};document.querySelector('body').style.padding='15px';document.querySelector('body').style.paddingBottom='30px';window.scrollTo(0,0) `}
-                    style={{
-                        width: deviceWidth,
-                        height: deviceHeight - 100
-                    }}
-                    startInLoadingState={true}
-                />
-            </View>
+            </SafeAreaView>
         );
     }
 }

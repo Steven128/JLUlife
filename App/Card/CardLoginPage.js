@@ -1,3 +1,6 @@
+/**
+ * 一卡通 -> 登录页
+ */
 import React, { Component } from "react";
 import {
     Dimensions,
@@ -9,13 +12,18 @@ import {
     Image,
     TouchableWithoutFeedback,
     ScrollView,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    StatusBar,
+    Platform
 } from "react-native";
+import { SafeAreaView } from "react-navigation";
 import { Header, Input, Button, CheckBox } from "react-native-elements";
 import Icon from "react-native-vector-icons/AntDesign";
 import Global from "../../src/Global";
 import AppStorage from "../../src/AppStorage";
 import Base64 from "base-64";
+import isIphoneX from "../../src/isIphoneX";
+import Toast, { DURATION } from "react-native-easy-toast";
 
 const { width, height } = Dimensions.get("window");
 
@@ -59,6 +67,9 @@ export default class CardLoginPage extends Component {
         });
     }
     componentDidMount() {
+        /**
+         * 从缓存加载一卡通登录名和密码，存在的话自动填入表单
+         */
         AppStorage._load("cardLoginInfo", res => {
             if (res.message == "success") {
                 Global.card.username = res.content.username;
@@ -78,8 +89,11 @@ export default class CardLoginPage extends Component {
             });
         });
     }
-
+    /**
+     * 按登录按钮后执行此函数
+     */
     loginTapped() {
+        //正在登录或表单验证失败，返回false
         if (this.state.showLoading || !this.validate()) {
             return false;
         }
@@ -99,7 +113,9 @@ export default class CardLoginPage extends Component {
                           username: this.state.username,
                           password: this.state.password
                       });
-                      ToastAndroid.show("登录成功", ToastAndroid.LONG);
+                      Platform.OS === "ios"
+                          ? this.refs.toast.show("登录成功", 2000)
+                          : ToastAndroid.show("登录成功", ToastAndroid.LONG);
                       this.props.navigation.navigate("Main", {
                           message: "success"
                       });
@@ -114,6 +130,11 @@ export default class CardLoginPage extends Component {
                   }
               });
     }
+
+    /**
+     * 获取cookie
+     * @param {Function} callback 回调函数
+     */
     getCookie(callback) {
         var loginURL = "http://ykt.jlu.edu.cn:8070/";
         fetch(loginURL, {
@@ -131,6 +152,12 @@ export default class CardLoginPage extends Component {
                 callback({ message: "error" });
             });
     }
+
+    /**
+     * 登录执行体
+     * @param {String} cookie cookie
+     * @param {Function} callback 回调函数
+     */
     loginMain(cookie, callback) {
         var name = this.state.username;
         var password = Base64.encode(this.state.password);
@@ -173,6 +200,9 @@ export default class CardLoginPage extends Component {
             });
     }
 
+    /**
+     * 刷新图片验证码
+     */
     refreshCode() {
         this.setState({
             uri:
@@ -181,6 +211,9 @@ export default class CardLoginPage extends Component {
         });
     }
 
+    /**
+     * 表单验证
+     */
     validate() {
         var flag = true;
         var errorText = [];
@@ -219,134 +252,171 @@ export default class CardLoginPage extends Component {
 
     render() {
         const { navigate } = this.props.navigation;
+        var headerStyle = {
+            borderBottomColor: Global.settings.theme.backgroundColor
+        };
+        if (isIphoneX()) {
+            headerStyle.paddingTop = 0;
+            headerStyle.height = 44;
+        }
         var contentPaddingTop = this.state.showErrMsg ? 20 : 50;
         return (
-            <View style={{ flex: 1, backgroundColor: "#efefef" }}>
-                <Header
-                    containerStyle={{
-                        borderBottomColor: Global.settings.theme.backgroundColor
-                    }}
+            <SafeAreaView
+                style={{
+                    flex: 1,
+                    backgroundColor: Global.settings.theme.backgroundColor
+                }}
+            >
+                <StatusBar
                     backgroundColor={Global.settings.theme.backgroundColor}
-                    placement="left"
-                    leftComponent={
-                        <Icon
-                            name="left"
-                            size={20}
-                            color="#ffffff"
-                            onPress={() => this.props.navigation.goBack()}
-                        />
-                    }
-                    centerComponent={{
-                        text: "一卡通账号登录",
-                        style: { color: "#fff", fontSize: 16 }
-                    }}
+                    barStyle="light-content"
+                    translucent={false}
                 />
-                <ScrollView style={{ flex: 1 }}>
-                    {this.state.showErrMsg ? (
-                        <View
-                            style={{
-                                height: 30,
-                                backgroundColor: "#d10000",
-                                padding: 5,
-                                justifyContent: "center",
-                                textAlignVertical: "center"
-                            }}
-                        >
-                            <Text
-                                style={{ color: "#fff", textAlign: "center" }}
+                <Toast ref="toast" />
+                <View style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
+                    <Header
+                        containerStyle={headerStyle}
+                        backgroundColor={Global.settings.theme.backgroundColor}
+                        placement="left"
+                        leftComponent={
+                            <Icon
+                                name="left"
+                                size={20}
+                                color="#ffffff"
+                                onPress={() => this.props.navigation.goBack()}
+                            />
+                        }
+                        centerComponent={{
+                            text: "一卡通账号登录",
+                            style: { color: "#fff", fontSize: 16 }
+                        }}
+                    />
+                    <ScrollView style={{ flex: 1 }}>
+                        {this.state.showErrMsg ? (
+                            <View
+                                style={{
+                                    height: 30,
+                                    backgroundColor: "#d10000",
+                                    padding: 5,
+                                    justifyContent: "center",
+                                    textAlignVertical: "center"
+                                }}
                             >
-                                {this.state.errMsgList[0]}
-                            </Text>
-                        </View>
-                    ) : null}
-                    <KeyboardAvoidingView style={{ alignSelf: "center" }}>
-                        <View style={{ paddingTop: contentPaddingTop }}>
-                            <Input
-                                containerStyle={styles.input}
-                                inputStyle={styles.inputStyle}
-                                placeholder="校园卡账号（11位学工号）"
-                                leftIcon={
-                                    <Icon name="user" size={22} color="#888" />
-                                }
-                                value={this.state.username}
-                                onChangeText={this.handleNameChange}
-                                returnKeyType="next"
-                                maxLength={11}
-                                keyboardType="numeric"
-                                selectTextOnFocus={true}
-                            />
-                            <Input
-                                containerStyle={styles.input}
-                                inputStyle={styles.inputStyle}
-                                placeholder="查询密码"
-                                secureTextEntry={true}
-                                leftIcon={
-                                    <Icon name="lock1" size={22} color="#888" />
-                                }
-                                value={this.state.password}
-                                onChangeText={this.handlePwdChange}
-                                maxLength={6}
-                                returnKeyType="next"
-                                keyboardType="numeric"
-                                selectTextOnFocus={true}
-                            />
-                            <View style={{ flexDirection: "row" }}>
+                                <Text
+                                    style={{
+                                        color: "#fff",
+                                        textAlign: "center"
+                                    }}
+                                >
+                                    {this.state.errMsgList[0]}
+                                </Text>
+                            </View>
+                        ) : null}
+                        <View style={{ alignSelf: "center" }}>
+                            <View style={{ paddingTop: contentPaddingTop }}>
                                 <Input
-                                    containerStyle={[styles.input, { flex: 3 }]}
+                                    containerStyle={styles.input}
                                     inputStyle={styles.inputStyle}
-                                    placeholder="验证码"
+                                    placeholder="校园卡账号（11位学工号）"
                                     leftIcon={
                                         <Icon
-                                            name="key"
+                                            name="user"
                                             size={22}
                                             color="#888"
                                         />
                                     }
-                                    value={this.state.code}
-                                    onChangeText={this.handleCodeChange}
-                                    maxLength={4}
+                                    value={this.state.username}
+                                    onChangeText={this.handleNameChange}
+                                    returnKeyType="next"
+                                    maxLength={11}
                                     keyboardType="numeric"
-                                    returnKeyType="done"
                                     selectTextOnFocus={true}
                                 />
-                                <TouchableWithoutFeedback
-                                    onPress={this.refreshCode}
-                                >
-                                    <Image
-                                        style={styles.image}
-                                        source={{
-                                            uri: this.state.uri,
-                                            headers: {
-                                                Cookie: this.state.cookie
-                                            }
-                                        }}
+                                <Input
+                                    containerStyle={styles.input}
+                                    inputStyle={styles.inputStyle}
+                                    placeholder="查询密码"
+                                    secureTextEntry={true}
+                                    leftIcon={
+                                        <Icon
+                                            name="lock1"
+                                            size={22}
+                                            color="#888"
+                                        />
+                                    }
+                                    value={this.state.password}
+                                    onChangeText={this.handlePwdChange}
+                                    maxLength={6}
+                                    returnKeyType="next"
+                                    keyboardType="numeric"
+                                    selectTextOnFocus={true}
+                                />
+                                <View style={{ flexDirection: "row" }}>
+                                    <Input
+                                        containerStyle={[
+                                            styles.input,
+                                            { flex: 3 }
+                                        ]}
+                                        inputStyle={styles.inputStyle}
+                                        placeholder="验证码"
+                                        leftIcon={
+                                            <Icon
+                                                name="key"
+                                                size={22}
+                                                color="#888"
+                                            />
+                                        }
+                                        value={this.state.code}
+                                        onChangeText={this.handleCodeChange}
+                                        maxLength={4}
+                                        keyboardType="numeric"
+                                        returnKeyType="done"
+                                        selectTextOnFocus={true}
                                     />
-                                </TouchableWithoutFeedback>
+                                    <TouchableWithoutFeedback
+                                        onPress={this.refreshCode}
+                                    >
+                                        <Image
+                                            style={styles.image}
+                                            source={{
+                                                uri: this.state.uri,
+                                                headers: {
+                                                    Cookie: this.state.cookie
+                                                }
+                                            }}
+                                        />
+                                    </TouchableWithoutFeedback>
+                                </View>
+                            </View>
+                            <View style={{ padding: 40, paddingTop: 20 }}>
+                                <Button
+                                    title="登录"
+                                    loading={this.state.showLoading}
+                                    loadingProps={{
+                                        size: "large",
+                                        color: "#fff"
+                                    }}
+                                    titleStyle={{ fontWeight: "700" }}
+                                    buttonStyle={{
+                                        height: 45,
+                                        backgroundColor:
+                                            Global.settings.theme
+                                                .backgroundColor
+                                    }}
+                                    onPress={this.loginTapped}
+                                />
                             </View>
                         </View>
-                        <View style={{ padding: 40, paddingTop: 20 }}>
-                            <Button
-                                title="登录"
-                                loading={this.state.showLoading}
-                                loadingProps={{
-                                    size: "large",
-                                    color: "#fff"
-                                }}
-                                titleStyle={{ fontWeight: "700" }}
-                                buttonStyle={{
-                                    height: 45,
-                                    backgroundColor: Global.settings.theme.backgroundColor
-                                }}
-                                onPress={this.loginTapped}
-                            />
-                        </View>
-                    </KeyboardAvoidingView>
-                </ScrollView>
-            </View>
+                    </ScrollView>
+                </View>
+            </SafeAreaView>
         );
     }
 }
 const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
     input: {
         paddingVertical: 5,
         width: width * 0.86

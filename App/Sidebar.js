@@ -1,9 +1,23 @@
+/**
+ * 侧边栏
+ */
 import React, { Component } from "react";
-import { Text, View, ScrollView, StatusBar, StyleSheet } from "react-native";
+import {
+    Text,
+    View,
+    ScrollView,
+    StyleSheet,
+    StatusBar,
+    Platform,
+    Dimensions
+} from "react-native";
 import { DrawerItems, SafeAreaView } from "react-navigation";
 import Global from "../src/Global";
 import AppStorage from "../src/AppStorage";
 import HandleNewSettings from "../src/HandleNewSettings";
+import isIphoneX from "../src/isIphoneX";
+
+const { width, height } = Dimensions.get("window");
 
 export class Sidebar extends Component {
     static navigationOptions = {
@@ -16,7 +30,6 @@ export class Sidebar extends Component {
 
     componentWillMount() {
         //加载设置
-        console.log("sidebar will mount");
         AppStorage._load("settings", res => {
             if (res.message == "success") {
                 Global.settings = res.content;
@@ -30,60 +43,69 @@ export class Sidebar extends Component {
         });
     }
     render() {
-        return (
-            <View style={{ flex: 1 }}>
-                {this.state.getSettings ? (
-                    <ScrollView>
-                        <SafeAreaView>
-                            <View
-                                style={[
-                                    styles.greetingWrap,
-                                    {
-                                        backgroundColor:
-                                            Global.settings.theme
-                                                .backgroundColor
-                                    }
-                                ]}
-                            >
-                                <Text style={styles.greeting}>
-                                    {"你好，" +
-                                        (Global.currentStuName == ""
-                                            ? "游客"
-                                            : Global.currentStuName)}
-                                </Text>
-                                <Text
-                                    style={[styles.greeting, { fontSize: 14 }]}
-                                >
-                                    {Global.currentStuName == ""
-                                        ? "请登录"
-                                        : "现在是 第" +
-                                          global.getCurrentWeek(
-                                              Global.startDate
-                                          ) +
-                                          "周"}
-                                </Text>
-                                <Text />
-                            </View>
+        return this.state.getSettings ? (
+            <View
+                style={[
+                    styles.container,
+                    { backgroundColor: Global.settings.theme.backgroundColor }
+                ]}
+            >
+                <StatusBar
+                    backgroundColor={Global.settings.theme.backgroundColor}
+                    barStyle="light-content"
+                    translucent={false}
+                />
+                <SafeAreaView style={{ flex: 1, backgroundColor: Global.settings.theme.backgroundColor }}>
+                    <View style={{ flex: 1, backgroundColor: "#fff" }}>
+                        <View
+                            style={[
+                                styles.greetingWrap,
+                                {
+                                    backgroundColor:
+                                        Global.settings.theme.backgroundColor,
+                                    height: height * 0.28,
+                                    paddingTop: height * 0.28 - 70
+                                }
+                            ]}
+                        >
+                            <Text style={styles.greeting}>
+                                {"你好，" +
+                                    (Global.currentStuName == ""
+                                        ? "游客"
+                                        : Global.currentStuName)}
+                            </Text>
+                            <Text style={[styles.greeting, { fontSize: 14 }]}>
+                                {Global.currentStuName == ""
+                                    ? "请登录"
+                                    : "现在是 第" +
+                                      global.getCurrentWeek(Global.startDate) +
+                                      "周"}
+                            </Text>
+                        </View>
+                        <ScrollView style={{ flex: 1 }}>
                             <DrawerItems {...this.props.items} />
                             <View style={{ height: 50 }} />
-                        </SafeAreaView>
-                    </ScrollView>
-                ) : null}
+                        </ScrollView>
+                    </View>
+                </SafeAreaView>
             </View>
+        ) : (
+            <View />
         );
     }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
     greetingWrap: {
-        height: 250,
-        paddingTop: 160,
         paddingLeft: 15
     },
     greeting: {
         fontSize: 20,
         color: "#fff",
-        paddingBottom: 15
+        paddingBottom: 10
     },
     loginBtn: {
         backgroundColor: "#fff",

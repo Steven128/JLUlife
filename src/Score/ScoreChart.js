@@ -77,13 +77,13 @@ export class ScoreChart extends Component {
                 horizontal
                 style={{
                     marginHorizontal: 10,
-                    height: height * 0.35
+                    height: 250
                 }}
             >
                 <Echarts
                     option={option}
-                    height={height * 0.35}
-                    width={width * 0.8}
+                    height={250}
+                    width={width * 0.9}
                 />
             </ScrollView>
         );

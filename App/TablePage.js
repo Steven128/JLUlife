@@ -6,17 +6,21 @@ import {
     ActivityIndicator,
     ToastAndroid,
     ScrollView,
-    TouchableOpacity,
     TouchableNativeFeedback,
+    TouchableOpacity,
+    Platform,
     StyleSheet,
     StatusBar
 } from "react-native";
+import { SafeAreaView } from "react-navigation";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../src/Global";
 import ClassTable from "../src/Class/ClassTable";
 import AppStorage from "../src/AppStorage";
-import ClassTip from "../src/Tips/ClassTip";
+import isIphoneX from "../src/isIphoneX";
+import Toast, { DURATION } from "react-native-easy-toast";
+
 const { width, height } = Dimensions.get("window");
 
 var classJson = [];
@@ -58,7 +62,14 @@ export default class TablePage extends Component {
         });
         if (!this.state.getClassTable) {
             if (Global.isOnline) this.getInfo();
-            else ToastAndroid.show("登录后才能刷新课表哟~", ToastAndroid.LONG);
+            else {
+                Platform.OS === "ios"
+                    ? this.refs.toast.show("登录后才能刷新课表哟~", 2000)
+                    : ToastAndroid.show(
+                          "登录后才能刷新课表哟~",
+                          ToastAndroid.LONG
+                      );
+            }
         }
     }
 
@@ -72,7 +83,10 @@ export default class TablePage extends Component {
             pickerOpen: !this.state.pickerOpen
         });
     }
-
+    /**
+     * 更换当前显示的周数
+     * @param {String} _week 周数
+     */
     changeWeek(_week) {
         this.setState({
             currentWeek: _week
@@ -80,6 +94,9 @@ export default class TablePage extends Component {
         this.setState({ pickerOpen: !this.state.pickerOpen });
     }
 
+    /**
+     * 返回本周
+     */
     goBack() {
         var currentWeek = global.getCurrentWeek(Global.startDate);
         if (this.state.currentWeek != currentWeek) {
@@ -89,6 +106,13 @@ export default class TablePage extends Component {
 
     render() {
         const { navigate } = this.props.navigation;
+        var headerStyle = {
+            borderBottomColor: Global.settings.theme.backgroundColor
+        };
+        if (isIphoneX()) {
+            headerStyle.paddingTop = 0;
+            headerStyle.height = 44;
+        }
         var pickerHeight = this.state.pickerOpen ? 60 : 0;
 
         var weekNotice =
@@ -102,126 +126,178 @@ export default class TablePage extends Component {
         var weekContainer = [];
         if (this.state.getClassTable) {
             for (var i = 1; i <= Global.weekLength; i++) {
-                var weekItem = (
-                    <TouchableNativeFeedback
-                        onPress={this.changeWeek.bind(this, i)}
-                        key={i}
-                    >
-                        <View style={styles.weekWrap}>
-                            <Text
-                                style={[
-                                    styles.weekText,
-                                    {
-                                        color:
-                                            Global.settings.theme
-                                                .backgroundColor
-                                    }
-                                ]}
-                            >
-                                第{i}周
-                            </Text>
-                        </View>
-                    </TouchableNativeFeedback>
-                );
+                var weekItem =
+                    Platform.OS === "ios" ? (
+                        <TouchableOpacity
+                            onPress={this.changeWeek.bind(this, i)}
+                            key={i}
+                        >
+                            <View style={styles.weekWrap}>
+                                <Text
+                                    style={[
+                                        styles.weekText,
+                                        {
+                                            color:
+                                                Global.settings.theme
+                                                    .backgroundColor
+                                        }
+                                    ]}
+                                >
+                                    第{i}周
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableNativeFeedback
+                            onPress={this.changeWeek.bind(this, i)}
+                            key={i}
+                        >
+                            <View style={styles.weekWrap}>
+                                <Text
+                                    style={[
+                                        styles.weekText,
+                                        {
+                                            color:
+                                                Global.settings.theme
+                                                    .backgroundColor
+                                        }
+                                    ]}
+                                >
+                                    第{i}周
+                                </Text>
+                            </View>
+                        </TouchableNativeFeedback>
+                    );
                 weekContainer.push(weekItem);
             }
         }
         return (
-            <View style={{ flex: 1, backgroundColor: "#fff" }}>
+            <SafeAreaView
+                style={{
+                    flex: 1,
+                    backgroundColor: Global.settings.theme.backgroundColor
+                }}
+            >
                 <StatusBar
                     backgroundColor={Global.settings.theme.backgroundColor}
+                    barStyle="light-content"
                     translucent={false}
                 />
-                <ClassTip />
-                <Header
-                    containerStyle={{
-                        borderBottomColor:
-                            Global.settings.theme.backgroundColor,
-                        position: "absolute",
-                        top: 0,
-                        right: 0,
-                        left: 0,
-                        zIndex: 0
-                    }}
-                    backgroundColor={Global.settings.theme.backgroundColor}
-                    placement="left"
-                    leftComponent={
-                        <Button
-                            title=""
-                            icon={<EIcon name="menu" size={28} color="white" />}
-                            clear
-                            onPress={this.openDrawer}
-                        />
-                    }
-                    centerComponent={
-                        <TouchableOpacity onPress={this.goBack.bind(this)}>
-                            <Text style={{ color: "#fff", fontSize: 16 }}>
-                                课程表 {weekNotice}
-                            </Text>
-                        </TouchableOpacity>
-                    }
-                    rightComponent={
-                        <Button
-                            title=""
-                            icon={
-                                <EIcon
-                                    name={
-                                        this.state.pickerOpen
-                                            ? "chevron-up"
-                                            : "chevron-down"
-                                    }
-                                    size={28}
-                                    color="white"
-                                />
-                            }
-                            clear
-                            onPress={this.openPicker}
-                        />
-                    }
-                />
-                <View>
-                    <ScrollView
-                        style={{ height: pickerHeight }}
-                        horizontal
-                        indicatorStyle="white"
-                        ref={scrollView => {
-                            if (scrollView !== null) {
-                                scrollView.scrollTo({
-                                    x:
-                                        100 * this.state.currentWeek -
-                                        width / 2.1,
-                                    y: 0,
-                                    animated: true
-                                });
-                            }
-                        }}
-                    >
-                        {weekContainer}
-                    </ScrollView>
-                </View>
-                <View style={{ flex: 1 }}>
-                    {this.state.getClassTable ? (
-                        <ClassTable
-                            classList={classJson}
-                            week={this.state.currentWeek}
-                            settings={this.state.settings}
-                        />
-                    ) : (
-                        <View
-                            style={{
-                                flex: 1,
-                                paddingVertical: height / 2 - 150,
-                                backgroundColor: "transparent"
+                <Toast ref="toast" />
+                <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
+                    <Header
+                        containerStyle={headerStyle}
+                        backgroundColor={Global.settings.theme.backgroundColor}
+                        placement="left"
+                        leftComponent={
+                            <Button
+                                title=""
+                                icon={
+                                    <EIcon
+                                        name="menu"
+                                        size={28}
+                                        color="white"
+                                    />
+                                }
+                                clear
+                                onPress={this.openDrawer}
+                            />
+                        }
+                        centerComponent={
+                            Platform.OS === "ios" ? (
+                                <TouchableOpacity
+                                    onPress={this.goBack.bind(this)}
+                                >
+                                    <Text
+                                        style={{
+                                            color: "#fff",
+                                            fontSize: 16
+                                        }}
+                                    >
+                                        课程表 {weekNotice}
+                                    </Text>
+                                </TouchableOpacity>
+                            ) : (
+                                <TouchableNativeFeedback
+                                    onPress={this.goBack.bind(this)}
+                                >
+                                    <Text
+                                        style={{
+                                            color: "#fff",
+                                            fontSize: 16
+                                        }}
+                                    >
+                                        课程表 {weekNotice}
+                                    </Text>
+                                </TouchableNativeFeedback>
+                            )
+                        }
+                        rightComponent={
+                            <Button
+                                title=""
+                                icon={
+                                    <EIcon
+                                        name={
+                                            this.state.pickerOpen
+                                                ? "chevron-up"
+                                                : "chevron-down"
+                                        }
+                                        size={28}
+                                        color="white"
+                                    />
+                                }
+                                clear
+                                onPress={this.openPicker}
+                            />
+                        }
+                    />
+                    <View>
+                        <ScrollView
+                            style={{ height: pickerHeight }}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            indicatorStyle="white"
+                            ref={scrollView => {
+                                if (scrollView !== null) {
+                                    scrollView.scrollTo({
+                                        x:
+                                            100 * this.state.currentWeek -
+                                            width / 2.1,
+                                        y: 0,
+                                        animated: true
+                                    });
+                                }
                             }}
                         >
-                            <ActivityIndicator
-                                size="large"
-                                color={Global.settings.theme.backgroundColor}
+                            {weekContainer}
+                        </ScrollView>
+                    </View>
+                    <View style={{ flex: 1 }}>
+                        {this.state.getClassTable ? (
+                            <ClassTable
+                                classList={classJson}
+                                week={this.state.currentWeek}
+                                settings={this.state.settings}
                             />
-                        </View>
-                    )}
+                        ) : (
+                            <View
+                                style={{
+                                    flex: 1,
+                                    paddingVertical: height / 2 - 150,
+                                    backgroundColor: "transparent"
+                                }}
+                            >
+                                <ActivityIndicator
+                                    size="large"
+                                    color={
+                                        Global.settings.theme.backgroundColor
+                                    }
+                                />
+                            </View>
+                        )}
+                    </View>
                 </View>
-            </View>
+            </SafeAreaView>
         );
     }
 
@@ -376,6 +452,9 @@ export default class TablePage extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
     weekWrap: {
         height: 60,
         width: 100,

@@ -3,6 +3,7 @@ package com.brady.jlulife;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.bugly.RNBuglyPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.horcrux.svg.SvgPackage;
 import com.mehcode.reactnative.splashscreen.SplashScreenPackage;
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNBuglyPackage(),
             new PickerPackage(),
             new SvgPackage(),
             new SplashScreenPackage(),

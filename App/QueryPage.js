@@ -1,3 +1,6 @@
+/**
+ * 信息查询页
+ */
 import React, { Component } from "react";
 import {
     View,
@@ -5,12 +8,17 @@ import {
     Dimensions,
     StyleSheet,
     TouchableNativeFeedback,
-    Alert
+    Alert,
+    StatusBar,
+    Platform
 } from "react-native";
+import { SafeAreaView } from "react-navigation";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../src/Global";
 import QueryItem from "../src/Query/QueryItem";
+import isIphoneX from "../src/isIphoneX";
+
 const { width, height } = Dimensions.get("window");
 
 export default class QueryPage extends Component {
@@ -28,49 +36,71 @@ export default class QueryPage extends Component {
 
     render() {
         const { navigate } = this.props.navigation;
+        var headerStyle = {
+            borderBottomColor: Global.settings.theme.backgroundColor
+        };
+        if (isIphoneX()) {
+            headerStyle.paddingTop = 0;
+            headerStyle.height = 44;
+        }
         return (
-            <View style={styles.container}>
-                <Header
-                    containerStyle={{
-                        borderBottomColor: Global.settings.theme.backgroundColor
-                    }}
+            <SafeAreaView
+                style={{
+                    flex: 1,
+                    backgroundColor: Global.settings.theme.backgroundColor
+                }}
+            >
+                <StatusBar
                     backgroundColor={Global.settings.theme.backgroundColor}
-                    placement="left"
-                    leftComponent={
-                        <Button
-                            title=""
-                            icon={<EIcon name="menu" size={28} color="white" />}
-                            clear
-                            onPress={this.openDrawer}
-                        />
-                    }
-                    centerComponent={{
-                        text: "信息查询",
-                        style: { color: "#fff", fontSize: 16 }
-                    }}
+                    barStyle="light-content"
+                    translucent={false}
                 />
-                <View>
-                    <QueryItem
-                        navigation={this.props.navigation}
-                        title="查空教室"
-                        subTitle="没地方上自习？进来看看吧"
-                        nextPage="EmptyRoom"
+                <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
+                    <Header
+                        containerStyle={headerStyle}
+                        backgroundColor={Global.settings.theme.backgroundColor}
+                        placement="left"
+                        leftComponent={
+                            <Button
+                                title=""
+                                icon={
+                                    <EIcon
+                                        name="menu"
+                                        size={28}
+                                        color="white"
+                                    />
+                                }
+                                clear
+                                onPress={this.openDrawer}
+                            />
+                        }
+                        centerComponent={{
+                            text: "信息查询",
+                            style: { color: "#fff", fontSize: 16 }
+                        }}
                     />
-                    <QueryItem
-                        navigation={this.props.navigation}
-                        title="图书馆"
-                        subTitle="馆藏查询"
-                        nextPage="Library"
-                    />
+                    <View>
+                        <QueryItem
+                            navigation={this.props.navigation}
+                            title="查空教室"
+                            subTitle="没地方上自习？进来看看吧"
+                            nextPage="EmptyRoom"
+                        />
+                        <QueryItem
+                            navigation={this.props.navigation}
+                            title="图书馆"
+                            subTitle="馆藏查询"
+                            nextPage="Library"
+                        />
+                    </View>
                 </View>
-            </View>
+            </SafeAreaView>
         );
     }
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: "#fff"
+        flex: 1
     },
     item: {
         height: 60,

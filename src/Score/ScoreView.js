@@ -4,6 +4,7 @@ import RefreshListView, { RefreshState } from "react-native-refresh-list-view";
 import ScoreItem from "./ScoreItem";
 import Global from "../Global";
 import ScoreInterface from "../FetchInterface/ScoreInterface";
+import Toast, { DURATION } from "react-native-easy-toast";
 
 const { width, height } = Dimensions.get("window");
 export default class ScoreView extends Component {
@@ -19,7 +20,12 @@ export default class ScoreView extends Component {
 
     onHeaderRefresh() {
         if (!Global.isOnline) {
-            ToastAndroid.show("登录后才能刷新成绩哟~", ToastAndroid.SHORT);
+            Platform.OS === "ios"
+                ? this.refs.toast.show("登录后才能刷新成绩哟~", 2000)
+                : ToastAndroid.show(
+                      "登录后才能刷新成绩哟~",
+                      ToastAndroid.SHORT
+                  );
             return;
         }
         this.setState({
@@ -83,7 +89,9 @@ export default class ScoreView extends Component {
                 footerFailureText="我擦嘞，居然失败了 =.=!"
                 footerNoMoreDataText="-我是有底线的-"
                 footerEmptyDataText="-好像什么东西都没有-"
-            />
+            >
+                <Toast ref="toast" />
+            </RefreshListView>
         );
     }
 }

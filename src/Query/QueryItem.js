@@ -4,7 +4,7 @@ import {
     Text,
     Dimensions,
     StyleSheet,
-    TouchableOpacity
+    TouchableHighlight
 } from "react-native";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
@@ -18,7 +18,7 @@ export default class Querytem extends Component {
     }
     render() {
         return (
-            <TouchableOpacity
+            <TouchableHighlight
                 onPress={() =>
                     this.props.navigation.navigate(this.props.nextPage)
                 }
@@ -39,7 +39,7 @@ export default class Querytem extends Component {
                         </Text>
                     </View>
                 </View>
-            </TouchableOpacity>
+            </TouchableHighlight>
         );
     }
 }

@@ -1,11 +1,18 @@
+/**
+ * 教务通知页
+ */
 import React, { Component } from "react";
 import {
     View,
     Text,
     Dimensions,
     ActivityIndicator,
-    TouchableOpacity
+    TouchableHighlight,
+    StyleSheet,
+    StatusBar,
+    Platform
 } from "react-native";
+import { SafeAreaView } from "react-navigation";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import ScrollableTabView, {
@@ -18,6 +25,7 @@ import NoticeAnnounce from "../src/Education/NoticeAnnounce";
 import ExamArrangement from "../src/Education/ExamArrangement";
 import JobBriefing from "../src/Education/JobBriefing";
 import TeachingExploration from "../src/Education/TeachingExploration";
+import isIphoneX from "../src/isIphoneX";
 
 const { width, height } = Dimensions.get("window");
 export default class EducationPage extends Component {
@@ -35,69 +43,102 @@ export default class EducationPage extends Component {
     }
     render() {
         const { navigate } = this.props.navigation;
+        var headerStyle = {
+            borderBottomColor: Global.settings.theme.backgroundColor
+        };
+        if (isIphoneX()) {
+            headerStyle.paddingTop = 0;
+            headerStyle.height = 44;
+        }
         return (
-            <View style={{ flex: 1, backgroundColor: "#efefef" }}>
-                <Header
-                    containerStyle={{
-                        borderBottomColor: Global.settings.theme.backgroundColor
-                    }}
+            <SafeAreaView
+                style={{
+                    flex: 1,
+                    backgroundColor: Global.settings.theme.backgroundColor
+                }}
+            >
+                <StatusBar
                     backgroundColor={Global.settings.theme.backgroundColor}
-                    placement="left"
-                    leftComponent={
-                        <Button
-                            title=""
-                            icon={<EIcon name="menu" size={28} color="white" />}
-                            clear
-                            onPress={this.openDrawer}
-                        />
-                    }
-                    centerComponent={{
-                        text: "教务通知",
-                        style: { color: "#fff", fontSize: 16 }
-                    }}
+                    barStyle="light-content"
+                    translucent={false}
                 />
-                <ScrollableTabView
-                    style={{
-                        backgroundColor: "#efefef",
-                        borderWidth: 0
-                    }}
-                    tabBarBackgroundColor={Global.settings.theme.backgroundColor}
-                    tabBarActiveTextColor="#fff"
-                    tabBarInactiveTextColor="#fff"
-                    tabBarTextStyle={{ fontWeight: "normal", fontSize: 14 }}
-                    tabBarUnderlineStyle={{
-                        height: 3,
-                        backgroundColor: "#fff"
-                    }}
-                    // locked={true}
-                    renderTabBar={() => <ScrollableTabBar style={{}} />}
-                >
-                    <EduInfo
-                        tabLabel="教学信息"
-                        navigation={this.props.navigation}
+                <View style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
+                    <Header
+                        containerStyle={headerStyle}
+                        backgroundColor={Global.settings.theme.backgroundColor}
+                        placement="left"
+                        leftComponent={
+                            <Button
+                                title=""
+                                icon={
+                                    <EIcon
+                                        name="menu"
+                                        size={28}
+                                        color="white"
+                                    />
+                                }
+                                clear
+                                onPress={this.openDrawer}
+                            />
+                        }
+                        centerComponent={{
+                            text: "教务通知",
+                            style: { color: "#fff", fontSize: 16 }
+                        }}
                     />
-                    <EduAnnounce
-                        tabLabel="教学公示"
-                        navigation={this.props.navigation}
-                    />
-                    <NoticeAnnounce
-                        tabLabel="通知公告"
-                        navigation={this.props.navigation}
-                    />
-                    <ExamArrangement
-                        tabLabel="考试安排"
-                        navigation={this.props.navigation}
-                    />
-                    <JobBriefing
-                        tabLabel="工作简报"
-                        navigation={this.props.navigation}
-                    />
-                    <TeachingExploration
-                        tabLabel="教学探索"
-                        navigation={this.props.navigation}
-                    />
-                </ScrollableTabView>
-            </View>
+                    <ScrollableTabView
+                        style={{
+                            backgroundColor: "#f5f5f5",
+                            borderWidth: 0
+                        }}
+                        tabBarBackgroundColor={
+                            Global.settings.theme.backgroundColor
+                        }
+                        tabBarActiveTextColor="#fff"
+                        tabBarInactiveTextColor="#fff"
+                        tabBarTextStyle={{
+                            fontWeight: "normal",
+                            fontSize: 14
+                        }}
+                        tabBarUnderlineStyle={{
+                            height: 3,
+                            backgroundColor: "#fff"
+                        }}
+                        // locked={true}
+                        renderTabBar={() => <ScrollableTabBar style={{}} />}
+                    >
+                        <EduInfo
+                            tabLabel="教学信息"
+                            navigation={this.props.navigation}
+                        />
+                        <EduAnnounce
+                            tabLabel="教学公示"
+                            navigation={this.props.navigation}
+                        />
+                        <NoticeAnnounce
+                            tabLabel="通知公告"
+                            navigation={this.props.navigation}
+                        />
+                        <ExamArrangement
+                            tabLabel="考试安排"
+                            navigation={this.props.navigation}
+                        />
+                        <JobBriefing
+                            tabLabel="工作简报"
+                            navigation={this.props.navigation}
+                        />
+                        <TeachingExploration
+                            tabLabel="教学探索"
+                            navigation={this.props.navigation}
+                        />
+                    </ScrollableTabView>
+                </View>
+            </SafeAreaView>
         );
     }
 }
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    }
+});

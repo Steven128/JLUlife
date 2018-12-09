@@ -7,6 +7,7 @@ import AppStorage from "./src/AppStorage";
 import Global from "./src/Global";
 
 import HomePage from "./App/HomePage";
+import SplashTipsPage from "./App/Home/SplashTipsPage";
 import TablePage from "./App/TablePage";
 import NotificationPage from "./App/NotificationPage";
 import NotificationDetailPage from "./App/Notification/NotificationDetailPage";
@@ -38,6 +39,12 @@ const HomeStack = createStackNavigator({
     },
     Login: {
         screen: LoginPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    SplashTips: {
+        screen: SplashTipsPage,
         navigationOptions: {
             header: null
         }

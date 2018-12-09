@@ -1,3 +1,6 @@
+/**
+ * 设置 -> 反馈页
+ */
 import React, { Component } from "react";
 import {
     View,
@@ -6,12 +9,18 @@ import {
     WebView,
     StyleSheet,
     Linking,
-    TouchableNativeFeedback
+    TouchableNativeFeedback,
+    TouchableHighlight,
+    Platform,
+    StatusBar
 } from "react-native";
+import { SafeAreaView } from "react-navigation";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import FIcon from "react-native-vector-icons/Feather";
 import Global from "../../src/Global";
+import isIphoneX from "../../src/isIphoneX";
+
 const { width, height } = Dimensions.get("window");
 
 var { height: deviceHeight, width: deviceWidth } = Dimensions.get("window");
@@ -19,11 +28,7 @@ export default class FeedBackPage extends Component {
     constructor(props) {
         super(props);
         this.openDrawer = this.openDrawer.bind(this);
-        this.state = {
-            getOa: false,
-            oaDetail: {},
-            showTag: false
-        };
+        this.state = {};
     }
 
     openDrawer() {
@@ -35,61 +40,106 @@ export default class FeedBackPage extends Component {
     }
     render() {
         const { navigate } = this.props.navigation;
+        var headerStyle = {
+            borderBottomColor: Global.settings.theme.backgroundColor
+        };
+        if (isIphoneX()) {
+            headerStyle.paddingTop = 0;
+            headerStyle.height = 44;
+        }
         return (
-            <View style={styles.container}>
-                <Header
-                    containerStyle={{
-                        borderBottomColor: Global.settings.theme.backgroundColor
-                    }}
+            <SafeAreaView
+                style={{
+                    flex: 1,
+                    backgroundColor: Global.settings.theme.backgroundColor
+                }}
+            >
+                <StatusBar
                     backgroundColor={Global.settings.theme.backgroundColor}
-                    placement="left"
-                    leftComponent={
-                        <Button
-                            title=""
-                            icon={
-                                <EIcon
-                                    name="chevron-left"
-                                    size={28}
-                                    color="white"
-                                />
-                            }
-                            clear
-                            onPress={() => this.props.navigation.goBack()}
-                        />
-                    }
-                    centerComponent={{
-                        text: "问题反馈&建议",
-                        style: { color: "#fff", fontSize: 16 }
-                    }}
+                    barStyle="light-content"
+                    translucent={false}
                 />
-                <View style={styles.main}>
-                    <Text style={[styles.text]}>
-                        问题反馈及建议，或合作意向，请发邮件至
-                    </Text>
-                    <Text style={[styles.text]}>Steven128@outlook.com</Text>
-                    <Text style={{ height: 30 }} />
-                    <Text style={[styles.text]}>
-                        本项目开源，欢迎Star或Fork
-                    </Text>
-                    <TouchableNativeFeedback
-                        onPress={this.goToGithub.bind(this)}
-                    >
-                        <Text
-                            style={[
-                                styles.text,
-                                styles.link,
-                                {
-                                    color: Global.settings.theme.backgroundColor,
-                                    textDecorationColor:
-                                        Global.settings.theme.backgroundColor
+                <View style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
+                    <Header
+                        containerStyle={headerStyle}
+                        backgroundColor={Global.settings.theme.backgroundColor}
+                        placement="left"
+                        leftComponent={
+                            <Button
+                                title=""
+                                icon={
+                                    <EIcon
+                                        name="chevron-left"
+                                        size={28}
+                                        color="white"
+                                    />
                                 }
-                            ]}
-                        >
-                            https://github.com/Steven128/JLUlife
+                                clear
+                                onPress={() =>
+                                    this.props.navigation.navigate("Settings")
+                                }
+                            />
+                        }
+                        centerComponent={{
+                            text: "问题反馈&建议",
+                            style: { color: "#fff", fontSize: 16 }
+                        }}
+                    />
+                    <View style={styles.main}>
+                        <Text style={[styles.text]}>
+                            问题反馈及建议，或合作意向，请发邮件至
                         </Text>
-                    </TouchableNativeFeedback>
+                        <Text style={[styles.text]}>Steven128@outlook.com</Text>
+                        <Text style={{ height: 30 }} />
+                        <Text style={[styles.text]}>
+                            本项目开源，欢迎Star或Fork
+                        </Text>
+                        {Platform.OS === "ios" ? (
+                            <TouchableHighlight
+                                onPress={this.goToGithub.bind(this)}
+                            >
+                                <Text
+                                    style={[
+                                        styles.text,
+                                        styles.link,
+                                        {
+                                            color:
+                                                Global.settings.theme
+                                                    .backgroundColor,
+                                            textDecorationColor:
+                                                Global.settings.theme
+                                                    .backgroundColor
+                                        }
+                                    ]}
+                                >
+                                    https://github.com/Steven128/JLUlife
+                                </Text>
+                            </TouchableHighlight>
+                        ) : (
+                            <TouchableNativeFeedback
+                                onPress={this.goToGithub.bind(this)}
+                            >
+                                <Text
+                                    style={[
+                                        styles.text,
+                                        styles.link,
+                                        {
+                                            color:
+                                                Global.settings.theme
+                                                    .backgroundColor,
+                                            textDecorationColor:
+                                                Global.settings.theme
+                                                    .backgroundColor
+                                        }
+                                    ]}
+                                >
+                                    https://github.com/Steven128/JLUlife
+                                </Text>
+                            </TouchableNativeFeedback>
+                        )}
+                    </View>
                 </View>
-            </View>
+            </SafeAreaView>
         );
     }
 }

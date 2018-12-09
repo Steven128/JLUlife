@@ -1,3 +1,6 @@
+/**
+ * 设置 -> 课程表设置页
+ */
 import React, { Component } from "react";
 import {
     View,
@@ -5,17 +8,24 @@ import {
     Dimensions,
     StyleSheet,
     TouchableNativeFeedback,
+    TouchableHighlight,
+    Platform,
     Alert,
     Slider,
     Switch,
     PermissionsAndroid,
-    ToastAndroid
+    ToastAndroid,
+    StatusBar
 } from "react-native";
+import { SafeAreaView } from "react-navigation";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import ImagePicker from "react-native-image-crop-picker";
 import Global from "../../src/Global";
 import AppStorage from "../../src/AppStorage";
+import isIphoneX from "../../src/isIphoneX";
+import Toast, { DURATION } from "react-native-easy-toast";
+
 const { width, height } = Dimensions.get("window");
 
 export default class ClassSettingsPage extends Component {
@@ -45,6 +55,7 @@ export default class ClassSettingsPage extends Component {
     }
 
     componentDidMount() {
+        //从全局变量加载设置
         this.setState({
             navColor:
                 Global.settings.class.navColor == "#ffffff" ? true : false,
@@ -56,6 +67,7 @@ export default class ClassSettingsPage extends Component {
     }
 
     componentWillUnmount() {
+        //离开页面时将更改写入全局变量和缓存，保存起来
         Global.settings.class.navColor = this.state.navColor
             ? "#ffffff"
             : "#808080";
@@ -88,6 +100,11 @@ export default class ClassSettingsPage extends Component {
     handleClassItemOpacityChange(opacity) {
         this.setState({ classItemOpacity: opacity });
     }
+
+    /**
+     * Android上请求存储权限
+     * @param {Function} callback 回调函数
+     */
     async requestStoragePermission(callback) {
         try {
             const granted = await PermissionsAndroid.request(
@@ -103,196 +120,265 @@ export default class ClassSettingsPage extends Component {
         }
     }
 
+    /**
+     * 选择图片
+     */
     selectPicture() {
-        this.requestStoragePermission(res => {
-            if (res.message != "success") {
-                ToastAndroid.show(
-                    "授权后才可以访问图库哦~",
-                    ToastAndroid.SHORT
-                );
-            } else {
-                ImagePicker.openPicker({
-                    width: width,
-                    height: height,
-                    cropping: true,
-                    includeBase64: true,
-                    cropperActiveWidgetColor:
-                        Global.settings.theme.backgroundColor,
-                    cropperStatusBarColor:
-                        Global.settings.theme.backgroundColor,
-                    cropperToolbarColor: Global.settings.theme.backgroundColor
-                }).then(image => {
-                    Global.settings.class.backgroundImage =
-                        "data:img/png;base64," + image.data;
-                    AppStorage._save("settings", Global.settings);
-                });
-            }
+        Platform.OS == "ios"
+            ? this.pickImage()
+            : this.requestStoragePermission(res => {
+                  if (res.message != "success") {
+                      ToastAndroid.show(
+                          "授权后才可以访问图库哦~",
+                          ToastAndroid.SHORT
+                      );
+                  } else {
+                      this.pickImage();
+                  }
+              });
+    }
+
+    pickImage() {
+        ImagePicker.openPicker({
+            width: width,
+            height: height,
+            cropping: true,
+            includeBase64: true,
+            cropperActiveWidgetColor: Global.settings.theme.backgroundColor,
+            cropperStatusBarColor: Global.settings.theme.backgroundColor,
+            cropperToolbarColor: Global.settings.theme.backgroundColor,
+            cropperChooseText: "裁剪",
+            cropperCancelText: "取消"
+        }).then(image => {
+            Global.settings.class.backgroundImage =
+                "data:img/png;base64," + image.data;
+            AppStorage._save("settings", Global.settings);
         });
     }
 
+    /**
+     * 长按后清除图片
+     */
     clearBgImage() {
         Global.settings.class.backgroundImage = "";
         AppStorage._save("settings", Global.settings);
-        ToastAndroid.show("背景图片已恢复默认啦~", ToastAndroid.SHORT);
+        Platform.OS === "ios"
+            ? this.refs.toast.show("背景图片已恢复默认啦~", 2000)
+            : ToastAndroid.show("背景图片已恢复默认啦~", ToastAndroid.SHORT);
     }
 
     render() {
         const { navigate } = this.props.navigation;
+        var headerStyle = {
+            borderBottomColor: Global.settings.theme.backgroundColor
+        };
+        if (isIphoneX()) {
+            headerStyle.paddingTop = 0;
+            headerStyle.height = 44;
+        }
         return (
-            <View style={styles.container}>
-                <Header
-                    containerStyle={{
-                        borderBottomColor: Global.settings.theme.backgroundColor
-                    }}
+            <SafeAreaView
+                style={{
+                    flex: 1,
+                    backgroundColor: Global.settings.theme.backgroundColor
+                }}
+            >
+                <StatusBar
                     backgroundColor={Global.settings.theme.backgroundColor}
-                    placement="left"
-                    leftComponent={
-                        <Button
-                            title=""
-                            icon={
-                                <EIcon
-                                    name="chevron-left"
-                                    size={28}
-                                    color="white"
-                                />
-                            }
-                            clear
-                            onPress={() => this.props.navigation.goBack()}
-                        />
-                    }
-                    centerComponent={{
-                        text: "课程表设置",
-                        style: { color: "#fff", fontSize: 16 }
-                    }}
+                    barStyle="light-content"
+                    translucent={false}
                 />
-                <View
-                    style={[
-                        styles.settingWrap,
-                        {
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            textAlignVertical: "center"
-                        }
-                    ]}
-                >
-                    <Text style={{ paddingLeft: 15, flex: 4 }}>
-                        课程表主题：{" "}
-                        <Text style={styles.sliderSubText}>
-                            {this.state.navColor ? "浅色" : "深色"}
-                        </Text>
-                    </Text>
-                    <Switch
-                        style={{ flex: 1 }}
-                        trackColor={Global.settings.theme.backgroundColor}
-                        thumbColor={Global.settings.theme.backgroundColor}
-                        trackColor={Global.settings.theme.backgroundColor}
-                        value={this.state.navColor}
-                        onValueChange={this.handleNavColorChange}
-                    />
-                </View>
-                <View style={styles.settingWrap}>
-                    <Text style={styles.settingText}>
-                        课程格子高度：{" "}
-                        <Text style={styles.sliderSubText}>
-                            {this.state.classItemHeight}
-                        </Text>
-                    </Text>
-                    <Slider
-                        thumbTintColor={Global.settings.theme.backgroundColor}
-                        minimumTrackTintColor={
-                            Global.settings.theme.backgroundColor
-                        }
-                        minimumValue={20}
-                        maximumValue={120}
-                        value={this.state.classItemHeight}
-                        onValueChange={this.handleClassItemHeightChange}
-                        step={5}
-                    />
-                </View>
-                <View style={styles.settingWrap}>
-                    <Text style={styles.settingText}>
-                        课程字体大小：{" "}
-                        <Text style={styles.sliderSubText}>
-                            {this.state.classFontSize}
-                        </Text>
-                    </Text>
-                    <Slider
-                        thumbTintColor={Global.settings.theme.backgroundColor}
-                        minimumTrackTintColor={
-                            Global.settings.theme.backgroundColor
-                        }
-                        minimumValue={9}
-                        maximumValue={18}
-                        value={this.state.classFontSize}
-                        onValueChange={this.handleClassFontSizeChange}
-                        step={1}
-                    />
-                </View>
-                <TouchableNativeFeedback
-                    onPress={this.selectPicture.bind(this)}
-                    onLongPress={this.clearBgImage.bind(this)}
-                >
-                    <View style={styles.settingWrap}>
-                        <Text style={styles.settingText}>课程表背景</Text>
-                        <Text
-                            style={[
-                                styles.settingText,
-                                {
-                                    paddingTop: 5,
-                                    color: "#888",
-                                    fontSize: 12
+                <Toast ref="toast" />
+                <View style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
+                    <Header
+                        containerStyle={headerStyle}
+                        backgroundColor={Global.settings.theme.backgroundColor}
+                        placement="left"
+                        leftComponent={
+                            <Button
+                                title=""
+                                icon={
+                                    <EIcon
+                                        name="chevron-left"
+                                        size={28}
+                                        color="white"
+                                    />
                                 }
-                            ]}
-                        >
-                            长按可以清除哦~
+                                clear
+                                onPress={() =>
+                                    this.props.navigation.navigate("Settings")
+                                }
+                            />
+                        }
+                        centerComponent={{
+                            text: "课程表设置",
+                            style: { color: "#fff", fontSize: 16 }
+                        }}
+                    />
+                    <View
+                        style={[
+                            styles.settingWrap,
+                            {
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                textAlignVertical: "center"
+                            }
+                        ]}
+                    >
+                        <Text style={{ paddingLeft: 15, flex: 4 }}>
+                            课程表主题：{" "}
+                            <Text style={styles.sliderSubText}>
+                                {this.state.navColor ? "浅色" : "深色"}
+                            </Text>
                         </Text>
+                        <Switch
+                            style={{ flex: 1 }}
+                            trackColor={Global.settings.theme.backgroundColor}
+                            thumbColor={Global.settings.theme.backgroundColor}
+                            trackColor={Global.settings.theme.backgroundColor}
+                            value={this.state.navColor}
+                            onValueChange={this.handleNavColorChange}
+                        />
                     </View>
-                </TouchableNativeFeedback>
-                <View style={styles.settingWrap}>
-                    <Text style={styles.settingText}>
-                        背景透明度：{" "}
-                        <Text style={styles.sliderSubText}>
-                            {Math.ceil(this.state.classBgOpacity * 100)}%
+                    <View style={styles.settingWrap}>
+                        <Text style={styles.settingText}>
+                            课程格子高度：{" "}
+                            <Text style={styles.sliderSubText}>
+                                {this.state.classItemHeight}
+                            </Text>
                         </Text>
-                    </Text>
-                    <Slider
-                        thumbTintColor={Global.settings.theme.backgroundColor}
-                        minimumTrackTintColor={
-                            Global.settings.theme.backgroundColor
-                        }
-                        minimumValue={0}
-                        maximumValue={1}
-                        value={this.state.classBgOpacity}
-                        onValueChange={this.handleClassBgOpacityChange}
-                    />
-                </View>
-                <View style={styles.settingWrap}>
-                    <Text style={styles.settingText}>
-                        课程格子透明度：{" "}
-                        <Text style={styles.sliderSubText}>
-                            {Math.ceil(this.state.classItemOpacity * 100)}%
+                        <Slider
+                            thumbTintColor={
+                                Global.settings.theme.backgroundColor
+                            }
+                            minimumTrackTintColor={
+                                Global.settings.theme.backgroundColor
+                            }
+                            minimumValue={20}
+                            maximumValue={120}
+                            value={this.state.classItemHeight}
+                            onValueChange={this.handleClassItemHeightChange}
+                            step={5}
+                        />
+                    </View>
+                    <View style={styles.settingWrap}>
+                        <Text style={styles.settingText}>
+                            课程字体大小：{" "}
+                            <Text style={styles.sliderSubText}>
+                                {this.state.classFontSize}
+                            </Text>
                         </Text>
-                    </Text>
-                    <Slider
-                        thumbTintColor={Global.settings.theme.backgroundColor}
-                        minimumTrackTintColor={
-                            Global.settings.theme.backgroundColor
-                        }
-                        minimumValue={0}
-                        maximumValue={1}
-                        value={this.state.classItemOpacity}
-                        onValueChange={this.handleClassItemOpacityChange}
-                    />
+                        <Slider
+                            thumbTintColor={
+                                Global.settings.theme.backgroundColor
+                            }
+                            minimumTrackTintColor={
+                                Global.settings.theme.backgroundColor
+                            }
+                            minimumValue={9}
+                            maximumValue={18}
+                            value={this.state.classFontSize}
+                            onValueChange={this.handleClassFontSizeChange}
+                            step={1}
+                        />
+                    </View>
+                    {Platform.OS === "ios" ? (
+                        <TouchableHighlight
+                            onPress={this.selectPicture.bind(this)}
+                            onLongPress={this.clearBgImage.bind(this)}
+                        >
+                            <View style={styles.settingWrap}>
+                                <Text style={styles.settingText}>
+                                    课程表背景
+                                </Text>
+                                <Text
+                                    style={[
+                                        styles.settingText,
+                                        {
+                                            paddingTop: 5,
+                                            color: "#888",
+                                            fontSize: 12
+                                        }
+                                    ]}
+                                >
+                                    长按可以清除哦~
+                                </Text>
+                            </View>
+                        </TouchableHighlight>
+                    ) : (
+                        <TouchableNativeFeedback
+                            onPress={this.selectPicture.bind(this)}
+                            onLongPress={this.clearBgImage.bind(this)}
+                        >
+                            <View style={styles.settingWrap}>
+                                <Text style={styles.settingText}>
+                                    课程表背景
+                                </Text>
+                                <Text
+                                    style={[
+                                        styles.settingText,
+                                        {
+                                            paddingTop: 5,
+                                            color: "#888",
+                                            fontSize: 12
+                                        }
+                                    ]}
+                                >
+                                    长按可以清除哦~
+                                </Text>
+                            </View>
+                        </TouchableNativeFeedback>
+                    )}
+
+                    <View style={styles.settingWrap}>
+                        <Text style={styles.settingText}>
+                            背景透明度：{" "}
+                            <Text style={styles.sliderSubText}>
+                                {Math.ceil(this.state.classBgOpacity * 100)}%
+                            </Text>
+                        </Text>
+                        <Slider
+                            thumbTintColor={
+                                Global.settings.theme.backgroundColor
+                            }
+                            minimumTrackTintColor={
+                                Global.settings.theme.backgroundColor
+                            }
+                            minimumValue={0}
+                            maximumValue={1}
+                            value={this.state.classBgOpacity}
+                            onValueChange={this.handleClassBgOpacityChange}
+                        />
+                    </View>
+                    <View style={styles.settingWrap}>
+                        <Text style={styles.settingText}>
+                            课程格子透明度：{" "}
+                            <Text style={styles.sliderSubText}>
+                                {Math.ceil(this.state.classItemOpacity * 100)}%
+                            </Text>
+                        </Text>
+                        <Slider
+                            thumbTintColor={
+                                Global.settings.theme.backgroundColor
+                            }
+                            minimumTrackTintColor={
+                                Global.settings.theme.backgroundColor
+                            }
+                            minimumValue={0}
+                            maximumValue={1}
+                            value={this.state.classItemOpacity}
+                            onValueChange={this.handleClassItemOpacityChange}
+                        />
+                    </View>
                 </View>
-            </View>
+            </SafeAreaView>
         );
     }
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: "#efefef"
+        flex: 1
     },
     item: {
         height: 60,

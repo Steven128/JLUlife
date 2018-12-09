@@ -1,3 +1,6 @@
+/**
+ * 信息查询 -> 图书馆查询页
+ */
 import React, { Component } from "react";
 import {
     View,
@@ -8,12 +11,16 @@ import {
     Linking,
     TouchableNativeFeedback,
     Platform,
-    BackHandler
+    BackHandler,
+    StatusBar
 } from "react-native";
+import { SafeAreaView } from "react-navigation";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import FIcon from "react-native-vector-icons/Feather";
 import Global from "../../src/Global";
+import isIphoneX from "../../src/isIphoneX";
+
 const { width, height } = Dimensions.get("window");
 
 var { height: deviceHeight, width: deviceWidth } = Dimensions.get("window");
@@ -38,6 +45,9 @@ export default class LibraryPage extends Component {
         this.props.navigation.openDrawer();
     }
 
+    /**
+     * 下面是处理安卓上的返回按键，当webview中有多层时，先在webview中后退
+     */
     onNavigationStateChange = navState => {
         this.setState({
             backButtonEnabled: navState.canGoBack
@@ -51,7 +61,7 @@ export default class LibraryPage extends Component {
             this.refs["webView"].goBack();
         } else {
             //否则返回到上一个页面
-            this.nav.goBack();
+            this.nav.navigate("Main");
         }
     };
 
@@ -74,52 +84,81 @@ export default class LibraryPage extends Component {
         }
     };
 
+    /**
+     * 下面处理左上角返回键，原理同上
+     */
+    backButtonTapped() {
+        if (this.state.backButtonEnabled) {
+            this.refs["webView"].goBack();
+        } else {
+            //否则返回到上一个页面
+            this.nav.navigate("Main");
+        }
+    }
+
     render() {
         const { navigate } = this.props.navigation;
+        var headerStyle = {
+            borderBottomColor: Global.settings.theme.backgroundColor
+        };
+        if (isIphoneX()) {
+            headerStyle.paddingTop = 0;
+            headerStyle.height = 44;
+        }
         return (
-            <View style={styles.container}>
-                <Header
-                    containerStyle={{
-                        borderBottomColor: Global.settings.theme.backgroundColor
-                    }}
+            <SafeAreaView
+                style={{
+                    flex: 1,
+                    backgroundColor: Global.settings.theme.backgroundColor
+                }}
+            >
+                <StatusBar
                     backgroundColor={Global.settings.theme.backgroundColor}
-                    placement="left"
-                    leftComponent={
-                        <Button
-                            title=""
-                            icon={
-                                <EIcon
-                                    name="chevron-left"
-                                    size={28}
-                                    color="white"
-                                />
-                            }
-                            clear
-                            onPress={() => this.props.navigation.goBack()}
-                        />
-                    }
-                    centerComponent={{
-                        text: "图书馆",
-                        style: { color: "#fff", fontSize: 16 }
-                    }}
+                    barStyle="light-content"
+                    translucent={false}
                 />
-                <WebView
-                    bounces={false}
-                    scalesPageToFit={true}
-                    source={{
-                        uri:
-                            "http://libpda.jlu.edu.cn:8080/sms/opac/search/showiphoneSearch.action"
-                    }}
-                    automaticallyAdjustContentInsets={true}
-                    style={{
-                        width: deviceWidth,
-                        height: deviceHeight - 100
-                    }}
-                    startInLoadingState={true}
-                    ref="webView"
-                    onNavigationStateChange={this.onNavigationStateChange}
-                />
-            </View>
+                <View style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
+                    <Header
+                        containerStyle={headerStyle}
+                        backgroundColor={Global.settings.theme.backgroundColor}
+                        placement="left"
+                        leftComponent={
+                            <Button
+                                title=""
+                                icon={
+                                    <EIcon
+                                        name="chevron-left"
+                                        size={28}
+                                        color="white"
+                                    />
+                                }
+                                clear
+                                onPress={this.backButtonTapped.bind(this)}
+                            />
+                        }
+                        centerComponent={{
+                            text: "图书馆",
+                            style: { color: "#fff", fontSize: 16 }
+                        }}
+                    />
+                    <WebView
+                        bounces={false}
+                        scalesPageToFit={true}
+                        source={{
+                            uri:
+                                "http://libpda.jlu.edu.cn:8080/sms/opac/search/showiphoneSearch.action"
+                        }}
+                        automaticallyAdjustContentInsets={true}
+                        style={{
+                            width: deviceWidth,
+                            height: deviceHeight - 100
+                        }}
+                        startInLoadingState={true}
+                        ref="webView"
+                        onNavigationStateChange={this.onNavigationStateChange}
+                    />
+                </View>
+            </SafeAreaView>
         );
     }
 }

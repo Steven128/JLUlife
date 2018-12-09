@@ -101,7 +101,7 @@ android {
         applicationId "com.brady.jlulife"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 210
+        versionCode 201001000
         versionName "2.1.0"
         ndk {
             abiFilters "armeabi-v7a"
@@ -148,6 +148,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-bugly')
     compile project(':react-native-image-crop-picker')
     compile project(':react-native-svg')
     compile project(':rn-splash-screen')

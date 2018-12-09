@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import {
     TouchableNativeFeedback,
+    TouchableHighlight,
+    Platform,
     Dimensions,
     StyleSheet,
     ScrollView,
@@ -27,7 +29,38 @@ export default class NotificationItem extends Component {
             title.push(redText);
         }
         title.push(<Text style={styles.title}>{this.props.title}</Text>);
-        return (
+        return Platform.OS === "ios" ? (
+            <TouchableHighlight
+                onPress={() => {
+                    this.props.navigation.navigate("Item", {
+                        title: this.props.title,
+                        href: this.props.href,
+                        comeFrom: this.props.comeFrom,
+                        time: this.props.time
+                    });
+                }}
+            >
+                <View style={styles.container}>
+                    <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+                        {title}
+                    </View>
+
+                    <View style={{ flexDirection: "row" }}>
+                        <Text style={[styles.text, { flex: 1 }]}>
+                            {this.props.comeFrom}
+                        </Text>
+                        <Text
+                            style={[
+                                styles.text,
+                                { flex: 1, textAlign: "right" }
+                            ]}
+                        >
+                            {this.props.time}
+                        </Text>
+                    </View>
+                </View>
+            </TouchableHighlight>
+        ) : (
             <TouchableNativeFeedback
                 onPress={() => {
                     this.props.navigation.navigate("Item", {

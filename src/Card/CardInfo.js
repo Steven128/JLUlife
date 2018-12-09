@@ -82,7 +82,7 @@ export default class CardInfo extends Component {
                     flex: 1,
                     borderRightWidth: 1,
                     borderRightColor: "#ccc",
-                    backgroundColor: "#efefef"
+                    backgroundColor: "#f5f5f5"
                 }}
             >
                 {this.state.getInfo ? (

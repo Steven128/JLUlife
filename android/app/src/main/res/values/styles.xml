@@ -15,7 +15,7 @@
 			#2089dc
 		</item>
 		<item name="android:navigationBarColor">
-			#efefef
+			#f5f5f5
 		</item>
 		<item name="android:windowLightStatusBar">
 			true

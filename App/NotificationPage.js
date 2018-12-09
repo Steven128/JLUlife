@@ -1,10 +1,22 @@
+/**
+ * 校内通知页
+ */
 import React, { Component } from "react";
-import { View, Dimensions, ActivityIndicator } from "react-native";
+import {
+    View,
+    Dimensions,
+    ActivityIndicator,
+    StyleSheet,
+    StatusBar,
+    Platform
+} from "react-native";
+import { SafeAreaView } from "react-navigation";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../src/Global";
 import NotificationInterface from "../src/FetchInterface/NotificationInterface";
 import NotificationView from "../src/Notification/NotificationView";
+import isIphoneX from "../src/isIphoneX";
 
 const { width, height } = Dimensions.get("window");
 export default class NotificationPage extends Component {
@@ -34,47 +46,75 @@ export default class NotificationPage extends Component {
     }
     render() {
         const { navigate } = this.props.navigation;
+        var headerStyle = {
+            borderBottomColor: Global.settings.theme.backgroundColor
+        };
+        if (isIphoneX()) {
+            headerStyle.paddingTop = 0;
+            headerStyle.height = 44;
+        }
         return (
-            <View style={{ flex: 1, backgroundColor: "#efefef" }}>
-                <Header
-                    containerStyle={{
-                        borderBottomColor: Global.settings.theme.backgroundColor
-                    }}
+            <SafeAreaView
+                style={{
+                    flex: 1,
+                    backgroundColor: Global.settings.theme.backgroundColor
+                }}
+            >
+                <StatusBar
                     backgroundColor={Global.settings.theme.backgroundColor}
-                    placement="left"
-                    leftComponent={
-                        <Button
-                            title=""
-                            icon={<EIcon name="menu" size={28} color="white" />}
-                            clear
-                            onPress={this.openDrawer}
-                        />
-                    }
-                    centerComponent={{
-                        text: "校内通知",
-                        style: { color: "#fff", fontSize: 16 }
-                    }}
+                    barStyle="light-content"
+                    translucent={false}
                 />
-                {this.state.getOa ? (
-                    <NotificationView
-                        oaList={this.state.oaList}
-                        navigation={this.props.navigation}
-                    />
-                ) : (
-                    <View
-                        style={{
-                            paddingVertical: height / 2 - 150,
-                            backgroundColor: "transparent"
+                <View style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
+                    <Header
+                        containerStyle={headerStyle}
+                        backgroundColor={Global.settings.theme.backgroundColor}
+                        placement="left"
+                        leftComponent={
+                            <Button
+                                title=""
+                                icon={
+                                    <EIcon
+                                        name="menu"
+                                        size={28}
+                                        color="white"
+                                    />
+                                }
+                                clear
+                                onPress={this.openDrawer}
+                            />
+                        }
+                        centerComponent={{
+                            text: "校内通知",
+                            style: { color: "#fff", fontSize: 16 }
                         }}
-                    >
-                        <ActivityIndicator
-                            style={{}}
-                            size="large"
-                            color={Global.settings.theme.backgroundColor}
+                    />
+                    {this.state.getOa ? (
+                        <NotificationView
+                            oaList={this.state.oaList}
+                            navigation={this.props.navigation}
                         />
-                    </View>
-                )}
-            </View>
+                    ) : (
+                        <View
+                            style={{
+                                paddingVertical: height / 2 - 150,
+                                backgroundColor: "transparent"
+                            }}
+                        >
+                            <ActivityIndicator
+                                style={{}}
+                                size="large"
+                                color={Global.settings.theme.backgroundColor}
+                            />
+                        </View>
+                    )}
+                </View>
+            </SafeAreaView>
         );
     }
 }
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    }
+});

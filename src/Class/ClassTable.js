@@ -26,7 +26,11 @@ export default class ClassTable extends Component {
             });
         }
     }
-
+    /**
+     * 获取指定周7天的日期列表
+     * @param {String} targetDate 开始的日期
+     * @param {String} week 隔几周
+     */
     getWeekDayList(targetDate, week) {
         week = week - 1;
         function formatDate(date) {

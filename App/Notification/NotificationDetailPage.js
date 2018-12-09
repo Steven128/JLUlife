@@ -1,3 +1,6 @@
+/**
+ * 校内通知 -> 通知详情页
+ */
 import React, { Component } from "react";
 import {
     View,
@@ -6,12 +9,18 @@ import {
     WebView,
     StyleSheet,
     Linking,
-    TouchableNativeFeedback
+    TouchableNativeFeedback,
+    TouchableHighlight,
+    Platform,
+    StatusBar
 } from "react-native";
+import { SafeAreaView } from "react-navigation";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import FIcon from "react-native-vector-icons/Feather";
 import Global from "../../src/Global";
+import isIphoneX from "../../src/isIphoneX";
+
 const { width, height } = Dimensions.get("window");
 
 var { height: deviceHeight, width: deviceWidth } = Dimensions.get("window");
@@ -20,8 +29,6 @@ export default class NotificationDetailPage extends Component {
         super(props);
         this.openDrawer = this.openDrawer.bind(this);
         this.state = {
-            getOa: false,
-            oaDetail: {},
             showTag: false
         };
     }
@@ -51,94 +58,141 @@ export default class NotificationDetailPage extends Component {
 
     render() {
         const { navigate } = this.props.navigation;
+        var headerStyle = {
+            borderBottomColor: Global.settings.theme.backgroundColor
+        };
+        if (isIphoneX()) {
+            headerStyle.paddingTop = 0;
+            headerStyle.height = 44;
+        }
         return (
-            <View style={styles.container}>
-                {this.state.showTag ? (
-                    <TouchableNativeFeedback onPress={this.closeTag.bind(this)}>
-                        <View style={styles.tagContainer}>
-                            <TouchableNativeFeedback
-                                onPress={this.openBroser.bind(
-                                    this,
-                                    this.props.navigation.state.params.href
-                                )}
+            <SafeAreaView
+                style={{
+                    flex: 1,
+                    backgroundColor: Global.settings.theme.backgroundColor
+                }}
+            >
+                <StatusBar
+                    backgroundColor={Global.settings.theme.backgroundColor}
+                    barStyle="light-content"
+                    translucent={false}
+                />
+                <View style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
+                    {this.state.showTag ? (
+                        Platform.OS === "ios" ? (
+                            <TouchableHighlight
+                                onPress={this.closeTag.bind(this)}
                             >
-                                <View style={styles.tag}>
-                                    <Text style={{ color: "#555" }}>
-                                        {"下载附件"}
-                                    </Text>
-                                    <Text style={{ color: "#555" }}>
-                                        {"(在浏览器打开原网页)"}
-                                    </Text>
+                                <View style={styles.tagContainer}>
+                                    <TouchableHighlight
+                                        onPress={this.openBroser.bind(
+                                            this,
+                                            this.props.navigation.state.params
+                                                .href
+                                        )}
+                                    >
+                                        <View style={styles.tag}>
+                                            <Text style={{ color: "#555" }}>
+                                                {"下载附件"}
+                                            </Text>
+                                            <Text style={{ color: "#555" }}>
+                                                {"(在浏览器打开原网页)"}
+                                            </Text>
+                                        </View>
+                                    </TouchableHighlight>
+                                </View>
+                            </TouchableHighlight>
+                        ) : (
+                            <TouchableNativeFeedback
+                                onPress={this.closeTag.bind(this)}
+                            >
+                                <View style={styles.tagContainer}>
+                                    <TouchableNativeFeedback
+                                        onPress={this.openBroser.bind(
+                                            this,
+                                            this.props.navigation.state.params
+                                                .href
+                                        )}
+                                    >
+                                        <View style={styles.tag}>
+                                            <Text style={{ color: "#555" }}>
+                                                {"下载附件"}
+                                            </Text>
+                                            <Text style={{ color: "#555" }}>
+                                                {"(在浏览器打开原网页)"}
+                                            </Text>
+                                        </View>
+                                    </TouchableNativeFeedback>
                                 </View>
                             </TouchableNativeFeedback>
-                        </View>
-                    </TouchableNativeFeedback>
-                ) : null}
-                <Header
-                    containerStyle={{
-                        borderBottomColor: Global.settings.theme.backgroundColor
-                    }}
-                    backgroundColor={Global.settings.theme.backgroundColor}
-                    placement="left"
-                    leftComponent={
-                        <Button
-                            title=""
-                            icon={
-                                <EIcon
-                                    name="chevron-left"
-                                    size={28}
-                                    color="white"
-                                />
-                            }
-                            clear
-                            onPress={() => this.props.navigation.goBack()}
-                        />
-                    }
-                    centerComponent={{
-                        text: "通知详情",
-                        style: { color: "#fff", fontSize: 16 }
-                    }}
-                    rightComponent={
-                        <Button
-                            title=""
-                            icon={
-                                <FIcon
-                                    name="more-vertical"
-                                    size={24}
-                                    color="white"
-                                />
-                            }
-                            clear
-                            onPress={this.showTag.bind(this)}
-                        />
-                    }
-                />
-                <View style={styles.titleWrap}>
-                    <Text style={styles.title}>
-                        {this.props.navigation.state.params.title}
-                    </Text>
-                    <Text style={styles.subTitle}>
-                        {this.props.navigation.state.params.comeFrom}
-                    </Text>
-                    <Text style={styles.subTitle}>
-                        {this.props.navigation.state.params.time}
-                    </Text>
+                        )
+                    ) : null}
+                    <Header
+                        containerStyle={headerStyle}
+                        backgroundColor={Global.settings.theme.backgroundColor}
+                        placement="left"
+                        leftComponent={
+                            <Button
+                                title=""
+                                icon={
+                                    <EIcon
+                                        name="chevron-left"
+                                        size={28}
+                                        color="white"
+                                    />
+                                }
+                                clear
+                                onPress={() =>
+                                    this.props.navigation.navigate("List")
+                                }
+                            />
+                        }
+                        centerComponent={{
+                            text: "通知详情",
+                            style: { color: "#fff", fontSize: 16 }
+                        }}
+                        rightComponent={
+                            <Button
+                                title=""
+                                icon={
+                                    <FIcon
+                                        name="more-vertical"
+                                        size={24}
+                                        color="white"
+                                    />
+                                }
+                                clear
+                                onPress={this.showTag.bind(this)}
+                            />
+                        }
+                    />
+                    <View style={styles.titleWrap}>
+                        <Text style={styles.title}>
+                            {this.props.navigation.state.params.title}
+                        </Text>
+                        <Text style={styles.subTitle}>
+                            {this.props.navigation.state.params.comeFrom}
+                        </Text>
+                        <Text style={styles.subTitle}>
+                            {this.props.navigation.state.params.time}
+                        </Text>
+                    </View>
+                    <WebView
+                        bounces={false}
+                        scalesPageToFit={true}
+                        source={{
+                            uri: this.props.navigation.state.params.href
+                        }}
+                        automaticallyAdjustContentInsets={true}
+                        injectedJavaScript={`document.querySelector('body').innerHTML=document.querySelector('.immmge').innerHTML;document.querySelector('body').style.background='#fff';document.querySelector('html').style.background='#fff';document.querySelector('body').style.padding='15px';window.scrollTo(0,0) `}
+                        style={{
+                            width: deviceWidth,
+                            height: deviceHeight - 100
+                        }}
+                        startInLoadingState={true}
+                    />
                 </View>
-                <WebView
-                    bounces={false}
-                    scalesPageToFit={true}
-                    source={{
-                        uri: this.props.navigation.state.params.href
-                    }}
-                    automaticallyAdjustContentInsets={true}
-                    injectedJavaScript={`document.querySelector('body').innerHTML=document.querySelector('.immmge').innerHTML;document.querySelector('body').style.background='#fff';document.querySelector('html').style.background='#fff';document.querySelector('body').style.padding='15px';window.scrollTo(0,0) `}
-                    style={{
-                        width: deviceWidth,
-                        height: deviceHeight - 100
-                    }}
-                    startInLoadingState={true}
-                />
-            </View>
+            </SafeAreaView>
         );
     }
 }
