@@ -12,7 +12,7 @@ Android
 
 [华为应用市场](http://appstore.huawei.com/app/C100513429)
 
-[应用宝](http://app.qq.com/#id=detail&appid=1104913434)
+[应用宝](https://sj.qq.com/myapp/detail.htm?apkName=com.brady.jlulife)
 
 
 简介
