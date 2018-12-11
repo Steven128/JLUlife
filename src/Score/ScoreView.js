@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, Dimensions, ToastAndroid } from "react-native";
+import {
+    StyleSheet,
+    Text,
+    View,
+    Dimensions,
+    ToastAndroid,
+    Platform
+} from "react-native";
 import RefreshListView, { RefreshState } from "react-native-refresh-list-view";
 import ScoreItem from "./ScoreItem";
 import Global from "../Global";

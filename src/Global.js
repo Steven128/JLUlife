@@ -45,6 +45,7 @@ var Global = {
         password: ""
     },
     settings: {
+        outOfSchool: false,
         theme: {
             index: 0,
             color: "#ffffff",

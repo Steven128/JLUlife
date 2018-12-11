@@ -25,12 +25,22 @@ export default class CardTransfer extends Component {
 
     componentDidMount() {}
     handleAmountChange(amount) {
+        amount = parseFloat(amount);
         this.setState({
             amount: amount
         });
     }
 
     buttonTapped() {
+        var pattern = /^[0-9]+([.]\d{1,2})?$/;
+        if (!pattern.test(this.state.amount)) {
+            Alert.alert("提示", "请输入正确的金额");
+            return false;
+        }
+        if (parseFloat(this.state.amount) < 0.01) {
+            Alert.alert("提示", "金额不能为0");
+            return false;
+        }
         Alert.alert(
             "提示",
             "确定要转入校园卡 " + this.state.amount + " 元吗？",
@@ -78,12 +88,6 @@ export default class CardTransfer extends Component {
     }
 
     transfer(cookie, amount, password, callback) {
-        var pattern = /^[0-9]+([.]\d{1,2})?$/;
-        if (!pattern.test(amount)) {
-            alert("请输入正确的金额");
-            this.setState({ showLoading: false });
-            return false;
-        }
         password = Base64.encode(password);
         let url = "http://ykt.jlu.edu.cn:8070/SynCard/Manage/TransferPost";
         fetch(url, {
@@ -133,10 +137,7 @@ export default class CardTransfer extends Component {
                 >
                     <Input
                         containerStyle={styles.input}
-                        inputContainerStyle={{
-                            borderBottomWidth: 1,
-                            borderBottomColor: this.state.amountColor
-                        }}
+                        inputStyle={styles.inputStyle}
                         placeholder="请输入金额"
                         leftIcon={<Icon name="rmb" size={22} color="#888" />}
                         value={this.state.amount}
@@ -147,7 +148,7 @@ export default class CardTransfer extends Component {
                         selectTextOnFocus={true}
                     />
                 </View>
-                <View style={{ paddingHorizontal: 30 }}>
+                <View style={{ paddingHorizontal: 30, paddingTop: 15 }}>
                     <Text style={{ color: "#888", paddingBottom: 10 }}>
                         •
                         向校园卡转账成功后所转金额将显示在过渡余额中，在餐厅等处的卡机上进行刷卡操作后，过渡余额即会转入校园卡
@@ -167,7 +168,8 @@ export default class CardTransfer extends Component {
                         titleStyle={{ fontWeight: "700" }}
                         buttonStyle={{
                             height: 45,
-                            backgroundColor: Global.settings.theme.backgroundColor
+                            backgroundColor:
+                                Global.settings.theme.backgroundColor
                         }}
                         onPress={this.buttonTapped}
                     />
@@ -179,7 +181,11 @@ export default class CardTransfer extends Component {
 
 const styles = StyleSheet.create({
     input: {
-        height: 80,
+        paddingVertical: 5,
         width: width * 0.86
+    },
+    inputStyle: {
+        height: 50,
+        overflow: "hidden"
     }
 });

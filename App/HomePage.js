@@ -11,9 +11,9 @@ import {
     ToastAndroid,
     ActivityIndicator,
     StatusBar,
-    Platform
+    Platform,
+    SafeAreaView
 } from "react-native";
-import { SafeAreaView } from "react-navigation";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../src/Global";
@@ -269,7 +269,7 @@ export default class HomePage extends Component {
         var headerStyle = {
             borderBottomColor: Global.settings.theme.backgroundColor
         };
-        if (isIphoneX()) {
+        if (Platform.OS == "ios") {
             headerStyle.paddingTop = 0;
             headerStyle.height = 44;
         }
@@ -305,14 +305,14 @@ export default class HomePage extends Component {
                         {"你好，" + Global.currentStuName}
                     </Text>
                     <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-                        <View>
-                            <Text style={{ color: "#888" }}>正在登录</Text>
-                        </View>
                         <ActivityIndicator
-                            style={{ width: 50 }}
+                            style={{ marginLeft: 5, marginRight: 10 }}
                             size="small"
                             color={Global.settings.theme.backgroundColor}
                         />
+                        <View>
+                            <Text style={{ color: "#888" }}>正在登录</Text>
+                        </View>
                     </View>
                 </View>
             );
@@ -327,7 +327,13 @@ export default class HomePage extends Component {
                         {"你好，" + Global.currentStuName}
                     </Text>
                     <Button
-                        buttonStyle={styles.loginBtn}
+                        buttonStyle={[
+                            styles.loginBtn,
+                            {
+                                borderColor:
+                                    Global.settings.theme.backgroundColor
+                            }
+                        ]}
                         titleStyle={{
                             color: Global.settings.theme.backgroundColor
                         }}

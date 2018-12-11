@@ -9,9 +9,9 @@ import {
     Platform,
     StyleSheet,
     StatusBar,
-    Image
+    Image,
+    SafeAreaView
 } from "react-native";
-import { SafeAreaView } from "react-navigation";
 import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/AntDesign";
 import Global from "../../src/Global";

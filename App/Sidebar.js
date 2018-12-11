@@ -9,9 +9,10 @@ import {
     StyleSheet,
     StatusBar,
     Platform,
-    Dimensions
+    Dimensions,
+    SafeAreaView
 } from "react-native";
-import { DrawerItems, SafeAreaView } from "react-navigation";
+import { DrawerItems } from "react-navigation";
 import Global from "../src/Global";
 import AppStorage from "../src/AppStorage";
 import HandleNewSettings from "../src/HandleNewSettings";
@@ -55,7 +56,12 @@ export class Sidebar extends Component {
                     barStyle="light-content"
                     translucent={false}
                 />
-                <SafeAreaView style={{ flex: 1, backgroundColor: Global.settings.theme.backgroundColor }}>
+                <SafeAreaView
+                    style={{
+                        flex: 1,
+                        backgroundColor: Global.settings.theme.backgroundColor
+                    }}
+                >
                     <View style={{ flex: 1, backgroundColor: "#fff" }}>
                         <View
                             style={[

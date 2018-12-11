@@ -12,9 +12,9 @@ import {
     ScrollView,
     BackHandler,
     StatusBar,
-    Platform
+    Platform,
+    SafeAreaView
 } from "react-native";
-import { SafeAreaView } from "react-navigation";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../../src/Global";
@@ -87,7 +87,7 @@ export default class ClassSettingsPage extends Component {
         var headerStyle = {
             borderBottomColor: Global.settings.theme.backgroundColor
         };
-        if (isIphoneX()) {
+        if (Platform.OS == "ios") {
             headerStyle.paddingTop = 0;
             headerStyle.height = 44;
         }

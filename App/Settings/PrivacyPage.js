@@ -11,9 +11,10 @@ import {
     Linking,
     TouchableNativeFeedback,
     StatusBar,
-    Platform
+    Platform,
+    ScrollView,
+    SafeAreaView
 } from "react-native";
-import { SafeAreaView } from "react-navigation";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import AIcon from "react-native-vector-icons/AntDesign";
@@ -39,7 +40,7 @@ export default class PrivacyPage extends Component {
         var headerStyle = {
             borderBottomColor: Global.settings.theme.backgroundColor
         };
-        if (isIphoneX()) {
+        if (Platform.OS == "ios") {
             headerStyle.paddingTop = 0;
             headerStyle.height = 44;
         }
@@ -81,7 +82,7 @@ export default class PrivacyPage extends Component {
                             style: { color: "#fff", fontSize: 16 }
                         }}
                     />
-                    <View style={styles.main}>
+                    <ScrollView style={styles.main}>
                         <Text style={[styles.title]}>
                             当您使用本APP，即表示您同意以下声明：
                         </Text>
@@ -93,7 +94,7 @@ export default class PrivacyPage extends Component {
                                         Global.settings.theme.backgroundColor
                                     }
                                 />
-                                此APP中所有功能的实现均使用吉大相关系统的接口
+                                此APP并非官方应用，为个人开发，所有功能的实现均使用学校官方开放接口。查询结果如与事实有所出入，恕不承担责任。
                             </Text>
                             <Text style={[styles.text]}>
                                 <EIcon
@@ -102,7 +103,7 @@ export default class PrivacyPage extends Component {
                                         Global.settings.theme.backgroundColor
                                     }
                                 />
-                                使用课程表和查询成绩功能时，需要您的信息来访问教务系统，并在教务系统中留下登录痕迹
+                                使用课程表和查询成绩功能时，需要您的信息来访问教务系统，并在教务系统中留下登录痕迹。
                             </Text>
                             <Text style={[styles.text]}>
                                 <EIcon
@@ -111,7 +112,7 @@ export default class PrivacyPage extends Component {
                                         Global.settings.theme.backgroundColor
                                     }
                                 />
-                                登录用户名和密码将保存在应用缓存中，以后打开APP时用此信息自动登录
+                                登录用户名和密码将保存在应用缓存中，以后打开APP时用此信息自动登录。
                             </Text>
                             <Text style={[styles.text]}>
                                 <EIcon
@@ -120,7 +121,7 @@ export default class PrivacyPage extends Component {
                                         Global.settings.theme.backgroundColor
                                     }
                                 />
-                                查看校内通知和教务通知时将访问相应网址并留下痕迹
+                                查看校内通知和教务通知时将访问相应网址并留下痕迹。
                             </Text>
                             <Text style={[styles.text]}>
                                 <EIcon
@@ -129,7 +130,7 @@ export default class PrivacyPage extends Component {
                                         Global.settings.theme.backgroundColor
                                     }
                                 />
-                                校园一卡通功能涉及金融，将不会缓存重要信息，并保证不上传任何数据
+                                校园一卡通功能涉及金融，将不会缓存重要信息，并保证不上传任何数据。
                             </Text>
                             <Text style={[styles.text]}>
                                 <EIcon
@@ -138,7 +139,7 @@ export default class PrivacyPage extends Component {
                                         Global.settings.theme.backgroundColor
                                     }
                                 />
-                                本APP为纯客户端应用，保证不上传您的任何数据
+                                本APP为纯客户端应用，保证不上传您的任何个人数据，请放心使用。
                             </Text>
                             <Text style={[styles.text]}>
                                 <EIcon
@@ -147,7 +148,7 @@ export default class PrivacyPage extends Component {
                                         Global.settings.theme.backgroundColor
                                     }
                                 />
-                                本条款更新于2018年12月1日，后续更新可能修改条款
+                                此应用接入腾讯bugly服务。当应用崩溃，或发生内部错误时，可能会将相关日志文件上传，以便开发者及时定位错误，请悉知。
                             </Text>
                             <Text style={[styles.text]}>
                                 <EIcon
@@ -156,11 +157,19 @@ export default class PrivacyPage extends Component {
                                         Global.settings.theme.backgroundColor
                                     }
                                 />
-                                &copy; 2018~2019 by
-                                GitHub@Steven128，保留所有权利
+                                本条款更新于2018年12月12日，后续更新可能修改条款。
+                            </Text>
+                            <Text style={[styles.text]}>
+                                <EIcon
+                                    name="dot-single"
+                                    color={
+                                        Global.settings.theme.backgroundColor
+                                    }
+                                />
+                                &copy; 2018 by GitHub@Steven128，保留所有权利。
                             </Text>
                         </View>
-                    </View>
+                    </ScrollView>
                 </View>
             </SafeAreaView>
         );

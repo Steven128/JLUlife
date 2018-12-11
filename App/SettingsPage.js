@@ -10,11 +10,11 @@ import {
     TouchableNativeFeedback,
     TouchableHighlight,
     Alert,
-    Slider,
+    Switch,
     StatusBar,
-    Platform
+    Platform,
+    SafeAreaView
 } from "react-native";
-import { SafeAreaView } from "react-navigation";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../src/Global";
@@ -30,9 +30,11 @@ export default class SettingsPage extends Component {
     constructor(props) {
         super(props);
         this.openDrawer = this.openDrawer.bind(this);
+        this.handleOutOfSchoolChange = this.handleOutOfSchoolChange.bind(this);
         this.state = {
             isOnline: Global.isOnline,
-            backgroundColor: ""
+            backgroundColor: "",
+            outOfSchool: Global.settings.outOfSchool
         };
     }
 
@@ -41,14 +43,32 @@ export default class SettingsPage extends Component {
         this.props.navigation.openDrawer();
     }
 
+    componentDidMount() {
+        this.setState({
+            outOfSchool: Global.settings.outOfSchool
+        });
+    }
+
     componentWillReceiveProps() {
         this.setState({
             backgroundColor: Global.settings.theme.backgroundColor
         });
     }
 
+    componentWillUnmount() {
+        Global.settings.outOfSchool = this.state.outOfSchool;
+        AppStorage._save("settings", Global.settings);
+    }
+
+    handleOutOfSchoolChange(value) {
+        Global.settings.outOfSchool = value;
+        this.setState({
+            outOfSchool: value
+        });
+    }
+
     checkUpgrade() {
-        console.log(RNBugly.checkUpgrade());
+        RNBugly.checkUpgrade();
     }
 
     logoutTapped() {
@@ -80,7 +100,7 @@ export default class SettingsPage extends Component {
         var headerStyle = {
             borderBottomColor: Global.settings.theme.backgroundColor
         };
-        if (isIphoneX()) {
+        if (Platform.OS == "ios") {
             headerStyle.paddingTop = 0;
             headerStyle.height = 44;
         }
@@ -127,6 +147,29 @@ export default class SettingsPage extends Component {
                             borderTopColor: "#eee"
                         }}
                     />
+                    {/* <View
+                        style={[
+                            styles.settingWrap,
+                            {
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                textAlignVertical: "center"
+                            }
+                        ]}
+                    >
+                        <Text style={{ paddingLeft: 15, flex: 4 }}>
+                            我在校外
+                        </Text>
+                        <Switch
+                            style={{ flex: 1 }}
+                            trackColor={Global.settings.theme.backgroundColor}
+                            thumbColor={Global.settings.theme.backgroundColor}
+                            trackColor={Global.settings.theme.backgroundColor}
+                            value={this.state.outOfSchool}
+                            onValueChange={this.handleOutOfSchoolChange}
+                        />
+                    </View> */}
                     <SettingItem
                         navigation={this.props.navigation}
                         title="主题皮肤"
@@ -169,15 +212,15 @@ export default class SettingsPage extends Component {
                             </TouchableNativeFeedback>
                         )}
                     </View>
-                    <View
-                        style={{
-                            marginTop: 20,
-                            borderTopWidth: 1,
-                            borderTopColor: "#eee"
-                        }}
-                    >
-                        {this.state.isOnline ? (
-                            Platform.OS === "ios" ? (
+                    {this.state.isOnline ? (
+                        <View
+                            style={{
+                                marginTop: 20,
+                                borderTopWidth: 1,
+                                borderTopColor: "#eee"
+                            }}
+                        >
+                            {Platform.OS === "ios" ? (
                                 <TouchableHighlight
                                     onPress={this.logoutTapped.bind(this)}
                                 >
@@ -193,9 +236,9 @@ export default class SettingsPage extends Component {
                                         <Text>退出登录</Text>
                                     </View>
                                 </TouchableNativeFeedback>
-                            )
-                        ) : null}
-                    </View>
+                            )}
+                        </View>
+                    ) : null}
                 </View>
             </SafeAreaView>
         );
@@ -214,5 +257,18 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: "#eee",
         paddingHorizontal: 30
+    },
+    settingWrap: {
+        padding: 15,
+        backgroundColor: "#fff",
+        borderBottomColor: "#eee",
+        borderBottomWidth: 1,
+        alignItems: "stretch",
+        justifyContent: "center"
+    },
+    settingText: {
+        paddingLeft: 15,
+        paddingTop: 10,
+        color: "#555"
     }
 });

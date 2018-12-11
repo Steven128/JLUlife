@@ -19,12 +19,16 @@ export default class CardLoss extends Component {
     constructor(props) {
         super(props);
         this.buttonTapped = this.buttonTapped.bind(this);
-        this.state = { showLoading: false };
+        this.state = { showLoading: false, password: "" };
     }
 
     componentDidMount() {}
 
     buttonTapped() {
+        if (this.state.password != Global.card.password) {
+            Alert.alert("提示", "查询密码不正确，再检查一下吧~");
+            return false;
+        }
         Alert.alert("提示", "确定要挂失吗？", [
             {
                 text: "我再想想",
@@ -46,7 +50,7 @@ export default class CardLoss extends Component {
                                 if (res.msg.indexOf("该校园卡已挂失") < 0) {
                                     Alert.alert(
                                         "挂失成功",
-                                        "操作成功,你的校园卡现在是挂失状态",
+                                        "你的校园卡资金暂时安全了呢\n如果7天内还未找到卡，赶快去补办一张新的吧~",
                                         [{ text: "确定" }],
                                         { cancelable: false }
                                     );
@@ -140,6 +144,12 @@ export default class CardLoss extends Component {
         return cardNumber;
     }
 
+    handlePwdChange(value) {
+        this.setState({
+            password: value
+        });
+    }
+
     render() {
         return (
             <View
@@ -159,15 +169,12 @@ export default class CardLoss extends Component {
                 >
                     <Input
                         containerStyle={styles.input}
-                        inputContainerStyle={{
-                            borderBottomWidth: 1,
-                            borderBottomColor: this.state.pwdColor
-                        }}
+                        inputStyle={styles.inputStyle}
                         placeholder="请输入查询密码"
                         secureTextEntry={true}
                         leftIcon={<Icon name="lock1" size={22} color="#888" />}
-                        value={this.state.j_password}
-                        onChangeText={this.handlePwdChange}
+                        value={this.state.password}
+                        onChangeText={this.handlePwdChange.bind(this)}
                         maxLength={6}
                         returnKeyType="next"
                         keyboardType="numeric"
@@ -185,7 +192,8 @@ export default class CardLoss extends Component {
                         titleStyle={{ fontWeight: "700" }}
                         buttonStyle={{
                             height: 45,
-                            backgroundColor: Global.settings.theme.backgroundColor
+                            backgroundColor:
+                                Global.settings.theme.backgroundColor
                         }}
                         onPress={this.buttonTapped}
                     />
@@ -197,7 +205,11 @@ export default class CardLoss extends Component {
 
 const styles = StyleSheet.create({
     input: {
-        height: 80,
+        paddingVertical: 5,
         width: width * 0.86
+    },
+    inputStyle: {
+        height: 50,
+        overflow: "hidden"
     }
 });

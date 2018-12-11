@@ -5,6 +5,8 @@ import Global from "./Global";
 export default function handleNewSettings() {
     var settings = {};
     if (Global.settings != undefined) settings = Global.settings;
+    //OutOfSchool
+    if (settings.outOfSchool == undefined) Global.settings.outOfSchool = false;
     //Theme
     if (settings.theme == undefined) Global.settings.theme = {};
     if (settings.theme.index == undefined) Global.settings.theme.index = 0;

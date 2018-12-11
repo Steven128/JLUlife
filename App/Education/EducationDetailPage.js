@@ -11,9 +11,8 @@ import {
     Linking,
     TouchableNativeFeedback,
     StatusBar,
-    Platform
+    Platform,SafeAreaView
 } from "react-native";
-import { SafeAreaView } from "react-navigation";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import FIcon from "react-native-vector-icons/Feather";
@@ -40,7 +39,7 @@ export default class EducationDetailPage extends Component {
         var headerStyle = {
             borderBottomColor: Global.settings.theme.backgroundColor
         };
-        if (isIphoneX()) {
+        if (Platform.OS == "ios") {
             headerStyle.paddingTop = 0;
             headerStyle.height = 44;
         }

@@ -12,9 +12,9 @@ import {
     TouchableNativeFeedback,
     Image,
     StatusBar,
-    Platform
+    Platform,
+    SafeAreaView
 } from "react-native";
-import { SafeAreaView } from "react-navigation";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import FIcon from "react-native-vector-icons/Feather";
@@ -40,7 +40,7 @@ export default class AboutPage extends Component {
         var headerStyle = {
             borderBottomColor: Global.settings.theme.backgroundColor
         };
-        if (isIphoneX()) {
+        if (Platform.OS == "ios") {
             headerStyle.paddingTop = 0;
             headerStyle.height = 44;
         }
@@ -84,17 +84,28 @@ export default class AboutPage extends Component {
                     />
                     <View style={styles.main}>
                         <Image
-                            style={{ width: 100, height: 100 }}
+                            style={{ width: 100, height: 100, borderRadius: 10 }}
                             source={require("../assets/ic_logo.png")}
                         />
                         <View style={{ paddingTop: 40, paddingBottom: 30 }}>
-                            <Text style={[styles.text, styles.title]}>
+                            <Text
+                                style={[
+                                    styles.text,
+                                    styles.title,
+                                    { textAlign: "center" }
+                                ]}
+                            >
                                 JLU Life
                             </Text>
-                            <Text style={[styles.text]}>版本号 2.1.0</Text>
+                            <Text
+                                style={[styles.text, { textAlign: "center" }]}
+                            >
+                                版本号 2.1.0
+                            </Text>
                         </View>
                         <Text style={[styles.text, { width: width * 0.8 }]}>
-                            &nbsp;&nbsp;&nbsp;&nbsp;JLU Life 是一款面向吉林大学学生的服务型APP。此应用并非官方应用，为个人开发，使用的接口均为学校官方开放接口，旨在帮助到同学们，为同学们的学习、生活提供便利。
+                            &nbsp;&nbsp;&nbsp;&nbsp;JLU Life
+                            是一款面向吉林大学学生的服务型APP。此应用并非官方应用，为个人开发，使用的接口均为学校官方开放接口，旨在帮助到同学们，为同学们的学习、生活提供便利。
                         </Text>
                     </View>
                     <View style={{ padding: 15 }}>
