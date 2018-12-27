@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { View, Text, Dimensions, StyleSheet } from "react-native";
+import { View, Text, Dimensions, StyleSheet, FlatList } from "react-native";
 import Global from "../Global";
 import AppStorage from "../AppStorage";
-
-var classJson = [];
+import { getMessage } from "../FetchInterface/MessageInterface";
+import MessageItem from "./MessageItem";
 
 export default class GetMessage extends Component {
     constructor(props) {
@@ -15,88 +15,31 @@ export default class GetMessage extends Component {
         };
     }
     componentDidMount() {
-        let url = "http:/10.60.65.8/ntms/siteMessages/get-message-in-box.do";
-        fetch(url, {
-            method: "POST",
-            headers: {
-                Accept:
-                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-                "Accept-Encoding": "gzip, deflate",
-                "Accept-Language": "zh-CN,zh;q=0.9",
-                "Cache-Control": "max-age=0",
-                Connection: "keep-alive",
-                "Content-Type": "application/json",
-                Cookie:
-                    "loginPage=userLogin.jsp; pwdStrength=1; alu=" +
-                    Global.loginInfo.j_username +
-                    "; " +
-                    Global.cookie,
-                Host: "10.60.65.8",
-                Origin: "http://10.60.65.8",
-                Referer: "http://10.60.65.8/ntms/userLogin.jsp?reason=nologin"
-            },
-            body: JSON.stringify({})
-        })
-            .then(response => response.json())
-            .then(responseJson => {
-                responseJson = responseJson.items;
+        getMessage(res => {
+            if (res.message == "success") {
                 this.setState({
-                    messageList: responseJson,
+                    messageList: res.content,
                     getMessage: true
                 });
-            })
-            .catch(err => {
-                if (__DEV__) console.log(err);
-            });
+            }
+        });
+    }
+
+    refreshList() {
+        this.setState({
+            messageList: [],
+            getMessage: false
+        });
+        getMessage(res => {
+            if (res.message == "success") {
+                this.setState({
+                    messageList: res.content,
+                    getMessage: true
+                });
+            }
+        });
     }
     render() {
-        var items = [];
-        if (this.state.getMessage) {
-            if (this.state.messageList.length > 0) {
-                for (var i = 0; i < this.state.messageList.length; i++) {
-                    var date = this.state.messageList[i].message.dateCreate;
-                    var single = (
-                        <View styles={{}}>
-                            <Text style={[styles.text, { paddingTop: 10 }]}>
-                                {this.state.messageList[i].message.body}
-                            </Text>
-                            <View
-                                style={{
-                                    paddingTop: 5,
-                                    flexDirection: "row",
-                                    borderBottomWidth: 1,
-                                    borderBottomColor: "#ccc",
-                                    paddingBottom: 10
-                                }}
-                            >
-                                <Text style={styles.text}>
-                                    {date.substring(0, 4)}年
-                                    {date.substring(5, 7)}月
-                                    {date.substring(8, 10)}日
-                                </Text>
-                                <Text
-                                    style={[
-                                        styles.text,
-                                        { textAlign: "right" }
-                                    ]}
-                                >
-                                    {this.state.messageList[i].hasReaded == "Y"
-                                        ? "已读"
-                                        : "未读"}
-                                </Text>
-                            </View>
-                        </View>
-                    );
-                    items.push(single);
-                }
-            } else {
-                var single = (
-                    <Text style={styles.text}>并没有什么通知┐(￣ー￣)┌</Text>
-                );
-                items.push(single);
-            }
-        }
-
         return this.state.getMessage ? (
             <View>
                 <Text
@@ -108,7 +51,44 @@ export default class GetMessage extends Component {
                 >
                     消息通知
                 </Text>
-                <View>{items}</View>
+                {this.state.messageList.length == 0 ? (
+                    <View>
+                        <Text style={styles.text}>
+                            并没有什么通知┐(￣ー￣)┌
+                        </Text>
+                    </View>
+                ) : (
+                    <FlatList
+                        data={this.state.messageList.slice(
+                            0,
+                            this.state.messageList.length - 1
+                        )}
+                        renderItem={({ item }) => (
+                            <MessageItem
+                                messageId={item.msgInboxId}
+                                message={item.message}
+                                isFooter={false}
+                                refreshList={this.refreshList.bind(this)}
+                            />
+                        )}
+                        ListFooterComponent={
+                            <MessageItem
+                                messageId={
+                                    this.state.messageList[
+                                        this.state.messageList.length - 1
+                                    ].msgInboxId
+                                }
+                                message={
+                                    this.state.messageList[
+                                        this.state.messageList.length - 1
+                                    ].message
+                                }
+                                isFooter={true}
+                                refreshList={this.refreshList.bind(this)}
+                            />
+                        }
+                    />
+                )}
             </View>
         ) : (
             <View>

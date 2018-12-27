@@ -12,7 +12,8 @@ import {
     ActivityIndicator,
     StatusBar,
     Platform,
-    SafeAreaView
+    SafeAreaView,
+    BackHandler
 } from "react-native";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
@@ -23,8 +24,7 @@ import Weather from "../src/Home/Weather";
 import NextClass from "../src/Home/NextClass";
 import GetMessage from "../src/Home/GetMessage";
 import SplashScreen from "rn-splash-screen";
-import isIphoneX from "../src/isIphoneX";
-import Toast, { DURATION } from "react-native-easy-toast";
+import Toast from "react-native-easy-toast";
 
 const { width, height } = Dimensions.get("window");
 export default class HomePage extends Component {
@@ -34,9 +34,7 @@ export default class HomePage extends Component {
         this.state = {
             showSplashTips: false,
             isOnline: Global.isOnline,
-            checkingOnline: Global.checkingOnline,
-            getTips: false,
-            tipsCount: 0
+            checkingOnline: Global.checkingOnline
         };
     }
 
@@ -47,7 +45,6 @@ export default class HomePage extends Component {
     }
     componentDidUpdate() {
         var params = this.props.navigation.state.params;
-        console.log(params);
         if (params != undefined)
             if (params.from == "SplashTips") {
                 if (!this.state.isOnline && !this.state.checkingOnline) {
@@ -65,12 +62,17 @@ export default class HomePage extends Component {
     }
 
     handleShowTips() {
+        if (!Global.showTips) return false;
         var flag = false;
         AppStorage._load("showTips", res => {
             if (res.message == "success") {
-                if (res.content.splashV210 != undefined) {
-                    if (res.content.splashV210) {
+                if (
+                    res.content.splashV210 != undefined &&
+                    res.content.splashV220 != undefined
+                ) {
+                    if (res.content.splashV210 || res.content.splashV220) {
                         flag = true;
+                        Global.showTips = false;
                     }
                 }
             }
@@ -78,19 +80,40 @@ export default class HomePage extends Component {
                 this.setState({
                     showSplashTips: true
                 });
-                this.props.navigation.navigate("SplashTips");
+                Global.showTips = false;
+                this.props.navigation.navigate("SplashTips", {
+                    tips: res.content
+                });
             }
         });
     }
+
+    componentWillMount() {
+        BackHandler.addEventListener("hardwareBackPress", this.onBackAndroid);
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener(
+            "hardwareBackPress",
+            this.onBackAndroid
+        );
+    }
+
+    onBackAndroid = () => {
+        if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+            BackHandler.exitApp();
+            return false;
+        }
+        this.lastBackPressed = Date.now();
+        ToastAndroid.show("再按一次退出 JLU Life", ToastAndroid.SHORT);
+        return true;
+    };
 
     componentDidMount() {
         //延时1秒关闭启动页
         setTimeout(() => {
             SplashScreen.hide();
         }, 1500);
-
         this.handleShowTips();
-
         //加载各种信息
         if (Global.loginInfo.j_username == "") {
             AppStorage._load("currentStuName", res => {
@@ -180,82 +203,6 @@ export default class HomePage extends Component {
                     if (!this.state.showSplashTips)
                         this.props.navigation.navigate("Login");
                 }
-            });
-        }
-        if (JSON.stringify(Global.tips) == "{}") {
-            //获取今日天气
-            let url = "http://api.help.bj.cn/apis/weather?id=101060101";
-            fetch(url, {
-                method: "GET"
-            })
-                .then(response => response.text())
-                .then(responseJson => {
-                    responseJson = responseJson.replace(/\r/g, "");
-                    responseJson = responseJson.replace(/\n/g, "");
-                    responseJson = JSON.parse(responseJson);
-                    Global.tips.weatherInfo = responseJson;
-                    this.setState({ tipsCount: this.state.tipsCount + 1 });
-                    this.addTips();
-                });
-            //获取明日天气
-            url = "http://api.help.bj.cn/apis/weather2d?id=长春";
-            fetch(url, {
-                method: "GET"
-            })
-                .then(response => response.text())
-                .then(responseJson => {
-                    responseJson = responseJson.replace(/\r/g, "");
-                    responseJson = responseJson.replace(/\n/g, "");
-                    responseJson = JSON.parse(responseJson);
-                    Global.tips.tomorrowWeather = responseJson.tomorrow;
-                    this.setState({ tipsCount: this.state.tipsCount + 1 });
-                    this.addTips();
-                });
-            //获取农历
-            url =
-                "http://api.help.bj.cn/apis/nongli/?id=101060101&now=" +
-                encodeURIComponent(new Date().toJSON);
-            fetch(url, {
-                method: "GET"
-            })
-                .then(response => response.text())
-                .then(responseJson => {
-                    responseJson = responseJson.replace(/\r/g, "");
-                    responseJson = responseJson.replace(/\n/g, "");
-                    responseJson = JSON.parse(responseJson);
-                    Global.tips.lunarCalendar =
-                        responseJson.data[16].val + responseJson.data[21].val;
-                    this.setState({ tipsCount: this.state.tipsCount + 1 });
-                    this.addTips();
-                });
-            //获取空气质量
-            url = "http://api.help.bj.cn/apis/aqi2?id=101060101";
-            fetch(url, {
-                method: "GET"
-            })
-                .then(response => response.text())
-                .then(responseJson => {
-                    responseJson = responseJson.replace(/\r/g, "");
-                    responseJson = responseJson.replace(/\n/g, "");
-                    responseJson = JSON.parse(responseJson);
-                    Global.tips.aqi = responseJson;
-                    this.setState({ tipsCount: this.state.tipsCount + 1 });
-                    this.addTips();
-                })
-                .catch(error => {
-                    if (__DEV__) console.error(error);
-                });
-        } else {
-            this.setState({
-                getTips: true
-            });
-        }
-    }
-
-    addTips() {
-        if (this.state.tipsCount == 4) {
-            this.setState({
-                getTips: true
             });
         }
     }
@@ -420,18 +367,7 @@ export default class HomePage extends Component {
                             <View style={styles.greetingWrap}>
                                 <Text style={styles.tipsTitle}>生活小贴士</Text>
                                 <View>
-                                    {this.state.getTips ? (
-                                        <Weather />
-                                    ) : (
-                                        <Text
-                                            style={{
-                                                color: "#888",
-                                                paddingLeft: 15
-                                            }}
-                                        >
-                                            {"玩命加载中 >.<"}
-                                        </Text>
-                                    )}
+                                    <Weather />
                                 </View>
                                 <View style={{ height: 15 }} />
                             </View>
