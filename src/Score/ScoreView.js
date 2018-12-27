@@ -1,17 +1,17 @@
 import React, { Component } from "react";
-import {
-    StyleSheet,
-    Text,
-    View,
-    Dimensions,
-    ToastAndroid,
-    Platform
-} from "react-native";
+import { StyleSheet, Dimensions, ToastAndroid, Platform } from "react-native";
 import RefreshListView, { RefreshState } from "react-native-refresh-list-view";
-import ScoreItem from "./ScoreItem";
+import ScoreItemAndroid from "./ScoreItem.android";
+import ScoreItemIOS from "./ScoreItem.ios";
 import Global from "../Global";
 import ScoreInterface from "../FetchInterface/ScoreInterface";
-import Toast, { DURATION } from "react-native-easy-toast";
+import Toast from "react-native-easy-toast";
+import {
+    FooterFailureComponent,
+    FooterRefreshingComponent,
+    FooterEmptyDataComponent,
+    FooterNoMoreDataComponent
+} from "../RefreshListComponent";
 
 const { width, height } = Dimensions.get("window");
 export default class ScoreView extends Component {
@@ -39,10 +39,15 @@ export default class ScoreView extends Component {
             refreshState: RefreshState.HeaderRefreshing
         });
         ScoreInterface(res => {
-            this.setState({
-                scoreList: res,
-                refreshState: RefreshState.Idle
-            });
+            if (res.message == "success") {
+                this.setState({
+                    scoreList: res.content,
+                    refreshState: RefreshState.Idle
+                });
+            } else {
+                Global.isOnline = false;
+                Global.cookie = "";
+            }
         });
     }
 
@@ -53,49 +58,48 @@ export default class ScoreView extends Component {
     }
 
     render() {
-        var items = [];
-        var scoreList = this.state.scoreList;
-        for (var i in scoreList) {
-            var scoreItem = (
-                <ScoreItem
-                    key={i}
-                    asId={scoreList[i].asId}
-                    courName={scoreList[i].courName}
-                    type={scoreList[i].type}
-                    termName={scoreList[i].termName}
-                    dateScore={scoreList[i].dateScore}
-                    credit={scoreList[i].credit}
-                    isPass={scoreList[i].isPass}
-                    score={scoreList[i].score}
-                    gpoint={scoreList[i].gpoint}
-                />
-            );
-            items.push(scoreItem);
-        }
         return (
             <RefreshListView
                 data={this.state.scoreList}
-                renderItem={({ item }) => (
-                    <ScoreItem
-                        key={item.courName}
-                        asId={item.asId}
-                        courName={item.courName}
-                        type={item.type}
-                        termName={item.termName}
-                        dateScore={item.dateScore}
-                        credit={item.credit}
-                        isPass={item.isPass}
-                        score={item.score}
-                        gpoint={item.gpoint}
-                    />
-                )}
+                renderItem={({ item }) =>
+                    Platform.OS == "ios" ? (
+                        <ScoreItemIOS
+                            key={item.courName}
+                            asId={item.asId}
+                            courName={item.courName}
+                            type={item.type}
+                            termName={item.termName}
+                            dateScore={item.dateScore}
+                            credit={item.credit}
+                            isPass={item.isPass}
+                            score={item.score}
+                            gpoint={item.gpoint}
+                        />
+                    ) : (
+                        <ScoreItemAndroid
+                            key={item.courName}
+                            asId={item.asId}
+                            courName={item.courName}
+                            type={item.type}
+                            termName={item.termName}
+                            dateScore={item.dateScore}
+                            credit={item.credit}
+                            isPass={item.isPass}
+                            score={item.score}
+                            gpoint={item.gpoint}
+                        />
+                    )
+                }
                 refreshState={this.state.refreshState}
                 onHeaderRefresh={this.onHeaderRefresh}
                 onFooterRefresh={this.onFooterRefresh}
-                footerRefreshingText="玩命加载中 >.<"
-                footerFailureText="我擦嘞，居然失败了 =.=!"
-                footerNoMoreDataText="-我是有底线的-"
-                footerEmptyDataText="-好像什么东西都没有-"
+                footerRefreshingComponent={<FooterRefreshingComponent />}
+                footerFailureComponent={<FooterFailureComponent />}
+                footerNoMoreDataComponent={<FooterNoMoreDataComponent />}
+                footerEmptyDataComponent={<FooterEmptyDataComponent />}
+                tintColor={Global.settings.theme.backgroundColor}
+                colors={Global.settings.theme.backgroundColor}
+                progressBackgroundColor={Global.settings.theme.backgroundColor}
             >
                 <Toast ref="toast" />
             </RefreshListView>

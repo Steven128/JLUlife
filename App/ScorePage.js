@@ -18,8 +18,7 @@ import Global from "../src/Global";
 import ScoreView from "../src/Score/ScoreView";
 import AppStorage from "../src/AppStorage";
 import ScoreInterface from "../src/FetchInterface/ScoreInterface";
-import isIphoneX from "../src/isIphoneX";
-import Toast, { DURATION } from "react-native-easy-toast";
+import Toast from "react-native-easy-toast";
 
 const { width, height } = Dimensions.get("window");
 
@@ -37,23 +36,28 @@ export default class ScorePage extends Component {
         AppStorage._load("scoreJson", res => {
             if (res.message == "success") {
                 this.setState({
-                    scoreList: res.content
-                });
-                this.setState({
+                    scoreList: res.content,
                     getScore: true
                 });
-            } else if (res.message == "error" && !Global.isOnline) {
+            } else if (
+                res.message == "error" &&
+                !Global.isOnline &&
+                !Global.checkingOnline
+            ) {
                 this.props.navigation.navigate("Login");
             }
         });
         if (!this.state.getScore) {
             if (Global.isOnline)
                 ScoreInterface(res => {
-                    if (res != "error") {
+                    if (res.message == "success") {
                         this.setState({
-                            scoreList: res,
+                            scoreList: res.content,
                             getScore: true
                         });
+                    } else {
+                        Global.isOnline = false;
+                        Global.cookie = "";
                     }
                 });
             else {
@@ -116,6 +120,33 @@ export default class ScorePage extends Component {
                             text: "成绩查询",
                             style: { color: "#fff", fontSize: 16 }
                         }}
+                        rightComponent={
+                            <Button
+                                containerStyle={{
+                                    borderWidth: 1,
+                                    borderColor: "#ffffff",
+                                    borderRadius: 3
+                                }}
+                                titleStyle={{
+                                    fontSize: 12,
+                                    paddingHorizontal: 5,
+                                    paddingVertical: 4
+                                }}
+                                title="学分绩点查询"
+                                clear
+                                onPress={() => {
+                                    if (Global.isOnline)
+                                        this.props.navigation.navigate("Stat");
+                                    else {
+                                        Alert.alert(
+                                            "提示",
+                                            "登录后才能查询哟~",
+                                            [{ text: "知道啦" }]
+                                        );
+                                    }
+                                }}
+                            />
+                        }
                     />
                     {this.state.getScore ? (
                         <ScoreView scoreList={this.state.scoreList} />

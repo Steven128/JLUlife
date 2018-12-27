@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Dimensions, ScrollView } from "react-native";
+import { Dimensions, ScrollView, View } from "react-native";
 import Echarts from "native-echarts";
+import Global from "../Global";
 
 const { width, height } = Dimensions.get("window");
 export class ScoreChart extends Component {
@@ -13,7 +14,13 @@ export class ScoreChart extends Component {
     render() {
         var option = {
             title: {
-                show: false
+                text: "成绩统计",
+                x: "-5px",
+                textStyle: {
+                    fontWeight: "normal",
+                    fontSize: 16,
+                    color: "#555555"
+                }
             },
             tooltip: {
                 trigger: "axis",
@@ -34,14 +41,54 @@ export class ScoreChart extends Component {
             calculable: true,
             xAxis: [
                 {
-                    type: "value",
-                    boundaryGap: [0, 0.01]
+                    type: "category",
+                    data: [">90", "80-90", "70-80", "60-70", "<60"],
+                    axisLine: {
+                        linkStyle: {
+                            color: "#808080"
+                        }
+                    },
+                    axisTick: {
+                        linkStyle: {
+                            color: "#808080"
+                        }
+                    },
+                    axisLabel: {
+                        textStyle: {
+                            color: "#808080"
+                        }
+                    },
+                    splitLine: {
+                        linkStyle: {
+                            color: "#ffffff"
+                        }
+                    }
                 }
             ],
             yAxis: [
                 {
-                    type: "category",
-                    data: [">90", "80-90", "70-80", "60-70", "<60"]
+                    type: "value",
+                    boundaryGap: [0, 0.01],
+                    axisLine: {
+                        linkStyle: {
+                            color: "#808080"
+                        }
+                    },
+                    axisTick: {
+                        linkStyle: {
+                            color: "#808080"
+                        }
+                    },
+                    axisLabel: {
+                        textStyle: {
+                            color: "#808080"
+                        }
+                    },
+                    splitLine: {
+                        linkStyle: {
+                            color: "#ffffff"
+                        }
+                    }
                 }
             ],
             series: [
@@ -67,22 +114,29 @@ export class ScoreChart extends Component {
                         this.props.scoreStat[2].percent.toFixed(2),
                         this.props.scoreStat[3].percent.toFixed(2),
                         this.props.scoreStat[4].percent.toFixed(2)
-                    ]
+                    ],
+                    markLine: {
+                        itemStyle: {
+                            emphasis: {
+                                lineStyle: {
+                                    color: Global.settings.theme.backgroundColor
+                                }
+                            }
+                        }
+                    }
                 }
             ]
         };
 
         return (
-            <ScrollView
-                showsHorizontalScrollIndicator={false}
-                horizontal
+            <View
                 style={{
-                    marginHorizontal: 10,
+                    alignItems: "center",
                     height: 250
                 }}
             >
-                <Echarts option={option} height={250} width={width * 0.9} />
-            </ScrollView>
+                <Echarts option={option} height={250} width={width * 0.78} />
+            </View>
         );
     }
 }

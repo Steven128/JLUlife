@@ -40,7 +40,7 @@ function getInfo(callback) {
         })
         .catch(error => {
             if (__DEV__) console.error(error);
-            callback("error");
+            callback({ message: "error" });
         });
 }
 
@@ -102,12 +102,12 @@ function storeStatData(asId, scoreJson, callback) {
         })
         .catch(error => {
             if (__DEV__) console.error(error);
-            callback("error");
+            callback({ message: "error" });
         });
 }
 function hasGetScore(scoreJson, callback) {
     if (statCount == scoreJson.length) {
-        callback(scoreJson);
+        callback({ message: "success", content: scoreJson });
     }
 }
 
