@@ -11,11 +11,15 @@ import SplashTipsPage from "./App/Home/SplashTipsPage";
 import TablePage from "./App/TablePage";
 import NotificationPage from "./App/NotificationPage";
 import NotificationDetailPage from "./App/Notification/NotificationDetailPage";
+import NotificationSearchPage from "./App/Notification/NotificationSearchPage";
 import EducationPage from "./App/EducationPage";
 import EducationDetailPage from "./App/Education/EducationDetailPage";
 import ScorePage from "./App/ScorePage";
+import ScoreStatPage from "./App/Score/ScoreStatPage";
+import ScoreStatDetailPage from "./App/Score/ScoreStatDetailPage";
 import QueryPage from "./App/QueryPage";
 import EmptyRoomPage from "./App/Query/EmptyRoomPage";
+import EvaluationPage from "./App/Query/EvaluationPage";
 import LibraryPage from "./App/Query/LibraryPage";
 import CardPage from "./App/CardPage";
 import CardLoginPage from "./App/Card/CardLoginPage";
@@ -76,6 +80,18 @@ const ScoreStack = createStackNavigator({
         navigationOptions: {
             header: null
         }
+    },
+    Stat: {
+        screen: ScoreStatPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    Detail: {
+        screen: ScoreStatDetailPage,
+        navigationOptions: {
+            header: null
+        }
     }
 });
 
@@ -88,6 +104,12 @@ const NotificationStack = createStackNavigator({
     },
     Item: {
         screen: NotificationDetailPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    Search: {
+        screen: NotificationSearchPage,
         navigationOptions: {
             header: null
         }
@@ -118,6 +140,12 @@ const QueryStack = createStackNavigator({
     },
     EmptyRoom: {
         screen: EmptyRoomPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    Evaluation: {
+        screen: EvaluationPage,
         navigationOptions: {
             header: null
         }
