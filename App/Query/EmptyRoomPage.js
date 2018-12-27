@@ -27,7 +27,6 @@ import Global from "../../src/Global";
 import { DatePicker } from "react-native-pickers";
 import EmptyRoomPicker from "../../src/Query/EmptyRoomPicker";
 import ClassPicker from "../../src/Query/ClassPicker";
-import isIphoneX from "../../src/isIphoneX";
 //data
 import campus from "../../src/Query/data/campus.json";
 import building from "../../src/Query/data/building.json";
@@ -50,6 +49,7 @@ export default class EmptyRoomPage extends Component {
             classEnd: 1,
             showLoading: false,
             dialogVisible: false,
+            getRoomList: false,
             roomList: []
         };
     }
@@ -207,6 +207,10 @@ export default class EmptyRoomPage extends Component {
                                 <EmptyRoomPicker
                                     list={this.state.campusNameList}
                                     ref={ref => (this.EmptyRoomPicker1 = ref)}
+                                    itemTextColor="#808080"
+                                    itemSelectedColor={
+                                        Global.settings.theme.backgroundColor
+                                    }
                                     onPickerCancel={() => {}}
                                     onPickerConfirm={value => {
                                         var campusSelected = 0;
@@ -233,6 +237,10 @@ export default class EmptyRoomPage extends Component {
                                 <EmptyRoomPicker
                                     list={this.state.buildingNameList}
                                     ref={ref => (this.EmptyRoomPicker2 = ref)}
+                                    itemTextColor="#808080"
+                                    itemSelectedColor={
+                                        Global.settings.theme.backgroundColor
+                                    }
                                     onPickerCancel={() => {}}
                                     onPickerConfirm={value => {
                                         var buildingSelected = 0;
@@ -272,6 +280,10 @@ export default class EmptyRoomPage extends Component {
                                     HH={false}
                                     mm={false}
                                     ss={false}
+                                    itemTextColor="#808080"
+                                    itemSelectedColor={
+                                        Global.settings.theme.backgroundColor
+                                    }
                                     onPickerConfirm={value => {
                                         var year = value[0].substring(0, 4);
                                         var month = "";
@@ -291,6 +303,10 @@ export default class EmptyRoomPage extends Component {
                                 />
                                 <ClassPicker
                                     ref={ref => (this.ClassPicker = ref)}
+                                    itemTextColor="#808080"
+                                    itemSelectedColor={
+                                        Global.settings.theme.backgroundColor
+                                    }
                                     onPickerCancel={() => {}}
                                     onPickerConfirm={value => {
                                         this.setState({
@@ -337,144 +353,168 @@ export default class EmptyRoomPage extends Component {
                                     }}
                                     width={0.9}
                                     height={0.75}
-                                    containerStyle={styles.dialog}
                                 >
                                     <DialogContent>
-                                        <View style={{ paddingVertical: 25 }}>
-                                            <View
-                                                style={{
-                                                    flexDirection: "row"
-                                                }}
-                                            >
-                                                <View
-                                                    style={{
-                                                        flex: 3,
-                                                        padding: 10,
-                                                        borderBottomWidth: 2,
-                                                        borderBottomColor:
-                                                            "#ccc",
-                                                        textAlign: "center",
-                                                        alignItems: "center",
-                                                        justifyContent:
-                                                            "center",
-                                                        textAlignVertical:
-                                                            "center"
-                                                    }}
-                                                >
-                                                    <Text>教室名称</Text>
-                                                </View>
-                                                <View
-                                                    style={{
-                                                        flex: 2,
-                                                        padding: 10,
-                                                        borderBottomWidth: 2,
-                                                        borderBottomColor:
-                                                            "#ccc",
-                                                        textAlign: "center",
-                                                        alignItems: "center",
-                                                        justifyContent:
-                                                            "center",
-                                                        textAlignVertical:
-                                                            "center"
-                                                    }}
-                                                >
-                                                    <Text>容量（人）</Text>
-                                                </View>
-                                                <View
-                                                    style={{
-                                                        flex: 2,
-                                                        padding: 10,
-                                                        borderBottomWidth: 2,
-                                                        borderBottomColor:
-                                                            "#ccc",
-                                                        textAlign: "center",
-                                                        alignItems: "center",
-                                                        justifyContent:
-                                                            "center",
-                                                        textAlignVertical:
-                                                            "center"
-                                                    }}
-                                                >
-                                                    <Text>注释</Text>
-                                                </View>
-                                            </View>
-                                            <FlatList
-                                                data={this.state.roomList}
-                                                renderItem={({ item }) => (
-                                                    <View
-                                                        style={{
-                                                            flexDirection: "row"
-                                                        }}
-                                                    >
+                                        <View style={{ paddingVertical: 10 }}>
+                                            {this.state.getRoomList ? (
+                                                <FlatList
+                                                    showsVerticalScrollIndicator={
+                                                        false
+                                                    }
+                                                    data={this.state.roomList.slice(
+                                                        0,
+                                                        this.state.roomList
+                                                            .length - 1
+                                                    )}
+                                                    ListHeaderComponent={
                                                         <View
-                                                            style={{
-                                                                flex: 3,
-                                                                padding: 10,
-                                                                borderBottomWidth: 2,
-                                                                borderBottomColor:
-                                                                    "#eee",
-                                                                textAlign:
-                                                                    "center",
-                                                                alignItems:
-                                                                    "center",
-                                                                justifyContent:
-                                                                    "center",
-                                                                textAlignVertical:
-                                                                    "center"
-                                                            }}
+                                                            style={styles.row}
                                                         >
-                                                            <Text>
-                                                                {item.name}
-                                                            </Text>
+                                                            <View
+                                                                style={[
+                                                                    styles.item,
+                                                                    { flex: 3 }
+                                                                ]}
+                                                            >
+                                                                <Text>
+                                                                    教室名称
+                                                                </Text>
+                                                            </View>
+                                                            <View
+                                                                style={[
+                                                                    styles.item,
+                                                                    { flex: 2 }
+                                                                ]}
+                                                            >
+                                                                <Text>
+                                                                    容量(人)
+                                                                </Text>
+                                                            </View>
+                                                            <View
+                                                                style={[
+                                                                    styles.item,
+                                                                    { flex: 2 }
+                                                                ]}
+                                                            >
+                                                                <Text>
+                                                                    注释
+                                                                </Text>
+                                                            </View>
                                                         </View>
+                                                    }
+                                                    renderItem={({ item }) => (
                                                         <View
-                                                            style={{
-                                                                flex: 2,
-                                                                padding: 10,
-                                                                borderBottomWidth: 2,
-                                                                borderBottomColor:
-                                                                    "#eee",
-                                                                textAlign:
-                                                                    "center",
-                                                                alignItems:
-                                                                    "center",
-                                                                justifyContent:
-                                                                    "center",
-                                                                textAlignVertical:
-                                                                    "center"
-                                                            }}
+                                                            style={styles.row}
                                                         >
-                                                            <Text>
-                                                                {item.volume}
-                                                            </Text>
+                                                            <View
+                                                                style={[
+                                                                    styles.item,
+                                                                    { flex: 3 }
+                                                                ]}
+                                                            >
+                                                                <Text>
+                                                                    {item.name}
+                                                                </Text>
+                                                            </View>
+                                                            <View
+                                                                style={[
+                                                                    styles.item,
+                                                                    { flex: 2 }
+                                                                ]}
+                                                            >
+                                                                <Text>
+                                                                    {
+                                                                        item.volume
+                                                                    }
+                                                                </Text>
+                                                            </View>
+                                                            <View
+                                                                style={[
+                                                                    styles.item,
+                                                                    { flex: 2 }
+                                                                ]}
+                                                            >
+                                                                <Text>
+                                                                    {item.notes}
+                                                                </Text>
+                                                            </View>
                                                         </View>
+                                                    )}
+                                                    ListFooterComponent={
                                                         <View
-                                                            style={{
-                                                                flex: 2,
-                                                                padding: 10,
-                                                                borderBottomWidth: 2,
-                                                                borderBottomColor:
-                                                                    "#eee",
-                                                                textAlign:
-                                                                    "center",
-                                                                alignItems:
-                                                                    "center",
-                                                                justifyContent:
-                                                                    "center",
-                                                                textAlignVertical:
-                                                                    "center"
-                                                            }}
+                                                            style={[
+                                                                styles.row,
+                                                                {
+                                                                    borderBottomWidth: 0
+                                                                }
+                                                            ]}
                                                         >
-                                                            <Text>
-                                                                {item.notes}
-                                                            </Text>
+                                                            <View
+                                                                style={[
+                                                                    styles.item,
+                                                                    { flex: 3 }
+                                                                ]}
+                                                            >
+                                                                <Text>
+                                                                    {
+                                                                        this
+                                                                            .state
+                                                                            .roomList[
+                                                                            this
+                                                                                .state
+                                                                                .roomList
+                                                                                .length -
+                                                                                1
+                                                                        ].name
+                                                                    }
+                                                                </Text>
+                                                            </View>
+                                                            <View
+                                                                style={[
+                                                                    styles.item,
+                                                                    { flex: 2 }
+                                                                ]}
+                                                            >
+                                                                <Text>
+                                                                    {
+                                                                        this
+                                                                            .state
+                                                                            .roomList[
+                                                                            this
+                                                                                .state
+                                                                                .roomList
+                                                                                .length -
+                                                                                1
+                                                                        ].volume
+                                                                    }
+                                                                </Text>
+                                                            </View>
+                                                            <View
+                                                                style={[
+                                                                    styles.item,
+                                                                    { flex: 2 }
+                                                                ]}
+                                                            >
+                                                                <Text>
+                                                                    {
+                                                                        this
+                                                                            .state
+                                                                            .roomList[
+                                                                            this
+                                                                                .state
+                                                                                .roomList
+                                                                                .length -
+                                                                                1
+                                                                        ].notes
+                                                                    }
+                                                                </Text>
+                                                            </View>
                                                         </View>
-                                                    </View>
-                                                )}
-                                            />
+                                                    }
+                                                />
+                                            ) : null}
                                         </View>
                                     </DialogContent>
-                                    <View style={{ height: 15 }} />
                                 </Dialog>
                             </View>
                         </View>
@@ -553,6 +593,7 @@ export default class EmptyRoomPage extends Component {
                 this.setState({
                     roomList: roomList,
                     showLoading: false,
+                    getRoomList: true,
                     dialogVisible: true
                 });
             })
@@ -568,5 +609,17 @@ export default class EmptyRoomPage extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1
+    },
+    row: {
+        flexDirection: "row",
+        borderBottomWidth: 1,
+        borderBottomColor: "#eee"
+    },
+    item: {
+        padding: 10,
+        textAlign: "center",
+        alignItems: "center",
+        justifyContent: "center",
+        textAlignVertical: "center"
     }
 });

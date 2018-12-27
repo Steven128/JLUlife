@@ -1,7 +1,7 @@
 import Global from "../Global";
 import AppStorage from "../AppStorage";
 
-function getClassTable(callback) {
+export default function getInfo(callback) {
     let loginURL = "http://10.60.65.8/ntms/service/res.do";
     fetch(loginURL, {
         method: "POST",
@@ -31,20 +31,19 @@ function getClassTable(callback) {
     })
         .then(response => response.json())
         .then(responseJson => {
-            console.log(responseJson);
             var classJson = parseclassJson(responseJson.value);
-            console.log(classJson);
             AppStorage._save("classJson", classJson);
             callback({ message: "success", content: classJson });
         })
         .catch(error => {
-            console.log(error);
             if (__DEV__) {
                 console.log("error");
                 console.error(error);
                 console.log(responseJson);
             }
             callback({ message: "error" });
+            Global.isOnline = false;
+            Global.cookie = "";
         });
 }
 
@@ -148,5 +147,3 @@ function getColor() {
     var num = Math.floor(Math.random() * 10);
     return Global.defColor[num];
 }
-
-export default getClassTable;

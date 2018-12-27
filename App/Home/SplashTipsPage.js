@@ -10,13 +10,13 @@ import {
     StyleSheet,
     StatusBar,
     Image,
-    SafeAreaView
+    SafeAreaView,
+    BackHandler
 } from "react-native";
 import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/AntDesign";
 import Global from "../../src/Global";
 import AppStorage from "../../src/AppStorage";
-import isIphoneX from "../../src/isIphoneX";
 
 const { width, height } = Dimensions.get("window");
 
@@ -24,15 +24,42 @@ export default class SplashTips extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { currentPage: 0 };
+        this.state = { currentPage: 0, splashV210: true, splashV220: true };
     }
 
     componentDidMount() {
-        this.refs.scrollView.scrollResponderScrollTo({
-            x: 0,
-            y: 0,
-            animated: true
-        });
+        BackHandler.addEventListener(
+            "hardwareBackPress",
+            () => this.handleBackPress
+        );
+        var params = this.props.navigation.state.params;
+        console.log(params);
+        if (params.tips.splashV210 != undefined) {
+            if (params.tips.splashV210) {
+                this.setState({
+                    splashV210: false
+                });
+            }
+        }
+        if (params.tips.splashV220 != undefined) {
+            if (params.tips.splashV220) {
+                this.setState({
+                    splashV220: false
+                });
+            }
+        }
+    }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener(
+            "hardwareBackPress",
+            () => this.handleBackPress
+        );
+    }
+
+    handleBackPress() {
+        this.props.navigation.goBack();
+        return true;
     }
 
     _onAnimationEnd(e) {
@@ -93,7 +120,10 @@ export default class SplashTips extends Component {
 
     scrollToNextPage(isLast) {
         if (isLast) {
-            AppStorage._save("showTips", { splashV210: true });
+            AppStorage._save("showTips", {
+                splashV210: true,
+                splashV220: true
+            });
             this.props.navigation.navigate("Home", { from: "SplashTips" });
         } else {
             var currentPage = this.state.currentPage + 1;
@@ -109,8 +139,16 @@ export default class SplashTips extends Component {
     }
 
     render() {
+        var pageNumber = 0;
+        if (this.state.splashV210) pageNumber += 2;
+        if (this.state.splashV220) pageNumber += 2;
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: "#f4f9fd" }}>
+                <StatusBar
+                    backgroundColor={"#f4f9fd"}
+                    barStyle="dark-content"
+                    translucent={false}
+                />
                 <ScrollView
                     ref="scrollView"
                     horizontal
@@ -121,66 +159,166 @@ export default class SplashTips extends Component {
                     }}
                     style={{ flex: 1 }}
                 >
-                    <View style={{ flex: 1, width: width }}>
-                        <View style={styles.container}>
-                            <View>
-                                {Platform.OS === "ios" ? (
-                                    <Image
-                                        style={[
-                                            styles.image,
-                                            { height: width * 1.3 }
-                                        ]}
-                                        source={require("../assets/Screenshots/ios/ios-1.png")}
-                                    />
-                                ) : (
-                                    <Image
-                                        style={styles.image}
-                                        source={require("../assets/Screenshots/android/android-1.png")}
-                                    />
-                                )}
-                            </View>
-                            <View style={styles.textWrap}>
-                                <Text style={styles.text}>
-                                    点击右上角箭头可以切换到其他周~
-                                </Text>
-                                <Text style={styles.text}>
-                                    点击标题栏可以返回本周~
-                                </Text>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={{ flex: 1, width: width }}>
-                        <View style={styles.container}>
-                            <View>
-                                {Platform.OS === "ios" ? (
-                                    <Image
-                                        style={[
-                                            styles.image,
-                                            { height: width * 1.3 }
-                                        ]}
-                                        source={require("../assets/Screenshots/ios/ios-2.png")}
-                                    />
-                                ) : (
-                                    <Image
-                                        style={styles.image}
-                                        source={require("../assets/Screenshots/android/android-2.png")}
-                                    />
-                                )}
-                            </View>
-                            <View style={styles.textWrap}>
-                                <Text style={styles.text}>
-                                    设置中有多种自定义选项
-                                </Text>
-                                <Text style={styles.text}>
-                                    快来打造自己的个性化课程表吧~
-                                </Text>
+                    {this.state.splashV210 ? (
+                        <View style={{ flex: 1, width: width }}>
+                            <View style={styles.container}>
+                                <View>
+                                    {Platform.OS === "ios" ? (
+                                        <Image
+                                            style={[
+                                                styles.image,
+                                                { height: width * 1.3 }
+                                            ]}
+                                            source={require("../assets/Screenshots/ios/ios-1.png")}
+                                        />
+                                    ) : (
+                                        <Image
+                                            style={styles.image}
+                                            source={require("../assets/Screenshots/android/android-1.png")}
+                                        />
+                                    )}
+                                </View>
+                                <View style={styles.textWrap}>
+                                    <Text style={styles.text}>
+                                        点击右上角箭头可以切换到其他周~
+                                    </Text>
+                                    <Text style={styles.text}>
+                                        点击标题栏可以返回本周~
+                                    </Text>
+                                </View>
                             </View>
                         </View>
-                    </View>
+                    ) : null}
+                    {this.state.splashV210 ? (
+                        <View style={{ flex: 1, width: width }}>
+                            <View style={styles.container}>
+                                <View>
+                                    {Platform.OS === "ios" ? (
+                                        <Image
+                                            style={[
+                                                styles.image,
+                                                { height: width * 1.3 }
+                                            ]}
+                                            source={require("../assets/Screenshots/ios/ios-2.png")}
+                                        />
+                                    ) : (
+                                        <Image
+                                            style={styles.image}
+                                            source={require("../assets/Screenshots/android/android-2.png")}
+                                        />
+                                    )}
+                                </View>
+                                <View style={styles.textWrap}>
+                                    <Text style={styles.text}>
+                                        设置中有多种自定义选项
+                                    </Text>
+                                    <Text style={styles.text}>
+                                        快来打造自己的个性化课程表吧~
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                    ) : null}
+                    {this.state.splashV220 ? (
+                        <View style={{ flex: 1, width: width }}>
+                            <View style={styles.container}>
+                                <View>
+                                    {Platform.OS === "ios" ? (
+                                        <Image
+                                            style={[
+                                                styles.image,
+                                                { height: width * 1.3 }
+                                            ]}
+                                            source={require("../assets/Screenshots/ios/ios-3.png")}
+                                        />
+                                    ) : (
+                                        <Image
+                                            style={styles.image}
+                                            source={require("../assets/Screenshots/android/android-3.png")}
+                                        />
+                                    )}
+                                </View>
+                                <View style={styles.textWrap}>
+                                    <Text style={styles.text}>
+                                        新增教学评价功能
+                                    </Text>
+                                    <Text style={styles.text}>
+                                        {
+                                            "点击右上角可一键教评(默认好评)，\n也可点击每一项未评记录手动评价~"
+                                        }
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                    ) : null}
+                    {this.state.splashV220 ? (
+                        <View style={{ flex: 1, width: width }}>
+                            <View style={styles.container}>
+                                <View>
+                                    {Platform.OS === "ios" ? (
+                                        <Image
+                                            style={[
+                                                styles.image,
+                                                { height: width * 1.3 }
+                                            ]}
+                                            source={require("../assets/Screenshots/ios/ios-4.png")}
+                                        />
+                                    ) : (
+                                        <Image
+                                            style={styles.image}
+                                            source={require("../assets/Screenshots/android/android-4.png")}
+                                        />
+                                    )}
+                                </View>
+                                <View style={styles.textWrap}>
+                                    <Text style={styles.text}>
+                                        校内通知可以搜索啦
+                                    </Text>
+                                    <Text style={styles.text}>
+                                        点击右上角按钮即可进入搜索页面~
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                    ) : null}
+                    {/* {this.state.splashV220 ? (
+                        <View style={{ flex: 1, width: width }}>
+                            <View style={styles.container}>
+                                <View>
+                                    {Platform.OS === "ios" ? (
+                                        <Image
+                                            style={[
+                                                styles.image,
+                                                { height: width * 1.3 }
+                                            ]}
+                                            source={require("../assets/Screenshots/ios/ios-5.png")}
+                                        />
+                                    ) : (
+                                        <Image
+                                            style={styles.image}
+                                            source={require("../assets/Screenshots/android/android-5.png")}
+                                        />
+                                    )}
+                                </View>
+                                <View style={styles.textWrap}>
+                                    <Text style={styles.text}>
+                                        在校外也可以查成绩啦
+                                    </Text>
+                                    <Text style={styles.text}>
+                                        {
+                                            "请在设置中开启 我在校外 按钮，\n回到学校后不要忘记关闭哟~"
+                                        }
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                    ) : null} */}
                 </ScrollView>
                 <View style={styles.bottomContainer}>
-                    {this.renderPoints(2)}
-                    <View style={styles.nextButton}>{this.renderNext(2)}</View>
+                    {this.renderPoints(pageNumber)}
+                    <View style={styles.nextButton}>
+                        {this.renderNext(pageNumber)}
+                    </View>
                 </View>
             </SafeAreaView>
         );
@@ -193,18 +331,20 @@ const styles = StyleSheet.create({
         textAlign: "center",
         alignItems: "center",
         justifyContent: "center",
-        textAlignVertical: "center"
+        textAlignVertical: "center",
+        marginTop: 40
     },
     image: {
         width: width * 0.6,
         height: width * 1.2
     },
     textWrap: {
-        paddingTop: 50,
-        alignItems: "center"
+        paddingVertical: 15,
+        alignItems: "center",
+        paddingHorizontal: 30
     },
     text: {
-        paddingBottom: 10,
+        paddingBottom: 5,
         color: "#808080"
     },
     bottomContainer: {

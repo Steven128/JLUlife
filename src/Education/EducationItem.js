@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {
     TouchableNativeFeedback,
-    TouchableHighlight,
+    TouchableOpacity,
     Platform,
     Dimensions,
     StyleSheet,
@@ -21,7 +21,7 @@ export default class EducationItem extends Component {
 
     render() {
         return Platform.OS === "ios" ? (
-            <TouchableHighlight
+            <TouchableOpacity
                 onPress={() => {
                     this.props.navigation.navigate("Item", {
                         title: this.props.title,
@@ -46,7 +46,7 @@ export default class EducationItem extends Component {
                         </Text>
                     </View>
                 </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
         ) : (
             <TouchableNativeFeedback
                 onPress={() => {

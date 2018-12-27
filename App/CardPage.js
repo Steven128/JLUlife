@@ -7,7 +7,7 @@ import {
     Text,
     Dimensions,
     ActivityIndicator,
-    TouchableHighlight,
+    TouchableOpacity,
     StyleSheet,
     StatusBar,
     Platform,
@@ -24,7 +24,6 @@ import CardTransfer from "../src/Card/CardTransfer";
 import CardPickup from "../src/Card/CardPickup";
 import CardLoss from "../src/Card/CardLoss";
 import Global from "../src/Global";
-import isIphoneX from "../src/isIphoneX";
 
 const { width, height } = Dimensions.get("window");
 export default class CardPage extends Component {

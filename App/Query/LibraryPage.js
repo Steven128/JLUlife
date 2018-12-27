@@ -4,12 +4,9 @@
 import React, { Component } from "react";
 import {
     View,
-    Text,
     Dimensions,
     WebView,
     StyleSheet,
-    Linking,
-    TouchableNativeFeedback,
     Platform,
     BackHandler,
     StatusBar,
@@ -17,9 +14,7 @@ import {
 } from "react-native";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
-import FIcon from "react-native-vector-icons/Feather";
 import Global from "../../src/Global";
-import isIphoneX from "../../src/isIphoneX";
 
 const { width, height } = Dimensions.get("window");
 
@@ -28,20 +23,17 @@ export default class LibraryPage extends Component {
     constructor(props) {
         super(props);
         this.state = {};
-        this.nav = this.props.navigation; //导航
-        // 添加返回键监听(对Android原生返回键的处理)
+        this.nav = this.props.navigation;
         this.addBackAndroidListener(this.nav);
     }
 
     componentDidMount() {
         this.props.navigation.setParams({
-            //给导航中增加监听事件
             goBackPage: this._goBackPage
         });
     }
 
     openDrawer() {
-        // 打开抽屉式导航
         this.props.navigation.openDrawer();
     }
 

@@ -101,8 +101,8 @@ android {
         applicationId "com.brady.jlulife"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 201001000
-        versionName "2.1.0"
+        versionCode 202001000
+        versionName "2.2.0"
         ndk {
             abiFilters "armeabi-v7a"
         }

@@ -22,8 +22,7 @@ import Icon from "react-native-vector-icons/AntDesign";
 import Global from "../../src/Global";
 import AppStorage from "../../src/AppStorage";
 import Base64 from "base-64";
-import isIphoneX from "../../src/isIphoneX";
-import Toast, { DURATION } from "react-native-easy-toast";
+import Toast from "react-native-easy-toast";
 
 const { width, height } = Dimensions.get("window");
 
@@ -122,7 +121,8 @@ export default class CardLoginPage extends Component {
                   } else {
                       this.refreshCode();
                       this.setState({
-                          showLoading: !this.state.showLoading
+                          showLoading: !this.state.showLoading,
+                          code: ""
                       });
                       Alert.alert("出错啦", res.response.msg, [
                           { text: "确定" }

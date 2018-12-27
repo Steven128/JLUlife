@@ -8,7 +8,7 @@ import {
     Dimensions,
     StyleSheet,
     TouchableNativeFeedback,
-    TouchableHighlight,
+    TouchableOpacity,
     Platform,
     Alert,
     Slider,
@@ -23,8 +23,7 @@ import EIcon from "react-native-vector-icons/Entypo";
 import ImagePicker from "react-native-image-crop-picker";
 import Global from "../../src/Global";
 import AppStorage from "../../src/AppStorage";
-import isIphoneX from "../../src/isIphoneX";
-import Toast, { DURATION } from "react-native-easy-toast";
+import Toast from "react-native-easy-toast";
 
 const { width, height } = Dimensions.get("window");
 
@@ -236,7 +235,6 @@ export default class ClassSettingsPage extends Component {
                             style={{ flex: 1 }}
                             trackColor={Global.settings.theme.backgroundColor}
                             thumbColor={Global.settings.theme.backgroundColor}
-                            trackColor={Global.settings.theme.backgroundColor}
                             value={this.state.navColor}
                             onValueChange={this.handleNavColorChange}
                         />
@@ -284,7 +282,7 @@ export default class ClassSettingsPage extends Component {
                         />
                     </View>
                     {Platform.OS === "ios" ? (
-                        <TouchableHighlight
+                        <TouchableOpacity
                             onPress={this.selectPicture.bind(this)}
                             onLongPress={this.clearBgImage.bind(this)}
                         >
@@ -305,7 +303,7 @@ export default class ClassSettingsPage extends Component {
                                     长按可以清除哦~
                                 </Text>
                             </View>
-                        </TouchableHighlight>
+                        </TouchableOpacity>
                     ) : (
                         <TouchableNativeFeedback
                             onPress={this.selectPicture.bind(this)}

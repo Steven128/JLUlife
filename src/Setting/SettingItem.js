@@ -5,7 +5,7 @@ import {
     Dimensions,
     StyleSheet,
     TouchableNativeFeedback,
-    TouchableHighlight,
+    TouchableOpacity,
     Platform
 } from "react-native";
 import { Header, Button } from "react-native-elements";
@@ -21,7 +21,7 @@ export default class SettingsItem extends Component {
     }
     render() {
         return Platform.OS === "ios" ? (
-            <TouchableHighlight
+            <TouchableOpacity
                 onPress={() =>
                     this.props.navigation.navigate(this.props.nextPage)
                 }
@@ -31,7 +31,7 @@ export default class SettingsItem extends Component {
                         <Text style={{ flex: 9 }}>{this.props.title}</Text>
                     </View>
                 </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
         ) : (
             <TouchableNativeFeedback
                 onPress={() =>

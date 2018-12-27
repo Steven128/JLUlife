@@ -19,7 +19,6 @@ import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import AIcon from "react-native-vector-icons/AntDesign";
 import Global from "../../src/Global";
-import isIphoneX from "../../src/isIphoneX";
 
 const { width, height } = Dimensions.get("window");
 
@@ -82,7 +81,10 @@ export default class PrivacyPage extends Component {
                             style: { color: "#fff", fontSize: 16 }
                         }}
                     />
-                    <ScrollView style={styles.main}>
+                    <ScrollView
+                        style={styles.main}
+                        showsVerticalScrollIndicator={false}
+                    >
                         <Text style={[styles.title]}>
                             当您使用本APP，即表示您同意以下声明：
                         </Text>
@@ -169,6 +171,7 @@ export default class PrivacyPage extends Component {
                                 &copy; 2018 by GitHub@Steven128，保留所有权利。
                             </Text>
                         </View>
+                        <View style={{ height: 50 }} />
                     </ScrollView>
                 </View>
             </SafeAreaView>

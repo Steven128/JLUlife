@@ -8,12 +8,13 @@ import {
     Dimensions,
     StyleSheet,
     TouchableNativeFeedback,
-    TouchableHighlight,
+    TouchableOpacity,
     Alert,
     Switch,
     StatusBar,
     Platform,
-    SafeAreaView
+    SafeAreaView,
+    ScrollView
 } from "react-native";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
@@ -21,7 +22,6 @@ import Global from "../src/Global";
 import SettingItem from "../src/Setting/SettingItem";
 import LogoutInterface from "../src/FetchInterface/LogoutInterface";
 import AppStorage from "../src/AppStorage";
-import isIphoneX from "../src/isIphoneX";
 import RNBugly from "react-native-bugly";
 
 const { width, height } = Dimensions.get("window");
@@ -65,6 +65,7 @@ export default class SettingsPage extends Component {
         this.setState({
             outOfSchool: value
         });
+        AppStorage._save("settings", Global.settings);
     }
 
     checkUpgrade() {
@@ -140,79 +141,50 @@ export default class SettingsPage extends Component {
                             style: { color: "#fff", fontSize: 16 }
                         }}
                     />
-                    <View
-                        style={{
-                            marginTop: 20,
-                            borderTopWidth: 1,
-                            borderTopColor: "#eee"
-                        }}
-                    />
-                    {/* <View
-                        style={[
-                            styles.settingWrap,
-                            {
-                                flexDirection: "row",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                textAlignVertical: "center"
-                            }
-                        ]}
-                    >
-                        <Text style={{ paddingLeft: 15, flex: 4 }}>
-                            我在校外
-                        </Text>
-                        <Switch
-                            style={{ flex: 1 }}
-                            trackColor={Global.settings.theme.backgroundColor}
-                            thumbColor={Global.settings.theme.backgroundColor}
-                            trackColor={Global.settings.theme.backgroundColor}
-                            value={this.state.outOfSchool}
-                            onValueChange={this.handleOutOfSchoolChange}
+                    <ScrollView style={{ flex: 1 }}>
+                        <View
+                            style={{
+                                marginTop: 20,
+                                borderTopWidth: 1,
+                                borderTopColor: "#eee"
+                            }}
                         />
-                    </View> */}
-                    <SettingItem
-                        navigation={this.props.navigation}
-                        title="主题皮肤"
-                        nextPage="Theme"
-                    />
-                    <SettingItem
-                        navigation={this.props.navigation}
-                        title="课程表设置"
-                        nextPage="Class"
-                    />
-                    <View
-                        style={{
-                            marginTop: 20,
-                            borderTopWidth: 1,
-                            borderTopColor: "#eee"
-                        }}
-                    >
+                        {/* <View
+                            style={[
+                                styles.settingWrap,
+                                {
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    textAlignVertical: "center"
+                                }
+                            ]}
+                        >
+                            <Text style={{ paddingLeft: 15, flex: 4 }}>
+                                我在校外
+                            </Text>
+                            <Switch
+                                style={{ flex: 1 }}
+                                trackColor={
+                                    Global.settings.theme.backgroundColor
+                                }
+                                thumbColor={
+                                    Global.settings.theme.backgroundColor
+                                }
+                                value={this.state.outOfSchool}
+                                onValueChange={this.handleOutOfSchoolChange}
+                            />
+                        </View> */}
                         <SettingItem
                             navigation={this.props.navigation}
-                            title="关于 JLU Life"
-                            nextPage="About"
+                            title="主题皮肤"
+                            nextPage="Theme"
                         />
                         <SettingItem
                             navigation={this.props.navigation}
-                            title="隐私政策"
-                            nextPage="Privacy"
+                            title="课程表设置"
+                            nextPage="Class"
                         />
-                        <SettingItem
-                            navigation={this.props.navigation}
-                            title="问题反馈&amp;建议"
-                            nextPage="FeedBack"
-                        />
-                        {Platform.OS === "ios" ? null : (
-                            <TouchableNativeFeedback
-                                onPress={this.checkUpgrade.bind(this)}
-                            >
-                                <View style={styles.item}>
-                                    <Text>检查更新</Text>
-                                </View>
-                            </TouchableNativeFeedback>
-                        )}
-                    </View>
-                    {this.state.isOnline ? (
                         <View
                             style={{
                                 marginTop: 20,
@@ -220,25 +192,59 @@ export default class SettingsPage extends Component {
                                 borderTopColor: "#eee"
                             }}
                         >
-                            {Platform.OS === "ios" ? (
-                                <TouchableHighlight
-                                    onPress={this.logoutTapped.bind(this)}
-                                >
-                                    <View style={styles.item}>
-                                        <Text>退出登录</Text>
-                                    </View>
-                                </TouchableHighlight>
-                            ) : (
+                            <SettingItem
+                                navigation={this.props.navigation}
+                                title="关于 JLU Life"
+                                nextPage="About"
+                            />
+                            <SettingItem
+                                navigation={this.props.navigation}
+                                title="隐私政策"
+                                nextPage="Privacy"
+                            />
+                            <SettingItem
+                                navigation={this.props.navigation}
+                                title="问题反馈&amp;建议"
+                                nextPage="FeedBack"
+                            />
+                            {Platform.OS === "ios" ? null : (
                                 <TouchableNativeFeedback
-                                    onPress={this.logoutTapped.bind(this)}
+                                    onPress={this.checkUpgrade.bind(this)}
                                 >
                                     <View style={styles.item}>
-                                        <Text>退出登录</Text>
+                                        <Text>检查更新</Text>
                                     </View>
                                 </TouchableNativeFeedback>
                             )}
                         </View>
-                    ) : null}
+                        {this.state.isOnline ? (
+                            <View
+                                style={{
+                                    marginTop: 20,
+                                    borderTopWidth: 1,
+                                    borderTopColor: "#eee"
+                                }}
+                            >
+                                {Platform.OS === "ios" ? (
+                                    <TouchableOpacity
+                                        onPress={this.logoutTapped.bind(this)}
+                                    >
+                                        <View style={styles.item}>
+                                            <Text>退出登录</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                ) : (
+                                    <TouchableNativeFeedback
+                                        onPress={this.logoutTapped.bind(this)}
+                                    >
+                                        <View style={styles.item}>
+                                            <Text>退出登录</Text>
+                                        </View>
+                                    </TouchableNativeFeedback>
+                                )}
+                            </View>
+                        ) : null}
+                    </ScrollView>
                 </View>
             </SafeAreaView>
         );

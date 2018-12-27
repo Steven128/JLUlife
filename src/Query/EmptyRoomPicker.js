@@ -54,6 +54,8 @@ export default class EmptyRoomPicker extends BaseDialog {
             >
                 <PickerView
                     list={this.props.list}
+                    itemTextColor={this.props.itemTextColor}
+                    itemSelectedColor={this.props.itemSelectedColor}
                     onPickerSelected={toValue => {
                         this.setState({ selectedValue: toValue });
                     }}

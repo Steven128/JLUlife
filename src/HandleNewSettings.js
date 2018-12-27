@@ -14,6 +14,8 @@ export default function handleNewSettings() {
         Global.settings.theme.color = "#ffffff";
     if (settings.theme.backgroundColor == undefined)
         Global.settings.theme.backgroundColor = "#2089dc";
+    if (settings.theme.nightMode == undefined)
+        Global.settings.theme.nightMode = false;
     //ClassTable
     if (settings.class == undefined) Global.settings.class = {};
     if (settings.class.classLength == undefined)
@@ -30,5 +32,8 @@ export default function handleNewSettings() {
         Global.settings.class.fontSize = 14;
     if (settings.class.backgroundImage == undefined)
         Global.settings.class.backgroundImage = "";
+    if (settings.options == undefined) Global.settings.options = {};
+    if (settings.options.firstUseEval == undefined)
+        Global.settings.options.firstUseEval = true;
     return;
 }

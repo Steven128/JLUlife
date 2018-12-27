@@ -12,14 +12,15 @@ import {
     ScrollView,
     StatusBar,
     Platform,
-    SafeAreaView
+    SafeAreaView,
+    Switch
 } from "react-native";
 import { Header, Input, Button, CheckBox } from "react-native-elements";
 import Icon from "react-native-vector-icons/AntDesign";
 import Global from "../src/Global";
 import LoginInterface from "../src/FetchInterface/LoginInterface";
-import isIphoneX from "../src/isIphoneX";
-import Toast, { DURATION } from "react-native-easy-toast";
+import Toast from "react-native-easy-toast";
+import AppStorage from "../src/AppStorage";
 
 const { width, height } = Dimensions.get("window");
 
@@ -29,6 +30,7 @@ export default class LoginPage extends Component {
         this.loginTapped = this.loginTapped.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handlePwdChange = this.handlePwdChange.bind(this);
+        this.handleOutOfSchoolChange = this.handleOutOfSchoolChange.bind(this);
         this.validate = this.validate.bind(this);
         this.state = {
             showLoading: false,
@@ -36,7 +38,8 @@ export default class LoginPage extends Component {
             j_username: Global.loginInfo.j_username,
             j_password: Global.loginInfo.j_password,
             showErrMsg: false,
-            errMsgList: []
+            errMsgList: [],
+            outOfSchool: Global.settings.outOfSchool
         };
     }
 
@@ -51,6 +54,16 @@ export default class LoginPage extends Component {
             j_password: pwd
         });
     }
+
+    handleOutOfSchoolChange(value) {
+        Global.settings.outOfSchool = value;
+        this.setState({
+            outOfSchool: value
+        });
+        alert("aaaaaaaaaaaaaaa");
+        AppStorage._save("settings", Global.settings);
+    }
+
     render() {
         const { navigate } = this.props.navigation;
         var headerStyle = {
@@ -152,6 +165,33 @@ export default class LoginPage extends Component {
                                     selectTextOnFocus={true}
                                 />
                             </View>
+                            {/* <View
+                                style={[
+                                    styles.input,
+                                    {
+                                        paddingHorizontal: 15,
+                                        flexDirection: "row",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        textAlignVertical: "center"
+                                    }
+                                ]}
+                            >
+                                <Text style={{ paddingLeft: 15 }}>
+                                    我在校外
+                                </Text>
+                                <Switch
+                                    style={{}}
+                                    trackColor={
+                                        Global.settings.theme.backgroundColor
+                                    }
+                                    thumbColor={
+                                        Global.settings.theme.backgroundColor
+                                    }
+                                    value={this.state.outOfSchool}
+                                    onValueChange={this.handleOutOfSchoolChange}
+                                />
+                            </View> */}
                             <View
                                 style={{
                                     paddingHorizontal: 40,

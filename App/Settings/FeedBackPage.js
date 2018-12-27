@@ -10,7 +10,7 @@ import {
     StyleSheet,
     Linking,
     TouchableNativeFeedback,
-    TouchableHighlight,
+    TouchableOpacity,
     Platform,
     StatusBar,
     SafeAreaView
@@ -19,7 +19,6 @@ import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import FIcon from "react-native-vector-icons/Feather";
 import Global from "../../src/Global";
-import isIphoneX from "../../src/isIphoneX";
 
 const { width, height } = Dimensions.get("window");
 
@@ -95,7 +94,7 @@ export default class FeedBackPage extends Component {
                             本项目开源，欢迎Star或Fork
                         </Text>
                         {Platform.OS === "ios" ? (
-                            <TouchableHighlight
+                            <TouchableOpacity
                                 onPress={this.goToGithub.bind(this)}
                             >
                                 <Text
@@ -114,7 +113,7 @@ export default class FeedBackPage extends Component {
                                 >
                                     https://github.com/Steven128/JLUlife
                                 </Text>
-                            </TouchableHighlight>
+                            </TouchableOpacity>
                         ) : (
                             <TouchableNativeFeedback
                                 onPress={this.goToGithub.bind(this)}

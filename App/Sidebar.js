@@ -16,7 +16,6 @@ import { DrawerItems } from "react-navigation";
 import Global from "../src/Global";
 import AppStorage from "../src/AppStorage";
 import HandleNewSettings from "../src/HandleNewSettings";
-import isIphoneX from "../src/isIphoneX";
 
 const { width, height } = Dimensions.get("window");
 
@@ -69,8 +68,8 @@ export class Sidebar extends Component {
                                 {
                                     backgroundColor:
                                         Global.settings.theme.backgroundColor,
-                                    height: height * 0.28,
-                                    paddingTop: height * 0.28 - 70
+                                    height: height * 0.3,
+                                    paddingTop: height * 0.3 - 70
                                 }
                             ]}
                         >
@@ -90,7 +89,7 @@ export class Sidebar extends Component {
                         </View>
                         <ScrollView style={{ flex: 1 }}>
                             <DrawerItems {...this.props.items} />
-                            <View style={{ height: 50 }} />
+                            <View style={{ height: 30 }} />
                         </ScrollView>
                     </View>
                 </SafeAreaView>

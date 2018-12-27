@@ -19,7 +19,6 @@ import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import FIcon from "react-native-vector-icons/Feather";
 import Global from "../../src/Global";
-import isIphoneX from "../../src/isIphoneX";
 
 const { width, height } = Dimensions.get("window");
 
@@ -78,7 +77,7 @@ export default class AboutPage extends Component {
                             />
                         }
                         centerComponent={{
-                            text: "关于",
+                            text: "关于 JLU Life",
                             style: { color: "#fff", fontSize: 16 }
                         }}
                     />
@@ -100,7 +99,7 @@ export default class AboutPage extends Component {
                             <Text
                                 style={[styles.text, { textAlign: "center" }]}
                             >
-                                版本号 2.1.0
+                                版本号 2.2.0
                             </Text>
                         </View>
                         <Text style={[styles.text, { width: width * 0.8 }]}>

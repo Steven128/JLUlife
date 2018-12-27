@@ -7,7 +7,7 @@ import {
     Text,
     Dimensions,
     ActivityIndicator,
-    TouchableHighlight,
+    TouchableOpacity,
     StyleSheet,
     StatusBar,
     Platform,
@@ -25,7 +25,6 @@ import NoticeAnnounce from "../src/Education/NoticeAnnounce";
 import ExamArrangement from "../src/Education/ExamArrangement";
 import JobBriefing from "../src/Education/JobBriefing";
 import TeachingExploration from "../src/Education/TeachingExploration";
-import isIphoneX from "../src/isIphoneX";
 
 const { width, height } = Dimensions.get("window");
 export default class EducationPage extends Component {

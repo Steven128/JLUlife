@@ -5,11 +5,13 @@ import {
     View,
     Dimensions,
     ScrollView,
-    ImageBackground
+    ImageBackground,
+    Platform
 } from "react-native";
 import Global from "../Global";
 import { TopNav, LeftNav } from "./NavView";
-import ClassItem from "./ClassItem";
+import ClassItemAndroid from "./ClassItem.android";
+import ClassItemIOS from "./ClassItem.ios";
 
 const { width, height } = Dimensions.get("window");
 
@@ -82,36 +84,69 @@ export default class ClassTable extends Component {
                     else if (dayList[j].schedule.weekOddEven == "E")
                         weekOddEven = "(双周)";
                     dayItem.push(
-                        <ClassItem
-                            color={dayList[j].color}
-                            length={length}
-                            itemHeight={this.props.settings.itemHeight}
-                            fontSize={this.props.settings.fontSize}
-                            opacity={this.props.settings.itemOpacity}
-                            innerText={
-                                dayList[j].lessonName +
-                                "@" +
-                                dayList[j].schedule.classroom +
-                                weekOddEven
-                            }
-                            lessonName={dayList[j].lessonName}
-                            classroom={dayList[j].schedule.classroom}
-                            beginWeek={dayList[j].schedule.beginWeek}
-                            endWeek={dayList[j].schedule.endWeek}
-                            dayOfWeek={dayList[j].schedule.dayOfWeek}
-                            time={dayList[j].schedule.time}
-                            teachers={dayList[j].teachers}
-                            weekOddEven={dayList[j].schedule.weekOddEven}
-                        />
+                        Platform.OS == "ios" ? (
+                            <ClassItemIOS
+                                color={dayList[j].color}
+                                length={length}
+                                itemHeight={this.props.settings.itemHeight}
+                                fontSize={this.props.settings.fontSize}
+                                opacity={this.props.settings.itemOpacity}
+                                innerText={
+                                    dayList[j].lessonName +
+                                    "@" +
+                                    dayList[j].schedule.classroom +
+                                    weekOddEven
+                                }
+                                lessonName={dayList[j].lessonName}
+                                classroom={dayList[j].schedule.classroom}
+                                beginWeek={dayList[j].schedule.beginWeek}
+                                endWeek={dayList[j].schedule.endWeek}
+                                dayOfWeek={dayList[j].schedule.dayOfWeek}
+                                time={dayList[j].schedule.time}
+                                teachers={dayList[j].teachers}
+                                weekOddEven={dayList[j].schedule.weekOddEven}
+                            />
+                        ) : (
+                            <ClassItemAndroid
+                                color={dayList[j].color}
+                                length={length}
+                                itemHeight={this.props.settings.itemHeight}
+                                fontSize={this.props.settings.fontSize}
+                                opacity={this.props.settings.itemOpacity}
+                                innerText={
+                                    dayList[j].lessonName +
+                                    "@" +
+                                    dayList[j].schedule.classroom +
+                                    weekOddEven
+                                }
+                                lessonName={dayList[j].lessonName}
+                                classroom={dayList[j].schedule.classroom}
+                                beginWeek={dayList[j].schedule.beginWeek}
+                                endWeek={dayList[j].schedule.endWeek}
+                                dayOfWeek={dayList[j].schedule.dayOfWeek}
+                                time={dayList[j].schedule.time}
+                                teachers={dayList[j].teachers}
+                                weekOddEven={dayList[j].schedule.weekOddEven}
+                            />
+                        )
                     );
                 } else {
                     dayItem.push(
-                        <ClassItem
-                            blank
-                            length={length}
-                            itemHeight={this.props.settings.itemHeight}
-                            fontSize={this.props.settings.fontSize}
-                        />
+                        Platform.OS == "ios" ? (
+                            <ClassItemIOS
+                                blank
+                                length={length}
+                                itemHeight={this.props.settings.itemHeight}
+                                fontSize={this.props.settings.fontSize}
+                            />
+                        ) : (
+                            <ClassItemAndroid
+                                blank
+                                length={length}
+                                itemHeight={this.props.settings.itemHeight}
+                                fontSize={this.props.settings.fontSize}
+                            />
+                        )
                     );
                 }
             }
@@ -140,10 +175,11 @@ export default class ClassTable extends Component {
                         color={this.props.settings.navColor}
                     />
                     <ScrollView
-                        style={{
-                            flex: 1
-                        }}
+                        style={{ flex: 1 }}
                         contentContainerStyle={styles.contentContainer}
+                        onScrollBeginDrag={() => {
+                            this.props.onScroll();
+                        }}
                     >
                         <View
                             style={{

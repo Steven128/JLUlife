@@ -8,6 +8,7 @@ function logout(callback) {
     //首先清除全局变量
     Global.isOnline = false;
     Global.cookie = "";
+    Global.outerCookie = "";
     Global.loginInfo.j_username = "";
     Global.loginInfo.j_password = "";
     Global.currentStuName = "";

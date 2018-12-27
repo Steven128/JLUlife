@@ -10,6 +10,12 @@ import RefreshListView, { RefreshState } from "react-native-refresh-list-view";
 import Global from "../Global";
 import EduInterface from "../FetchInterface/EduInterface";
 import EducationItem from "./EducationItem";
+import {
+    FooterFailureComponent,
+    FooterRefreshingComponent,
+    FooterEmptyDataComponent,
+    FooterNoMoreDataComponent
+} from "../RefreshListComponent";
 
 const { width, height } = Dimensions.get("window");
 export default class EduInfo extends Component {
@@ -90,10 +96,10 @@ export default class EduInfo extends Component {
                             refreshState={this.state.refreshState}
                             onHeaderRefresh={this.onHeaderRefresh}
                             onFooterRefresh={this.onFooterRefresh}
-                            footerRefreshingText="玩命加载中 >.<"
-                            footerFailureText="我擦嘞，居然失败了 =.=!"
-                            footerNoMoreDataText="-我是有底线的-"
-                            footerEmptyDataText="-好像什么东西都没有-"
+                            footerRefreshingComponent={<FooterRefreshingComponent />}
+                            footerFailureComponent={<FooterFailureComponent />}
+                            footerNoMoreDataComponent={<FooterNoMoreDataComponent />}
+                            footerEmptyDataComponent={<FooterEmptyDataComponent />}
                         />
                     ) : (
                         <View style={{ paddingVertical: height / 2 - 150 }}>

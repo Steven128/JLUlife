@@ -2,11 +2,9 @@
 
 <img src="https://github.com/Steven128/JLUlife/blob/master/App/assets/ic_logo.png" alt="logo" width="128px">
 
-下载地址
-============
+## 下载地址
 
-Android
-------------
+### Android
 
 [酷安](https://www.coolapk.com/apk/210060)
 
@@ -15,8 +13,7 @@ Android
 [应用宝](https://sj.qq.com/myapp/detail.htm?apkName=com.brady.jlulife)
 
 
-简介
-============
+## 简介
 
 JLU Life 是一款面向吉林大学学生的服务型APP。此应用并非官方应用，为个人开发，使用的接口均为学校官方开放接口，旨在帮助到同学们，为同学们的学习、生活提供便利。
 
@@ -24,8 +21,7 @@ JLU Life 是一款面向吉林大学学生的服务型APP。此应用并非官�
 
 1.0版本地址 [GitHub@bradywwang/JLUlife](https://github.com/bradywwang/JLUlife)
 
-目前包括的功能
--------------
+## 目前包括的功能
 
 * 首页下一节课提示、教务系统通知
 
@@ -69,19 +65,16 @@ JLU Life 是一款面向吉林大学学生的服务型APP。此应用并非官�
    </span>
 </div>
 
-开发者
-===========
+## 开发者
 
 [Github@Steven128](https://github.com/Steven128/)
 
 [Github@CloudMagician](https://github.com/CloudMagician)
 
 
-开源相关
-===========
+## 开源相关
 
-使用的开源库
------------
+### 使用的开源库
 
 * 弹框  [react-native-popup-dialog](https://github.com/jacklam718/react-native-popup-dialog)
 
@@ -99,4 +92,47 @@ JLU Life 是一款面向吉林大学学生的服务型APP。此应用并非官�
 
 * 选取图片&裁剪 [react-native-image-crop-picker](https://github.com/ivpusic/react-native-image-crop-picker)
 
-* 集成bugly [react-native-bugly](https://github.com/canyara/react-native-bugly)
+* 集成bugly [react-native-bugly](https://github.com/walkOnly/react-native-bugly)
+
+## Build Setup
+
+```
+// 安装依赖
+1. npm install
+
+//有五个依赖需要链接
+2. react-native link react-native-vector-icons
+3. react-native link react-native-image-crop-picker
+4. react-native link react-native-svg
+5. react-native link react-native-bugly
+6. react-native link rn-splash-screen
+
+7. react-native-image-crop-picker react-native-bugly rn-splash-screen 需要自行配置，
+   详细步骤移步项目所在地址，上面都给了链接
+
+8. 启动屏 rn-splash-screen 配置比较复杂，
+   需将 /android/app/src/main/res/ 中的三个drawable文件夹拷贝到rn-splash-screen中的res目录下，
+   然后自行配置 styles.xml
+
+//现在可以尝试运行了
+9. react-native run-android (Android)
+   react-native run-ios (iOS)
+
+```
+```
+
+//如果上述尝试不成功，请手动新建一个新项目，然后将文件一点点集成进来
+
+//新建 React Native 项目
+1. react-native init jlulife && cd jlulife
+
+//先尝试将空项目跑起来
+2. react-native run-android (Android)
+   react-native run-ios (iOS)
+
+//将文件集成进来
+3. 拷贝或覆盖 /App /src /index.js /app.js /package.json /package-lock.json /yarn.lock 到项目中
+
+4.现在再执行上面的步骤，应该可以运行起来了~
+
+```

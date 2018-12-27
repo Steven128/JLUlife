@@ -7,6 +7,7 @@ var Global = {
         j_username: "",
         j_password: ""
     },
+    outerCookie: "",
     currentStuName: "",
     startDate: "",
     termName: "",
@@ -44,12 +45,14 @@ var Global = {
         username: "",
         password: ""
     },
+    showTips: true,
     settings: {
         outOfSchool: false,
         theme: {
             index: 0,
             color: "#ffffff",
-            backgroundColor: "#ffffff"
+            backgroundColor: "#2089dc",
+            nightMode: false
         },
         class: {
             classLength: 11,
@@ -59,6 +62,9 @@ var Global = {
             itemHeight: 70,
             fontSize: 14,
             backgroundImage: ""
+        },
+        options: {
+            firstUseEval: true
         }
     }
 };

@@ -12,9 +12,9 @@ import {
 
 import { BaseDialog, PickerView } from "react-native-pickers";
 
-export default class ClassPicker extends BaseDialog {
+export default class SearchTypePicker extends BaseDialog {
     static defaultProps = {
-        list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+        list: ["标题", "组织", "内容", "日期"],
         selectedIndex: 0,
 
         removeSubviews: false,
@@ -37,8 +37,7 @@ export default class ClassPicker extends BaseDialog {
     constructor(props) {
         super(props);
         this.state = {
-            classBegin: 1,
-            classEnd: 1
+            selectedValue: "标题"
         };
     }
 
@@ -55,46 +54,17 @@ export default class ClassPicker extends BaseDialog {
                 }}
             >
                 <PickerView
-                    title="从第    节"
                     list={this.props.list}
                     itemTextColor={this.props.itemTextColor}
                     itemSelectedColor={this.props.itemSelectedColor}
                     onPickerSelected={toValue => {
-                        this.setState({
-                            classBegin: toValue
-                        });
-                        if (toValue > this.state.classEnd) {
-                            this.setState({
-                                classEnd: toValue
-                            });
-                        }
+                        this.setState({ selectedValue: toValue });
                     }}
-                    selectedIndex={this.state.classBegin - 1}
+                    selectedIndex={this.props.selectedIndex}
                     fontSize={this.getSize(14)}
-                    itemWidth={this.mScreenWidth / 2}
+                    itemWidth={this.mScreenWidth}
                     itemHeight={this.getSize(40)}
                 />
-                <PickerView
-                    title="到第    节"
-                    list={this.props.list}
-                    itemTextColor={this.props.itemTextColor}
-                    itemSelectedColor={this.props.itemSelectedColor}
-                    onPickerSelected={toValue => {
-                        this.setState({
-                            classEnd: toValue
-                        });
-                        if (toValue < this.state.classBegin) {
-                            this.setState({
-                                classBegin: toValue
-                            });
-                        }
-                    }}
-                    selectedIndex={this.state.classEnd - 1}
-                    fontSize={this.getSize(14)}
-                    itemWidth={this.mScreenWidth / 2}
-                    itemHeight={this.getSize(40)}
-                />
-
                 <View
                     style={{
                         width: this.mScreenWidth,
@@ -111,10 +81,9 @@ export default class ClassPicker extends BaseDialog {
                             this.dismiss(
                                 () =>
                                     this.props.onPickerCancel &&
-                                    this.props.onPickerCancel({
-                                        begin: this.state.classBegin,
-                                        end: this.state.classEnd
-                                    })
+                                    this.props.onPickerCancel(
+                                        this.state.selectedValue
+                                    )
                             );
                         }}
                         style={{
@@ -139,10 +108,9 @@ export default class ClassPicker extends BaseDialog {
                             this.dismiss(
                                 () =>
                                     this.props.onPickerConfirm &&
-                                    this.props.onPickerConfirm({
-                                        begin: this.state.classBegin,
-                                        end: this.state.classEnd
-                                    })
+                                    this.props.onPickerConfirm(
+                                        this.state.selectedValue
+                                    )
                             );
                         }}
                         style={{

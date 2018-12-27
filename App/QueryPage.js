@@ -17,7 +17,6 @@ import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../src/Global";
 import QueryItem from "../src/Query/QueryItem";
-import isIphoneX from "../src/isIphoneX";
 
 const { width, height } = Dimensions.get("window");
 
@@ -85,6 +84,12 @@ export default class QueryPage extends Component {
                             title="查空教室"
                             subTitle="没地方上自习？进来看看吧"
                             nextPage="EmptyRoom"
+                        />
+                        <QueryItem
+                            navigation={this.props.navigation}
+                            title="教学评价"
+                            subTitle="一键教学评价，也可对每门课程单独评价~"
+                            nextPage="Evaluation"
                         />
                         <QueryItem
                             navigation={this.props.navigation}

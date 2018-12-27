@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {
     View,
     Text,
-    TouchableHighlight,
+    TouchableOpacity,
     Modal,
     Dimensions,
     StyleSheet
@@ -29,7 +29,7 @@ export default class EmptyRoomItem extends Component {
 
     renderButton(text, callback) {
         return (
-            <TouchableHighlight
+            <TouchableOpacity
                 onPress={callback.bind(this)}
                 style={{
                     justifyContent: "center",
@@ -42,7 +42,7 @@ export default class EmptyRoomItem extends Component {
                 }}
             >
                 <Text>{text}</Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
         );
     }
 
