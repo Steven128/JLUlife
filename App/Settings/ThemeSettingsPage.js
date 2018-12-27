@@ -7,7 +7,7 @@ import {
     Text,
     Dimensions,
     StyleSheet,
-    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
     Alert,
     ScrollView,
     BackHandler,
@@ -20,33 +20,18 @@ import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../../src/Global";
 import { RadioGroup, RadioButton } from "react-native-flexi-radio-button";
 import AppStorage from "../../src/AppStorage";
-import isIphoneX from "../../src/isIphoneX";
+import SlidersColorPicker from "../../src/Setting/SlidersColorPicker";
+import tinycolor from "tinycolor2";
 
 const { width, height } = Dimensions.get("window");
-var radio_props = [
-    { label: "param1", value: 0 },
-    { label: "param2", value: 1 }
-];
-const colorList = [
-    "#2089dc",
-    "#808080",
-    "#db4437",
-    "#fb7299",
-    "#0f9d58",
-    "#3f51b5",
-    "#ff9800",
-    "#673ab7",
-    "#795548",
-    "#009688",
-    "#fcff00"
-];
 export default class ClassSettingsPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isOnline: Global.isOnline,
-            selectedIndex: 0,
-            backgroundColor: ""
+            selectedIndex: Global.settings.theme.index,
+            backgroundColor: Global.settings.theme.backgroundColor,
+            modalVisible: false
         };
     }
 
@@ -79,6 +64,7 @@ export default class ClassSettingsPage extends Component {
             backgroundColor: value
         });
         Global.settings.theme.index = index;
+        Global.settings.theme.color = "#ffffff";
         Global.settings.theme.backgroundColor = value;
     }
 
@@ -238,6 +224,68 @@ export default class ClassSettingsPage extends Component {
                                 <Text style={{ color: "#212121" }}>高级黑</Text>
                             </RadioButton>
                         </RadioGroup>
+                        <View
+                            style={{
+                                backgroundColor:
+                                    this.state.selectedIndex == 12
+                                        ? "transparent"
+                                        : "#ffffff"
+                            }}
+                        >
+                            <TouchableWithoutFeedback
+                                onPress={() => {
+                                    this.setState({ modalVisible: true });
+                                }}
+                            >
+                                <View style={[styles.radioContainer]}>
+                                    <View style={[styles.radio]}>
+                                        <View
+                                            style={[
+                                                styles.radioDot,
+                                                {
+                                                    backgroundColor:
+                                                        this.state
+                                                            .selectedIndex == 12
+                                                            ? this.state
+                                                                  .backgroundColor
+                                                            : "transparent"
+                                                }
+                                            ]}
+                                        />
+                                    </View>
+                                    <View style={styles.item}>
+                                        <Text
+                                            style={{
+                                                color: this.state
+                                                    .backgroundColor
+                                            }}
+                                        >
+                                            自定义
+                                        </Text>
+                                    </View>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        </View>
+                        <SlidersColorPicker
+                            visible={this.state.modalVisible}
+                            color={this.state.backgroundColor}
+                            returnMode={"hex"}
+                            onCancel={() =>
+                                this.setState({ modalVisible: false })
+                            }
+                            onOk={colorHex => {
+                                this.setState({
+                                    modalVisible: false,
+                                    backgroundColor: colorHex,
+                                    selectedIndex: 12
+                                });
+                                Global.settings.theme.index = 12;
+                                Global.settings.theme.backgroundColor = colorHex;
+                            }}
+                            value={Global.settings.theme.backgroundColor}
+                            okLabel="确定"
+                            cancelLabel="取消"
+                        />
                     </ScrollView>
                 </View>
             </SafeAreaView>
@@ -253,5 +301,25 @@ const styles = StyleSheet.create({
         borderBottomColor: "#eee",
         borderBottomWidth: 1,
         backgroundColor: "#ffffff"
+    },
+    radioContainer: {
+        flexGrow: 1,
+        flexDirection: "row",
+        padding: 15,
+        paddingHorizontal: 20
+    },
+    radio: {
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    radioDot: {
+        height: 10,
+        width: 10,
+        borderRadius: 5
+    },
+    item: {
+        marginLeft: 10,
+        alignItems: "center",
+        justifyContent: "center"
     }
 });
