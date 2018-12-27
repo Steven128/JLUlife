@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {
     TouchableNativeFeedback,
-    TouchableHighlight,
+    TouchableOpacity,
     Platform,
     Dimensions,
     StyleSheet,
@@ -30,7 +30,7 @@ export default class NotificationItem extends Component {
         }
         title.push(<Text style={styles.title}>{this.props.title}</Text>);
         return Platform.OS === "ios" ? (
-            <TouchableHighlight
+            <TouchableOpacity
                 onPress={() => {
                     this.props.navigation.navigate("Item", {
                         title: this.props.title,
@@ -59,7 +59,7 @@ export default class NotificationItem extends Component {
                         </Text>
                     </View>
                 </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
         ) : (
             <TouchableNativeFeedback
                 onPress={() => {

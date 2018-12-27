@@ -5,7 +5,7 @@ import cheerio from "cheerio";
  * @param {int} page 页数
  * @param {function} callback 回调
  */
-function getOaList(page, callback) {
+export function getOaList(page, callback) {
     let oa_url =
         "https://oa.jlu.edu.cn/defaultroot/PortalInformation!jldxList.action?1=1&channelId=179577&startPage=" +
         page;
@@ -15,11 +15,40 @@ function getOaList(page, callback) {
         .then(response => response.text())
         .then(responseHTML => {
             var notificationJson = htmlToJson(responseHTML);
-            callback(notificationJson);
+            callback({ message: "success", content: notificationJson });
             return notificationJson;
         })
         .catch(error => {
             if (__DEV__) console.error(error);
+            callback({ message: "error" });
+        });
+}
+
+/**
+ * 查询校内通知列表
+ * @param {int} page 页数
+ * @param {function} callback 回调
+ */
+export function searchOa(page, searchnr, searchlx, callback) {
+    let oa_url =
+        "https://oa.jlu.edu.cn/defaultroot/PortalInformation!jldxList.action?1=1&channelId=179577&searchnr=" +
+        searchnr +
+        "&searchlx=" +
+        searchlx +
+        "&startPage=" +
+        page;
+    fetch(oa_url, {
+        method: "GET"
+    })
+        .then(response => response.text())
+        .then(responseHTML => {
+            var notificationJson = htmlToJson(responseHTML);
+            callback({ message: "success", content: notificationJson });
+            return notificationJson;
+        })
+        .catch(error => {
+            if (__DEV__) console.error(error);
+            callback({ message: "error" });
         });
 }
 
@@ -65,5 +94,3 @@ function htmlToJson(_document) {
     }
     return itemList;
 }
-
-export default getOaList;

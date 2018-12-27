@@ -10,7 +10,7 @@ import {
     StyleSheet,
     Linking,
     TouchableNativeFeedback,
-    TouchableHighlight,
+    TouchableOpacity,
     Platform,
     StatusBar,
     SafeAreaView
@@ -19,7 +19,6 @@ import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import FIcon from "react-native-vector-icons/Feather";
 import Global from "../../src/Global";
-import isIphoneX from "../../src/isIphoneX";
 
 const { width, height } = Dimensions.get("window");
 
@@ -80,11 +79,11 @@ export default class NotificationDetailPage extends Component {
                 <View style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
                     {this.state.showTag ? (
                         Platform.OS === "ios" ? (
-                            <TouchableHighlight
+                            <TouchableOpacity
                                 onPress={this.closeTag.bind(this)}
                             >
                                 <View style={styles.tagContainer}>
-                                    <TouchableHighlight
+                                    <TouchableOpacity
                                         onPress={this.openBroser.bind(
                                             this,
                                             this.props.navigation.state.params
@@ -99,9 +98,9 @@ export default class NotificationDetailPage extends Component {
                                                 {"(在浏览器打开原网页)"}
                                             </Text>
                                         </View>
-                                    </TouchableHighlight>
+                                    </TouchableOpacity>
                                 </View>
-                            </TouchableHighlight>
+                            </TouchableOpacity>
                         ) : (
                             <TouchableNativeFeedback
                                 onPress={this.closeTag.bind(this)}

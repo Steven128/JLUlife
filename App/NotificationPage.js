@@ -14,9 +14,8 @@ import {
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../src/Global";
-import NotificationInterface from "../src/FetchInterface/NotificationInterface";
+import { getOaList } from "../src/FetchInterface/NotificationInterface";
 import NotificationView from "../src/Notification/NotificationView";
-import isIphoneX from "../src/isIphoneX";
 
 const { width, height } = Dimensions.get("window");
 export default class NotificationPage extends Component {
@@ -30,13 +29,13 @@ export default class NotificationPage extends Component {
     }
 
     componentDidMount() {
-        NotificationInterface(1, res => {
-            this.setState({
-                oaList: res
-            });
-            this.setState({
-                getOa: true
-            });
+        getOaList(1, res => {
+            if (res.message == "success") {
+                this.setState({
+                    oaList: res.content,
+                    getOa: true
+                });
+            }
         });
     }
 
@@ -88,6 +87,28 @@ export default class NotificationPage extends Component {
                             text: "校内通知",
                             style: { color: "#fff", fontSize: 16 }
                         }}
+                        rightComponent={
+                            <Button
+                                buttonStyle={{
+                                    borderColor: "#ffffff",
+                                    // borderWidth: 1,
+                                    borderRadius: 3,
+                                    padding: 3
+                                }}
+                                title=""
+                                icon={
+                                    <EIcon
+                                        name="magnifying-glass"
+                                        size={22}
+                                        color="white"
+                                    />
+                                }
+                                clear
+                                onPress={() => {
+                                    this.props.navigation.navigate("Search");
+                                }}
+                            />
+                        }
                     />
                     {this.state.getOa ? (
                         <NotificationView
