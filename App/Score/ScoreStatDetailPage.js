@@ -610,9 +610,12 @@ export default class ScoreStatDetailPage extends Component {
                                                             { flex: 1 }
                                                         ]}
                                                     >
-                                                        {item.isReselect != "N"
+                                                        {item.isReselect == "Y"
                                                             ? "是"
-                                                            : "否"}
+                                                            : item.isReselect ==
+                                                              "N"
+                                                            ? "否"
+                                                            : null}
                                                     </Text>
                                                 </View>
                                             ) : this.state.target ==

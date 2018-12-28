@@ -16,7 +16,8 @@ import {
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../src/Global";
-import QueryItem from "../src/Query/QueryItem";
+import QueryItemAndroid from "../src/Query/QueryItem.android";
+import QueryItemIOS from "../src/Query/QueryItem.ios";
 
 const { width, height } = Dimensions.get("window");
 
@@ -79,24 +80,51 @@ export default class QueryPage extends Component {
                         }}
                     />
                     <View>
-                        <QueryItem
-                            navigation={this.props.navigation}
-                            title="查空教室"
-                            subTitle="没地方上自习？进来看看吧"
-                            nextPage="EmptyRoom"
-                        />
-                        <QueryItem
-                            navigation={this.props.navigation}
-                            title="教学评价"
-                            subTitle="一键教学评价，也可对每门课程单独评价~"
-                            nextPage="Evaluation"
-                        />
-                        <QueryItem
-                            navigation={this.props.navigation}
-                            title="图书馆"
-                            subTitle="馆藏查询"
-                            nextPage="Library"
-                        />
+                        {Platform.OS == "ios" ? (
+                            <QueryItemIOS
+                                navigation={this.props.navigation}
+                                title="查空教室"
+                                subTitle="没地方上自习？进来看看吧"
+                                nextPage="EmptyRoom"
+                            />
+                        ) : (
+                            <QueryItemAndroid
+                                navigation={this.props.navigation}
+                                title="查空教室"
+                                subTitle="没地方上自习？进来看看吧"
+                                nextPage="EmptyRoom"
+                            />
+                        )}
+                        {Platform.OS == "ios" ? (
+                            <QueryItemIOS
+                                navigation={this.props.navigation}
+                                title="教学评价"
+                                subTitle="一键教学评价，也可对每门课程单独评价~"
+                                nextPage="Evaluation"
+                            />
+                        ) : (
+                            <QueryItemAndroid
+                                navigation={this.props.navigation}
+                                title="教学评价"
+                                subTitle="一键教学评价，也可对每门课程单独评价~"
+                                nextPage="Evaluation"
+                            />
+                        )}
+                        {Platform.OS == "ios" ? (
+                            <QueryItemIOS
+                                navigation={this.props.navigation}
+                                title="图书馆"
+                                subTitle="馆藏查询"
+                                nextPage="Library"
+                            />
+                        ) : (
+                            <QueryItemAndroid
+                                navigation={this.props.navigation}
+                                title="图书馆"
+                                subTitle="馆藏查询"
+                                nextPage="Library"
+                            />
+                        )}
                     </View>
                 </View>
             </SafeAreaView>

@@ -99,7 +99,7 @@ export default class AboutPage extends Component {
                             <Text
                                 style={[styles.text, { textAlign: "center" }]}
                             >
-                                版本号 2.2.0
+                                版本号 2.2.1
                             </Text>
                         </View>
                         <Text style={[styles.text, { width: width * 0.8 }]}>

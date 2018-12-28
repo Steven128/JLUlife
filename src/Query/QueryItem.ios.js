@@ -10,7 +10,7 @@ import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../Global";
 const { width, height } = Dimensions.get("window");
-export default class Querytem extends Component {
+export default class QueryItemIOS extends Component {
     constructor(props) {
         super(props);
 

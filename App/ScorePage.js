@@ -10,7 +10,8 @@ import {
     StyleSheet,
     StatusBar,
     Platform,
-    SafeAreaView
+    SafeAreaView,
+    Alert
 } from "react-native";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";

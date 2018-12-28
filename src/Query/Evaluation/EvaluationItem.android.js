@@ -156,7 +156,7 @@ export default class EvaluationItemAndroid extends Component {
                         </View>
                         {this.props.hasEvaluated ? (
                             <Text style={styles.text}>
-                                {this.props.evalTime.replace("T", "")}
+                                {this.props.evalTime.replace("T", " ")}
                             </Text>
                         ) : null}
                         {this.props.hasEvaluated ? (
