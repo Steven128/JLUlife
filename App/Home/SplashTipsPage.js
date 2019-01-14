@@ -24,7 +24,12 @@ export default class SplashTips extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { currentPage: 0, splashV210: true, splashV220: true };
+        this.state = {
+            currentPage: 0,
+            splashV210: true,
+            splashV220: true,
+            splashV230: true
+        };
     }
 
     componentDidMount() {
@@ -33,7 +38,6 @@ export default class SplashTips extends Component {
             () => this.handleBackPress
         );
         var params = this.props.navigation.state.params;
-        console.log(params);
         if (params.tips.splashV210 != undefined) {
             if (params.tips.splashV210) {
                 this.setState({
@@ -45,6 +49,13 @@ export default class SplashTips extends Component {
             if (params.tips.splashV220) {
                 this.setState({
                     splashV220: false
+                });
+            }
+        }
+        if (params.tips.splashV230 != undefined) {
+            if (params.tips.splashV230) {
+                this.setState({
+                    splashV230: false
                 });
             }
         }
@@ -94,6 +105,7 @@ export default class SplashTips extends Component {
         if (Platform.OS === "ios")
             item = (
                 <TouchableOpacity
+                    activeOpacity={0.75}
                     onPress={this.scrollToNextPage.bind(this, isLast)}
                 >
                     <Icon
@@ -122,7 +134,8 @@ export default class SplashTips extends Component {
         if (isLast) {
             AppStorage._save("showTips", {
                 splashV210: true,
-                splashV220: true
+                splashV220: true,
+                splashV230: true
             });
             this.props.navigation.navigate("Home", { from: "SplashTips" });
         } else {
@@ -139,9 +152,8 @@ export default class SplashTips extends Component {
     }
 
     render() {
-        var pageNumber = 0;
-        if (this.state.splashV210) pageNumber += 2;
-        if (this.state.splashV220) pageNumber += 2;
+        var pageNumber = 1;
+        if (this.state.splashV210) pageNumber += 1;
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: "#f4f9fd" }}>
                 <StatusBar
@@ -189,25 +201,25 @@ export default class SplashTips extends Component {
                             </View>
                         </View>
                     ) : null}
-                    {this.state.splashV210 ? (
-                        <View style={{ flex: 1, width: width }}>
-                            <View style={styles.container}>
-                                <View>
-                                    {Platform.OS === "ios" ? (
-                                        <Image
-                                            style={[
-                                                styles.image,
-                                                { height: width * 1.3 }
-                                            ]}
-                                            source={require("../assets/Screenshots/ios/ios-2.png")}
-                                        />
-                                    ) : (
-                                        <Image
-                                            style={styles.image}
-                                            source={require("../assets/Screenshots/android/android-2.png")}
-                                        />
-                                    )}
-                                </View>
+                    <View style={{ flex: 1, width: width }}>
+                        <View style={styles.container}>
+                            <View>
+                                {Platform.OS === "ios" ? (
+                                    <Image
+                                        style={[
+                                            styles.image,
+                                            { height: width * 1.3 }
+                                        ]}
+                                        source={require("../assets/Screenshots/ios/ios-2.png")}
+                                    />
+                                ) : (
+                                    <Image
+                                        style={styles.image}
+                                        source={require("../assets/Screenshots/android/android-2.png")}
+                                    />
+                                )}
+                            </View>
+                            {this.state.splashV210 ? (
                                 <View style={styles.textWrap}>
                                     <Text style={styles.text}>
                                         设置中有多种自定义选项
@@ -216,10 +228,16 @@ export default class SplashTips extends Component {
                                         快来打造自己的个性化课程表吧~
                                     </Text>
                                 </View>
-                            </View>
+                            ) : (
+                                <View style={styles.textWrap}>
+                                    <Text style={styles.text}>
+                                        课表自定义设置移到这里啦~
+                                    </Text>
+                                </View>
+                            )}
                         </View>
-                    ) : null}
-                    {this.state.splashV220 ? (
+                    </View>
+                    {/* {this.state.splashV220 ? (
                         <View style={{ flex: 1, width: width }}>
                             <View style={styles.container}>
                                 <View>
@@ -235,68 +253,6 @@ export default class SplashTips extends Component {
                                         <Image
                                             style={styles.image}
                                             source={require("../assets/Screenshots/android/android-3.png")}
-                                        />
-                                    )}
-                                </View>
-                                <View style={styles.textWrap}>
-                                    <Text style={styles.text}>
-                                        新增教学评价功能
-                                    </Text>
-                                    <Text style={styles.text}>
-                                        {
-                                            "点击右上角可一键教评(默认好评)，\n也可点击每一项未评记录手动评价~"
-                                        }
-                                    </Text>
-                                </View>
-                            </View>
-                        </View>
-                    ) : null}
-                    {this.state.splashV220 ? (
-                        <View style={{ flex: 1, width: width }}>
-                            <View style={styles.container}>
-                                <View>
-                                    {Platform.OS === "ios" ? (
-                                        <Image
-                                            style={[
-                                                styles.image,
-                                                { height: width * 1.3 }
-                                            ]}
-                                            source={require("../assets/Screenshots/ios/ios-4.png")}
-                                        />
-                                    ) : (
-                                        <Image
-                                            style={styles.image}
-                                            source={require("../assets/Screenshots/android/android-4.png")}
-                                        />
-                                    )}
-                                </View>
-                                <View style={styles.textWrap}>
-                                    <Text style={styles.text}>
-                                        校内通知可以搜索啦
-                                    </Text>
-                                    <Text style={styles.text}>
-                                        点击右上角按钮即可进入搜索页面~
-                                    </Text>
-                                </View>
-                            </View>
-                        </View>
-                    ) : null}
-                    {/* {this.state.splashV220 ? (
-                        <View style={{ flex: 1, width: width }}>
-                            <View style={styles.container}>
-                                <View>
-                                    {Platform.OS === "ios" ? (
-                                        <Image
-                                            style={[
-                                                styles.image,
-                                                { height: width * 1.3 }
-                                            ]}
-                                            source={require("../assets/Screenshots/ios/ios-5.png")}
-                                        />
-                                    ) : (
-                                        <Image
-                                            style={styles.image}
-                                            source={require("../assets/Screenshots/android/android-5.png")}
                                         />
                                     )}
                                 </View>
