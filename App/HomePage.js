@@ -25,6 +25,7 @@ import NextClass from "../src/Home/NextClass";
 import GetMessage from "../src/Home/GetMessage";
 import SplashScreen from "rn-splash-screen";
 import Toast from "react-native-easy-toast";
+import ClassInterface from "../src/FetchInterface/ClassInterface";
 
 const { width, height } = Dimensions.get("window");
 export default class HomePage extends Component {
@@ -34,7 +35,9 @@ export default class HomePage extends Component {
         this.state = {
             showSplashTips: false,
             isOnline: Global.isOnline,
-            checkingOnline: Global.checkingOnline
+            checkingOnline: Global.checkingOnline,
+            backgroundColor: Global.settings.theme.backgroundColor,
+            getClass: false
         };
     }
 
@@ -45,14 +48,41 @@ export default class HomePage extends Component {
     }
     componentDidUpdate() {
         var params = this.props.navigation.state.params;
-        if (params != undefined)
+        if (params != undefined) {
             if (params.from == "SplashTips") {
                 if (!this.state.isOnline && !this.state.checkingOnline) {
                     if (Global.loginInfo.j_username == "") {
                         this.props.navigation.navigate("Login");
                     }
                 }
+            } else if (params.from == "Login") {
+                if (Global.classJson.length == 0) {
+                    AppStorage._load("classJson", res => {
+                        if (res.message == "success") {
+                            Global.classJson = res.content;
+                            this.setState({
+                                getClass: true
+                            });
+                        } else {
+                            ClassInterface(res => {
+                                if (res.message == "success") {
+                                    Global.classJson = res.content;
+                                    this.setState({
+                                        getClass: true
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            } else if (params.from == "WeatherSettings") {
+                if (Global.tips.weatherData != undefined) {
+                    if (Global.tips.weatherData.location != params.name) {
+                        this.refs.weather.refreshTips();
+                    }
+                }
             }
+        }
     }
 
     ComponentWillUpdate() {
@@ -68,9 +98,14 @@ export default class HomePage extends Component {
             if (res.message == "success") {
                 if (
                     res.content.splashV210 != undefined &&
-                    res.content.splashV220 != undefined
+                    res.content.splashV220 != undefined &&
+                    res.content.splashV230 != undefined
                 ) {
-                    if (res.content.splashV210 || res.content.splashV220) {
+                    if (
+                        res.content.splashV210 ||
+                        res.content.splashV220 ||
+                        res.content.splashV230
+                    ) {
                         flag = true;
                         Global.showTips = false;
                     }
@@ -113,6 +148,11 @@ export default class HomePage extends Component {
         setTimeout(() => {
             SplashScreen.hide();
         }, 1500);
+        setTimeout(() => {
+            this.setState({
+                backgroundColor: Global.settings.theme.backgroundColor
+            });
+        }, 1000);
         this.handleShowTips();
         //加载各种信息
         if (Global.loginInfo.j_username == "") {
@@ -170,7 +210,7 @@ export default class HomePage extends Component {
                                 });
                                 if (res.message == "success") {
                                     Platform.OS === "ios"
-                                        ? this.refs.toast.show("登录成功", 2000)
+                                        ? this.refs.toast.show("登录成功", 5000)
                                         : ToastAndroid.show(
                                               "登录成功",
                                               ToastAndroid.LONG
@@ -181,11 +221,43 @@ export default class HomePage extends Component {
                                         isOnline: true,
                                         checkingOnline: false
                                     });
+                                    if (Global.classJson.length == 0) {
+                                        AppStorage._load("classJson", res => {
+                                            if (res.message == "success") {
+                                                Global.classJson = res.content;
+                                                this.setState({
+                                                    getClass: true
+                                                });
+                                            } else {
+                                                ClassInterface(res => {
+                                                    if (
+                                                        res.message == "success"
+                                                    ) {
+                                                        Global.classJson =
+                                                            res.content;
+                                                        this.setState({
+                                                            getClass: true
+                                                        });
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                    if (res.termChanged) {
+                                        ClassInterface(res => {
+                                            if (res.message == "success") {
+                                                Global.classJson = res.content;
+                                                this.setState({
+                                                    getClass: true
+                                                });
+                                            }
+                                        });
+                                    }
                                 } else {
                                     Platform.OS === "ios"
                                         ? this.refs.toast.show(
                                               "网络开小差啦，看看是不是连上校园网了呢~",
-                                              2000
+                                              5000
                                           )
                                         : ToastAndroid.show(
                                               "网络开小差啦，看看是不是连上校园网了呢~",
@@ -200,11 +272,29 @@ export default class HomePage extends Component {
                         );
                     }
                 } else if (res.message == "error") {
-                    if (!this.state.showSplashTips)
+                    if (!this.state.showSplashTips) {
                         this.props.navigation.navigate("Login");
+                    }
                 }
             });
+            if (Global.classJson.length == 0) {
+                AppStorage._load("classJson", res => {
+                    if (res.message == "success") {
+                        Global.classJson = res.content;
+                        this.setState({
+                            getClass: true
+                        });
+                    }
+                });
+            }
         }
+    }
+
+    handleOffline() {
+        Platform.OS === "ios"
+            ? this.refs.toast.show("退出登录", 2000)
+            : ToastAndroid.show("退出登录", ToastAndroid.SHORT);
+        this.setState({ isOnline: false });
     }
 
     openDrawer() {
@@ -351,7 +441,7 @@ export default class HomePage extends Component {
                             style: { color: "#fff", fontSize: 16 }
                         }}
                     />
-                    <ScrollView style={{ height: height - 80 }}>
+                    <ScrollView style={{ flex: 1 }}>
                         <View>
                             <View style={styles.greetingWrap}>
                                 {item}
@@ -360,22 +450,22 @@ export default class HomePage extends Component {
                         </View>
                         <View>
                             <View style={styles.greetingWrap}>
-                                <NextClass />
-                            </View>
-                        </View>
-                        <View>
-                            <View style={styles.greetingWrap}>
-                                <Text style={styles.tipsTitle}>生活小贴士</Text>
-                                <View>
-                                    <Weather />
-                                </View>
-                                <View style={{ height: 15 }} />
+                                {this.state.getClass ||
+                                Global.classJson.length != 0 ? (
+                                    <NextClass getClass={true} />
+                                ) : (
+                                    <NextClass getClass={false} />
+                                )}
                             </View>
                         </View>
                         <View>
                             <View style={styles.greetingWrap}>
                                 {this.state.isOnline ? (
-                                    <GetMessage />
+                                    <GetMessage
+                                        handleOffline={this.handleOffline.bind(
+                                            this
+                                        )}
+                                    />
                                 ) : Global.checkingOnline ? (
                                     <View>
                                         <Text
@@ -412,12 +502,17 @@ export default class HomePage extends Component {
                                     </View>
                                 )}
                             </View>
-                            <View
-                                style={{
-                                    height: 15,
-                                    backgroundColor: "#f5f5f5"
-                                }}
-                            />
+                        </View>
+                        <View style={{ marginBottom: 15 }}>
+                            <View style={styles.greetingWrap}>
+                                <Text style={styles.tipsTitle}>生活小贴士</Text>
+                                <View>
+                                    <Weather
+                                        navigation={this.props.navigation}
+                                        ref="weather"
+                                    />
+                                </View>
+                            </View>
                         </View>
                     </ScrollView>
                 </View>

@@ -114,7 +114,7 @@ export default class PrivacyPage extends Component {
                                         Global.settings.theme.backgroundColor
                                     }
                                 />
-                                登录用户名和密码将保存在应用缓存中，以后打开APP时用此信息自动登录。
+                                登录用户名和密码将保存在应用缓存中，以后使用此信息自动登录。
                             </Text>
                             <Text style={[styles.text]}>
                                 <EIcon
@@ -150,7 +150,7 @@ export default class PrivacyPage extends Component {
                                         Global.settings.theme.backgroundColor
                                     }
                                 />
-                                此应用接入腾讯bugly服务。当应用崩溃，或发生内部错误时，可能会将相关日志文件上传，以便开发者及时定位错误，请悉知。
+                                应用崩溃，或发生内部错误时，可能会将相关日志文件上传，以便开发者及时定位错误，请悉知。
                             </Text>
                             <Text style={[styles.text]}>
                                 <EIcon
@@ -168,7 +168,7 @@ export default class PrivacyPage extends Component {
                                         Global.settings.theme.backgroundColor
                                     }
                                 />
-                                &copy; 2018 by GitHub@Steven128，保留所有权利。
+                                &copy; 2019 by GitHub@Steven128，保留所有权利。
                             </Text>
                         </View>
                         <View style={{ height: 50 }} />

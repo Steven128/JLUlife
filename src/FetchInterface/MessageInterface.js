@@ -36,6 +36,8 @@ export function getMessage(callback) {
         .catch(err => {
             callback({ message: "error", reason: err });
             if (__DEV__) console.log(err);
+            Global.isOnline = false;
+            Global.cookie = "";
         });
 }
 

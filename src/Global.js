@@ -39,6 +39,7 @@ var Global = {
         "#93c6ea"
     ],
     tips: {},
+    classJson: [],
     card: {
         isOnline: false,
         cookie: "",
@@ -65,7 +66,8 @@ var Global = {
         },
         options: {
             firstUseEval: true
-        }
+        },
+        weather: { city: "CN101060101", name: "长春" }
     }
 };
 

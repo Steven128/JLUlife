@@ -10,16 +10,26 @@ import {
     StatusBar,
     Platform,
     Dimensions,
-    SafeAreaView
+    SafeAreaView,
+    ToastAndroid
 } from "react-native";
 import { DrawerItems } from "react-navigation";
 import Global from "../src/Global";
 import AppStorage from "../src/AppStorage";
 import HandleNewSettings from "../src/HandleNewSettings";
+import {
+    isFirstTime,
+    checkUpdate,
+    downloadUpdate,
+    switchVersionLater,
+    markSuccess
+} from "react-native-update";
+import _updateConfig from "../update.json";
+const { appKey } = _updateConfig[Platform.OS];
 
 const { width, height } = Dimensions.get("window");
 
-export class Sidebar extends Component {
+export default class Sidebar extends Component {
     static navigationOptions = {
         title: "Welcome"
     };
@@ -40,8 +50,35 @@ export class Sidebar extends Component {
             this.setState({
                 getSettings: true
             });
+            this.checkUpdate();
+            if (isFirstTime) {
+                markSuccess();
+                ToastAndroid.show("已切换到新版本", ToastAndroid.SHORT);
+            }
         });
     }
+    doUpdate = info => {
+        downloadUpdate(info)
+            .then(hash => {
+                switchVersionLater(hash);
+                ToastAndroid.show("热更新已完成", ToastAndroid.SHORT);
+            })
+            .catch(err => {
+                if (__DEV__) console.log(err);
+            });
+    };
+    checkUpdate = () => {
+        checkUpdate(appKey)
+            .then(info => {
+                if (info.update) {
+                    ToastAndroid.show("开始热更新", ToastAndroid.SHORT);
+                    this.doUpdate(info);
+                }
+            })
+            .catch(err => {
+                if (__DEV__) console.log(err);
+            });
+    };
     render() {
         return this.state.getSettings ? (
             <View
@@ -119,5 +156,3 @@ const styles = StyleSheet.create({
         width: 90
     }
 });
-
-export default Sidebar;

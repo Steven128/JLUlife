@@ -22,6 +22,7 @@ export default class EducationItem extends Component {
     render() {
         return Platform.OS === "ios" ? (
             <TouchableOpacity
+                activeOpacity={0.75}
                 onPress={() => {
                     this.props.navigation.navigate("Item", {
                         title: this.props.title,

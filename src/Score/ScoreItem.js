@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {
     TouchableNativeFeedback,
-    TouchableHighlight,
+    TouchableOpacity,
     Platform,
     ScrollView,
     Dimensions,
@@ -48,7 +48,8 @@ export default class ScoreItem extends Component {
         else lessonType = "其他";
 
         return Platform.OS === "ios" ? (
-            <TouchableHighlight
+            <TouchableOpacity
+                activeOpacity={0.75}
                 onPress={() => {
                     this.setState({ dialogVisible: true });
                 }}
@@ -195,7 +196,7 @@ export default class ScoreItem extends Component {
                         </DialogContent>
                     </Dialog>
                 </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
         ) : (
             <TouchableNativeFeedback
                 onPress={() => {

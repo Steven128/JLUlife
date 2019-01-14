@@ -21,8 +21,13 @@ import {
     FooterRefreshingComponent,
     FooterEmptyDataComponent,
     FooterNoMoreDataComponent
-} from "../../RefreshListComponent";
+} from "../../Components/RefreshListComponent";
 import Toast from "react-native-easy-toast";
+import Dialog, {
+    DialogTitle,
+    DialogButton,
+    DialogContent
+} from "react-native-popup-dialog";
 
 const { width, height } = Dimensions.get("window");
 export default class Blank extends Component {
@@ -31,6 +36,7 @@ export default class Blank extends Component {
         this.onHeaderRefresh = this.onHeaderRefresh.bind(this);
         this.onFooterRefresh = this.onFooterRefresh.bind(this);
         this.state = {
+            alertVisible: false,
             getBlankList: false,
             blankList: [],
             refreshState: RefreshState.Idle,
@@ -87,7 +93,7 @@ export default class Blank extends Component {
                 });
                 if (res.content.length == 0) {
                     Platform.OS === "ios"
-                        ? this.refs.toast.show("评教已经完成啦~", 2000)
+                        ? this.refs.toast.show("评教已经完成啦~", 5000)
                         : ToastAndroid.show(
                               "评教已经完成啦~",
                               ToastAndroid.LONG
@@ -99,19 +105,7 @@ export default class Blank extends Component {
 
     evalAll() {
         if (this.state.blankList.length == 0) {
-            Alert.alert(
-                "提示",
-                "现在没有需要评价的项目~",
-                [
-                    {
-                        text: "知道啦",
-                        onPress: () => {
-                            return false;
-                        }
-                    }
-                ],
-                { cancelable: false }
-            );
+            this.setState({ alertVisible: true });
         } else
             for (var i in this.state.blankList) {
                 var body = {
@@ -162,7 +156,6 @@ export default class Blank extends Component {
                         prob73: 79145
                     }
                 };
-                console.log(this.state.blankList[i].evalItemId);
                 evalWithAnswer(
                     body,
                     this.state.blankList[i].evalItemId,
@@ -174,10 +167,6 @@ export default class Blank extends Component {
     }
 
     render() {
-        for (var i in this.state.blankList) {
-            console.log(this.state.blankList[i].evalItemId);
-        }
-        console.log("\n");
         return (
             <View
                 style={{
@@ -249,6 +238,56 @@ export default class Blank extends Component {
                         </View>
                     )}
                 </View>
+                <Dialog
+                    visible={this.state.alertVisible}
+                    dialogTitle={
+                        <DialogTitle
+                            title="提示"
+                            style={{
+                                backgroundColor: "#ffffff"
+                            }}
+                            titleStyle={{
+                                color: "#6a6a6a",
+                                fontWeight: 500
+                            }}
+                        />
+                    }
+                    actions={[
+                        <DialogButton
+                            text="知道啦"
+                            textStyle={{
+                                color: Global.settings.theme.backgroundColor,
+                                fontSize: 14,
+                                fontWeight: "normal"
+                            }}
+                            onPress={() => {
+                                this.setState({ alertVisible: false });
+                            }}
+                        />
+                    ]}
+                    width={0.75}
+                    height={0.45 * (width / height)}
+                    containerStyle={styles.dialog}
+                >
+                    <DialogContent style={{ flex: 1 }}>
+                        <View style={{ flex: 1 }}>
+                            <View
+                                style={{
+                                    paddingVertical: 10,
+                                    alignItems: "center"
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        paddingVertical: 5
+                                    }}
+                                >
+                                    现在没有需要评价的项目~
+                                </Text>
+                            </View>
+                        </View>
+                    </DialogContent>
+                </Dialog>
             </View>
         );
     }

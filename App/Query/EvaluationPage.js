@@ -25,7 +25,6 @@ import ScrollableTabView, {
 import Blank from "../../src/Query/Evaluation/Blank";
 import Done from "../../src/Query/Evaluation/Done";
 import Dialog, {
-    ScaleAnimation,
     DialogTitle,
     DialogButton,
     DialogContent
@@ -37,22 +36,21 @@ var { height: deviceHeight, width: deviceWidth } = Dimensions.get("window");
 export default class EvaluationPage extends Component {
     constructor(props) {
         super(props);
-        this.state = { dialogVisible: false, selectedIndex: 0 };
+        this.state = {
+            alertVisible: false,
+            alertText: "",
+            dialogVisible: false,
+            selectedIndex: 0
+        };
     }
 
     componentDidMount() {
         if (!Global.isOnline) {
-            Alert.alert(
-                "提示",
-                "登录后才能评教哟~",
-                [
-                    {
-                        text: "知道啦",
-                        onPress: () => this.props.navigation.navigate("Main")
-                    }
-                ],
-                { cancelable: false }
-            );
+            this.setState({
+                alertText: "登录后才能评教哟~",
+                alertVisible: true
+            });
+            return;
         } else {
             if (Global.settings.options.firstUseEval) {
                 this.setState({
@@ -184,7 +182,11 @@ export default class EvaluationPage extends Component {
                     actions={[
                         <DialogButton
                             text="拒绝"
-                            textStyle={{ color: "#808080" }}
+                            textStyle={{
+                                color: "#6a6a6a",
+                                fontSize: 14,
+                                fontWeight: "normal"
+                            }}
                             onPress={() => {
                                 this.setState({ dialogVisible: false });
                                 this.props.navigation.goBack();
@@ -193,7 +195,9 @@ export default class EvaluationPage extends Component {
                         <DialogButton
                             text="同意"
                             textStyle={{
-                                color: Global.settings.theme.backgroundColor
+                                color: Global.settings.theme.backgroundColor,
+                                fontSize: 14,
+                                fontWeight: "normal"
                             }}
                             onPress={() => {
                                 Global.settings.options.firstUseEval = false;
@@ -202,7 +206,6 @@ export default class EvaluationPage extends Component {
                             }}
                         />
                     ]}
-                    dialogAnimation={new ScaleAnimation()}
                     width={0.9}
                     height={0.65}
                     containerStyle={styles.dialog}
@@ -235,6 +238,57 @@ export default class EvaluationPage extends Component {
                                 </Text>
                             </View>
                         </ScrollView>
+                    </DialogContent>
+                </Dialog>
+                <Dialog
+                    visible={this.state.alertVisible}
+                    dialogTitle={
+                        <DialogTitle
+                            title="提示"
+                            style={{
+                                backgroundColor: "#ffffff"
+                            }}
+                            titleStyle={{
+                                color: "#6a6a6a",
+                                fontWeight: 500
+                            }}
+                        />
+                    }
+                    actions={[
+                        <DialogButton
+                            text="知道啦"
+                            textStyle={{
+                                color: Global.settings.theme.backgroundColor,
+                                fontSize: 14,
+                                fontWeight: "normal"
+                            }}
+                            onPress={() => {
+                                this.setState({ alertVisible: false });
+                                this.props.navigation.navigate("Main");
+                            }}
+                        />
+                    ]}
+                    width={0.75}
+                    height={0.45 * (width / height)}
+                    containerStyle={styles.dialog}
+                >
+                    <DialogContent style={{ flex: 1 }}>
+                        <View style={{ flex: 1 }}>
+                            <View
+                                style={{
+                                    paddingVertical: 10,
+                                    alignItems: "center"
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        paddingVertical: 5
+                                    }}
+                                >
+                                    {this.state.alertText}
+                                </Text>
+                            </View>
+                        </View>
                     </DialogContent>
                 </Dialog>
             </SafeAreaView>

@@ -4,71 +4,79 @@ import {
     View,
     Text,
     Dimensions,
-    FlatList,
     ActivityIndicator,
-    Alert
+    Alert,
+    ScrollView,
+    Keyboard
 } from "react-native";
 import { Input, Button } from "react-native-elements";
 import cheerio from "cheerio";
 import Global from "../Global";
 import Base64 from "base-64";
 import Icon from "react-native-vector-icons/AntDesign";
+import Dialog, {
+    DialogTitle,
+    DialogButton,
+    DialogContent
+} from "react-native-popup-dialog";
 
 const { width, height } = Dimensions.get("window");
 export default class CardLoss extends Component {
     constructor(props) {
         super(props);
         this.buttonTapped = this.buttonTapped.bind(this);
-        this.state = { showLoading: false, password: "" };
+        this.state = {
+            comfirmVisible: false,
+            alertVisible: false,
+            alertTitle: "",
+            alertText: "",
+            showLoading: false,
+            password: ""
+        };
     }
 
     componentDidMount() {}
 
     buttonTapped() {
+        Keyboard.dismiss();
         if (this.state.password != Global.card.password) {
-            Alert.alert("提示", "查询密码不正确，再检查一下吧~");
+            this.setState({
+                alertTitle: "提示",
+                alertText: "查询密码不正确，再检查一下吧~",
+                alertVisible: true
+            });
             return false;
+        } else {
+            this.setState({ confirmVisible: true });
         }
-        Alert.alert("提示", "确定要挂失吗？", [
-            {
-                text: "我再想想",
-                style: "cancel",
-                onPress: () => {
-                    return false;
+    }
+
+    reportLossMain() {
+        this.getCardNumber(Global.card.cookie, cardNumber => {
+            this.reportLoss(
+                Global.card.cookie,
+                cardNumber,
+                Global.card.password,
+                res => {
+                    console.log(res);
+                    if (res.success) {
+                        this.setState({
+                            alertTitle: "挂失成功",
+                            alertText:
+                                "你的校园卡资金暂时安全了呢\n如果7天内还未找到卡，赶快去补办一张新的吧~",
+                            alertVisible: true
+                        });
+                    } else {
+                        this.setState({
+                            alertTitle: "挂失失败",
+                            alertText: "失败啦，" + res.msg,
+                            alertVisible: true
+                        });
+                    }
+                    this.setState({ showLoading: false });
                 }
-            },
-            {
-                text: "确定",
-                onPress: () => {
-                    this.setState({ showLoading: true });
-                    this.getCardNumber(Global.card.cookie, cardNumber => {
-                        this.reportLoss(
-                            Global.card.cookie,
-                            cardNumber,
-                            Global.card.password,
-                            res => {
-                                if (res.msg.indexOf("该校园卡已挂失") < 0) {
-                                    Alert.alert(
-                                        "挂失成功",
-                                        "你的校园卡资金暂时安全了呢\n如果7天内还未找到卡，赶快去补办一张新的吧~",
-                                        [{ text: "确定" }],
-                                        { cancelable: false }
-                                    );
-                                } else {
-                                    Alert.alert(
-                                        "挂失失败",
-                                        "失败啦，" + res.msg,
-                                        [{ text: "确定" }],
-                                        { cancelable: false }
-                                    );
-                                }
-                                this.setState({ showLoading: false });
-                            }
-                        );
-                    });
-                }
-            }
-        ]);
+            );
+        });
     }
 
     reportLoss(cookie, cardNumber, password, callback) {
@@ -152,13 +160,14 @@ export default class CardLoss extends Component {
 
     render() {
         return (
-            <View
+            <ScrollView
                 style={{
                     flex: 1,
                     borderRightWidth: 1,
                     borderRightColor: "#ccc",
                     backgroundColor: "#fff"
                 }}
+                keyboardShouldPersistTaps="handled"
             >
                 <View
                     style={{
@@ -198,7 +207,122 @@ export default class CardLoss extends Component {
                         onPress={this.buttonTapped}
                     />
                 </View>
-            </View>
+                <Dialog
+                    visible={this.state.confirmVisible}
+                    dialogTitle={
+                        <DialogTitle
+                            title="提示"
+                            style={{
+                                backgroundColor: "#ffffff"
+                            }}
+                            titleStyle={{
+                                color: "#6a6a6a",
+                                fontWeight: 500
+                            }}
+                        />
+                    }
+                    actions={[
+                        <DialogButton
+                            text="我再想想"
+                            textStyle={{
+                                color: "#6a6a6a",
+                                fontSize: 14,
+                                fontWeight: "normal"
+                            }}
+                            onPress={() => {
+                                this.setState({ confirmVisible: false });
+                            }}
+                        />,
+                        <DialogButton
+                            text="确认"
+                            textStyle={{
+                                color: "#6a6a6a",
+                                fontSize: 14,
+                                fontWeight: "normal"
+                            }}
+                            onPress={() => {
+                                this.setState({
+                                    showLoading: true,
+                                    confirmVisible: false
+                                });
+                                this.reportLossMain();
+                            }}
+                        />
+                    ]}
+                    width={0.75}
+                    height={0.45 * (width / height)}
+                    containerStyle={styles.dialog}
+                >
+                    <DialogContent style={{ flex: 1 }}>
+                        <View style={{ flex: 1 }}>
+                            <View
+                                style={{
+                                    paddingVertical: 10,
+                                    alignItems: "center"
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        paddingVertical: 5
+                                    }}
+                                >
+                                    确定要挂失吗？
+                                </Text>
+                            </View>
+                        </View>
+                    </DialogContent>
+                </Dialog>
+                <Dialog
+                    visible={this.state.alertVisible}
+                    dialogTitle={
+                        <DialogTitle
+                            title={this.state.alertTitle}
+                            style={{
+                                backgroundColor: "#ffffff"
+                            }}
+                            titleStyle={{
+                                color: "#6a6a6a",
+                                fontWeight: 500
+                            }}
+                        />
+                    }
+                    actions={[
+                        <DialogButton
+                            text="知道啦"
+                            textStyle={{
+                                color: Global.settings.theme.backgroundColor,
+                                fontSize: 14,
+                                fontWeight: "normal"
+                            }}
+                            onPress={() => {
+                                this.setState({ alertVisible: false });
+                            }}
+                        />
+                    ]}
+                    width={0.75}
+                    height={0.45 * (width / height)}
+                    containerStyle={styles.dialog}
+                >
+                    <DialogContent style={{ flex: 1 }}>
+                        <View style={{ flex: 1 }}>
+                            <View
+                                style={{
+                                    paddingVertical: 10,
+                                    alignItems: "center"
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        paddingVertical: 5
+                                    }}
+                                >
+                                    {this.state.alertText}
+                                </Text>
+                            </View>
+                        </View>
+                    </DialogContent>
+                </Dialog>
+            </ScrollView>
         );
     }
 }

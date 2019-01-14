@@ -45,6 +45,7 @@ export default class NotificationSearchPage extends Component {
     renderButton(text, callback) {
         return (
             <TouchableOpacity
+                activeOpacity={0.75}
                 onPress={callback.bind(this)}
                 style={{ flex: 1, padding: 10, paddingRight: 0 }}
             >
@@ -188,6 +189,7 @@ export default class NotificationSearchPage extends Component {
                                         this
                                     )}
                                     placeholder="按回车键搜索"
+                                    autoFocus
                                 />
                             </View>
                         </View>

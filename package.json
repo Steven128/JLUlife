@@ -33,6 +33,7 @@
         "react-native-scrollable-tab-view": "^0.10.0",
         "react-native-storage": "^0.2.3",
         "react-native-svg": "^8.0.8",
+        "react-native-update": "^5.1.4",
         "react-native-vector-icons": "^6.0.2",
         "react-native-webview": "^2.5.0",
         "react-navigation": "^2.18.2",

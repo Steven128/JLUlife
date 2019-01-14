@@ -30,6 +30,7 @@ export default class EmptyRoomItem extends Component {
     renderButton(text, callback) {
         return (
             <TouchableOpacity
+                activeOpacity={0.75}
                 onPress={callback.bind(this)}
                 style={{
                     justifyContent: "center",

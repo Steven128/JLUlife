@@ -35,6 +35,8 @@ export function getBlankList(callback) {
                 console.log(responseJson);
             }
             callback({ message: "error" });
+            Global.isOnline = false;
+            Global.cookie = "";
         });
 }
 
@@ -74,6 +76,8 @@ export function getDoneList(callback) {
                 console.log(responseJson);
             }
             callback({ message: "error" });
+            Global.isOnline = false;
+            Global.cookie = "";
         });
 }
 

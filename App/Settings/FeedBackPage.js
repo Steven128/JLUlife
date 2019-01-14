@@ -95,6 +95,7 @@ export default class FeedBackPage extends Component {
                         </Text>
                         {Platform.OS === "ios" ? (
                             <TouchableOpacity
+                                activeOpacity={0.75}
                                 onPress={this.goToGithub.bind(this)}
                             >
                                 <Text

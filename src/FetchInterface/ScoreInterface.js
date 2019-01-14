@@ -41,6 +41,8 @@ function getInfo(callback) {
         .catch(error => {
             if (__DEV__) console.error(error);
             callback({ message: "error" });
+            Global.isOnline = false;
+            Global.cookie = "";
         });
 }
 

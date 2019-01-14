@@ -48,6 +48,7 @@ export default class ScoreItemIOS extends Component {
 
         return (
             <TouchableOpacity
+                activeOpacity={0.75}
                 onPress={() => {
                     this.setState({ dialogVisible: true });
                 }}

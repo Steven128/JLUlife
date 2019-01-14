@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, Dimensions, ToastAndroid, Platform } from "react-native";
 import RefreshListView, { RefreshState } from "react-native-refresh-list-view";
-import ScoreItemAndroid from "./ScoreItem.android";
-import ScoreItemIOS from "./ScoreItem.ios";
+import ScoreItem from "./ScoreItem";
 import Global from "../Global";
 import ScoreInterface from "../FetchInterface/ScoreInterface";
 import Toast from "react-native-easy-toast";
@@ -11,7 +10,7 @@ import {
     FooterRefreshingComponent,
     FooterEmptyDataComponent,
     FooterNoMoreDataComponent
-} from "../RefreshListComponent";
+} from "../Components/RefreshListComponent";
 
 const { width, height } = Dimensions.get("window");
 export default class ScoreView extends Component {
@@ -44,9 +43,6 @@ export default class ScoreView extends Component {
                     scoreList: res.content,
                     refreshState: RefreshState.Idle
                 });
-            } else {
-                Global.isOnline = false;
-                Global.cookie = "";
             }
         });
     }
@@ -61,35 +57,20 @@ export default class ScoreView extends Component {
         return (
             <RefreshListView
                 data={this.state.scoreList}
-                renderItem={({ item }) =>
-                    Platform.OS == "ios" ? (
-                        <ScoreItemIOS
-                            key={item.courName}
-                            asId={item.asId}
-                            courName={item.courName}
-                            type={item.type}
-                            termName={item.termName}
-                            dateScore={item.dateScore}
-                            credit={item.credit}
-                            isPass={item.isPass}
-                            score={item.score}
-                            gpoint={item.gpoint}
-                        />
-                    ) : (
-                        <ScoreItemAndroid
-                            key={item.courName}
-                            asId={item.asId}
-                            courName={item.courName}
-                            type={item.type}
-                            termName={item.termName}
-                            dateScore={item.dateScore}
-                            credit={item.credit}
-                            isPass={item.isPass}
-                            score={item.score}
-                            gpoint={item.gpoint}
-                        />
-                    )
-                }
+                renderItem={({ item }) => (
+                    <ScoreItem
+                        key={item.courName}
+                        asId={item.asId}
+                        courName={item.courName}
+                        type={item.type}
+                        termName={item.termName}
+                        dateScore={item.dateScore}
+                        credit={item.credit}
+                        isPass={item.isPass}
+                        score={item.score}
+                        gpoint={item.gpoint}
+                    />
+                )}
                 refreshState={this.state.refreshState}
                 onHeaderRefresh={this.onHeaderRefresh}
                 onFooterRefresh={this.onFooterRefresh}

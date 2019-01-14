@@ -27,6 +27,8 @@ export default class EvaluationItemIOS extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            alertVisible: false,
+            alertText: "",
             evalItemId: "",
             dialogVisible: false,
             submitTapped: false,
@@ -128,6 +130,7 @@ export default class EvaluationItemIOS extends Component {
     render() {
         return (
             <TouchableOpacity
+                activeOpacity={0.75}
                 onPress={() => {
                     this.props.hasEvaluated
                         ? null
@@ -195,7 +198,11 @@ export default class EvaluationItemIOS extends Component {
                         actions={[
                             <DialogButton
                                 text="取消"
-                                textStyle={{ color: "#808080" }}
+                                textStyle={{
+                                    color: "#6a6a6a",
+                                    fontSize: 14,
+                                    fontWeight: "normal"
+                                }}
                                 onPress={() => {
                                     this.setState({ dialogVisible: false });
                                 }}
@@ -203,7 +210,10 @@ export default class EvaluationItemIOS extends Component {
                             <DialogButton
                                 text="提交"
                                 textStyle={{
-                                    color: Global.settings.theme.backgroundColor
+                                    color:
+                                        Global.settings.theme.backgroundColor,
+                                    fontSize: 14,
+                                    fontWeight: "normal"
                                 }}
                                 disabled={this.state.submitTapped}
                                 onPress={this.buttonTapped.bind(this)}
@@ -1533,6 +1543,56 @@ export default class EvaluationItemIOS extends Component {
                         </DialogContent>
                     </Dialog>
                 </View>
+                <Dialog
+                    visible={this.state.alertVisible}
+                    dialogTitle={
+                        <DialogTitle
+                            title="出错啦"
+                            style={{
+                                backgroundColor: "#ffffff"
+                            }}
+                            titleStyle={{
+                                color: "#6a6a6a",
+                                fontWeight: 500
+                            }}
+                        />
+                    }
+                    actions={[
+                        <DialogButton
+                            text="知道啦"
+                            textStyle={{
+                                color: Global.settings.theme.backgroundColor,
+                                fontSize: 14,
+                                fontWeight: "normal"
+                            }}
+                            onPress={() => {
+                                this.setState({ alertVisible: false });
+                            }}
+                        />
+                    ]}
+                    width={0.75}
+                    height={0.45 * (width / height)}
+                    containerStyle={styles.dialog}
+                >
+                    <DialogContent style={{ flex: 1 }}>
+                        <View style={{ flex: 1 }}>
+                            <View
+                                style={{
+                                    paddingVertical: 10,
+                                    alignItems: "center"
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        paddingVertical: 5
+                                    }}
+                                >
+                                    {this.state.alertText}
+                                </Text>
+                            </View>
+                        </View>
+                    </DialogContent>
+                </Dialog>
             </TouchableOpacity>
         );
     }
@@ -1626,19 +1686,18 @@ export default class EvaluationItemIOS extends Component {
             res => {
                 if (res.message == "success") {
                     if (res.content.errno == 0) {
-                        this.refs.toast.show("评价成功", 2000);
+                        this.refs.toast.show("评价成功", 5000);
                         this.setState({
                             submitTapped: false,
                             dialogVisible: false
                         });
                         this.props.refreshList();
                     } else {
-                        Alert.alert("出错啦", res.content.msg, [
-                            { text: "好的" }
-                        ]);
                         this.setState({
-                            submitTapped: false,
-                            dialogVisible: false
+                            dialogVisible: false,
+                            alertText: res.content.msg,
+                            alertVisible: true,
+                            submitTapped: false
                         });
                         this.props.refreshList();
                     }

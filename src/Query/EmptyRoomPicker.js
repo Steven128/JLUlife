@@ -76,6 +76,7 @@ export default class EmptyRoomPicker extends BaseDialog {
                     }}
                 >
                     <TouchableOpacity
+                        activeOpacity={0.75}
                         onPress={() => {
                             this.dismiss(
                                 () =>
@@ -103,6 +104,7 @@ export default class EmptyRoomPicker extends BaseDialog {
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
+                        activeOpacity={0.75}
                         onPress={() => {
                             this.dismiss(
                                 () =>

@@ -11,6 +11,7 @@ import {
     StatusBar,
     Platform,
     SafeAreaView,
+    Text,
     Alert
 } from "react-native";
 import { Header, Button } from "react-native-elements";
@@ -20,6 +21,11 @@ import ScoreView from "../src/Score/ScoreView";
 import AppStorage from "../src/AppStorage";
 import ScoreInterface from "../src/FetchInterface/ScoreInterface";
 import Toast from "react-native-easy-toast";
+import Dialog, {
+    DialogTitle,
+    DialogButton,
+    DialogContent
+} from "react-native-popup-dialog";
 
 const { width, height } = Dimensions.get("window");
 
@@ -28,6 +34,8 @@ export default class ScorePage extends Component {
         super(props);
         this.openDrawer = this.openDrawer.bind(this);
         this.state = {
+            alertVisible: false,
+            alertText: "",
             getScore: false,
             statCount: 0,
             scoreList: []
@@ -52,13 +60,16 @@ export default class ScorePage extends Component {
             if (Global.isOnline)
                 ScoreInterface(res => {
                     if (res.message == "success") {
+                        Platform.OS === "ios"
+                            ? this.refs.toast.show("成绩已刷新", 2000)
+                            : ToastAndroid.show(
+                                  "成绩已刷新",
+                                  ToastAndroid.SHORT
+                              );
                         this.setState({
                             scoreList: res.content,
                             getScore: true
                         });
-                    } else {
-                        Global.isOnline = false;
-                        Global.cookie = "";
                     }
                 });
             else {
@@ -66,7 +77,7 @@ export default class ScorePage extends Component {
                     ? this.refs.toast.show("登录后才能刷新成绩哟~", 2000)
                     : ToastAndroid.show(
                           "登录后才能刷新成绩哟~",
-                          ToastAndroid.LONG
+                          ToastAndroid.SHORT
                       );
             }
         }
@@ -139,11 +150,10 @@ export default class ScorePage extends Component {
                                     if (Global.isOnline)
                                         this.props.navigation.navigate("Stat");
                                     else {
-                                        Alert.alert(
-                                            "提示",
-                                            "登录后才能查询哟~",
-                                            [{ text: "知道啦" }]
-                                        );
+                                        this.setState({
+                                            alertText: "登录后才能查询哟~",
+                                            alertVisible: true
+                                        });
                                     }
                                 }}
                             />
@@ -158,13 +168,68 @@ export default class ScorePage extends Component {
                                 backgroundColor: "transparent"
                             }}
                         >
-                            <ActivityIndicator
-                                style={{}}
-                                size="large"
-                                color={Global.settings.theme.backgroundColor}
-                            />
+                            {Global.isOnline ? (
+                                <ActivityIndicator
+                                    style={{}}
+                                    size="large"
+                                    color={
+                                        Global.settings.theme.backgroundColor
+                                    }
+                                />
+                            ) : null}
                         </View>
                     )}
+                    <Dialog
+                        visible={this.state.alertVisible}
+                        dialogTitle={
+                            <DialogTitle
+                                title="提示"
+                                style={{
+                                    backgroundColor: "#ffffff"
+                                }}
+                                titleStyle={{
+                                    color: "#6a6a6a",
+                                    fontWeight: 500
+                                }}
+                            />
+                        }
+                        actions={[
+                            <DialogButton
+                                text="知道啦"
+                                textStyle={{
+                                    color:
+                                        Global.settings.theme.backgroundColor,
+                                    fontSize: 14,
+                                    fontWeight: "normal"
+                                }}
+                                onPress={() => {
+                                    this.setState({ alertVisible: false });
+                                }}
+                            />
+                        ]}
+                        width={0.75}
+                        height={0.45 * (width / height)}
+                        containerStyle={styles.dialog}
+                    >
+                        <DialogContent style={{ flex: 1 }}>
+                            <View style={{ flex: 1 }}>
+                                <View
+                                    style={{
+                                        paddingVertical: 10,
+                                        alignItems: "center"
+                                    }}
+                                >
+                                    <Text
+                                        style={{
+                                            paddingVertical: 5
+                                        }}
+                                    >
+                                        {this.state.alertText}
+                                    </Text>
+                                </View>
+                            </View>
+                        </DialogContent>
+                    </Dialog>
                 </View>
             </SafeAreaView>
         );

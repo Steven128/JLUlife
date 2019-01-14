@@ -7,8 +7,6 @@ import {
     Text,
     Dimensions,
     StyleSheet,
-    TouchableNativeFeedback,
-    Alert,
     StatusBar,
     Platform,
     SafeAreaView,

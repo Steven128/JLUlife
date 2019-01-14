@@ -8,7 +8,6 @@ import {
     Dimensions,
     StyleSheet,
     TouchableWithoutFeedback,
-    Alert,
     ScrollView,
     BackHandler,
     StatusBar,
@@ -36,42 +35,37 @@ export default class ClassSettingsPage extends Component {
     }
 
     componentDidMount() {
-        BackHandler.addEventListener("hardwareBackPress", this.onBackAndroid);
         this.setState({
             selectedIndex: Global.settings.theme.index,
             backgroundColor: Global.settings.theme.backgroundColor
         });
     }
 
-    componentWillUnmount() {
+    onSave() {
+        Global.settings.theme.index = this.state.selectedIndex;
+        Global.settings.theme.color = "#ffffff";
+        Global.settings.theme.backgroundColor = this.state.backgroundColor;
         AppStorage._save("settings", Global.settings);
         BackHandler.removeEventListener(
             "hardwareBackPress",
             this.onBackAndroid
         );
-    }
-
-    onBackAndroid = () => {
         this.props.navigation.navigate("Settings", {
             backgroundColor: this.state.backgroundColor
         });
-        return true;
-    };
+    }
 
     onSelect(index, value) {
         this.setState({
             selectedIndex: index,
             backgroundColor: value
         });
-        Global.settings.theme.index = index;
-        Global.settings.theme.color = "#ffffff";
-        Global.settings.theme.backgroundColor = value;
     }
 
     render() {
         const { navigate } = this.props.navigation;
         var headerStyle = {
-            borderBottomColor: Global.settings.theme.backgroundColor
+            borderBottomColor: this.state.backgroundColor
         };
         if (Platform.OS == "ios") {
             headerStyle.paddingTop = 0;
@@ -81,7 +75,7 @@ export default class ClassSettingsPage extends Component {
             <SafeAreaView
                 style={{
                     flex: 1,
-                    backgroundColor: Global.settings.theme.backgroundColor
+                    backgroundColor: this.state.backgroundColor
                 }}
             >
                 <StatusBar
@@ -105,18 +99,30 @@ export default class ClassSettingsPage extends Component {
                                     />
                                 }
                                 clear
-                                onPress={() =>
-                                    this.props.navigation.navigate("Settings", {
-                                        backgroundColor: this.state
-                                            .backgroundColor
-                                    })
-                                }
+                                onPress={() => this.props.navigation.goBack()}
                             />
                         }
                         centerComponent={{
                             text: "主题皮肤",
                             style: { color: "#fff", fontSize: 16 }
                         }}
+                        rightComponent={
+                            <Button
+                                containerStyle={{
+                                    borderWidth: 1,
+                                    borderColor: "#ffffff",
+                                    borderRadius: 3
+                                }}
+                                titleStyle={{
+                                    fontSize: 12,
+                                    paddingHorizontal: 5,
+                                    paddingVertical: 4
+                                }}
+                                title="保存"
+                                clear
+                                onPress={this.onSave.bind(this)}
+                            />
+                        }
                     />
                     <View
                         style={{
@@ -127,8 +133,8 @@ export default class ClassSettingsPage extends Component {
                             borderBottomWidth: 1
                         }}
                     >
-                        <Text style={{ color: "#888" }}>
-                            提示： 主题在退出此页面后才会生效哦~
+                        <Text style={{ color: "#808080" }}>
+                            提示： 点击右上角保存后生效哦~
                         </Text>
                     </View>
                     <ScrollView style={{ flex: 1 }}>

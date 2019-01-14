@@ -10,15 +10,14 @@ import {
 } from "react-native";
 import RefreshListView, { RefreshState } from "react-native-refresh-list-view";
 import Global from "../../Global";
-import EvaluationItemAndroid from "./EvaluationItem.android";
-import EvaluationItemIOS from "./EvaluationItem.ios";
+import EvaluationItem from "./EvaluationItem";
 import { getDoneList } from "../../FetchInterface/EvaluationInterface";
 import {
     FooterFailureComponent,
     FooterRefreshingComponent,
     FooterEmptyDataComponent,
     FooterNoMoreDataComponent
-} from "../../RefreshListComponent";
+} from "../../Components/RefreshListComponent";
 
 const { width, height } = Dimensions.get("window");
 export default class Done extends Component {
@@ -107,37 +106,17 @@ export default class Done extends Component {
                                     </Text>
                                 </View>
                             }
-                            renderItem={({ item }) =>
-                                Platform.OS == "ios" ? (
-                                    <EvaluationItemIOS
-                                        hasEvaluated={true}
-                                        evalItemId={item.evalItemId}
-                                        teacherName={item.target.name}
-                                        schoolName={
-                                            item.target.school.schoolName
-                                        }
-                                        evalTime={item.dateInput}
-                                        lessonName={item.targetClar.notes}
-                                        evalTitle={
-                                            item.evalActTime.evalTime.title
-                                        }
-                                    />
-                                ) : (
-                                    <EvaluationItemAndroid
-                                        hasEvaluated={true}
-                                        evalItemId={item.evalItemId}
-                                        teacherName={item.target.name}
-                                        schoolName={
-                                            item.target.school.schoolName
-                                        }
-                                        evalTime={item.dateInput}
-                                        lessonName={item.targetClar.notes}
-                                        evalTitle={
-                                            item.evalActTime.evalTime.title
-                                        }
-                                    />
-                                )
-                            }
+                            renderItem={({ item }) => (
+                                <EvaluationItem
+                                    hasEvaluated={true}
+                                    evalItemId={item.evalItemId}
+                                    teacherName={item.target.name}
+                                    schoolName={item.target.school.schoolName}
+                                    evalTime={item.dateInput}
+                                    lessonName={item.targetClar.notes}
+                                    evalTitle={item.evalActTime.evalTime.title}
+                                />
+                            )}
                             refreshState={this.state.refreshState}
                             onHeaderRefresh={this.onHeaderRefresh}
                             onFooterRefresh={this.onFooterRefresh}

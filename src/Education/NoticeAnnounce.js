@@ -15,7 +15,7 @@ import {
     FooterRefreshingComponent,
     FooterEmptyDataComponent,
     FooterNoMoreDataComponent
-} from "../RefreshListComponent";
+} from "../Components/RefreshListComponent";
 
 const { width, height } = Dimensions.get("window");
 export default class NoticeAnnounce extends Component {

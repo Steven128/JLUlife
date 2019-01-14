@@ -19,6 +19,7 @@ export default class QueryItemIOS extends Component {
     render() {
         return (
             <TouchableOpacity
+                activeOpacity={0.75}
                 onPress={() =>
                     this.props.navigation.navigate(this.props.nextPage)
                 }

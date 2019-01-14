@@ -7,7 +7,6 @@ import {
     StyleSheet,
     Text,
     View,
-    Alert,
     ToastAndroid,
     Image,
     TouchableWithoutFeedback,
@@ -15,14 +14,20 @@ import {
     KeyboardAvoidingView,
     StatusBar,
     Platform,
-    SafeAreaView
+    SafeAreaView,
+    Keyboard
 } from "react-native";
-import { Header, Input, Button, CheckBox } from "react-native-elements";
+import { Header, Input, Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/AntDesign";
 import Global from "../../src/Global";
 import AppStorage from "../../src/AppStorage";
 import Base64 from "base-64";
 import Toast from "react-native-easy-toast";
+import Dialog, {
+    DialogTitle,
+    DialogButton,
+    DialogContent
+} from "react-native-popup-dialog";
 
 const { width, height } = Dimensions.get("window");
 
@@ -36,6 +41,8 @@ export default class CardLoginPage extends Component {
         this.refreshCode = this.refreshCode.bind(this);
         this.validate = this.validate.bind(this);
         this.state = {
+            alertVisible: false,
+            alertText: "",
             showLoading: false,
             cookie: "",
             username: "",
@@ -43,7 +50,8 @@ export default class CardLoginPage extends Component {
             code: "",
             uri: "",
             showErrMsg: false,
-            errMsgList: []
+            errMsgList: [],
+            scrollViewHeight: height
         };
     }
 
@@ -92,6 +100,7 @@ export default class CardLoginPage extends Component {
      * 按登录按钮后执行此函数
      */
     loginTapped() {
+        Keyboard.dismiss();
         //正在登录或表单验证失败，返回false
         if (this.state.showLoading || !this.validate()) {
             return false;
@@ -113,7 +122,7 @@ export default class CardLoginPage extends Component {
                           password: this.state.password
                       });
                       Platform.OS === "ios"
-                          ? this.refs.toast.show("登录成功", 2000)
+                          ? this.refs.toast.show("登录成功", 5000)
                           : ToastAndroid.show("登录成功", ToastAndroid.LONG);
                       this.props.navigation.navigate("Main", {
                           message: "success"
@@ -122,11 +131,10 @@ export default class CardLoginPage extends Component {
                       this.refreshCode();
                       this.setState({
                           showLoading: !this.state.showLoading,
-                          code: ""
+                          code: "",
+                          alertText: res.response.msg,
+                          alertVisible: true
                       });
-                      Alert.alert("出错啦", res.response.msg, [
-                          { text: "确定" }
-                      ]);
                   }
               });
     }
@@ -250,6 +258,11 @@ export default class CardLoginPage extends Component {
         }
     }
 
+    _onLayout(event) {
+        let { x, y, width, height } = event.nativeEvent.layout;
+        this.setState({ scrollViewHeight: height });
+    }
+
     render() {
         const { navigate } = this.props.navigation;
         var headerStyle = {
@@ -291,123 +304,193 @@ export default class CardLoginPage extends Component {
                             style: { color: "#fff", fontSize: 16 }
                         }}
                     />
-                    <ScrollView style={{ flex: 1 }}>
-                        {this.state.showErrMsg ? (
-                            <View
+                    {this.state.showErrMsg ? (
+                        <View
+                            style={{
+                                height: 30,
+                                backgroundColor: "#d10000",
+                                padding: 5,
+                                justifyContent: "center",
+                                textAlignVertical: "center"
+                            }}
+                        >
+                            <Text
                                 style={{
-                                    height: 30,
-                                    backgroundColor: "#d10000",
-                                    padding: 5,
-                                    justifyContent: "center",
-                                    textAlignVertical: "center"
+                                    color: "#fff",
+                                    textAlign: "center"
                                 }}
                             >
-                                <Text
-                                    style={{
-                                        color: "#fff",
-                                        textAlign: "center"
-                                    }}
+                                {this.state.errMsgList[0]}
+                            </Text>
+                        </View>
+                    ) : null}
+                    <KeyboardAvoidingView behavior="position">
+                        <ScrollView
+                            style={{
+                                height: this.state.scrollViewHeight
+                            }}
+                            keyboardShouldPersistTaps="handled"
+                        >
+                            <View style={{ alignSelf: "center" }}>
+                                <View
+                                    style={{ paddingTop: contentPaddingTop }}
+                                    onLayout={this._onLayout.bind(this)}
                                 >
-                                    {this.state.errMsgList[0]}
-                                </Text>
-                            </View>
-                        ) : null}
-                        <View style={{ alignSelf: "center" }}>
-                            <View style={{ paddingTop: contentPaddingTop }}>
-                                <Input
-                                    containerStyle={styles.input}
-                                    inputStyle={styles.inputStyle}
-                                    placeholder="校园卡账号（11位学工号）"
-                                    leftIcon={
-                                        <Icon
-                                            name="user"
-                                            size={22}
-                                            color="#888"
-                                        />
-                                    }
-                                    value={this.state.username}
-                                    onChangeText={this.handleNameChange}
-                                    returnKeyType="next"
-                                    maxLength={11}
-                                    keyboardType="numeric"
-                                    selectTextOnFocus={true}
-                                />
-                                <Input
-                                    containerStyle={styles.input}
-                                    inputStyle={styles.inputStyle}
-                                    placeholder="查询密码"
-                                    secureTextEntry={true}
-                                    leftIcon={
-                                        <Icon
-                                            name="lock1"
-                                            size={22}
-                                            color="#888"
-                                        />
-                                    }
-                                    value={this.state.password}
-                                    onChangeText={this.handlePwdChange}
-                                    maxLength={6}
-                                    returnKeyType="next"
-                                    keyboardType="numeric"
-                                    selectTextOnFocus={true}
-                                />
-                                <View style={{ flexDirection: "row" }}>
                                     <Input
-                                        containerStyle={[
-                                            styles.input,
-                                            { flex: 3 }
-                                        ]}
+                                        containerStyle={styles.input}
                                         inputStyle={styles.inputStyle}
-                                        placeholder="验证码"
+                                        placeholder="校园卡账号（11位学工号）"
                                         leftIcon={
                                             <Icon
-                                                name="key"
+                                                name="user"
                                                 size={22}
                                                 color="#888"
                                             />
                                         }
-                                        value={this.state.code}
-                                        onChangeText={this.handleCodeChange}
-                                        maxLength={4}
+                                        value={this.state.username}
+                                        onChangeText={this.handleNameChange}
+                                        returnKeyType="next"
+                                        maxLength={11}
                                         keyboardType="numeric"
-                                        returnKeyType="done"
                                         selectTextOnFocus={true}
                                     />
-                                    <TouchableWithoutFeedback
-                                        onPress={this.refreshCode}
-                                    >
-                                        <Image
-                                            style={styles.image}
-                                            source={{
-                                                uri: this.state.uri,
-                                                headers: {
-                                                    Cookie: this.state.cookie
-                                                }
-                                            }}
+                                    <Input
+                                        containerStyle={styles.input}
+                                        inputStyle={styles.inputStyle}
+                                        placeholder="查询密码"
+                                        secureTextEntry={true}
+                                        leftIcon={
+                                            <Icon
+                                                name="lock1"
+                                                size={22}
+                                                color="#888"
+                                            />
+                                        }
+                                        value={this.state.password}
+                                        onChangeText={this.handlePwdChange}
+                                        maxLength={6}
+                                        returnKeyType="next"
+                                        keyboardType="numeric"
+                                        selectTextOnFocus={true}
+                                    />
+                                    <View style={{ flexDirection: "row" }}>
+                                        <Input
+                                            containerStyle={[
+                                                styles.input,
+                                                { flex: 3 }
+                                            ]}
+                                            inputStyle={styles.inputStyle}
+                                            placeholder="验证码"
+                                            leftIcon={
+                                                <Icon
+                                                    name="key"
+                                                    size={22}
+                                                    color="#888"
+                                                />
+                                            }
+                                            value={this.state.code}
+                                            onChangeText={this.handleCodeChange}
+                                            maxLength={4}
+                                            keyboardType="numeric"
+                                            returnKeyType="done"
+                                            selectTextOnFocus={true}
                                         />
-                                    </TouchableWithoutFeedback>
+                                        <TouchableWithoutFeedback
+                                            onPress={this.refreshCode}
+                                        >
+                                            <Image
+                                                style={styles.image}
+                                                source={{
+                                                    uri: this.state.uri,
+                                                    headers: {
+                                                        Cookie: this.state
+                                                            .cookie
+                                                    }
+                                                }}
+                                            />
+                                        </TouchableWithoutFeedback>
+                                    </View>
+                                    <View
+                                        style={{
+                                            paddingTop: 20,
+                                            paddingBottom: 10
+                                        }}
+                                    >
+                                        <Button
+                                            title="登录"
+                                            loading={this.state.showLoading}
+                                            loadingProps={{
+                                                size: "large",
+                                                color: "#fff"
+                                            }}
+                                            titleStyle={{ fontWeight: "700" }}
+                                            buttonStyle={{
+                                                height: 45,
+                                                backgroundColor:
+                                                    Global.settings.theme
+                                                        .backgroundColor
+                                            }}
+                                            onPress={this.loginTapped}
+                                        />
+                                    </View>
                                 </View>
                             </View>
-                            <View style={{ padding: 40, paddingTop: 20 }}>
-                                <Button
-                                    title="登录"
-                                    loading={this.state.showLoading}
-                                    loadingProps={{
-                                        size: "large",
-                                        color: "#fff"
+                        </ScrollView>
+                    </KeyboardAvoidingView>
+                    <Dialog
+                        visible={this.state.alertVisible}
+                        dialogTitle={
+                            <DialogTitle
+                                title="出错啦"
+                                style={{
+                                    backgroundColor: "#ffffff"
+                                }}
+                                titleStyle={{
+                                    color: "#6a6a6a",
+                                    fontWeight: 500
+                                }}
+                            />
+                        }
+                        actions={[
+                            <DialogButton
+                                text="知道啦"
+                                textStyle={{
+                                    color:
+                                        Global.settings.theme.backgroundColor,
+                                    fontSize: 14,
+                                    fontWeight: "normal"
+                                }}
+                                onPress={() => {
+                                    this.setState({ alertVisible: false });
+                                }}
+                            />
+                        ]}
+                        width={0.75}
+                        height={0.45 * (width / height)}
+                        containerStyle={styles.dialog}
+                    >
+                        <DialogContent style={{ flex: 1 }}>
+                            <ScrollView
+                                style={{ flex: 1 }}
+                                showsVerticalScrollIndicator={false}
+                            >
+                                <View
+                                    style={{
+                                        paddingVertical: 10,
+                                        alignItems: "center"
                                     }}
-                                    titleStyle={{ fontWeight: "700" }}
-                                    buttonStyle={{
-                                        height: 45,
-                                        backgroundColor:
-                                            Global.settings.theme
-                                                .backgroundColor
-                                    }}
-                                    onPress={this.loginTapped}
-                                />
-                            </View>
-                        </View>
-                    </ScrollView>
+                                >
+                                    <Text
+                                        style={{
+                                            paddingVertical: 5
+                                        }}
+                                    >
+                                        {this.state.alertText}
+                                    </Text>
+                                </View>
+                            </ScrollView>
+                        </DialogContent>
+                    </Dialog>
                 </View>
             </SafeAreaView>
         );

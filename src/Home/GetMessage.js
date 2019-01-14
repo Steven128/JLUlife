@@ -1,9 +1,17 @@
 import React, { Component } from "react";
-import { View, Text, Dimensions, StyleSheet, FlatList } from "react-native";
+import {
+    View,
+    Text,
+    Dimensions,
+    StyleSheet,
+    FlatList,
+    ToastAndroid
+} from "react-native";
 import Global from "../Global";
 import AppStorage from "../AppStorage";
 import { getMessage } from "../FetchInterface/MessageInterface";
 import MessageItem from "./MessageItem";
+import Toast from "react-native-easy-toast";
 
 export default class GetMessage extends Component {
     constructor(props) {
@@ -36,12 +44,21 @@ export default class GetMessage extends Component {
                     messageList: res.content,
                     getMessage: true
                 });
+            } else {
+                Platform.OS === "ios"
+                    ? this.refs.toast.show("登录后才可以刷新课表~", 2000)
+                    : ToastAndroid.show(
+                          "登录后才可以刷新课表~",
+                          ToastAndroid.SHORT
+                      );
+                this.props.handleOffline();
             }
         });
     }
     render() {
         return this.state.getMessage ? (
             <View>
+                <Toast ref="toast" />
                 <Text
                     style={{
                         color: "#555",

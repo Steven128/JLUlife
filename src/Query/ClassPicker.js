@@ -107,6 +107,7 @@ export default class ClassPicker extends BaseDialog {
                     }}
                 >
                     <TouchableOpacity
+                        activeOpacity={0.75}
                         onPress={() => {
                             this.dismiss(
                                 () =>
@@ -135,6 +136,7 @@ export default class ClassPicker extends BaseDialog {
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
+                        activeOpacity={0.75}
                         onPress={() => {
                             this.dismiss(
                                 () =>

@@ -78,12 +78,16 @@ export class SlidersColorPicker extends Component {
                 <ScrollView style={{ flex: 1 }}>
                     <View style={styles.container}>
                         <View style={styles.header}>
-                            <TouchableOpacity onPress={onCancel}>
+                            <TouchableOpacity
+                                activeOpacity={0.75}
+                                onPress={onCancel}
+                            >
                                 <Text style={styles.headerButton}>
                                     {cancelLabel}
                                 </Text>
                             </TouchableOpacity>
                             <TouchableOpacity
+                                activeOpacity={0.75}
                                 onPress={() =>
                                     onOk(
                                         modes[this.props.returnMode].getString(
@@ -134,20 +138,20 @@ export class SlidersColorPicker extends Component {
                             <View style={styles.sliders}>
                                 <HueSlider
                                     style={styles.sliderRow}
-                                    gradientSteps={200}
+                                    gradientSteps={500}
                                     value={this.state.color.h}
                                     onValueChange={this.updateHue}
                                 />
                                 <SaturationSlider
                                     style={styles.sliderRow}
-                                    gradientSteps={100}
+                                    gradientSteps={500}
                                     value={this.state.color.s}
                                     color={this.state.color}
                                     onValueChange={this.updateSaturation}
                                 />
                                 <LightnessSlider
                                     style={styles.sliderRow}
-                                    gradientSteps={100}
+                                    gradientSteps={500}
                                     value={this.state.color.l}
                                     color={this.state.color}
                                     onValueChange={this.updateLightness}

@@ -35,5 +35,10 @@ export default function handleNewSettings() {
     if (settings.options == undefined) Global.settings.options = {};
     if (settings.options.firstUseEval == undefined)
         Global.settings.options.firstUseEval = true;
+    if (settings.weather == undefined) Global.settings.weather = {};
+    if (settings.weather.city == undefined)
+        Global.settings.weather.city = "CN101060101";
+    if (settings.weather.name == undefined)
+        Global.settings.weather.name = "长春";
     return;
 }

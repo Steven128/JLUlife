@@ -80,10 +80,12 @@ export default class NotificationDetailPage extends Component {
                     {this.state.showTag ? (
                         Platform.OS === "ios" ? (
                             <TouchableOpacity
+                                activeOpacity={0.75}
                                 onPress={this.closeTag.bind(this)}
                             >
                                 <View style={styles.tagContainer}>
                                     <TouchableOpacity
+                                        activeOpacity={0.75}
                                         onPress={this.openBroser.bind(
                                             this,
                                             this.props.navigation.state.params
@@ -141,9 +143,7 @@ export default class NotificationDetailPage extends Component {
                                     />
                                 }
                                 clear
-                                onPress={() =>
-                                    this.props.navigation.navigate("List")
-                                }
+                                onPress={() => this.props.navigation.goBack()}
                             />
                         }
                         centerComponent={{

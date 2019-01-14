@@ -22,8 +22,12 @@ export default class SettingsItem extends Component {
     render() {
         return Platform.OS === "ios" ? (
             <TouchableOpacity
+                activeOpacity={0.75}
                 onPress={() =>
-                    this.props.navigation.navigate(this.props.nextPage)
+                    this.props.navigation.navigate(
+                        this.props.nextPage,
+                        this.props.params
+                    )
                 }
             >
                 <View style={styles.container}>
@@ -35,7 +39,10 @@ export default class SettingsItem extends Component {
         ) : (
             <TouchableNativeFeedback
                 onPress={() =>
-                    this.props.navigation.navigate(this.props.nextPage)
+                    this.props.navigation.navigate(
+                        this.props.nextPage,
+                        this.props.params
+                    )
                 }
             >
                 <View style={styles.container}>

@@ -11,7 +11,10 @@ import {
     Platform,
     StyleSheet,
     StatusBar,
-    SafeAreaView
+    SafeAreaView,
+    ImageBackground,
+    Animated,
+    Easing
 } from "react-native";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
@@ -20,8 +23,8 @@ import ClassTable from "../src/Class/ClassTable";
 import AppStorage from "../src/AppStorage";
 import Toast from "react-native-easy-toast";
 import ClassInterface from "../src/FetchInterface/ClassInterface";
-import WeekPickerAndroid from "../src/Class/WeekPicker.android";
-import WeekPickerIOS from "../src/Class/WeekPicker.ios";
+import WeekPicker from "../src/Class/WeekPicker";
+import ClassAdditions from "../src/Class/ClassAdditions";
 
 const { width, height } = Dimensions.get("window");
 
@@ -36,8 +39,16 @@ export default class TablePage extends Component {
             classJson: [],
             currentWeek: " - ",
             pickerOpen: false,
-            settings: {}
+            classAdditionsOpen: false,
+            addButtonDeg: new Animated.Value(0),
+            settings: { backgroundImage: "" }
         };
+    }
+
+    componentWillMount() {
+        this.setState({
+            settings: Global.settings.class
+        });
     }
 
     componentDidMount() {
@@ -46,42 +57,48 @@ export default class TablePage extends Component {
                 currentWeek: global.getCurrentWeek(Global.startDate)
             });
         }
-        this.setState({
-            settings: Global.settings.class
-        });
-        AppStorage._load("classJson", res => {
-            if (res.message == "success") {
-                classJson = res.content;
+        if (Global.isOnline && Global.classJson.length == 0) {
+            ClassInterface(res => {
+                if (res.message == "success") {
+                    this.setState({
+                        classJson: res.content,
+                        getClassTable: true
+                    });
+                    Global.classJson = res.content;
+                }
+            });
+        } else {
+            if (Global.classJson.length != 0) {
                 this.setState({
+                    classJson: Global.classJson,
                     getClassTable: true
                 });
-            } else if (
-                res.message == "error" &&
-                !Global.isOnline &&
-                !Global.checkingOnline
-            ) {
-                this.props.navigation.navigate("Login");
-            }
-        });
-        if (!this.state.getClassTable) {
-            if (Global.isOnline) {
-                ClassInterface(res => {
+            } else {
+                AppStorage._load("classJson", res => {
                     if (res.message == "success") {
+                        Global.classJson = res.content;
                         this.setState({
                             classJson: res.content,
                             getClassTable: true
                         });
+                    } else if (
+                        res.message == "error" &&
+                        !Global.isOnline &&
+                        !Global.checkingOnline
+                    ) {
+                        this.props.navigation.navigate("Login");
                     }
                 });
-            } else {
-                Platform.OS === "ios"
-                    ? this.refs.toast.show("登录后才能刷新课表哟~", 2000)
-                    : ToastAndroid.show(
-                          "登录后才能刷新课表哟~",
-                          ToastAndroid.LONG
-                      );
             }
         }
+    }
+
+    componentWillReceiveProps() {
+        this.setState({
+            settings: Global.settings.class,
+            classJson: Global.classJson,
+            getClassTable: true
+        });
     }
 
     openDrawer() {
@@ -89,6 +106,7 @@ export default class TablePage extends Component {
         this.props.navigation.openDrawer();
         this.setState({ pickerOpen: false });
         this.refs.weekPicker.closePicker();
+        this.handleAddButton();
     }
 
     openPicker() {
@@ -123,6 +141,72 @@ export default class TablePage extends Component {
     handleWeekPicker() {
         this.setState({ pickerOpen: false });
         this.refs.weekPicker.closePicker();
+    }
+
+    handleAddButton() {
+        this.refs.classAdditions.handlePickerOpen();
+        if (this.state.classAdditionsOpen) {
+            Animated.timing(this.state.addButtonDeg, {
+                toValue: 0,
+                duration: 300,
+                easing: Easing.linear
+            }).start();
+            this.setState({ classAdditionsOpen: false });
+        } else {
+            Animated.timing(this.state.addButtonDeg, {
+                toValue: 1,
+                duration: 300,
+                easing: Easing.linear
+            }).start();
+            this.setState({ classAdditionsOpen: true });
+        }
+    }
+
+    refreshClassTable() {
+        if (!Global.isOnline) {
+            Platform.OS === "ios"
+                ? this.refs.toast.show("登录后才可以刷新课表~", 2000)
+                : ToastAndroid.show(
+                      "登录后才可以刷新课表~",
+                      ToastAndroid.SHORT
+                  );
+        } else {
+            ClassInterface(res => {
+                if (res.message == "success") {
+                    Global.classJson = res.content;
+                    this.setState({
+                        classJson: res.content,
+                        getClassTable: true
+                    });
+                    Platform.OS === "ios"
+                        ? this.refs.toast.show("课表已刷新~", 2000)
+                        : ToastAndroid.show("课表已刷新~", ToastAndroid.SHORT);
+                } else {
+                    Platform.OS === "ios"
+                        ? this.refs.toast.show("登录后才可以刷新课表~", 2000)
+                        : ToastAndroid.show(
+                              "登录后才可以刷新课表~",
+                              ToastAndroid.SHORT
+                          );
+                }
+            });
+        }
+        this.refs.classAdditions.handlePickerOpen();
+        if (this.state.classAdditionsOpen) {
+            Animated.timing(this.state.addButtonDeg, {
+                toValue: 0,
+                duration: 300,
+                easing: Easing.linear
+            }).start();
+            this.setState({ classAdditionsOpen: false });
+        }
+    }
+
+    handleDeleteClass() {
+        this.setState({
+            classJson: Global.classJson,
+            getClassTable: true
+        });
     }
 
     render() {
@@ -177,6 +261,7 @@ export default class TablePage extends Component {
                         centerComponent={
                             Platform.OS === "ios" ? (
                                 <TouchableOpacity
+                                    activeOpacity={0.75}
                                     onPress={this.goBack.bind(this)}
                                 >
                                     <Text
@@ -204,66 +289,112 @@ export default class TablePage extends Component {
                             )
                         }
                         rightComponent={
-                            <Button
-                                title=""
-                                icon={
-                                    <EIcon
-                                        name={
-                                            this.state.pickerOpen
-                                                ? "chevron-up"
-                                                : "chevron-down"
+                            <View style={{ flexDirection: "row" }}>
+                                <Animated.View
+                                    style={{
+                                        marginRight: 15,
+                                        transform: [
+                                            {
+                                                rotateZ: this.state.addButtonDeg.interpolate(
+                                                    {
+                                                        inputRange: [0, 1],
+                                                        outputRange: [
+                                                            "0deg",
+                                                            "45deg"
+                                                        ]
+                                                    }
+                                                )
+                                            }
+                                        ]
+                                    }}
+                                >
+                                    <Button
+                                        title=""
+                                        icon={
+                                            <EIcon
+                                                name="plus"
+                                                size={28}
+                                                color="white"
+                                            />
                                         }
-                                        size={28}
-                                        color="white"
+                                        clear
+                                        onPress={this.handleAddButton.bind(
+                                            this
+                                        )}
                                     />
-                                }
-                                clear
-                                onPress={this.openPicker}
-                            />
+                                </Animated.View>
+                                <View>
+                                    <Button
+                                        title=""
+                                        icon={
+                                            <EIcon
+                                                name={
+                                                    this.state.pickerOpen
+                                                        ? "chevron-up"
+                                                        : "chevron-down"
+                                                }
+                                                size={28}
+                                                color="white"
+                                            />
+                                        }
+                                        clear
+                                        onPress={this.openPicker}
+                                    />
+                                </View>
+                            </View>
                         }
                     />
-                    {Platform.OS == "ios" ? (
-                        <WeekPickerIOS
+                    <ImageBackground
+                        source={{ uri: this.state.settings.backgroundImage }}
+                        style={{ flex: 1 }}
+                    >
+                        <ClassAdditions
+                            ref="classAdditions"
+                            handleChange={this.handleAddButton.bind(this)}
+                            navigation={this.props.navigation}
+                            refreshClassTable={this.refreshClassTable.bind(
+                                this
+                            )}
+                        />
+                        <WeekPicker
                             currentWeek={global.getCurrentWeek(
                                 Global.startDate
                             )}
                             ref="weekPicker"
                             changeWeek={this.changeWeek.bind(this)}
                         />
-                    ) : (
-                        <WeekPickerAndroid
-                            currentWeek={global.getCurrentWeek(
-                                Global.startDate
-                            )}
-                            ref="weekPicker"
-                            changeWeek={this.changeWeek.bind(this)}
-                        />
-                    )}
-                    <View style={{ flex: 1 }}>
-                        {this.state.getClassTable ? (
-                            <ClassTable
-                                classList={this.state.classJson}
-                                week={this.state.currentWeek}
-                                settings={this.state.settings}
-                                onScroll={this.handleWeekPicker.bind(this)}
-                            />
-                        ) : (
-                            <View
-                                style={{
-                                    flex: 1,
-                                    paddingVertical: height / 2 - 150,
-                                    backgroundColor: "transparent"
-                                }}
-                            >
-                                <ActivityIndicator
-                                    size="large"
-                                    color={
-                                        Global.settings.theme.backgroundColor
-                                    }
+                        <View style={{ flex: 1 }}>
+                            {this.state.getClassTable ? (
+                                <ClassTable
+                                    navigation={this.props.navigation}
+                                    classList={this.state.classJson}
+                                    week={this.state.currentWeek}
+                                    settings={this.state.settings}
+                                    onScroll={this.handleWeekPicker.bind(this)}
+                                    handleDeleteClass={this.handleDeleteClass.bind(
+                                        this
+                                    )}
                                 />
-                            </View>
-                        )}
-                    </View>
+                            ) : (
+                                <View
+                                    style={{
+                                        flex: 1,
+                                        paddingVertical: height / 2 - 150
+                                    }}
+                                >
+                                    {Global.isOnline ? (
+                                        <ActivityIndicator
+                                            size="large"
+                                            color={
+                                                Global.settings.theme
+                                                    .backgroundColor
+                                            }
+                                        />
+                                    ) : null}
+                                </View>
+                            )}
+                        </View>
+                    </ImageBackground>
                 </View>
             </SafeAreaView>
         );

@@ -3,8 +3,6 @@ import { View, Text, Dimensions, StyleSheet } from "react-native";
 import Global from "../Global";
 import AppStorage from "../AppStorage";
 
-var classJson = [];
-
 export default class NextClass extends Component {
     constructor(props) {
         super(props);
@@ -15,12 +13,7 @@ export default class NextClass extends Component {
         };
     }
     componentDidMount() {
-        AppStorage._load("classJson", res => {
-            if (res.message == "success") {
-                classJson = res.content;
-                this.getNextClass(classJson, this.getCurrentClass());
-            }
-        });
+        this.getNextClass(Global.classJson, this.getCurrentClass());
     }
     getNextClass(classJson, currentClass) {
         AppStorage._load("startDate", res => {
@@ -81,24 +74,43 @@ export default class NextClass extends Component {
         }
     }
     render() {
-        if (JSON.stringify(classJson) == "[]")
-            return (
-                <View>
-                    <Text
-                        style={{
-                            color: "#555",
-                            fontSize: 18,
-                            paddingBottom: 15
-                        }}
-                    >
-                        接下来
-                    </Text>
+        if (!this.props.getClass) {
+            if (!Global.isOnline) {
+                return (
                     <View>
-                        <Text style={styles.text}>请先登录哟~</Text>
+                        <Text
+                            style={{
+                                color: "#555",
+                                fontSize: 18,
+                                paddingBottom: 15
+                            }}
+                        >
+                            接下来
+                        </Text>
+                        <View>
+                            <Text style={styles.text}>请先登录哟~</Text>
+                        </View>
                     </View>
-                </View>
-            );
-        else
+                );
+            } else {
+                return (
+                    <View>
+                        <Text
+                            style={{
+                                color: "#555",
+                                fontSize: 18,
+                                paddingBottom: 15
+                            }}
+                        >
+                            接下来
+                        </Text>
+                        <View>
+                            <Text style={styles.text}>{"玩命加载中 >.<"}</Text>
+                        </View>
+                    </View>
+                );
+            }
+        } else {
             return this.state.getClass ? (
                 <View>
                     <Text
@@ -150,6 +162,7 @@ export default class NextClass extends Component {
                     </View>
                 </View>
             );
+        }
     }
 }
 const styles = StyleSheet.create({

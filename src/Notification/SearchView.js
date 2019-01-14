@@ -8,7 +8,7 @@ import {
     FooterRefreshingComponent,
     FooterEmptyDataComponent,
     FooterNoMoreDataComponent
-} from "../RefreshListComponent";
+} from "../Components/RefreshListComponent";
 
 const { width, height } = Dimensions.get("window");
 

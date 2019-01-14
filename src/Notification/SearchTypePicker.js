@@ -77,6 +77,7 @@ export default class SearchTypePicker extends BaseDialog {
                     }}
                 >
                     <TouchableOpacity
+                        activeOpacity={0.75}
                         onPress={() => {
                             this.dismiss(
                                 () =>
@@ -104,6 +105,7 @@ export default class SearchTypePicker extends BaseDialog {
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
+                        activeOpacity={0.75}
                         onPress={() => {
                             this.dismiss(
                                 () =>

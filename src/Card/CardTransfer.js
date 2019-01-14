@@ -4,15 +4,21 @@ import {
     View,
     Text,
     Dimensions,
-    FlatList,
     ActivityIndicator,
-    Alert
+    ScrollView,
+    Alert,
+    Keyboard
 } from "react-native";
 import { Input, Button } from "react-native-elements";
 import cheerio from "cheerio";
 import Global from "../Global";
 import Base64 from "base-64";
 import Icon from "react-native-vector-icons/FontAwesome";
+import Dialog, {
+    DialogTitle,
+    DialogButton,
+    DialogContent
+} from "react-native-popup-dialog";
 
 const { width, height } = Dimensions.get("window");
 export default class CardTransfer extends Component {
@@ -20,10 +26,18 @@ export default class CardTransfer extends Component {
         super(props);
         this.handleAmountChange = this.handleAmountChange.bind(this);
         this.buttonTapped = this.buttonTapped.bind(this);
-        this.state = { amount: "0.00", showLoading: false };
+        this.state = {
+            alertVisible: false,
+            alertTitle: "",
+            alertText: "",
+            confirmVisible: false,
+            confirmTitle: "",
+            confirmText: "",
+            amount: "0.00",
+            showLoading: false
+        };
     }
 
-    componentDidMount() {}
     handleAmountChange(amount) {
         amount = parseFloat(amount);
         this.setState({
@@ -32,58 +46,55 @@ export default class CardTransfer extends Component {
     }
 
     buttonTapped() {
+        Keyboard.dismiss();
         var pattern = /^[0-9]+([.]\d{1,2})?$/;
         if (!pattern.test(this.state.amount)) {
-            Alert.alert("提示", "请输入正确的金额");
+            this.setState({
+                alertTitle: "提示",
+                alertText: "请输入正确的金额",
+                alertVisible: true
+            });
             return false;
         }
         if (parseFloat(this.state.amount) < 0.01) {
-            Alert.alert("提示", "金额不能为0");
+            this.setState({
+                alertTitle: "提示",
+                alertText: "金额不能为0",
+                alertVisible: true
+            });
             return false;
         }
-        Alert.alert(
-            "提示",
-            "确定要转入校园卡 " + this.state.amount + " 元吗？",
-            [
-                {
-                    text: "我再想想",
-                    style: "cancel",
-                    onPress: () => {
-                        return false;
-                    }
-                },
-                {
-                    text: "确定",
-                    onPress: () => {
-                        this.setState({ showLoading: true });
-                        this.transfer(
-                            Global.card.cookie,
-                            this.state.amount,
-                            Global.card.password,
-                            res => {
-                                if (res.success == true) {
-                                    Alert.alert(
-                                        "转账成功",
-                                        "操作成功，成功转入 " +
-                                            this.state.amount +
-                                            " 元，欢迎下次使用",
-                                        [{ text: "确定" }],
-                                        { cancelable: false }
-                                    );
-                                } else {
-                                    Alert.alert(
-                                        "转账失败",
-                                        "失败啦，" + res.msg,
-                                        [{ text: "确定" }],
-                                        { cancelable: false }
-                                    );
-                                }
-                                this.setState({ showLoading: false });
-                            }
-                        );
-                    }
+        this.setState({
+            confirmTitle: "提示",
+            confirmText: "确定要转入校园卡 " + this.state.amount + " 元吗？",
+            confirmVisible: true
+        });
+    }
+
+    transferMain() {
+        this.transfer(
+            Global.card.cookie,
+            this.state.amount,
+            Global.card.password,
+            res => {
+                if (res.success == true) {
+                    this.setState({
+                        alertTitle: "转账成功",
+                        alertText:
+                            "操作成功，成功转入 " +
+                            this.state.amount +
+                            " 元，欢迎下次使用",
+                        alertVisible: true
+                    });
+                } else {
+                    this.setState({
+                        alertTitle: "转账失败",
+                        alertText: "失败啦，" + res.msg,
+                        alertVisible: true
+                    });
                 }
-            ]
+                this.setState({ showLoading: false });
+            }
         );
     }
 
@@ -120,13 +131,14 @@ export default class CardTransfer extends Component {
 
     render() {
         return (
-            <View
+            <ScrollView
                 style={{
                     flex: 1,
                     borderRightWidth: 1,
                     borderRightColor: "#ccc",
                     backgroundColor: "#fff"
                 }}
+                keyboardShouldPersistTaps="handled"
             >
                 <View
                     style={{
@@ -174,7 +186,122 @@ export default class CardTransfer extends Component {
                         onPress={this.buttonTapped}
                     />
                 </View>
-            </View>
+                <Dialog
+                    visible={this.state.confirmVisible}
+                    dialogTitle={
+                        <DialogTitle
+                            title={this.state.confirmTitle}
+                            style={{
+                                backgroundColor: "#ffffff"
+                            }}
+                            titleStyle={{
+                                color: "#6a6a6a",
+                                fontWeight: 500
+                            }}
+                        />
+                    }
+                    actions={[
+                        <DialogButton
+                            text="我再想想"
+                            textStyle={{
+                                color: "#6a6a6a",
+                                fontSize: 14,
+                                fontWeight: "normal"
+                            }}
+                            onPress={() => {
+                                this.setState({ confirmVisible: false });
+                            }}
+                        />,
+                        <DialogButton
+                            text="确定"
+                            textStyle={{
+                                color: Global.settings.theme.backgroundColor,
+                                fontSize: 14,
+                                fontWeight: "normal"
+                            }}
+                            onPress={() => {
+                                this.setState({
+                                    showLoading: true,
+                                    confirmVisible: false
+                                });
+                                this.transferMain();
+                            }}
+                        />
+                    ]}
+                    width={0.75}
+                    height={0.45 * (width / height)}
+                    containerStyle={styles.dialog}
+                >
+                    <DialogContent style={{ flex: 1 }}>
+                        <View style={{ flex: 1 }}>
+                            <View
+                                style={{
+                                    paddingVertical: 10,
+                                    alignItems: "center"
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        paddingVertical: 5
+                                    }}
+                                >
+                                    {this.state.confirmText}
+                                </Text>
+                            </View>
+                        </View>
+                    </DialogContent>
+                </Dialog>
+                <Dialog
+                    visible={this.state.alertVisible}
+                    dialogTitle={
+                        <DialogTitle
+                            title={this.state.alertTitle}
+                            style={{
+                                backgroundColor: "#ffffff"
+                            }}
+                            titleStyle={{
+                                color: "#6a6a6a",
+                                fontWeight: 500
+                            }}
+                        />
+                    }
+                    actions={[
+                        <DialogButton
+                            text="知道啦"
+                            textStyle={{
+                                color: Global.settings.theme.backgroundColor,
+                                fontSize: 14,
+                                fontWeight: "normal"
+                            }}
+                            onPress={() => {
+                                this.setState({ alertVisible: false });
+                            }}
+                        />
+                    ]}
+                    width={0.75}
+                    height={0.45 * (width / height)}
+                    containerStyle={styles.dialog}
+                >
+                    <DialogContent style={{ flex: 1 }}>
+                        <View style={{ flex: 1 }}>
+                            <View
+                                style={{
+                                    paddingVertical: 10,
+                                    alignItems: "center"
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        paddingVertical: 5
+                                    }}
+                                >
+                                    {this.state.alertText}
+                                </Text>
+                            </View>
+                        </View>
+                    </DialogContent>
+                </Dialog>
+            </ScrollView>
         );
     }
 }

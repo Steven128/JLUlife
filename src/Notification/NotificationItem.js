@@ -31,6 +31,7 @@ export default class NotificationItem extends Component {
         title.push(<Text style={styles.title}>{this.props.title}</Text>);
         return Platform.OS === "ios" ? (
             <TouchableOpacity
+                activeOpacity={0.75}
                 onPress={() => {
                     this.props.navigation.navigate("Item", {
                         title: this.props.title,

@@ -4,11 +4,8 @@
 import React, { Component } from "react";
 import {
     View,
-    Text,
     Dimensions,
     StyleSheet,
-    TouchableNativeFeedback,
-    Alert,
     StatusBar,
     Platform,
     SafeAreaView
@@ -16,7 +13,7 @@ import {
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../../src/Global";
-import ScoreStatItemAndroid from "../../src/Score/ScoreStatItem.android";
+import ScoreStatItem from "../../src/Score/ScoreStatItem";
 
 const { width, height } = Dimensions.get("window");
 
@@ -79,22 +76,22 @@ export default class ScoreStatPage extends Component {
                         }}
                     />
                     <View style={styles.container}>
-                        <ScoreStatItemAndroid
+                        <ScoreStatItem
                             navigation={this.props.navigation}
                             title="学分绩点统计"
                             target="ScoreGpoint"
                         />
-                        <ScoreStatItemAndroid
+                        <ScoreStatItem
                             navigation={this.props.navigation}
                             title="历年成绩"
                             target="EachYear"
                         />
-                        <ScoreStatItemAndroid
+                        <ScoreStatItem
                             navigation={this.props.navigation}
                             title="历次课程成绩"
                             target="EachLesson"
                         />
-                        <ScoreStatItemAndroid
+                        <ScoreStatItem
                             navigation={this.props.navigation}
                             title="未通过成绩"
                             target="NotPassed"

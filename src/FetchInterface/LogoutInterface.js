@@ -46,6 +46,7 @@ function logout(callback) {
             AppStorage._remove("scoreJson");
         }
     });
+    AppStorage._remove("cardLoginInfo");
     callback({ message: "success" });
 }
 

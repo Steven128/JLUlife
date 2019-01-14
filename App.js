@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dimensions, ToastAndroid } from "react-native";
+import { Dimensions, Platform } from "react-native";
 import { createStackNavigator, createDrawerNavigator } from "react-navigation";
 import AIcon from "react-native-vector-icons/AntDesign";
 import md5, { hex_md5 } from "react-native-md5";
@@ -9,6 +9,8 @@ import Global from "./src/Global";
 import HomePage from "./App/HomePage";
 import SplashTipsPage from "./App/Home/SplashTipsPage";
 import TablePage from "./App/TablePage";
+import AddClassPage from "./App/Class/AddClassPage";
+import EditClassPage from "./App/Class/EditClassPage";
 import NotificationPage from "./App/NotificationPage";
 import NotificationDetailPage from "./App/Notification/NotificationDetailPage";
 import NotificationSearchPage from "./App/Notification/NotificationSearchPage";
@@ -24,13 +26,18 @@ import LibraryPage from "./App/Query/LibraryPage";
 import CardPage from "./App/CardPage";
 import CardLoginPage from "./App/Card/CardLoginPage";
 import SettingsPage from "./App/SettingsPage";
+import SettingsPageIOS from "./App/SettingsPage.ios";
 import ThemeSettingsPage from "./App/Settings/ThemeSettingsPage";
 import ClassSettingsPage from "./App/Settings/ClassSettingsPage";
 import AboutPage from "./App/Settings/AboutPage";
 import PrivacyPage from "./App/Settings/PrivacyPage";
+import DonatePage from "./App/Settings/DonatePage";
+import AdditionsPage from "./App/Settings/AdditionsPage";
+import WeatherSettingsPage from "./App/Settings/WeatherSettingsPage";
 import FeedBackPage from "./App/Settings/FeedBackPage";
 import LoginPage from "./App/LoginPage";
 import Sidebar from "./App/Sidebar";
+import SidebarIOS from "./App/Sidebar.ios";
 
 const { width, height } = Dimensions.get("window");
 
@@ -52,6 +59,12 @@ const HomeStack = createStackNavigator({
         navigationOptions: {
             header: null
         }
+    },
+    WeatherSettings: {
+        screen: WeatherSettingsPage,
+        navigationOptions: {
+            header: null
+        }
     }
 });
 const TableStack = createStackNavigator({
@@ -63,6 +76,24 @@ const TableStack = createStackNavigator({
     },
     Login: {
         screen: LoginPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    AddClass: {
+        screen: AddClassPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    EditClass: {
+        screen: EditClassPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    ClassSettings: {
+        screen: ClassSettingsPage,
         navigationOptions: {
             header: null
         }
@@ -175,7 +206,7 @@ const CardStack = createStackNavigator({
 
 const SettingsStack = createStackNavigator({
     Settings: {
-        screen: SettingsPage,
+        screen: Platform.OS == "ios" ? SettingsPageIOS : SettingsPage,
         navigationOptions: {
             header: null
         }
@@ -200,6 +231,24 @@ const SettingsStack = createStackNavigator({
     },
     Privacy: {
         screen: PrivacyPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    Donate: {
+        screen: DonatePage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    Additions: {
+        screen: AdditionsPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    WeatherSettings: {
+        screen: WeatherSettingsPage,
         navigationOptions: {
             header: null
         }
@@ -311,7 +360,11 @@ const Drawer = createDrawerNavigator(
         drawerWidth: width * 0.75, // 展示的宽度
         drawerPosition: "left", // 抽屉在左边还是右边
         contentComponent: props => {
-            return <Sidebar items={props} />;
+            return Platform.OS == "ios" ? (
+                <SidebarIOS items={props} />
+            ) : (
+                <Sidebar items={props} />
+            );
         },
         contentOptions: {
             items: [],

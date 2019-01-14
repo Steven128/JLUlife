@@ -2,6 +2,7 @@ import md5, { hex_md5 } from "react-native-md5";
 import Global from "../Global";
 import AppStorage from "../AppStorage";
 import cheerio from "cheerio";
+import ClassInterface from "./ClassInterface";
 
 var setCookieURL = "http://10.60.65.8/ntms/userLogin.jsp";
 var loginURL = "http://10.60.65.8/ntms/j_spring_security_check";
@@ -144,6 +145,9 @@ function getStuInfo(j_username, cookie, callback) {
     })
         .then(response => response.json())
         .then(responseJson => {
+            var flag = false;
+            if (Global.defRes.teachingTerm != responseJson.defRes.teachingTerm)
+                flag = true;
             Global.defRes.adcId = responseJson.defRes.adcId;
             Global.defRes.campus = responseJson.defRes.campus;
             Global.defRes.department = responseJson.defRes.department;
@@ -164,7 +168,8 @@ function getStuInfo(j_username, cookie, callback) {
                 j_username,
                 cookie,
                 responseJson.defRes.teachingTerm,
-                callback
+                callback,
+                flag
             );
         })
         .catch(error => {
@@ -182,7 +187,7 @@ function getStuInfo(j_username, cookie, callback) {
  * @param {String} teachingTerm 学期
  * @param {Function} callback 回调
  */
-function getTermInfo(j_username, cookie, teachingTerm, callback) {
+function getTermInfo(j_username, cookie, teachingTerm, callback, termChanged) {
     fetch(getResURL, {
         method: "POST",
         headers: {
@@ -218,7 +223,7 @@ function getTermInfo(j_username, cookie, teachingTerm, callback) {
             AppStorage._save("startDate", Global.startDate);
             AppStorage._save("weekLength", Global.weekLength);
             Global.isOnline = true;
-            callback({ message: "success" });
+            callback({ message: "success", termChanged: termChanged });
         })
         .catch(error => {
             if (__DEV__) {

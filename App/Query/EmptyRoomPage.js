@@ -6,23 +6,26 @@ import {
     View,
     Text,
     Dimensions,
-    WebView,
     StyleSheet,
-    Linking,
     TouchableOpacity,
+    TouchableNativeFeedback,
     ActivityIndicator,
     FlatList,
     Alert,
     StatusBar,
     Platform,
-    SafeAreaView
+    SafeAreaView,
+    ToastAndroid
 } from "react-native";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Dialog, {
     ScaleAnimation,
+    DialogTitle,
+    DialogButton,
     DialogContent
 } from "react-native-popup-dialog";
+import Toast from "react-native-easy-toast";
 import Global from "../../src/Global";
 import { DatePicker } from "react-native-pickers";
 import EmptyRoomPicker from "../../src/Query/EmptyRoomPicker";
@@ -37,6 +40,8 @@ export default class EmptyRoomPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            alertVisible: false,
+            alertText: "",
             unit: ["年", "月", "日"],
             date: "",
             campusNameList: [],
@@ -56,17 +61,10 @@ export default class EmptyRoomPage extends Component {
 
     componentDidMount() {
         if (!Global.isOnline) {
-            Alert.alert(
-                "提示",
-                "登录后才能查空教室哟~",
-                [
-                    {
-                        text: "知道啦",
-                        onPress: () => this.props.navigation.navigate("Main")
-                    }
-                ],
-                { cancelable: false }
-            );
+            this.setState({
+                alertText: "登录后才能查空教室哟~",
+                alertVisible: true
+            });
         }
         var campusNameList = [];
         for (var i in campus) {
@@ -101,27 +99,35 @@ export default class EmptyRoomPage extends Component {
     }
 
     renderButton(text, callback) {
-        return (
-            <TouchableOpacity
-                onPress={callback.bind(this)}
-                style={{ padding: 15, paddingBottom: 0 }}
-            >
-                <View
-                    style={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderColor: "#ccc",
-                        borderWidth: 1,
-                        paddingVertical: 10,
-                        borderRadius: 3,
-                        flexDirection: "row",
-                        backgroundColor: "#fff"
-                    }}
+        return Platform.OS == "ios" ? (
+            <View style={styles.buttomContainer}>
+                <TouchableOpacity
+                    onPress={callback.bind(this)}
+                    activeOpacity={0.75}
                 >
-                    <Text style={{ flex: 8, paddingLeft: 15 }}>{text}</Text>
-                    <EIcon style={{ flex: 1 }} size={18} name="chevron-down" />
-                </View>
-            </TouchableOpacity>
+                    <View style={styles.button}>
+                        <Text style={{ flex: 8, paddingLeft: 15 }}>{text}</Text>
+                        <EIcon
+                            style={{ flex: 1 }}
+                            size={18}
+                            name="chevron-down"
+                        />
+                    </View>
+                </TouchableOpacity>
+            </View>
+        ) : (
+            <View style={styles.buttomContainer}>
+                <TouchableNativeFeedback onPress={callback.bind(this)}>
+                    <View style={styles.button}>
+                        <Text style={{ flex: 8, paddingLeft: 15 }}>{text}</Text>
+                        <EIcon
+                            style={{ flex: 1 }}
+                            size={18}
+                            name="chevron-down"
+                        />
+                    </View>
+                </TouchableNativeFeedback>
+            </View>
         );
     }
 
@@ -146,6 +152,7 @@ export default class EmptyRoomPage extends Component {
                     barStyle="light-content"
                     translucent={false}
                 />
+                <Toast ref="toast" />
                 <View style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
                     <Header
                         containerStyle={headerStyle}
@@ -174,7 +181,7 @@ export default class EmptyRoomPage extends Component {
                     />
                     {Global.isOnline || 1 ? (
                         <View style={{ flex: 1 }}>
-                            <View style={{ flex: 1 }}>
+                            <View style={{ flex: 1, paddingVertical: 10 }}>
                                 {this.renderButton(
                                     this.state.campusNameList[
                                         this.state.campusSelected
@@ -204,118 +211,6 @@ export default class EmptyRoomPage extends Component {
                                         this.ClassPicker.show();
                                     }
                                 )}
-                                <EmptyRoomPicker
-                                    list={this.state.campusNameList}
-                                    ref={ref => (this.EmptyRoomPicker1 = ref)}
-                                    itemTextColor="#808080"
-                                    itemSelectedColor={
-                                        Global.settings.theme.backgroundColor
-                                    }
-                                    onPickerCancel={() => {}}
-                                    onPickerConfirm={value => {
-                                        var campusSelected = 0;
-                                        var campusId = "";
-                                        while (campus[campusSelected]) {
-                                            if (
-                                                campus[campusSelected].name ==
-                                                value
-                                            ) {
-                                                campusId =
-                                                    campus[campusSelected]
-                                                        .value;
-                                                break;
-                                            }
-                                            campusSelected++;
-                                        }
-                                        this.setState({
-                                            campusSelected: campusSelected
-                                        });
-                                        this.changeCampus(campusId);
-                                    }}
-                                    itemHeight={50}
-                                />
-                                <EmptyRoomPicker
-                                    list={this.state.buildingNameList}
-                                    ref={ref => (this.EmptyRoomPicker2 = ref)}
-                                    itemTextColor="#808080"
-                                    itemSelectedColor={
-                                        Global.settings.theme.backgroundColor
-                                    }
-                                    onPickerCancel={() => {}}
-                                    onPickerConfirm={value => {
-                                        var buildingSelected = 0;
-                                        var buildingId = "";
-                                        var campusId = this.state.campusId;
-                                        campusId = parseInt(
-                                            campusId.substring(3, 4)
-                                        );
-                                        while (
-                                            building[campusId - 1][
-                                                buildingSelected
-                                            ]
-                                        ) {
-                                            if (
-                                                building[campusId - 1][
-                                                    buildingSelected
-                                                ].name == value
-                                            ) {
-                                                buildingId =
-                                                    building[campusId - 1][
-                                                        buildingSelected
-                                                    ].value;
-
-                                                break;
-                                            }
-                                            buildingSelected++;
-                                        }
-                                        this.setState({
-                                            buildingId: buildingId,
-                                            buildingSelected: buildingSelected
-                                        });
-                                    }}
-                                    itemHeight={50}
-                                />
-                                <DatePicker
-                                    unit={this.state.unit}
-                                    HH={false}
-                                    mm={false}
-                                    ss={false}
-                                    itemTextColor="#808080"
-                                    itemSelectedColor={
-                                        Global.settings.theme.backgroundColor
-                                    }
-                                    onPickerConfirm={value => {
-                                        var year = value[0].substring(0, 4);
-                                        var month = "";
-                                        if (value[1].length == 2) {
-                                            month =
-                                                "0" + value[1].substring(0, 1);
-                                        } else {
-                                            month = value[1].substring(0, 2);
-                                        }
-                                        var day = value[2].substring(0, 2);
-                                        this.setState({
-                                            date: year + "-" + month + "-" + day
-                                        });
-                                    }}
-                                    onPickerCancel={() => {}}
-                                    ref={ref => (this.DatePicker = ref)}
-                                />
-                                <ClassPicker
-                                    ref={ref => (this.ClassPicker = ref)}
-                                    itemTextColor="#808080"
-                                    itemSelectedColor={
-                                        Global.settings.theme.backgroundColor
-                                    }
-                                    onPickerCancel={() => {}}
-                                    onPickerConfirm={value => {
-                                        this.setState({
-                                            classBegin: value.begin,
-                                            classEnd: value.end
-                                        });
-                                    }}
-                                    itemHeight={50}
-                                />
                                 <View
                                     style={{
                                         paddingHorizontal: 15,
@@ -368,6 +263,7 @@ export default class EmptyRoomPage extends Component {
                                                     )}
                                                     ListHeaderComponent={
                                                         <View
+                                                            key="listTitle"
                                                             style={styles.row}
                                                         >
                                                             <View
@@ -404,6 +300,7 @@ export default class EmptyRoomPage extends Component {
                                                     }
                                                     renderItem={({ item }) => (
                                                         <View
+                                                            key={item.name}
                                                             style={styles.row}
                                                         >
                                                             <View
@@ -533,6 +430,147 @@ export default class EmptyRoomPage extends Component {
                         </View>
                     )}
                 </View>
+                <EmptyRoomPicker
+                    list={this.state.campusNameList}
+                    ref={ref => (this.EmptyRoomPicker1 = ref)}
+                    itemTextColor="#808080"
+                    itemSelectedColor={Global.settings.theme.backgroundColor}
+                    onPickerCancel={() => {}}
+                    onPickerConfirm={value => {
+                        var campusSelected = 0;
+                        var campusId = "";
+                        while (campus[campusSelected]) {
+                            if (campus[campusSelected].name == value) {
+                                campusId = campus[campusSelected].value;
+                                break;
+                            }
+                            campusSelected++;
+                        }
+                        this.setState({
+                            campusSelected: campusSelected
+                        });
+                        this.changeCampus(campusId);
+                    }}
+                    itemHeight={50}
+                />
+                <EmptyRoomPicker
+                    list={this.state.buildingNameList}
+                    ref={ref => (this.EmptyRoomPicker2 = ref)}
+                    itemTextColor="#808080"
+                    itemSelectedColor={Global.settings.theme.backgroundColor}
+                    onPickerCancel={() => {}}
+                    onPickerConfirm={value => {
+                        var buildingSelected = 0;
+                        var buildingId = "";
+                        var campusId = this.state.campusId;
+                        campusId = parseInt(campusId.substring(3, 4));
+                        while (building[campusId - 1][buildingSelected]) {
+                            if (
+                                building[campusId - 1][buildingSelected].name ==
+                                value
+                            ) {
+                                buildingId =
+                                    building[campusId - 1][buildingSelected]
+                                        .value;
+
+                                break;
+                            }
+                            buildingSelected++;
+                        }
+                        this.setState({
+                            buildingId: buildingId,
+                            buildingSelected: buildingSelected
+                        });
+                    }}
+                    itemHeight={50}
+                />
+                <DatePicker
+                    unit={this.state.unit}
+                    HH={false}
+                    mm={false}
+                    ss={false}
+                    itemTextColor="#808080"
+                    itemSelectedColor={Global.settings.theme.backgroundColor}
+                    onPickerConfirm={value => {
+                        var year = value[0].substring(0, 4);
+                        var month = "";
+                        if (value[1].length == 2) {
+                            month = "0" + value[1].substring(0, 1);
+                        } else {
+                            month = value[1].substring(0, 2);
+                        }
+                        var day = value[2].substring(0, 2);
+                        this.setState({
+                            date: year + "-" + month + "-" + day
+                        });
+                    }}
+                    onPickerCancel={() => {}}
+                    ref={ref => (this.DatePicker = ref)}
+                />
+                <ClassPicker
+                    ref={ref => (this.ClassPicker = ref)}
+                    itemTextColor="#808080"
+                    itemSelectedColor={Global.settings.theme.backgroundColor}
+                    onPickerCancel={() => {}}
+                    onPickerConfirm={value => {
+                        this.setState({
+                            classBegin: value.begin,
+                            classEnd: value.end
+                        });
+                    }}
+                    itemHeight={50}
+                />
+                <Dialog
+                    visible={this.state.alertVisible}
+                    dialogTitle={
+                        <DialogTitle
+                            title="提示"
+                            style={{
+                                backgroundColor: "#ffffff"
+                            }}
+                            titleStyle={{
+                                color: "#6a6a6a",
+                                fontWeight: 500
+                            }}
+                        />
+                    }
+                    actions={[
+                        <DialogButton
+                            text="知道啦"
+                            textStyle={{
+                                color: Global.settings.theme.backgroundColor,
+                                fontSize: 14,
+                                fontWeight: "normal"
+                            }}
+                            onPress={() => {
+                                this.setState({ alertVisible: false });
+                                this.props.navigation.navigate("Main");
+                            }}
+                        />
+                    ]}
+                    width={0.75}
+                    height={0.45 * (width / height)}
+                    containerStyle={styles.dialog}
+                >
+                    <DialogContent style={{ flex: 1 }}>
+                        <View style={{ flex: 1 }}>
+                            <View
+                                style={{
+                                    paddingVertical: 10,
+                                    alignItems: "center"
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        paddingVertical: 5
+                                    }}
+                                >
+                                    {this.state.alertText}
+                                </Text>
+                            </View>
+                        </View>
+                    </DialogContent>
+                </Dialog>
             </SafeAreaView>
         );
     }
@@ -603,12 +641,33 @@ export default class EmptyRoomPage extends Component {
                     console.error(error);
                     console.log(responseJson);
                 }
+                Global.isOnline = false;
+                Platform.OS === "ios"
+                    ? this.refs.toast.show("登录后才能查询空教室~", 2000)
+                    : ToastAndroid.show(
+                          "登录后才能查询空教室~",
+                          ToastAndroid.SHORT
+                      );
             });
     }
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1
+    },
+    buttomContainer: {
+        paddingHorizontal: 15,
+        paddingVertical: 5
+    },
+    button: {
+        justifyContent: "center",
+        alignItems: "center",
+        borderColor: "#cecece",
+        borderWidth: 1,
+        paddingVertical: 10,
+        borderRadius: 3,
+        flexDirection: "row",
+        backgroundColor: "#fff"
     },
     row: {
         flexDirection: "row",
