@@ -28,6 +28,7 @@ public class MainActivity extends ReactActivity {
         // Show the js-controlled splash screen
         SplashScreen.show(this, getReactInstanceManager()); // **********需要添加的************
         RNBuglyModule.init(this, "be7918c35a", true);
+
         super.onCreate(savedInstanceState);
     }
 }

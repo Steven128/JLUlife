@@ -28,6 +28,9 @@
 		<item name="windowNoTitle">
 			true
 		</item>
+		<item name="android:windowLightStatusBar">
+			true
+		</item>
 	</style>
 	<style name="App.Theme.Launch" parent="Base.App.Theme">
 		<item name="android:statusBarColor">
@@ -44,6 +47,9 @@
 		</item>
 		<item name="android:windowContentOverlay">
 			@null
+		</item>
+		<item name="android:windowLightStatusBar">
+			true
 		</item>
 	</style>
 </resources>

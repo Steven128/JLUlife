@@ -19,3 +19,11 @@
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
 -keep class android.support.**{*;}
+
+-dontwarn com.squareup.**
+-dontwarn okio.**
+-keep public class org.codehaus.* { *; }
+-keep public class java.nio.* { *; }
+
+-dontwarn interfaces.heweather.com.interfacesmodule.**
+-keep class interfaces.heweather.com.interfacesmodule.** { *;}
