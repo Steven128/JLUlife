@@ -10,8 +10,7 @@ import {
 } from "react-native";
 import Global from "../Global";
 import { TopNav, LeftNav } from "./NavView";
-import ClassItemAndroid from "./ClassItem.android";
-import ClassItemIOS from "./ClassItem.ios";
+import ClassItem from "./ClassItem";
 
 const { width, height } = Dimensions.get("window");
 
@@ -83,70 +82,44 @@ export default class ClassTable extends Component {
                         weekOddEven = "(单周)";
                     else if (dayList[j].schedule.weekOddEven == "E")
                         weekOddEven = "(双周)";
+                    var innerText =
+                        dayList[j].schedule.classroom == ""
+                            ? ""
+                            : "@" + dayList[j].schedule.classroom;
+                    innerText = dayList[j].lessonName + innerText + weekOddEven;
+
                     dayItem.push(
-                        Platform.OS == "ios" ? (
-                            <ClassItemIOS
-                                color={dayList[j].color}
-                                length={length}
-                                itemHeight={this.props.settings.itemHeight}
-                                fontSize={this.props.settings.fontSize}
-                                opacity={this.props.settings.itemOpacity}
-                                innerText={
-                                    dayList[j].lessonName +
-                                    "@" +
-                                    dayList[j].schedule.classroom +
-                                    weekOddEven
-                                }
-                                lessonName={dayList[j].lessonName}
-                                classroom={dayList[j].schedule.classroom}
-                                beginWeek={dayList[j].schedule.beginWeek}
-                                endWeek={dayList[j].schedule.endWeek}
-                                dayOfWeek={dayList[j].schedule.dayOfWeek}
-                                time={dayList[j].schedule.time}
-                                teachers={dayList[j].teachers}
-                                weekOddEven={dayList[j].schedule.weekOddEven}
-                            />
-                        ) : (
-                            <ClassItemAndroid
-                                color={dayList[j].color}
-                                length={length}
-                                itemHeight={this.props.settings.itemHeight}
-                                fontSize={this.props.settings.fontSize}
-                                opacity={this.props.settings.itemOpacity}
-                                innerText={
-                                    dayList[j].lessonName +
-                                    "@" +
-                                    dayList[j].schedule.classroom +
-                                    weekOddEven
-                                }
-                                lessonName={dayList[j].lessonName}
-                                classroom={dayList[j].schedule.classroom}
-                                beginWeek={dayList[j].schedule.beginWeek}
-                                endWeek={dayList[j].schedule.endWeek}
-                                dayOfWeek={dayList[j].schedule.dayOfWeek}
-                                time={dayList[j].schedule.time}
-                                teachers={dayList[j].teachers}
-                                weekOddEven={dayList[j].schedule.weekOddEven}
-                            />
-                        )
+                        <ClassItem
+                            navigation={this.props.navigation}
+                            color={dayList[j].color}
+                            length={length}
+                            itemHeight={this.props.settings.itemHeight}
+                            fontSize={this.props.settings.fontSize}
+                            opacity={this.props.settings.itemOpacity}
+                            innerText={innerText}
+                            lessonName={dayList[j].lessonName}
+                            classroom={dayList[j].schedule.classroom}
+                            beginWeek={dayList[j].schedule.beginWeek}
+                            endWeek={dayList[j].schedule.endWeek}
+                            dayOfWeek={dayList[j].schedule.dayOfWeek}
+                            time={dayList[j].schedule.time}
+                            teachers={dayList[j].teachers}
+                            weekOddEven={dayList[j].schedule.weekOddEven}
+                            handleDeleteClass={this.props.handleDeleteClass}
+                            currentWeek={this.props.week}
+                        />
                     );
                 } else {
                     dayItem.push(
-                        Platform.OS == "ios" ? (
-                            <ClassItemIOS
-                                blank
-                                length={length}
-                                itemHeight={this.props.settings.itemHeight}
-                                fontSize={this.props.settings.fontSize}
-                            />
-                        ) : (
-                            <ClassItemAndroid
-                                blank
-                                length={length}
-                                itemHeight={this.props.settings.itemHeight}
-                                fontSize={this.props.settings.fontSize}
-                            />
-                        )
+                        <ClassItem
+                            navigation={this.props.navigation}
+                            blank
+                            length={length}
+                            itemHeight={this.props.settings.itemHeight}
+                            fontSize={this.props.settings.fontSize}
+                            handleDeleteClass={this.props.handleDeleteClass}
+                            currentWeek={this.props.week}
+                        />
                     );
                 }
             }
@@ -154,59 +127,54 @@ export default class ClassTable extends Component {
         }
 
         return (
-            <View style={{ flex: 1, backgroundColor: "fff" }}>
-                <ImageBackground
-                    source={{ uri: this.state.backgroundImage }}
-                    style={{ width: "100%", height: "100%" }}
+            <View style={{ flex: 1 }}>
+                <View
+                    style={{
+                        opacity: this.props.settings.backgroundOpacity,
+                        position: "absolute",
+                        backgroundColor: "#ffffff",
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        left: 0
+                    }}
+                />
+                <TopNav
+                    weekDayList={weekDayList}
+                    color={this.props.settings.navColor}
+                />
+                <ScrollView
+                    style={{ flex: 1 }}
+                    contentContainerStyle={styles.contentContainer}
+                    onScrollBeginDrag={() => {
+                        this.props.onScroll();
+                    }}
                 >
                     <View
                         style={{
-                            backgroundColor: "#fff",
-                            opacity: this.props.settings.backgroundOpacity,
-                            position: "absolute",
-                            top: 0,
-                            right: 0,
-                            bottom: 0,
-                            left: 0
-                        }}
-                    />
-                    <TopNav
-                        weekDayList={weekDayList}
-                        color={this.props.settings.navColor}
-                    />
-                    <ScrollView
-                        style={{ flex: 1 }}
-                        contentContainerStyle={styles.contentContainer}
-                        onScrollBeginDrag={() => {
-                            this.props.onScroll();
+                            flex: 1,
+                            flexDirection: "row",
+                            height:
+                                this.props.classLength *
+                                this.props.settings.itemHeight
                         }}
                     >
+                        <LeftNav
+                            itemHeight={this.props.settings.itemHeight}
+                            classLength={this.props.settings.classLength}
+                            color={this.props.settings.navColor}
+                            opacity={this.props.settings.navOpacity}
+                        />
                         <View
                             style={{
-                                flex: 1,
-                                flexDirection: "row",
-                                height:
-                                    this.props.classLength *
-                                    this.props.settings.itemHeight
+                                flex: 7,
+                                flexDirection: "row"
                             }}
                         >
-                            <LeftNav
-                                itemHeight={this.props.settings.itemHeight}
-                                classLength={this.props.settings.classLength}
-                                color={this.props.settings.navColor}
-                                opacity={this.props.settings.navOpacity}
-                            />
-                            <View
-                                style={{
-                                    flex: 7,
-                                    flexDirection: "row"
-                                }}
-                            >
-                                {items}
-                            </View>
+                            {items}
                         </View>
-                    </ScrollView>
-                </ImageBackground>
+                    </View>
+                </ScrollView>
             </View>
         );
     }

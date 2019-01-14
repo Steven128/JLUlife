@@ -38,6 +38,7 @@ export default class ClassItem extends Component {
     render() {
         return Platform.OS === "ios" ? (
             <TouchableOpacity
+                activeOpacity={0.75}
                 onPress={() => {
                     this.setState({ dialogVisible: true });
                 }}

@@ -93,7 +93,8 @@ export default class WeekPickerAndroid extends Component {
                 style={{
                     height: this.state.pickerHeight,
                     borderBottomWidth: 1,
-                    borderBottomColor: Global.settings.theme.backgroundColor
+                    borderBottomColor: Global.settings.theme.backgroundColor,
+                    backgroundColor: "#ffffff"
                 }}
             >
                 {this.state.weekList.length == 0 ? null : (

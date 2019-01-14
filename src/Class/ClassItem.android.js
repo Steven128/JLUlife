@@ -6,16 +6,21 @@ import {
     View,
     Dimensions,
     ScrollView,
-    PixelRatio
+    PixelRatio,
+    ToastAndroid,
+    Vibration
 } from "react-native";
+import { Button } from "react-native-elements";
 import Dialog, {
     ScaleAnimation,
     DialogTitle,
     DialogContent
 } from "react-native-popup-dialog";
 import Global from "../Global";
+import AIcon from "react-native-vector-icons/AntDesign";
 import EIcon from "react-native-vector-icons/Entypo";
 import MIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import AppStorage from "../AppStorage";
 
 const { width, height } = Dimensions.get("window");
 
@@ -23,7 +28,9 @@ export default class ClassItemAndroid extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dialogVisible: false
+            dialogVisible: false,
+            deleteTapCount: 0,
+            showDeleteWarning: false
         };
     }
 
@@ -33,6 +40,105 @@ export default class ClassItemAndroid extends Component {
 
     getHeight() {
         return this.props.length * this.props.itemHeight;
+    }
+
+    editClass() {
+        this.setState({
+            dialogVisible: false,
+            deleteTapCount: 0,
+            showDeleteWarning: false
+        });
+        this.props.navigation.navigate("EditClass", {
+            lessonName: this.props.lessonName,
+            classroom: this.props.classroom,
+            beginWeek: this.props.beginWeek,
+            endWeek: this.props.endWeek,
+            dayOfWeek: this.props.dayOfWeek,
+            time: this.props.time,
+            teachers: this.props.teachers,
+            weekOddEven: this.props.weekOddEven
+        });
+    }
+    deleteClass() {
+        var deleteTapCount = this.state.deleteTapCount;
+        deleteTapCount++;
+        this.setState({ deleteTapCount: this.state.deleteTapCount + 1 });
+        setTimeout(() => {
+            if (deleteTapCount == 1) {
+                this.setState({ showDeleteWarning: false, deleteTapCount: 0 });
+            }
+        }, 3000);
+        if (deleteTapCount == 1) {
+            this.setState({ showDeleteWarning: true });
+        } else {
+            this.setState({ dialogVisible: false });
+            Vibration.vibrate(20);
+            setTimeout(() => {
+                for (
+                    var i = this.props.beginWeek;
+                    i <= this.props.endWeek;
+                    i++
+                ) {
+                    if (
+                        (this.props.weekOddEven == "O" && i % 2 != 1) ||
+                        (this.props.weekOddEven == "E" && i % 2 != 0)
+                    ) {
+                        continue;
+                    }
+                    this.handleSingleDelete(i);
+                }
+                AppStorage._save("classJson", Global.classJson);
+                ToastAndroid.show("删除成功", ToastAndroid.SHORT);
+                this.props.handleDeleteClass();
+            }, 500);
+        }
+    }
+
+    renderBlankClass(time) {
+        var singleClass = {};
+        singleClass.hasLesson = false;
+        singleClass.schedule = {};
+        singleClass.schedule.time = [time];
+        return singleClass;
+    }
+
+    handleSingleDelete(week) {
+        for (var i in Global.classJson[week - 1][this.props.dayOfWeek - 1]) {
+            if (
+                Global.classJson[week - 1][this.props.dayOfWeek - 1][i]
+                    .hasLesson
+            ) {
+                if (
+                    Global.classJson[week - 1][this.props.dayOfWeek - 1][i]
+                        .lessonName == this.props.lessonName
+                ) {
+                    //删除这门课程
+                    Global.classJson[week - 1][this.props.dayOfWeek - 1].splice(
+                        i,
+                        1
+                    );
+                    //添加相应的空课程格子
+                    for (var j = 0; j < this.props.length; j++) {
+                        Global.classJson[week - 1][
+                            this.props.dayOfWeek - 1
+                        ].push(this.renderBlankClass(this.props.time[j]));
+                    }
+                    //排序
+                    var asc = function(x, y) {
+                        return x["schedule"]["time"][0] >
+                            y["schedule"]["time"][0]
+                            ? 1
+                            : -1;
+                    };
+                    Global.classJson[week - 1][
+                        this.props.dayOfWeek - 1
+                    ] = Global.classJson[week - 1][
+                        this.props.dayOfWeek - 1
+                    ].sort(asc);
+                    break;
+                }
+            }
+        }
     }
 
     render() {
@@ -70,10 +176,22 @@ export default class ClassItemAndroid extends Component {
                                 visible={this.state.dialogVisible}
                                 dialogAnimation={new ScaleAnimation()}
                                 onTouchOutside={() => {
-                                    this.setState({ dialogVisible: false });
+                                    this.setState({
+                                        dialogVisible: false,
+                                        deleteTapCount: 0,
+                                        showDeleteWarning: false
+                                    });
                                 }}
                                 width={PixelRatio.get() * 0.25}
-                                height={PixelRatio.get() * 0.14}
+                                height={
+                                    this.state.showDeleteWarning
+                                        ? PixelRatio.get() *
+                                          0.33 *
+                                          (width / height)
+                                        : PixelRatio.get() *
+                                          0.28 *
+                                          (width / height)
+                                }
                                 containerStyle={styles.dialog}
                                 dialogTitle={
                                     <DialogTitle
@@ -86,10 +204,41 @@ export default class ClassItemAndroid extends Component {
                                         titleStyle={styles.dialogTitle}
                                     />
                                 }
+                                actions={[
+                                    <TouchableNativeFeedback
+                                        onPress={this.editClass.bind(this)}
+                                    >
+                                        <View
+                                            style={[
+                                                styles.dialogButton,
+                                                {
+                                                    borderRightColor: "#eee",
+                                                    borderRightWidth: 1
+                                                }
+                                            ]}
+                                        >
+                                            <AIcon
+                                                name="edit"
+                                                size={24}
+                                                color="#2070dc"
+                                            />
+                                        </View>
+                                    </TouchableNativeFeedback>,
+                                    <TouchableNativeFeedback
+                                        onPress={this.deleteClass.bind(this)}
+                                    >
+                                        <View style={styles.dialogButton}>
+                                            <AIcon
+                                                name="delete"
+                                                size={24}
+                                                color="#ff0048"
+                                            />
+                                        </View>
+                                    </TouchableNativeFeedback>
+                                ]}
                             >
                                 <DialogContent style={{ flex: 1 }}>
-                                    <ScrollView
-                                        showsVerticalScrollIndicator={false}
+                                    <View
                                         style={{
                                             flex: 1,
                                             paddingHorizontal: 5
@@ -188,7 +337,14 @@ export default class ClassItemAndroid extends Component {
                                             <View
                                                 style={[
                                                     styles.text,
-                                                    styles.textInDialog
+                                                    styles.textInDialog,
+                                                    {
+                                                        borderBottomWidth: this
+                                                            .state
+                                                            .showDeleteWarning
+                                                            ? 1
+                                                            : 0
+                                                    }
                                                 ]}
                                             >
                                                 <EIcon
@@ -207,8 +363,28 @@ export default class ClassItemAndroid extends Component {
                                                     {this.props.classroom}
                                                 </Text>
                                             </View>
+                                            {this.state.showDeleteWarning ? (
+                                                <View style={{ marginTop: 10 }}>
+                                                    <Text
+                                                        style={{
+                                                            color: "#ff0042",
+                                                            fontSize: 12
+                                                        }}
+                                                    >
+                                                        再按一次确定删除
+                                                    </Text>
+                                                    <Text
+                                                        style={{
+                                                            color: "#ff0042",
+                                                            fontSize: 12
+                                                        }}
+                                                    >
+                                                        将删除所有周当天的这门课程哟~
+                                                    </Text>
+                                                </View>
+                                            ) : null}
                                         </View>
-                                    </ScrollView>
+                                    </View>
                                 </DialogContent>
                             </Dialog>
                         </View>
@@ -255,14 +431,17 @@ const styles = StyleSheet.create({
     innerItemText: {
         color: "#fff"
     },
-    dialog: {
-        borderRadius: 0,
-        paddingVertical: 10
-    },
+    dialog: {},
     dialogTitle: {
         fontSize: 18,
         color: "#6a6a6a",
         fontWeight: "normal"
+    },
+    dialogButton: {
+        flex: 1,
+        padding: 15,
+        alignItems: "center",
+        justifyContent: "center"
     },
     dialogInnerWrap: {
         flex: 1,
