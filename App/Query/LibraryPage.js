@@ -148,6 +148,10 @@ export default class LibraryPage extends Component {
                         startInLoadingState={true}
                         ref="webView"
                         onNavigationStateChange={this.onNavigationStateChange}
+                        javaScriptEnabled
+                        domStorageEnabled
+                        thirdPartyCookiesEnabled
+                        allowUniversalAccessFromFileURLs
                     />
                 </View>
             </SafeAreaView>

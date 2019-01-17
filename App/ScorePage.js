@@ -53,13 +53,16 @@ export default class ScorePage extends Component {
                 !Global.isOnline &&
                 !Global.checkingOnline
             ) {
-                this.props.navigation.navigate("Login");
+                this.props.navigation.navigate("Login", { from: "Score" });
             }
         });
         if (!this.state.getScore) {
-            if (Global.isOnline)
+            if (Global.isOnline) {
                 ScoreInterface(res => {
                     if (res.message == "success") {
+                        this.setState({
+                            getScore: false
+                        });
                         Platform.OS === "ios"
                             ? this.refs.toast.show("成绩已刷新", 2000)
                             : ToastAndroid.show(
@@ -72,7 +75,7 @@ export default class ScorePage extends Component {
                         });
                     }
                 });
-            else {
+            } else {
                 Platform.OS === "ios"
                     ? this.refs.toast.show("登录后才能刷新成绩哟~", 2000)
                     : ToastAndroid.show(
@@ -80,6 +83,20 @@ export default class ScorePage extends Component {
                           ToastAndroid.SHORT
                       );
             }
+        }
+    }
+
+    componentWillReceiveProps() {
+        var params = this.props.navigation.state.params;
+        if (params.from == "Login") {
+            ScoreInterface(res => {
+                if (res.message == "success") {
+                    this.setState({
+                        scoreList: res.content,
+                        getScore: true
+                    });
+                }
+            });
         }
     }
 
@@ -163,14 +180,11 @@ export default class ScorePage extends Component {
                         <ScoreView scoreList={this.state.scoreList} />
                     ) : (
                         <View
-                            style={{
-                                paddingVertical: height / 2 - 150,
-                                backgroundColor: "transparent"
-                            }}
+                            style={{ flex: 1, backgroundColor: "transparent" }}
                         >
                             {Global.isOnline ? (
                                 <ActivityIndicator
-                                    style={{}}
+                                    style={{ flex: 1 }}
                                     size="large"
                                     color={
                                         Global.settings.theme.backgroundColor
@@ -216,14 +230,11 @@ export default class ScorePage extends Component {
                                 <View
                                     style={{
                                         paddingVertical: 10,
-                                        alignItems: "center"
+                                        alignItems: "center",
+                                        flex: 1
                                     }}
                                 >
-                                    <Text
-                                        style={{
-                                            paddingVertical: 5
-                                        }}
-                                    >
+                                    <Text style={{ flex: 1, color: "#6a6a6a" }}>
                                         {this.state.alertText}
                                     </Text>
                                 </View>

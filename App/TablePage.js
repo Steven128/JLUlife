@@ -86,7 +86,9 @@ export default class TablePage extends Component {
                         !Global.isOnline &&
                         !Global.checkingOnline
                     ) {
-                        this.props.navigation.navigate("Login");
+                        this.props.navigation.navigate("Login", {
+                            from: "Table"
+                        });
                     }
                 });
             }
@@ -379,11 +381,12 @@ export default class TablePage extends Component {
                                 <View
                                     style={{
                                         flex: 1,
-                                        paddingVertical: height / 2 - 150
+                                        backgroundColor: "transparent"
                                     }}
                                 >
                                     {Global.isOnline ? (
                                         <ActivityIndicator
+                                            style={{ flex: 1 }}
                                             size="large"
                                             color={
                                                 Global.settings.theme

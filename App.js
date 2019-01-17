@@ -26,7 +26,6 @@ import LibraryPage from "./App/Query/LibraryPage";
 import CardPage from "./App/CardPage";
 import CardLoginPage from "./App/Card/CardLoginPage";
 import SettingsPage from "./App/SettingsPage";
-import SettingsPageIOS from "./App/SettingsPage.ios";
 import ThemeSettingsPage from "./App/Settings/ThemeSettingsPage";
 import ClassSettingsPage from "./App/Settings/ClassSettingsPage";
 import AboutPage from "./App/Settings/AboutPage";
@@ -206,7 +205,7 @@ const CardStack = createStackNavigator({
 
 const SettingsStack = createStackNavigator({
     Settings: {
-        screen: Platform.OS == "ios" ? SettingsPageIOS : SettingsPage,
+        screen: SettingsPage,
         navigationOptions: {
             header: null
         }

@@ -7,21 +7,70 @@ import {
     FlatList,
     ActivityIndicator
 } from "react-native";
+import RefreshListView, { RefreshState } from "react-native-refresh-list-view";
 import cheerio from "cheerio";
 import Global from "../Global";
+import {
+    FooterFailureComponent,
+    FooterRefreshingComponent,
+    FooterEmptyDataComponent,
+    FooterNoMoreDataComponent
+} from "../Components/RefreshListComponent";
+
 const { width, height } = Dimensions.get("window");
 export default class CardPickup extends Component {
     constructor(props) {
         super(props);
-        this.state = { getInfo: false, info: [] };
+        this.onHeaderRefresh = this.onHeaderRefresh.bind(this);
+        this.onFooterRefresh = this.onFooterRefresh.bind(this);
+        this.state = {
+            getInfo: false,
+            info: [],
+            refreshState: RefreshState.Idle
+        };
     }
 
     componentDidMount() {
         this.getInfo(Global.card.cookie, res => {
-            this.setState({
-                info: res,
-                getInfo: true
-            });
+            this.setState({ getInfo: false });
+            if (res.message == "success") {
+                this.setState({
+                    info: res.content,
+                    getInfo: true
+                });
+            } else {
+                Global.card.cookie = "";
+                Global.card.isOnline = false;
+                this.props.navigation.navigate("Login");
+            }
+        });
+    }
+
+    onHeaderRefresh() {
+        this.setState({
+            refreshState: RefreshState.HeaderRefreshing
+        });
+        this.getInfo(Global.card.cookie, res => {
+            if (res.message == "success") {
+                this.setState({
+                    info: res.content,
+                    getInfo: true,
+                    refreshState: RefreshState.Idle
+                });
+            } else {
+                this.setState({
+                    refreshState: RefreshState.Idle
+                });
+                Global.card.cookie = "";
+                Global.card.isOnline = false;
+                this.props.navigation.navigate("Login");
+            }
+        });
+    }
+
+    onFooterRefresh() {
+        this.setState({
+            refreshState: RefreshState.NoMoreData
         });
     }
 
@@ -42,7 +91,7 @@ export default class CardPickup extends Component {
             .then(response => response.text())
             .then(response => {
                 var info = this.parseHTML(response);
-                callback(info);
+                callback({ message: "success", content: info });
             })
             .catch(error => {
                 if (__DEV__) console.error(error);
@@ -91,7 +140,7 @@ export default class CardPickup extends Component {
                 }}
             >
                 {this.state.getInfo ? (
-                    <FlatList
+                    <RefreshListView
                         data={this.state.info}
                         renderItem={({ item }) => (
                             <View style={styles.item}>
@@ -112,11 +161,27 @@ export default class CardPickup extends Component {
                                 </Text>
                             </View>
                         )}
+                        refreshState={this.state.refreshState}
+                        onHeaderRefresh={this.onHeaderRefresh}
+                        onFooterRefresh={this.onFooterRefresh}
+                        footerRefreshingComponent={
+                            <FooterRefreshingComponent />
+                        }
+                        footerFailureComponent={<FooterFailureComponent />}
+                        footerNoMoreDataComponent={
+                            <FooterNoMoreDataComponent />
+                        }
+                        footerEmptyDataComponent={<FooterEmptyDataComponent />}
                     />
                 ) : (
-                    <View style={{ paddingVertical: height / 2 - 150 }}>
+                    <View
+                        style={{
+                            flex: 1,
+                            backgroundColor: "transparent"
+                        }}
+                    >
                         <ActivityIndicator
-                            style={{}}
+                            style={{ flex: 1 }}
                             size="large"
                             color={Global.settings.theme.backgroundColor}
                         />

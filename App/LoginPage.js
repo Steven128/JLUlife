@@ -298,14 +298,11 @@ export default class LoginPage extends Component {
                             <View
                                 style={{
                                     paddingVertical: 10,
-                                    alignItems: "center"
+                                    alignItems: "center",
+                                    flex: 1
                                 }}
                             >
-                                <Text
-                                    style={{
-                                        paddingVertical: 5
-                                    }}
-                                >
+                                <Text style={{ flex: 1, color: "#6a6a6a" }}>
                                     {this.state.alertText}
                                 </Text>
                             </View>
@@ -357,12 +354,14 @@ export default class LoginPage extends Component {
         this.setState({
             showLoading: !this.state.showLoading
         });
+        var params = this.props.navigation.state.params;
+        if (params.from == "Table") params.from = "Home";
         LoginInterface(this.state.j_username, this.state.j_password, res => {
             if (res.message == "success") {
                 Platform.OS === "ios"
                     ? this.refs.toast.show("登录成功", 5000)
                     : ToastAndroid.show("登录成功", ToastAndroid.LONG);
-                this.props.navigation.navigate("Home", {
+                this.props.navigation.navigate(params.from, {
                     from: "Login",
                     message: "success"
                 });

@@ -52,7 +52,9 @@ export default class HomePage extends Component {
             if (params.from == "SplashTips") {
                 if (!this.state.isOnline && !this.state.checkingOnline) {
                     if (Global.loginInfo.j_username == "") {
-                        this.props.navigation.navigate("Login");
+                        this.props.navigation.navigate("Login", {
+                            from: "Home"
+                        });
                     }
                 }
             } else if (params.from == "Login") {
@@ -273,7 +275,9 @@ export default class HomePage extends Component {
                     }
                 } else if (res.message == "error") {
                     if (!this.state.showSplashTips) {
-                        this.props.navigation.navigate("Login");
+                        this.props.navigation.navigate("Login", {
+                            from: "Home"
+                        });
                     }
                 }
             });
@@ -376,7 +380,9 @@ export default class HomePage extends Component {
                         }}
                         title="登录"
                         onPress={() => {
-                            this.props.navigation.navigate("Login");
+                            this.props.navigation.navigate("Login", {
+                                from: "Home"
+                            });
                         }}
                     />
                 </View>
@@ -398,7 +404,9 @@ export default class HomePage extends Component {
                         }}
                         title="登录"
                         onPress={() => {
-                            this.props.navigation.navigate("Login");
+                            this.props.navigation.navigate("Login", {
+                                from: "Home"
+                            });
                         }}
                     />
                 </View>

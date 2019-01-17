@@ -77,8 +77,20 @@ export default class NoticeAnnounce extends Component {
 
     render() {
         return (
-            <View style={{ borderRightWidth: 1, borderRightColor: "#ccc" }}>
-                <View style={{ borderRightWidth: 1, borderRightColor: "#ccc" }}>
+            <View
+                style={{
+                    flex: 1,
+                    borderRightWidth: 1,
+                    borderRightColor: "#ccc"
+                }}
+            >
+                <View
+                    style={{
+                        flex: 1,
+                        borderRightWidth: 1,
+                        borderRightColor: "#ccc"
+                    }}
+                >
                     {this.state.getEdu ? (
                         <RefreshListView
                             data={this.state.eduList}
@@ -96,15 +108,26 @@ export default class NoticeAnnounce extends Component {
                             refreshState={this.state.refreshState}
                             onHeaderRefresh={this.onHeaderRefresh}
                             onFooterRefresh={this.onFooterRefresh}
-                            footerRefreshingComponent={<FooterRefreshingComponent />}
+                            footerRefreshingComponent={
+                                <FooterRefreshingComponent />
+                            }
                             footerFailureComponent={<FooterFailureComponent />}
-                            footerNoMoreDataComponent={<FooterNoMoreDataComponent />}
-                            footerEmptyDataComponent={<FooterEmptyDataComponent />}
+                            footerNoMoreDataComponent={
+                                <FooterNoMoreDataComponent />
+                            }
+                            footerEmptyDataComponent={
+                                <FooterEmptyDataComponent />
+                            }
                         />
                     ) : (
-                        <View style={{ paddingVertical: height / 2 - 150 }}>
+                        <View
+                            style={{
+                                flex: 1,
+                                backgroundColor: "transparent"
+                            }}
+                        >
                             <ActivityIndicator
-                                style={{}}
+                                style={{ flex: 1 }}
                                 size="large"
                                 color={Global.settings.theme.backgroundColor}
                             />

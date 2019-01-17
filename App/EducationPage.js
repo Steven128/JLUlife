@@ -87,8 +87,8 @@ export default class EducationPage extends Component {
                     />
                     <ScrollableTabView
                         style={{
-                            backgroundColor: "#f5f5f5",
-                            borderWidth: 0
+                            flex: 1,
+                            backgroundColor: "#f5f5f5"
                         }}
                         tabBarBackgroundColor={
                             Global.settings.theme.backgroundColor

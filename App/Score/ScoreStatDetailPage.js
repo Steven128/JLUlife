@@ -58,6 +58,7 @@ export default class ScoreStatDetailPage extends Component {
                 }
             });
             getCreditStat(res => {
+                console.log(res);
                 if (res.message == "success") {
                     this.setState({
                         dataList: res.content,
@@ -204,595 +205,632 @@ export default class ScoreStatDetailPage extends Component {
                             style: { color: "#fff", fontSize: 16 }
                         }}
                     />
-                    <ScrollView
-                        style={[styles.container, {}]}
-                        showsVerticalScrollIndicator={false}
-                    >
-                        {this.state.getGpoint ? (
-                            <AvgGpointItem gpointData={this.state.gpointData} />
-                        ) : null}
-                        {this.state.getDataList ? (
-                            <View
-                                style={{
-                                    backgroundColor:
-                                        this.state.target == "ScoreGpoint"
-                                            ? "transparent"
-                                            : "#fff",
-                                    paddingHorizontal:
-                                        this.state.target == "ScoreGpoint"
-                                            ? 0
-                                            : 10
-                                }}
-                            >
+                    {this.state.getGpoint || this.state.getDataList ? (
+                        <ScrollView
+                            style={[styles.container]}
+                            showsVerticalScrollIndicator={false}
+                        >
+                            {this.state.getGpoint ? (
+                                <AvgGpointItem
+                                    gpointData={this.state.gpointData}
+                                />
+                            ) : null}
+                            {this.state.getDataList ? (
                                 <View
                                     style={{
-                                        flex: 1,
-                                        backgroundColor: "#fff",
-                                        margin:
+                                        backgroundColor:
                                             this.state.target == "ScoreGpoint"
-                                                ? 10
-                                                : 0
+                                                ? "transparent"
+                                                : "#fff",
+                                        paddingHorizontal:
+                                            this.state.target == "ScoreGpoint"
+                                                ? 0
+                                                : 10
                                     }}
                                 >
-                                    {this.state.getGpoint ? (
-                                        <View>
-                                            <View
-                                                style={{
-                                                    padding: 15
-                                                }}
-                                            >
-                                                <Text
-                                                    style={{ color: "#6a6a6a" }}
-                                                >
-                                                    获得总学分：{" "}
-                                                    <Text
-                                                        style={{
-                                                            color:
-                                                                Global.settings
-                                                                    .theme
-                                                                    .backgroundColor,
-                                                            fontSize: 22
-                                                        }}
-                                                    >
-                                                        {sumCredit}
-                                                    </Text>
-                                                </Text>
-                                                <View style={{ height: 10 }} />
-                                            </View>
-                                        </View>
-                                    ) : null}
-                                    <FlatList
-                                        data={this.state.dataList}
-                                        showsVerticalScrollIndicator={false}
-                                        ListEmptyComponent={
-                                            <View
-                                                style={{
-                                                    flex: 1,
-                                                    paddingHorizontal: 30,
-                                                    paddingVertical: 15,
-                                                    backgroundColor:
-                                                        "transparent"
-                                                }}
-                                            >
-                                                <Text
+                                    <View
+                                        style={{
+                                            flex: 1,
+                                            backgroundColor: "#fff",
+                                            margin:
+                                                this.state.target ==
+                                                "ScoreGpoint"
+                                                    ? 10
+                                                    : 0
+                                        }}
+                                    >
+                                        {this.state.getGpoint ? (
+                                            <View>
+                                                <View
                                                     style={{
-                                                        fontSize: 16,
-                                                        color: "#808080"
+                                                        padding: 15
                                                     }}
                                                 >
-                                                    好像什么东西都没有ヽ(ー_ー)ノ
-                                                </Text>
+                                                    <Text
+                                                        style={{
+                                                            color: "#6a6a6a"
+                                                        }}
+                                                    >
+                                                        获得总学分：{" "}
+                                                        <Text
+                                                            style={{
+                                                                color:
+                                                                    Global
+                                                                        .settings
+                                                                        .theme
+                                                                        .backgroundColor,
+                                                                fontSize: 22
+                                                            }}
+                                                        >
+                                                            {sumCredit}
+                                                        </Text>
+                                                    </Text>
+                                                    <View
+                                                        style={{ height: 10 }}
+                                                    />
+                                                </View>
                                             </View>
-                                        }
-                                        ListHeaderComponent={
-                                            this.state.target ==
-                                            "ScoreGpoint" ? (
+                                        ) : null}
+                                        <FlatList
+                                            data={this.state.dataList}
+                                            showsVerticalScrollIndicator={false}
+                                            ListEmptyComponent={
                                                 <View
-                                                    style={[
-                                                        styles.row,
-                                                        {
-                                                            paddingVertical: 10,
-                                                            marginHorizontal: 15
-                                                        }
-                                                    ]}
-                                                >
-                                                    <Text style={styles.item}>
-                                                        课程性质
-                                                    </Text>
-                                                    <Text style={styles.item}>
-                                                        校选修课类别
-                                                    </Text>
-                                                    <Text style={styles.item}>
-                                                        获得学分
-                                                    </Text>
-                                                </View>
-                                            ) : this.state.target ==
-                                              "EachYear" ? (
-                                                <View
-                                                    style={[
-                                                        styles.row,
-                                                        { paddingVertical: 10 }
-                                                    ]}
+                                                    style={{
+                                                        flex: 1,
+                                                        paddingHorizontal: 30,
+                                                        paddingVertical: 15,
+                                                        backgroundColor:
+                                                            "transparent"
+                                                    }}
                                                 >
                                                     <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 2 }
-                                                        ]}
+                                                        style={{
+                                                            fontSize: 16,
+                                                            color: "#808080"
+                                                        }}
                                                     >
-                                                        学期
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 2 }
-                                                        ]}
-                                                    >
-                                                        课程名称
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1.5 }
-                                                        ]}
-                                                    >
-                                                        课程性质
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 0.5 }
-                                                        ]}
-                                                    >
-                                                        学分
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1 }
-                                                        ]}
-                                                    >
-                                                        成绩
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 0.5 }
-                                                        ]}
-                                                    >
-                                                        绩点
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1 }
-                                                        ]}
-                                                    >
-                                                        是否重修
+                                                        好像什么东西都没有ヽ(ー_ー)ノ
                                                     </Text>
                                                 </View>
-                                            ) : this.state.target ==
-                                              "EachLesson" ? (
-                                                <View
-                                                    style={[
-                                                        styles.row,
-                                                        { paddingVertical: 10 }
-                                                    ]}
-                                                >
-                                                    <Text
+                                            }
+                                            ListHeaderComponent={
+                                                this.state.target ==
+                                                "ScoreGpoint" ? (
+                                                    <View
                                                         style={[
-                                                            styles.item,
-                                                            { flex: 2 }
+                                                            styles.row,
+                                                            {
+                                                                paddingVertical: 10,
+                                                                marginHorizontal: 15
+                                                            }
                                                         ]}
                                                     >
-                                                        首次上课学期
-                                                    </Text>
-                                                    <Text
+                                                        <Text
+                                                            style={styles.item}
+                                                        >
+                                                            课程性质
+                                                        </Text>
+                                                        <Text
+                                                            style={styles.item}
+                                                        >
+                                                            校选修课类别
+                                                        </Text>
+                                                        <Text
+                                                            style={styles.item}
+                                                        >
+                                                            获得学分
+                                                        </Text>
+                                                    </View>
+                                                ) : this.state.target ==
+                                                  "EachYear" ? (
+                                                    <View
                                                         style={[
-                                                            styles.item,
-                                                            { flex: 2 }
+                                                            styles.row,
+                                                            {
+                                                                paddingVertical: 10
+                                                            }
                                                         ]}
                                                     >
-                                                        课程名称
-                                                    </Text>
-                                                    <Text
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 2 }
+                                                            ]}
+                                                        >
+                                                            学期
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 2 }
+                                                            ]}
+                                                        >
+                                                            课程名称
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1.5 }
+                                                            ]}
+                                                        >
+                                                            课程性质
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 0.5 }
+                                                            ]}
+                                                        >
+                                                            学分
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            成绩
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 0.5 }
+                                                            ]}
+                                                        >
+                                                            绩点
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            是否重修
+                                                        </Text>
+                                                    </View>
+                                                ) : this.state.target ==
+                                                  "EachLesson" ? (
+                                                    <View
                                                         style={[
-                                                            styles.item,
-                                                            { flex: 1.5 }
+                                                            styles.row,
+                                                            {
+                                                                paddingVertical: 10
+                                                            }
                                                         ]}
                                                     >
-                                                        课程性质
-                                                    </Text>
-                                                    <Text
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 2 }
+                                                            ]}
+                                                        >
+                                                            首次上课学期
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 2 }
+                                                            ]}
+                                                        >
+                                                            课程名称
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1.5 }
+                                                            ]}
+                                                        >
+                                                            课程性质
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 0.5 }
+                                                            ]}
+                                                        >
+                                                            学分
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            通过成绩
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            通过绩点
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            最高成绩
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            最高绩点
+                                                        </Text>
+                                                    </View>
+                                                ) : this.state.target ==
+                                                  "NotPassed" ? (
+                                                    <View
                                                         style={[
-                                                            styles.item,
-                                                            { flex: 0.5 }
+                                                            styles.row,
+                                                            {
+                                                                paddingVertical: 10
+                                                            }
                                                         ]}
                                                     >
-                                                        学分
-                                                    </Text>
-                                                    <Text
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 2 }
+                                                            ]}
+                                                        >
+                                                            首次上课学期
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 2 }
+                                                            ]}
+                                                        >
+                                                            课程名称
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1.5 }
+                                                            ]}
+                                                        >
+                                                            课程类型
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            学分
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            首次成绩
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            最高成绩
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            学习次数
+                                                        </Text>
+                                                    </View>
+                                                ) : null
+                                            }
+                                            renderItem={({ item }) =>
+                                                this.state.target ==
+                                                "ScoreGpoint" ? (
+                                                    <View
                                                         style={[
-                                                            styles.item,
-                                                            { flex: 1 }
+                                                            styles.row,
+                                                            {
+                                                                marginHorizontal: 15,
+                                                                borderBottomColor:
+                                                                    "#f5f5f5"
+                                                            }
                                                         ]}
                                                     >
-                                                        通过成绩
-                                                    </Text>
-                                                    <Text
+                                                        <Text
+                                                            style={styles.item}
+                                                        >
+                                                            {this.convertType5(
+                                                                item.type5
+                                                            )}
+                                                        </Text>
+                                                        <Text
+                                                            style={styles.item}
+                                                        >
+                                                            {this.convertCourType2(
+                                                                item.courType2
+                                                            )}
+                                                        </Text>
+                                                        <Text
+                                                            style={styles.item}
+                                                        >
+                                                            {item.sumCredit}
+                                                        </Text>
+                                                    </View>
+                                                ) : this.state.target ==
+                                                  "EachYear" ? (
+                                                    <View
                                                         style={[
-                                                            styles.item,
-                                                            { flex: 1 }
+                                                            styles.row,
+                                                            {
+                                                                borderBottomColor:
+                                                                    "#f5f5f5"
+                                                            }
                                                         ]}
                                                     >
-                                                        通过绩点
-                                                    </Text>
-                                                    <Text
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 2 }
+                                                            ]}
+                                                        >
+                                                            {
+                                                                item
+                                                                    .teachingTerm
+                                                                    .termName
+                                                            }
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 2 }
+                                                            ]}
+                                                        >
+                                                            {
+                                                                item.course
+                                                                    .courName
+                                                            }
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1.5 }
+                                                            ]}
+                                                        >
+                                                            {this.convertType5(
+                                                                item.type5
+                                                            )}
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 0.5 }
+                                                            ]}
+                                                        >
+                                                            {item.credit}
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            {item.score}
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 0.5 }
+                                                            ]}
+                                                        >
+                                                            {item.gpoint}
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            {item.isReselect ==
+                                                            "Y"
+                                                                ? "是"
+                                                                : item.isReselect ==
+                                                                  "N"
+                                                                ? "否"
+                                                                : null}
+                                                        </Text>
+                                                    </View>
+                                                ) : this.state.target ==
+                                                  "EachLesson" ? (
+                                                    <View
                                                         style={[
-                                                            styles.item,
-                                                            { flex: 1 }
+                                                            styles.row,
+                                                            {
+                                                                borderBottomColor:
+                                                                    "#f5f5f5"
+                                                            }
                                                         ]}
                                                     >
-                                                        最高成绩
-                                                    </Text>
-                                                    <Text
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 2 }
+                                                            ]}
+                                                        >
+                                                            {
+                                                                item.firstTerm
+                                                                    .termName
+                                                            }
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 2 }
+                                                            ]}
+                                                        >
+                                                            {
+                                                                item.course
+                                                                    .courName
+                                                            }
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1.5 }
+                                                            ]}
+                                                        >
+                                                            {this.convertType5(
+                                                                item.type5
+                                                            )}
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            {item.credit}
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            {item.firstScoreNum}
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            {item.firstGpoint}
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            {item.bestScoreNum}
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            {item.bestGpoint}
+                                                        </Text>
+                                                    </View>
+                                                ) : this.state.target ==
+                                                  "NotPassed" ? (
+                                                    <View
                                                         style={[
-                                                            styles.item,
-                                                            { flex: 1 }
+                                                            styles.row,
+                                                            {
+                                                                borderBottomColor:
+                                                                    "#f5f5f5"
+                                                            }
                                                         ]}
                                                     >
-                                                        最高绩点
-                                                    </Text>
-                                                </View>
-                                            ) : this.state.target ==
-                                              "NotPassed" ? (
-                                                <View
-                                                    style={[
-                                                        styles.row,
-                                                        { paddingVertical: 10 }
-                                                    ]}
-                                                >
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 2 }
-                                                        ]}
-                                                    >
-                                                        首次上课学期
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 2 }
-                                                        ]}
-                                                    >
-                                                        课程名称
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1.5 }
-                                                        ]}
-                                                    >
-                                                        课程类型
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1 }
-                                                        ]}
-                                                    >
-                                                        学分
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1 }
-                                                        ]}
-                                                    >
-                                                        首次成绩
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1 }
-                                                        ]}
-                                                    >
-                                                        最高成绩
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1 }
-                                                        ]}
-                                                    >
-                                                        学习次数
-                                                    </Text>
-                                                </View>
-                                            ) : null
-                                        }
-                                        renderItem={({ item }) =>
-                                            this.state.target ==
-                                            "ScoreGpoint" ? (
-                                                <View
-                                                    style={[
-                                                        styles.row,
-                                                        {
-                                                            marginHorizontal: 15,
-                                                            borderBottomColor:
-                                                                "#f5f5f5"
-                                                        }
-                                                    ]}
-                                                >
-                                                    <Text style={styles.item}>
-                                                        {this.convertType5(
-                                                            item.type5
-                                                        )}
-                                                    </Text>
-                                                    <Text style={styles.item}>
-                                                        {this.convertCourType2(
-                                                            item.courType2
-                                                        )}
-                                                    </Text>
-                                                    <Text style={styles.item}>
-                                                        {item.sumCredit}
-                                                    </Text>
-                                                </View>
-                                            ) : this.state.target ==
-                                              "EachYear" ? (
-                                                <View
-                                                    style={[
-                                                        styles.row,
-                                                        {
-                                                            borderBottomColor:
-                                                                "#f5f5f5"
-                                                        }
-                                                    ]}
-                                                >
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 2 }
-                                                        ]}
-                                                    >
-                                                        {
-                                                            item.teachingTerm
-                                                                .termName
-                                                        }
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 2 }
-                                                        ]}
-                                                    >
-                                                        {item.course.courName}
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1.5 }
-                                                        ]}
-                                                    >
-                                                        {this.convertType5(
-                                                            item.type5
-                                                        )}
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 0.5 }
-                                                        ]}
-                                                    >
-                                                        {item.credit}
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1 }
-                                                        ]}
-                                                    >
-                                                        {item.score}
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 0.5 }
-                                                        ]}
-                                                    >
-                                                        {item.gpoint}
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1 }
-                                                        ]}
-                                                    >
-                                                        {item.isReselect == "Y"
-                                                            ? "是"
-                                                            : item.isReselect ==
-                                                              "N"
-                                                            ? "否"
-                                                            : null}
-                                                    </Text>
-                                                </View>
-                                            ) : this.state.target ==
-                                              "EachLesson" ? (
-                                                <View
-                                                    style={[
-                                                        styles.row,
-                                                        {
-                                                            borderBottomColor:
-                                                                "#f5f5f5"
-                                                        }
-                                                    ]}
-                                                >
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 2 }
-                                                        ]}
-                                                    >
-                                                        {
-                                                            item.firstTerm
-                                                                .termName
-                                                        }
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 2 }
-                                                        ]}
-                                                    >
-                                                        {item.course.courName}
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1.5 }
-                                                        ]}
-                                                    >
-                                                        {this.convertType5(
-                                                            item.type5
-                                                        )}
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1 }
-                                                        ]}
-                                                    >
-                                                        {item.credit}
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1 }
-                                                        ]}
-                                                    >
-                                                        {item.firstScoreNum}
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1 }
-                                                        ]}
-                                                    >
-                                                        {item.firstGpoint}
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1 }
-                                                        ]}
-                                                    >
-                                                        {item.bestScoreNum}
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1 }
-                                                        ]}
-                                                    >
-                                                        {item.bestGpoint}
-                                                    </Text>
-                                                </View>
-                                            ) : this.state.target ==
-                                              "NotPassed" ? (
-                                                <View
-                                                    style={[
-                                                        styles.row,
-                                                        {
-                                                            borderBottomColor:
-                                                                "#f5f5f5"
-                                                        }
-                                                    ]}
-                                                >
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 2 }
-                                                        ]}
-                                                    >
-                                                        {
-                                                            item.firstTerm
-                                                                .termName
-                                                        }
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 2 }
-                                                        ]}
-                                                    >
-                                                        {item.course.courName}
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1.5 }
-                                                        ]}
-                                                    >
-                                                        {this.convertType5(
-                                                            item.type5
-                                                        )}
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1 }
-                                                        ]}
-                                                    >
-                                                        {item.credit}
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1 }
-                                                        ]}
-                                                    >
-                                                        {item.firstScoreNum}
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1 }
-                                                        ]}
-                                                    >
-                                                        {item.bestScoreNum}
-                                                    </Text>
-                                                    <Text
-                                                        style={[
-                                                            styles.item,
-                                                            { flex: 1 }
-                                                        ]}
-                                                    >
-                                                        {item.studyCnt}
-                                                    </Text>
-                                                </View>
-                                            ) : null
-                                        }
-                                    />
-                                    <View style={{ height: 10 }} />
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 2 }
+                                                            ]}
+                                                        >
+                                                            {
+                                                                item.firstTerm
+                                                                    .termName
+                                                            }
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 2 }
+                                                            ]}
+                                                        >
+                                                            {
+                                                                item.course
+                                                                    .courName
+                                                            }
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1.5 }
+                                                            ]}
+                                                        >
+                                                            {this.convertType5(
+                                                                item.type5
+                                                            )}
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            {item.credit}
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            {item.firstScoreNum}
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            {item.bestScoreNum}
+                                                        </Text>
+                                                        <Text
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 1 }
+                                                            ]}
+                                                        >
+                                                            {item.studyCnt}
+                                                        </Text>
+                                                    </View>
+                                                ) : null
+                                            }
+                                        />
+                                        <View style={{ height: 10 }} />
+                                    </View>
                                 </View>
-                            </View>
-                        ) : (
-                            <View
-                                style={{
-                                    paddingVertical: height / 2 - 150,
-                                    backgroundColor: "transparent"
-                                }}
-                            >
-                                <ActivityIndicator
-                                    style={{}}
-                                    size="large"
-                                    color={
-                                        Global.settings.theme.backgroundColor
-                                    }
-                                />
-                            </View>
-                        )}
-                    </ScrollView>
+                            ) : null}
+                        </ScrollView>
+                    ) : (
+                        <View
+                            style={{
+                                flex: 1,
+                                paddingVertical: height / 2 - 150
+                            }}
+                        >
+                            <ActivityIndicator
+                                style={{ flex: 1 }}
+                                size="large"
+                                color={Global.settings.theme.backgroundColor}
+                            />
+                        </View>
+                    )}
                 </View>
             </SafeAreaView>
         );

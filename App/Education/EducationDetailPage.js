@@ -8,10 +8,10 @@ import {
     Dimensions,
     WebView,
     StyleSheet,
-    Linking,
-    TouchableNativeFeedback,
     StatusBar,
-    Platform,SafeAreaView
+    Platform,
+    SafeAreaView,
+    ActivityIndicator
 } from "react-native";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
@@ -25,12 +25,18 @@ export default class EducationDetailPage extends Component {
     constructor(props) {
         super(props);
         this.openDrawer = this.openDrawer.bind(this);
-        this.state = {};
+        this.state = {
+            showWebView: false
+        };
     }
 
     openDrawer() {
         // 打开抽屉式导航
         this.props.navigation.openDrawer();
+    }
+
+    showWebView() {
+        this.setState({ showWebView: true });
     }
 
     render() {
@@ -88,20 +94,39 @@ export default class EducationDetailPage extends Component {
                             {this.props.navigation.state.params.time}
                         </Text>
                     </View>
-                    <WebView
-                        bounces={false}
-                        scalesPageToFit={true}
-                        source={{
-                            uri: this.props.navigation.state.params.href
-                        }}
-                        automaticallyAdjustContentInsets={true}
-                        injectedJavaScript={`document.querySelector('body').innerHTML=document.querySelector('.con_con').innerHTML;var list = document.querySelectorAll('span');for(var i=0;i<list.length;i++){list[i].style.fontSize='16px';list[i].style.lineHeight='24px';list[i].style.color='#454545'};document.querySelector('body').style.padding='15px';document.querySelector('body').style.paddingBottom='30px';window.scrollTo(0,0) `}
-                        style={{
-                            width: deviceWidth,
-                            height: deviceHeight - 100
-                        }}
-                        startInLoadingState={true}
-                    />
+                    <View style={{ flex: 1 }}>
+                        <WebView
+                            onLoad={this.showWebView.bind(this)}
+                            scalesPageToFit={true}
+                            source={{
+                                uri: this.props.navigation.state.params.href
+                            }}
+                            automaticallyAdjustContentInsets={true}
+                            injectedJavaScript={`document.querySelector('body').innerHTML=document.querySelector('.con_con').innerHTML;var list = document.querySelectorAll('span');for(var i=0;i<list.length;i++){list[i].style.fontSize='16px';list[i].style.lineHeight='24px';list[i].style.color='#454545'};document.querySelector('body').style.padding='15px';document.querySelector('body').style.paddingBottom='30px';window.scrollTo(0,0) `}
+                            style={{ flex: 1 }}
+                        />
+                        {this.state.showWebView ? null : (
+                            <View
+                                style={{
+                                    flex: 1,
+                                    backgroundColor: "#ffffff",
+                                    position: "absolute",
+                                    top: 0,
+                                    right: 0,
+                                    bottom: 0,
+                                    left: 0
+                                }}
+                            >
+                                <ActivityIndicator
+                                    style={{ flex: 1 }}
+                                    size="large"
+                                    color={
+                                        Global.settings.theme.backgroundColor
+                                    }
+                                />
+                            </View>
+                        )}
+                    </View>
                 </View>
             </SafeAreaView>
         );

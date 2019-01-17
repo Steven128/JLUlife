@@ -67,6 +67,7 @@ export function getCreditStat(callback) {
     })
         .then(response => response.json())
         .then(responseJson => {
+            console.log(responseJson);
             if (responseJson.status == 0) {
                 callback({
                     message: "success",

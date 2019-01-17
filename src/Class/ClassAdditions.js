@@ -252,20 +252,15 @@ export default class ClassAdditions extends Component {
                     containerStyle={styles.dialog}
                 >
                     <DialogContent style={{ flex: 1 }}>
-                        <View
-                            style={{ flex: 1 }}
-                        >
+                        <View style={{ flex: 1 }}>
                             <View
                                 style={{
                                     paddingVertical: 10,
-                                    alignItems: "center"
+                                    alignItems: "center",
+                                    flex: 1
                                 }}
                             >
-                                <Text
-                                    style={{
-                                        paddingVertical: 5
-                                    }}
-                                >
+                                <Text style={{ flex: 1, color: "#6a6a6a" }}>
                                     手动刷新课表会清除你此前对课表的添加和修改
                                 </Text>
                             </View>

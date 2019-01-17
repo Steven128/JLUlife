@@ -196,9 +196,11 @@ export default class EvaluationItemAndroid extends Component {
                         actions={[
                             <DialogButton
                                 text="取消"
-                                textStyle={{ color: "#6a6a6a",
-                                fontSize: 14,
-                                fontWeight: "normal" }}
+                                textStyle={{
+                                    color: "#6a6a6a",
+                                    fontSize: 14,
+                                    fontWeight: "normal"
+                                }}
                                 onPress={() => {
                                     this.setState({ dialogVisible: false });
                                 }}
@@ -206,7 +208,8 @@ export default class EvaluationItemAndroid extends Component {
                             <DialogButton
                                 text="提交"
                                 textStyle={{
-                                    color: Global.settings.theme.backgroundColor,
+                                    color:
+                                        Global.settings.theme.backgroundColor,
                                     fontSize: 14,
                                     fontWeight: "normal"
                                 }}
@@ -1574,14 +1577,11 @@ export default class EvaluationItemAndroid extends Component {
                             <View
                                 style={{
                                     paddingVertical: 10,
-                                    alignItems: "center"
+                                    alignItems: "center",
+                                    flex: 1
                                 }}
                             >
-                                <Text
-                                    style={{
-                                        paddingVertical: 5
-                                    }}
-                                >
+                                <Text style={{ flex: 1, color: "#6a6a6a" }}>
                                     {this.state.alertText}
                                 </Text>
                             </View>

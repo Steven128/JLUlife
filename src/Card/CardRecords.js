@@ -7,13 +7,22 @@ import {
     FlatList,
     ActivityIndicator
 } from "react-native";
+import RefreshListView, { RefreshState } from "react-native-refresh-list-view";
 import cheerio from "cheerio";
 import Global from "../Global";
-import RefreshListView, { RefreshState } from "react-native-refresh-list-view";
+import {
+    FooterFailureComponent,
+    FooterRefreshingComponent,
+    FooterEmptyDataComponent,
+    FooterNoMoreDataComponent
+} from "../Components/RefreshListComponent";
+
 const { width, height } = Dimensions.get("window");
 export default class CardRecords extends Component {
     constructor(props) {
         super(props);
+        this.onHeaderRefresh = this.onHeaderRefresh.bind(this);
+        this.onFooterRefresh = this.onFooterRefresh.bind(this);
         this.state = {
             getList: false,
             recordsList: [],
@@ -26,25 +35,33 @@ export default class CardRecords extends Component {
 
     componentDidMount() {
         this.getCardNumber(Global.card.cookie, res => {
-            var beginTime = new Date().toJSON().substring(0, 10);
-            var endTime = this.getDateBefore(this.state.beginTime);
-            this.setState({
-                cardNumber: res,
-                beginTime: beginTime,
-                endTime: endTime
-            });
-            this.getRecordsList(
-                Global.card.cookie,
-                res,
-                beginTime,
-                endTime,
-                res => {
-                    this.setState({
-                        recordsList: res,
-                        getList: true
-                    });
-                }
-            );
+            if (res.message == "success") {
+                var beginTime = new Date().toJSON().substring(0, 10);
+                var endTime = this.getDateBefore(this.state.beginTime);
+                this.setState({
+                    cardNumber: res.content,
+                    beginTime: beginTime,
+                    endTime: endTime
+                });
+                this.getRecordsList(
+                    Global.card.cookie,
+                    res.content,
+                    beginTime,
+                    endTime,
+                    res => {
+                        if (res.message == "success") {
+                            this.setState({
+                                recordsList: res.content,
+                                getList: true
+                            });
+                        }
+                    }
+                );
+            } else {
+                Global.card.cookie = "";
+                Global.card.isOnline = false;
+                this.props.navigation.navigate("Login");
+            }
         });
     }
 
@@ -64,7 +81,7 @@ export default class CardRecords extends Component {
             .then(response => response.text())
             .then(response => {
                 var cardNumber = this.parseCardNumber(response);
-                callback(cardNumber);
+                callback({ message: "success", content: cardNumber });
             })
             .catch(error => {
                 if (__DEV__) console.error(error);
@@ -121,7 +138,7 @@ export default class CardRecords extends Component {
             .then(response => response.text())
             .then(response => {
                 var recordList = this.parseHTML(response);
-                callback(recordList);
+                callback({ message: "success", content: recordList });
             })
             .catch(error => {
                 if (__DEV__) console.error(error);
@@ -169,9 +186,21 @@ export default class CardRecords extends Component {
             this.state.beginTime,
             this.state.endTime,
             res => {
-                this.setState({
-                    recordsList: res
-                });
+                this.setState({ getList: false });
+                if (res.message == "success") {
+                    this.setState({
+                        recordsList: res.content,
+                        getList: true,
+                        refreshState: RefreshState.Idle
+                    });
+                } else {
+                    this.setState({
+                        refreshState: RefreshState.Idle
+                    });
+                    Global.card.cookie = "";
+                    Global.card.isOnline = false;
+                    this.props.navigation.navigate("Login");
+                }
             }
         );
     }
@@ -193,7 +222,7 @@ export default class CardRecords extends Component {
                 }}
             >
                 {this.state.getList ? (
-                    <FlatList
+                    <RefreshListView
                         data={this.state.recordsList}
                         renderItem={({ item }) => (
                             <View style={styles.item}>
@@ -211,18 +240,27 @@ export default class CardRecords extends Component {
                                 </Text>
                             </View>
                         )}
-                        // refreshState={this.state.refreshState}
-                        // onHeaderRefresh={this.onHeaderRefresh}
-                        // onFooterRefresh={this.onFooterRefresh}
-                        // footerRefreshingText="玩命加载中 >.<"
-                        // footerFailureText="我擦嘞，居然失败了 =.=!"
-                        // footerNoMoreDataText="-我是有底线的-"
-                        // footerEmptyDataText="-好像什么东西都没有-"
+                        refreshState={this.state.refreshState}
+                        onHeaderRefresh={this.onHeaderRefresh}
+                        onFooterRefresh={this.onFooterRefresh}
+                        footerRefreshingComponent={
+                            <FooterRefreshingComponent />
+                        }
+                        footerFailureComponent={<FooterFailureComponent />}
+                        footerNoMoreDataComponent={
+                            <FooterNoMoreDataComponent />
+                        }
+                        footerEmptyDataComponent={<FooterEmptyDataComponent />}
                     />
                 ) : (
-                    <View style={{ paddingVertical: height / 2 - 150 }}>
+                    <View
+                        style={{
+                            flex: 1,
+                            backgroundColor: "transparent"
+                        }}
+                    >
                         <ActivityIndicator
-                            style={{}}
+                            style={{ flex: 1 }}
                             size="large"
                             color={Global.settings.theme.backgroundColor}
                         />

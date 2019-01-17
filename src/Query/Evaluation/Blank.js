@@ -229,9 +229,14 @@ export default class Blank extends Component {
                             }
                         />
                     ) : (
-                        <View style={{ paddingVertical: height / 2 - 150 }}>
+                        <View
+                            style={{
+                                flex: 1,
+                                backgroundColor: "transparent"
+                            }}
+                        >
                             <ActivityIndicator
-                                style={{}}
+                                style={{ flex: 1 }}
                                 size="large"
                                 color={Global.settings.theme.backgroundColor}
                             />
@@ -274,14 +279,11 @@ export default class Blank extends Component {
                             <View
                                 style={{
                                     paddingVertical: 10,
-                                    alignItems: "center"
+                                    alignItems: "center",
+                                    flex: 1
                                 }}
                             >
-                                <Text
-                                    style={{
-                                        paddingVertical: 5
-                                    }}
-                                >
+                                <Text style={{ flex: 1, color: "#6a6a6a" }}>
                                     现在没有需要评价的项目~
                                 </Text>
                             </View>

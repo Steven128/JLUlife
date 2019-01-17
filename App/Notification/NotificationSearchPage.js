@@ -218,11 +218,11 @@ export default class NotificationSearchPage extends Component {
                             <View
                                 style={{
                                     flex: 1,
-                                    paddingVertical: height / 2 - 150,
                                     backgroundColor: "transparent"
                                 }}
                             >
                                 <ActivityIndicator
+                                    style={{ flex: 1 }}
                                     size="large"
                                     color={
                                         Global.settings.theme.backgroundColor

@@ -12,7 +12,9 @@ export default class AvgGpointItem extends Component {
             <View style={styles.container}>
                 <Text style={styles.title}>平均绩点成绩统计</Text>
                 <View style={{ marginTop: 10, paddingHorizontal: 10 }}>
-                    <Text>按首次成绩</Text>
+                    <Text style={[styles.text, styles.textTitle]}>
+                        按首次成绩
+                    </Text>
                     <View>
                         <View style={styles.row}>
                             <Text style={[styles.text, styles.textTitle]}>
@@ -37,7 +39,9 @@ export default class AvgGpointItem extends Component {
                     </View>
                 </View>
                 <View style={{ marginTop: 10, paddingHorizontal: 10 }}>
-                    <Text>按最好成绩</Text>
+                    <Text style={[styles.text, styles.textTitle]}>
+                        按最好成绩
+                    </Text>
                     <View>
                         <View style={styles.row}>
                             <Text style={[styles.text, styles.textTitle]}>

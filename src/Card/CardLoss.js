@@ -58,19 +58,23 @@ export default class CardLoss extends Component {
                 cardNumber,
                 Global.card.password,
                 res => {
-                    console.log(res);
-                    if (res.success) {
+                    if (
+                        res.success ||
+                        res.msg.indexOf("Value cannot be null") > -1
+                    ) {
                         this.setState({
                             alertTitle: "挂失成功",
                             alertText:
                                 "你的校园卡资金暂时安全了呢\n如果7天内还未找到卡，赶快去补办一张新的吧~",
-                            alertVisible: true
+                            alertVisible: true,
+                            password: ""
                         });
                     } else {
                         this.setState({
                             alertTitle: "挂失失败",
                             alertText: "失败啦，" + res.msg,
-                            alertVisible: true
+                            alertVisible: true,
+                            password: ""
                         });
                     }
                     this.setState({ showLoading: false });
@@ -258,14 +262,11 @@ export default class CardLoss extends Component {
                             <View
                                 style={{
                                     paddingVertical: 10,
-                                    alignItems: "center"
+                                    alignItems: "center",
+                                    flex: 1
                                 }}
                             >
-                                <Text
-                                    style={{
-                                        paddingVertical: 5
-                                    }}
-                                >
+                                <Text style={{ flex: 1, color: "#6a6a6a" }}>
                                     确定要挂失吗？
                                 </Text>
                             </View>
@@ -308,14 +309,11 @@ export default class CardLoss extends Component {
                             <View
                                 style={{
                                     paddingVertical: 10,
-                                    alignItems: "center"
+                                    alignItems: "center",
+                                    flex: 1
                                 }}
                             >
-                                <Text
-                                    style={{
-                                        paddingVertical: 5
-                                    }}
-                                >
+                                <Text style={{ flex: 1, color: "#6a6a6a" }}>
                                     {this.state.alertText}
                                 </Text>
                             </View>

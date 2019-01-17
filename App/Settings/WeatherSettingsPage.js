@@ -184,17 +184,12 @@ export default class WeatherSettingsPage extends Component {
                     }
                 />
                 <View style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
-                    <DropDownPicker
-                        cityList={this.state.cityList}
-                        changeLocation={this.changeLocation.bind(this)}
-                        selectItem={this.handleCityChange.bind(this)}
-                        ref="picker"
-                    />
                     <View
                         style={{
                             position: "absolute",
                             top: 80,
-                            paddingHorizontal: 15
+                            paddingHorizontal: 15,
+                            zIndex: 0
                         }}
                     >
                         <Text style={{ color: "#6a6a6a" }}>
@@ -204,6 +199,12 @@ export default class WeatherSettingsPage extends Component {
                             点击保存后生效哟~
                         </Text>
                     </View>
+                    <DropDownPicker
+                        cityList={this.state.cityList}
+                        changeLocation={this.changeLocation.bind(this)}
+                        selectItem={this.handleCityChange.bind(this)}
+                        ref="picker"
+                    />
                 </View>
             </SafeAreaView>
         );

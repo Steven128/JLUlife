@@ -118,12 +118,12 @@ export default class NotificationPage extends Component {
                     ) : (
                         <View
                             style={{
-                                paddingVertical: height / 2 - 150,
+                                flex: 1,
                                 backgroundColor: "transparent"
                             }}
                         >
                             <ActivityIndicator
-                                style={{}}
+                                style={{ flex: 1 }}
                                 size="large"
                                 color={Global.settings.theme.backgroundColor}
                             />

@@ -966,8 +966,8 @@ babel-code-frame@^6.26.0:
 
 babel-core@^6.0.0, babel-core@^6.25.0, babel-core@^6.26.0:
   version "6.26.3"
-  resolved "http://registry.npm.taobao.org/babel-core/download/babel-core-6.26.3.tgz#b2e2f09e342d0f0c88e2f02e067794125e75c207"
-  integrity sha1-suLwnjQtDwyI4vAuBneUEl51wgc=
+  resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.26.3.tgz#b2e2f09e342d0f0c88e2f02e067794125e75c207"
+  integrity sha512-6jyFLuDmeidKmUEb3NM+/yawG0M2bDZ9Z1qbZP59cyHLz8kYGKYwpJP0UwUKKUiTRNvxfLesJnTedqczP7cTDA==
   dependencies:
     babel-code-frame "^6.26.0"
     babel-generator "^6.26.0"
@@ -4888,10 +4888,9 @@ nanomatch@^1.2.9:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-native-echarts@^0.5.0:
+"native-echarts@github:Steven128/react-native-echarts":
   version "0.5.0"
-  resolved "https://registry.yarnpkg.com/native-echarts/-/native-echarts-0.5.0.tgz#611382db27e48ae66cfda733cdf06b85a10b8abc"
-  integrity sha512-3agM6Mh6Xg95M0OrOdKWsuVl5MrGPz1ZS8hT1Ophhjr/byHZLKtL7RCqj4ul5f+t5ZXRuUOikM0obsyIANM7zw==
+  resolved "https://codeload.github.com/Steven128/react-native-echarts/tar.gz/d8782258169bbec1113cc870809c2393ecd1c24d"
   dependencies:
     echarts "3.2.3"
 
@@ -5727,13 +5726,6 @@ react-native-flexi-radio-button@^0.2.2:
   resolved "https://registry.yarnpkg.com/react-native-flexi-radio-button/-/react-native-flexi-radio-button-0.2.2.tgz#a0180393c531ba3477722c6e42a31ceb1c11623b"
   integrity sha1-oBgDk8UxujR3cixuQqMc6xwRYjs=
 
-react-native-general-siblings@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-general-siblings/-/react-native-general-siblings-1.0.0.tgz#fe19d2fb589fd482bedcf5e725d3855060c7febd"
-  integrity sha512-V6aqrGnVBeUPwnMG56NwyUl8Nqwax1M8gbzINAWgnBnUAqj7wBb6jxvOmAdtsUyV7yMhz+bu1a3hiGZKw7hRyQ==
-  dependencies:
-    static-container "^1.0.0"
-
 react-native-image-crop-picker@^0.21.3:
   version "0.21.3"
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.21.3.tgz#04457a3f2a888949f51be4a670dcf2520b9994f8"
@@ -5744,24 +5736,30 @@ react-native-md5@^1.0.0:
   resolved "http://registry.npm.taobao.org/react-native-md5/download/react-native-md5-1.0.0.tgz#2320be24d674938ae5ef4f492698edbbfa0e0205"
   integrity sha1-IyC+JNZ0k4rl709JJpjtu/oOAgU=
 
-react-native-pickers@^2.0.0:
+"react-native-pickers@github:Steven128/react-native-picker":
   version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-pickers/-/react-native-pickers-2.0.0.tgz#c18ee65ce148d52cadf7cbe0379ab07e7a945394"
-  integrity sha512-qDAYKrHt0o8pfq/c59vO8JE31ehlrvE1Lo74gYskLe6ObSOH3jCHvo+iCLmwCWZNtIoLFoP6dKmfMrdgfnUK9w==
+  resolved "https://codeload.github.com/Steven128/react-native-picker/tar.gz/1ad6ee9d68072c4c225e9545f83f7eb9849d6171"
 
-react-native-popup-dialog@^0.16.3:
-  version "0.16.3"
-  resolved "https://registry.yarnpkg.com/react-native-popup-dialog/-/react-native-popup-dialog-0.16.3.tgz#e5f448a3de33ac3e4a87fab68a177662094be1ed"
-  integrity sha512-99n/iDZGKI6rovI97nk96RmXUFpjDYtZWx9HOvrybKYfsTBOYDBQUg7ddcMYkXbQZHa9B/C2ALcJqCRVWhQjxA==
+"react-native-popup-dialog@github:Steven128/react-native-popup-dialog":
+  version "0.16.6"
+  resolved "https://codeload.github.com/Steven128/react-native-popup-dialog/tar.gz/54caafebf8792a65475c65bebed24a38a9f09030"
   dependencies:
     babel-plugin-flow-react-proptypes "^9.1.1"
     prop-types "^15.6.0"
-    react-native-general-siblings "^1.0.0"
+    react-native-root-siblings "^3.1.7"
 
 react-native-refresh-list-view@^1.0.10:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/react-native-refresh-list-view/-/react-native-refresh-list-view-1.0.10.tgz#4f801e8526f9028d4273f04283506f7a1eda8a0b"
   integrity sha512-n9QSwCThcY/JR2uz5B0+dSy1wAjGWYH7kEzV/lX9JfzSGXWIzKjLlJnOESZ3W65xXT5eh4r17zxTsYHYTmCtUg==
+
+react-native-root-siblings@^3.1.7:
+  version "3.1.7"
+  resolved "https://registry.yarnpkg.com/react-native-root-siblings/-/react-native-root-siblings-3.1.7.tgz#9af7cf7495311db9fbe929201a3234ed114cfe77"
+  integrity sha512-KYnDyEOR0YSt6WBY3zpF2OOC6AED7dOhdKZamOJaEmBVl8LO3bzvqu39AToH4G3fOspAJVtop7MjH7bzUxtUFQ==
+  dependencies:
+    prop-types "^15.6.2"
+    static-container "^1.0.0"
 
 react-native-safe-area-view@0.11.0:
   version "0.11.0"

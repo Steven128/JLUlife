@@ -13,7 +13,8 @@ import {
     TouchableOpacity,
     Platform,
     StatusBar,
-    SafeAreaView
+    SafeAreaView,
+    ActivityIndicator
 } from "react-native";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
@@ -28,7 +29,8 @@ export default class NotificationDetailPage extends Component {
         super(props);
         this.openDrawer = this.openDrawer.bind(this);
         this.state = {
-            showTag: false
+            showTag: false,
+            showWebView: false
         };
     }
 
@@ -53,6 +55,10 @@ export default class NotificationDetailPage extends Component {
         Linking.openURL(href).catch(err => {
             if (__DEV__) console.error("An error occurred", err);
         });
+    }
+
+    showWebView() {
+        this.setState({ showWebView: true });
     }
 
     render() {
@@ -176,20 +182,39 @@ export default class NotificationDetailPage extends Component {
                             {this.props.navigation.state.params.time}
                         </Text>
                     </View>
-                    <WebView
-                        bounces={false}
-                        scalesPageToFit={true}
-                        source={{
-                            uri: this.props.navigation.state.params.href
-                        }}
-                        automaticallyAdjustContentInsets={true}
-                        injectedJavaScript={`document.querySelector('body').innerHTML=document.querySelector('.immmge').innerHTML;document.querySelector('body').style.background='#fff';document.querySelector('html').style.background='#fff';document.querySelector('body').style.padding='15px';window.scrollTo(0,0) `}
-                        style={{
-                            width: deviceWidth,
-                            height: deviceHeight - 100
-                        }}
-                        startInLoadingState={true}
-                    />
+                    <View style={{ flex: 1 }}>
+                        <WebView
+                            onLoad={this.showWebView.bind(this)}
+                            scalesPageToFit={true}
+                            source={{
+                                uri: this.props.navigation.state.params.href
+                            }}
+                            automaticallyAdjustContentInsets={true}
+                            injectedJavaScript={`document.querySelector('body').innerHTML=document.querySelector('.immmge').innerHTML;document.querySelector('body').style.background='#fff';document.querySelector('html').style.background='#fff';document.querySelector('body').style.padding='15px';window.scrollTo(0,0) `}
+                            style={{ flex: 1 }}
+                        />
+                        {this.state.showWebView ? null : (
+                            <View
+                                style={{
+                                    flex: 1,
+                                    backgroundColor: "#ffffff",
+                                    position: "absolute",
+                                    top: 0,
+                                    right: 0,
+                                    bottom: 0,
+                                    left: 0
+                                }}
+                            >
+                                <ActivityIndicator
+                                    style={{ flex: 1 }}
+                                    size="large"
+                                    color={
+                                        Global.settings.theme.backgroundColor
+                                    }
+                                />
+                            </View>
+                        )}
+                    </View>
                 </View>
             </SafeAreaView>
         );

@@ -272,7 +272,12 @@ export default class EmptyRoomPage extends Component {
                                                                     { flex: 3 }
                                                                 ]}
                                                             >
-                                                                <Text>
+                                                                <Text
+                                                                    style={{
+                                                                        textAlign:
+                                                                            "center"
+                                                                    }}
+                                                                >
                                                                     教室名称
                                                                 </Text>
                                                             </View>
@@ -282,7 +287,12 @@ export default class EmptyRoomPage extends Component {
                                                                     { flex: 2 }
                                                                 ]}
                                                             >
-                                                                <Text>
+                                                                <Text
+                                                                    style={{
+                                                                        textAlign:
+                                                                            "center"
+                                                                    }}
+                                                                >
                                                                     容量(人)
                                                                 </Text>
                                                             </View>
@@ -292,7 +302,12 @@ export default class EmptyRoomPage extends Component {
                                                                     { flex: 2 }
                                                                 ]}
                                                             >
-                                                                <Text>
+                                                                <Text
+                                                                    style={{
+                                                                        textAlign:
+                                                                            "center"
+                                                                    }}
+                                                                >
                                                                     注释
                                                                 </Text>
                                                             </View>
@@ -309,7 +324,12 @@ export default class EmptyRoomPage extends Component {
                                                                     { flex: 3 }
                                                                 ]}
                                                             >
-                                                                <Text>
+                                                                <Text
+                                                                    style={{
+                                                                        textAlign:
+                                                                            "center"
+                                                                    }}
+                                                                >
                                                                     {item.name}
                                                                 </Text>
                                                             </View>
@@ -319,7 +339,12 @@ export default class EmptyRoomPage extends Component {
                                                                     { flex: 2 }
                                                                 ]}
                                                             >
-                                                                <Text>
+                                                                <Text
+                                                                    style={{
+                                                                        textAlign:
+                                                                            "center"
+                                                                    }}
+                                                                >
                                                                     {
                                                                         item.volume
                                                                     }
@@ -331,7 +356,12 @@ export default class EmptyRoomPage extends Component {
                                                                     { flex: 2 }
                                                                 ]}
                                                             >
-                                                                <Text>
+                                                                <Text
+                                                                    style={{
+                                                                        textAlign:
+                                                                            "center"
+                                                                    }}
+                                                                >
                                                                     {item.notes}
                                                                 </Text>
                                                             </View>
@@ -352,7 +382,12 @@ export default class EmptyRoomPage extends Component {
                                                                     { flex: 3 }
                                                                 ]}
                                                             >
-                                                                <Text>
+                                                                <Text
+                                                                    style={{
+                                                                        textAlign:
+                                                                            "center"
+                                                                    }}
+                                                                >
                                                                     {
                                                                         this
                                                                             .state
@@ -372,7 +407,12 @@ export default class EmptyRoomPage extends Component {
                                                                     { flex: 2 }
                                                                 ]}
                                                             >
-                                                                <Text>
+                                                                <Text
+                                                                    style={{
+                                                                        textAlign:
+                                                                            "center"
+                                                                    }}
+                                                                >
                                                                     {
                                                                         this
                                                                             .state
@@ -392,7 +432,12 @@ export default class EmptyRoomPage extends Component {
                                                                     { flex: 2 }
                                                                 ]}
                                                             >
-                                                                <Text>
+                                                                <Text
+                                                                    style={{
+                                                                        textAlign:
+                                                                            "center"
+                                                                    }}
+                                                                >
                                                                     {
                                                                         this
                                                                             .state
@@ -419,11 +464,11 @@ export default class EmptyRoomPage extends Component {
                         <View
                             style={{
                                 flex: 1,
-                                paddingVertical: height / 2 - 150,
                                 backgroundColor: "transparent"
                             }}
                         >
                             <ActivityIndicator
+                                style={{ flex: 1 }}
                                 size="large"
                                 color={Global.settings.theme.backgroundColor}
                             />
@@ -557,14 +602,11 @@ export default class EmptyRoomPage extends Component {
                             <View
                                 style={{
                                     paddingVertical: 10,
-                                    alignItems: "center"
+                                    alignItems: "center",
+                                    flex: 1
                                 }}
                             >
-                                <Text
-                                    style={{
-                                        paddingVertical: 5
-                                    }}
-                                >
+                                <Text style={{ flex: 1, color: "#6a6a6a" }}>
                                     {this.state.alertText}
                                 </Text>
                             </View>

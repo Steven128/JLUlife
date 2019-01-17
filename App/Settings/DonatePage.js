@@ -136,7 +136,8 @@ export default class DonatePage extends Component {
                             {Platform.OS == "ios" ? (
                                 <TouchableOpacity
                                     activeOpacity={0.75}
-                                    onPress={this.goToStore.bind(this)}
+                                    // onPress={this.goToStore.bind(this)}
+                                    onPress={() => {}}
                                 >
                                     <View
                                         style={{
@@ -153,7 +154,7 @@ export default class DonatePage extends Component {
                                             如果你认为 JLU Life
                                             还不错，欢迎到应用商店5星好评
                                         </Text>
-                                        <Text
+                                        {/* <Text
                                             style={[
                                                 styles.text,
                                                 {
@@ -165,7 +166,7 @@ export default class DonatePage extends Component {
                                             ]}
                                         >
                                             点此处到商店评价 :)
-                                        </Text>
+                                        </Text> */}
                                     </View>
                                 </TouchableOpacity>
                             ) : (

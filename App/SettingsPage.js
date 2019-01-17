@@ -55,9 +55,11 @@ export default class SettingsPage extends Component {
         this.setState({
             outOfSchool: Global.settings.outOfSchool
         });
-        NativeModules.FeedbackModule.init(
-            Global.loginInfo.j_username + " " + Global.currentStuName
-        );
+        if (Platform.OS == "android") {
+            NativeModules.FeedbackModule.init(
+                Global.loginInfo.j_username + " " + Global.currentStuName
+            );
+        }
     }
 
     componentWillReceiveProps() {
@@ -215,6 +217,9 @@ export default class SettingsPage extends Component {
                                                 platform: "ios"
                                             }
                                         );
+                                        // this.props.navigation.navigate(
+                                        //     "FeedBack"
+                                        // );
                                     }}
                                 >
                                     <View style={styles.item}>
@@ -329,14 +334,11 @@ export default class SettingsPage extends Component {
                             <View
                                 style={{
                                     paddingVertical: 10,
-                                    alignItems: "center"
+                                    alignItems: "center",
+                                    flex: 1
                                 }}
                             >
-                                <Text
-                                    style={{
-                                        paddingVertical: 5
-                                    }}
-                                >
+                                <Text style={{ flex: 1, color: "#6a6a6a" }}>
                                     退出登录会清空你的一切信息
                                 </Text>
                             </View>
@@ -379,14 +381,11 @@ export default class SettingsPage extends Component {
                             <View
                                 style={{
                                     paddingVertical: 10,
-                                    alignItems: "center"
+                                    alignItems: "center",
+                                    flex: 1
                                 }}
                             >
-                                <Text
-                                    style={{
-                                        paddingVertical: 5
-                                    }}
-                                >
+                                <Text style={{ flex: 1, color: "#6a6a6a" }}>
                                     你已退出登录啦，换个账号吧~
                                 </Text>
                             </View>

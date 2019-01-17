@@ -45,7 +45,7 @@ export default class Weather extends Component {
                             res.content.weatherData.update.replace(/-/g, "/")
                         ).getTime() / 1000;
                     if (
-                        Math.floor((timestamp - lastUpdate) / 3600) >= 6 &&
+                        Math.floor((timestamp - lastUpdate) / 3600) >= 20 &&
                         new Date().toISOString().substring(5, 10) !=
                             this.state.weatherData.update.substring(5, 10)
                     ) {
@@ -273,15 +273,15 @@ export default class Weather extends Component {
                             </View>
                         </View>
                     ) : null}
-                    {this.state.getWeather ? (
-                        <View
-                            style={{
-                                borderTopColor: "#eee",
-                                borderTopWidth: 1,
-                                marginTop: 20,
-                                paddingTop: 10
-                            }}
-                        >
+                    <View
+                        style={{
+                            borderTopColor: "#eee",
+                            borderTopWidth: 1,
+                            marginTop: 20,
+                            paddingTop: 10
+                        }}
+                    >
+                        {this.state.getWeather ? (
                             <View>
                                 <Text
                                     style={[
@@ -310,47 +310,46 @@ export default class Weather extends Component {
                                               .replace(" ", "日 ")}
                                 </Text>
                             </View>
-                            <View>
-                                <Text
-                                    style={[
-                                        styles.text,
-                                        {
-                                            fontSize: 16,
-                                            textAlign: "right",
-                                            paddingTop: 5
-                                        }
-                                    ]}
+                        ) : null}
+                        <View>
+                            <Text
+                                style={[
+                                    styles.text,
+                                    {
+                                        fontSize: 16,
+                                        textAlign: "right",
+                                        paddingTop: 5
+                                    }
+                                ]}
+                            >
+                                {this.state.weatherData.location}
+                                {"  "}
+                                <TouchableWithoutFeedback
+                                    onPress={() =>
+                                        this.props.navigation.navigate(
+                                            "WeatherSettings",
+                                            { from: "Home" }
+                                        )
+                                    }
                                 >
-                                    {this.state.weatherData.location}
-                                    {"  "}
-                                    <TouchableWithoutFeedback
-                                        onPress={() =>
-                                            this.props.navigation.navigate(
-                                                "WeatherSettings",
-                                                { from: "Home" }
-                                            )
-                                        }
+                                    <Text
+                                        style={[
+                                            styles.text,
+                                            {
+                                                fontSize: 14,
+                                                color:
+                                                    Global.settings.theme
+                                                        .backgroundColor,
+                                                textDecorationLine: "underline"
+                                            }
+                                        ]}
                                     >
-                                        <Text
-                                            style={[
-                                                styles.text,
-                                                {
-                                                    fontSize: 14,
-                                                    color:
-                                                        Global.settings.theme
-                                                            .backgroundColor,
-                                                    textDecorationLine:
-                                                        "underline"
-                                                }
-                                            ]}
-                                        >
-                                            切换城市
-                                        </Text>
-                                    </TouchableWithoutFeedback>
-                                </Text>
-                            </View>
+                                        切换城市
+                                    </Text>
+                                </TouchableWithoutFeedback>
+                            </Text>
                         </View>
-                    ) : null}
+                    </View>
                 </View>
             );
     }
