@@ -225,7 +225,7 @@ export default class EvaluationItemAndroid extends Component {
                         height={0.85}
                         containerStyle={styles.dialog}
                     >
-                        <DialogContent style={{ flex: 1 }}>
+                        <DialogContent style={{ flex: 1, paddingBottom: 0 }}>
                             <ScrollView
                                 showsVerticalScrollIndicator={false}
                                 style={{
@@ -1572,7 +1572,7 @@ export default class EvaluationItemAndroid extends Component {
                     height={0.45 * (width / height)}
                     containerStyle={styles.dialog}
                 >
-                    <DialogContent style={{ flex: 1 }}>
+                    <DialogContent style={{ flex: 1, paddingBottom: 0 }}>
                         <View style={{ flex: 1 }}>
                             <View
                                 style={{

@@ -53,7 +53,6 @@ export default class Sidebar extends Component {
             this.checkUpdate();
             if (isFirstTime) {
                 markSuccess();
-                ToastAndroid.show("已切换到新版本", ToastAndroid.SHORT);
             }
         });
     }
@@ -61,7 +60,6 @@ export default class Sidebar extends Component {
         downloadUpdate(info)
             .then(hash => {
                 switchVersionLater(hash);
-                ToastAndroid.show("热更新已完成", ToastAndroid.SHORT);
             })
             .catch(err => {
                 if (__DEV__) console.log(err);
@@ -71,7 +69,6 @@ export default class Sidebar extends Component {
         checkUpdate(appKey)
             .then(info => {
                 if (info.update) {
-                    ToastAndroid.show("开始热更新", ToastAndroid.SHORT);
                     this.doUpdate(info);
                 }
             })

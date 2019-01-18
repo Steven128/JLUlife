@@ -63,12 +63,12 @@ export default class ScorePage extends Component {
                         this.setState({
                             getScore: false
                         });
-                        Platform.OS === "ios"
-                            ? this.refs.toast.show("成绩已刷新", 2000)
-                            : ToastAndroid.show(
-                                  "成绩已刷新",
-                                  ToastAndroid.SHORT
-                              );
+                        if (Platform.OS === "ios") {
+                            if (this.refs.toast != undefined)
+                                this.refs.toast.show("成绩已刷新", 2000);
+                        } else {
+                            ToastAndroid.show("成绩已刷新", ToastAndroid.SHORT);
+                        }
                         this.setState({
                             scoreList: res.content,
                             getScore: true
@@ -76,12 +76,15 @@ export default class ScorePage extends Component {
                     }
                 });
             } else {
-                Platform.OS === "ios"
-                    ? this.refs.toast.show("登录后才能刷新成绩哟~", 2000)
-                    : ToastAndroid.show(
-                          "登录后才能刷新成绩哟~",
-                          ToastAndroid.SHORT
-                      );
+                if (Platform.OS === "ios") {
+                    if (this.refs.toast != undefined)
+                        this.refs.toast.show("登录后才能刷新成绩哟~", 2000);
+                } else {
+                    ToastAndroid.show(
+                        "登录后才能刷新成绩哟~",
+                        ToastAndroid.SHORT
+                    );
+                }
             }
         }
     }
@@ -225,7 +228,7 @@ export default class ScorePage extends Component {
                         height={0.45 * (width / height)}
                         containerStyle={styles.dialog}
                     >
-                        <DialogContent style={{ flex: 1 }}>
+                        <DialogContent style={{ flex: 1, paddingBottom: 0 }}>
                             <View style={{ flex: 1 }}>
                                 <View
                                     style={{

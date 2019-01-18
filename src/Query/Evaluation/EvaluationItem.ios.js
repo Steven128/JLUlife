@@ -227,7 +227,7 @@ export default class EvaluationItemIOS extends Component {
                         height={0.85}
                         containerStyle={styles.dialog}
                     >
-                        <DialogContent style={{ flex: 1 }}>
+                        <DialogContent style={{ flex: 1, paddingBottom: 0 }}>
                             <ScrollView
                                 showsVerticalScrollIndicator={false}
                                 style={{
@@ -1574,7 +1574,7 @@ export default class EvaluationItemIOS extends Component {
                     height={0.45 * (width / height)}
                     containerStyle={styles.dialog}
                 >
-                    <DialogContent style={{ flex: 1 }}>
+                    <DialogContent style={{ flex: 1, paddingBottom: 0 }}>
                         <View style={{ flex: 1 }}>
                             <View
                                 style={{
@@ -1683,7 +1683,8 @@ export default class EvaluationItemIOS extends Component {
             res => {
                 if (res.message == "success") {
                     if (res.content.errno == 0) {
-                        this.refs.toast.show("评价成功", 5000);
+                        if (this.refs.toast != undefined)
+                            this.refs.toast.show("评价成功", 5000);
                         this.setState({
                             submitTapped: false,
                             dialogVisible: false

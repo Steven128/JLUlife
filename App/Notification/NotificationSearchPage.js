@@ -59,19 +59,14 @@ export default class NotificationSearchPage extends Component {
                         borderRadius: 3,
                         flexDirection: "row",
                         backgroundColor: "#fff",
-                        overflow: "hidden"
+                        overflow: "hidden",
+                        flex: 1
                     }}
                 >
-                    <Text
-                        style={{ flex: 1.5, paddingLeft: 10, color: "#6a6a6a" }}
-                    >
+                    <Text style={{ textAlign: "center", color: "#6a6a6a" }}>
                         {text}
                     </Text>
-                    <EIcon
-                        style={{ flex: 1 }}
-                        size={18}
-                        name="chevron-small-down"
-                    />
+                    <EIcon size={18} name="chevron-small-down" />
                 </View>
             </TouchableOpacity>
         );
@@ -193,20 +188,6 @@ export default class NotificationSearchPage extends Component {
                                 />
                             </View>
                         </View>
-                        <SearchTypePicker
-                            ref={ref => (this.SearchTypePicker = ref)}
-                            itemTextColor="#808080"
-                            itemSelectedColor={
-                                Global.settings.theme.backgroundColor
-                            }
-                            onPickerCancel={() => {}}
-                            onPickerConfirm={value => {
-                                this.setState({
-                                    searchlx: value
-                                });
-                            }}
-                            itemHeight={50}
-                        />
                         {this.state.getOa ? (
                             <SearchView
                                 oaList={this.state.oaList}
@@ -232,6 +213,18 @@ export default class NotificationSearchPage extends Component {
                         ) : null}
                     </View>
                 </View>
+                <SearchTypePicker
+                    ref={ref => (this.SearchTypePicker = ref)}
+                    itemTextColor="#808080"
+                    itemSelectedColor={Global.settings.theme.backgroundColor}
+                    onPickerCancel={() => {}}
+                    onPickerConfirm={value => {
+                        this.setState({
+                            searchlx: value
+                        });
+                    }}
+                    itemHeight={50}
+                />
             </SafeAreaView>
         );
     }

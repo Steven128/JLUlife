@@ -92,12 +92,12 @@ export default class Blank extends Component {
                     evalLength: res.content.length
                 });
                 if (res.content.length == 0) {
-                    Platform.OS === "ios"
-                        ? this.refs.toast.show("评教已经完成啦~", 5000)
-                        : ToastAndroid.show(
-                              "评教已经完成啦~",
-                              ToastAndroid.LONG
-                          );
+                    if (Platform.OS === "ios") {
+                        if (this.refs.toast != undefined)
+                            this.refs.toast.show("评教已经完成啦~", 5000);
+                    } else {
+                        ToastAndroid.show("评教已经完成啦~", ToastAndroid.LONG);
+                    }
                 }
             }
         });
@@ -274,7 +274,7 @@ export default class Blank extends Component {
                     height={0.45 * (width / height)}
                     containerStyle={styles.dialog}
                 >
-                    <DialogContent style={{ flex: 1 }}>
+                    <DialogContent style={{ flex: 1, paddingBottom: 0 }}>
                         <View style={{ flex: 1 }}>
                             <View
                                 style={{

@@ -106,7 +106,15 @@ export default class EmptyRoomPage extends Component {
                     activeOpacity={0.75}
                 >
                     <View style={styles.button}>
-                        <Text style={{ flex: 8, paddingLeft: 15 }}>{text}</Text>
+                        <Text
+                            style={{
+                                flex: 8,
+                                paddingLeft: 15,
+                                color: "#6a6a6a"
+                            }}
+                        >
+                            {text}
+                        </Text>
                         <EIcon
                             style={{ flex: 1 }}
                             size={18}
@@ -597,7 +605,7 @@ export default class EmptyRoomPage extends Component {
                     height={0.45 * (width / height)}
                     containerStyle={styles.dialog}
                 >
-                    <DialogContent style={{ flex: 1 }}>
+                    <DialogContent style={{ flex: 1, paddingBottom: 0 }}>
                         <View style={{ flex: 1 }}>
                             <View
                                 style={{
@@ -684,12 +692,15 @@ export default class EmptyRoomPage extends Component {
                     console.log(responseJson);
                 }
                 Global.isOnline = false;
-                Platform.OS === "ios"
-                    ? this.refs.toast.show("登录后才能查询空教室~", 2000)
-                    : ToastAndroid.show(
-                          "登录后才能查询空教室~",
-                          ToastAndroid.SHORT
-                      );
+                if (Platform.OS === "ios") {
+                    if (this.refs.toast != undefined)
+                        this.refs.toast.show("登录后才能查询空教室~", 2000);
+                } else {
+                    ToastAndroid.show(
+                        "登录后才能查询空教室~",
+                        ToastAndroid.SHORT
+                    );
+                }
             });
     }
 }

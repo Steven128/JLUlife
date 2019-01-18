@@ -73,7 +73,7 @@ export default class ScoreItemAndroid extends Component {
                         height={0.75}
                         containerStyle={styles.dialog}
                     >
-                        <DialogContent style={{ flex: 1 }}>
+                        <DialogContent style={{ flex: 1, paddingBottom: 0 }}>
                             <Text style={styles.dialogTitle}>成绩详情</Text>
                             <Text style={[styles.text, styles.textInDialog]}>
                                 {this.props.courName}

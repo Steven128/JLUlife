@@ -272,28 +272,26 @@ export default class ClassSettingsPage extends Component {
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>
-                        <SlidersColorPicker
-                            visible={this.state.modalVisible}
-                            color={this.state.backgroundColor}
-                            returnMode={"hex"}
-                            onCancel={() =>
-                                this.setState({ modalVisible: false })
-                            }
-                            onOk={colorHex => {
-                                this.setState({
-                                    modalVisible: false,
-                                    backgroundColor: colorHex,
-                                    selectedIndex: 12
-                                });
-                                Global.settings.theme.index = 12;
-                                Global.settings.theme.backgroundColor = colorHex;
-                            }}
-                            value={Global.settings.theme.backgroundColor}
-                            okLabel="确定"
-                            cancelLabel="取消"
-                        />
                     </ScrollView>
                 </View>
+                <SlidersColorPicker
+                    visible={this.state.modalVisible}
+                    color={this.state.backgroundColor}
+                    returnMode={"hex"}
+                    onCancel={() => this.setState({ modalVisible: false })}
+                    onOk={colorHex => {
+                        this.setState({
+                            modalVisible: false,
+                            backgroundColor: colorHex,
+                            selectedIndex: 12
+                        });
+                        Global.settings.theme.index = 12;
+                        Global.settings.theme.backgroundColor = colorHex;
+                    }}
+                    value={Global.settings.theme.backgroundColor}
+                    okLabel="确定"
+                    cancelLabel="取消"
+                />
             </SafeAreaView>
         );
     }

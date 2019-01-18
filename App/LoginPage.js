@@ -293,7 +293,7 @@ export default class LoginPage extends Component {
                     height={0.45 * (width / height)}
                     containerStyle={styles.dialog}
                 >
-                    <DialogContent style={{ flex: 1 }}>
+                    <DialogContent style={{ flex: 1, paddingBottom: 0 }}>
                         <View style={{ flex: 1 }}>
                             <View
                                 style={{
@@ -358,9 +358,12 @@ export default class LoginPage extends Component {
         if (params.from == "Table") params.from = "Home";
         LoginInterface(this.state.j_username, this.state.j_password, res => {
             if (res.message == "success") {
-                Platform.OS === "ios"
-                    ? this.refs.toast.show("登录成功", 5000)
-                    : ToastAndroid.show("登录成功", ToastAndroid.LONG);
+                if (Platform.OS === "ios") {
+                    if (this.refs.toast != undefined)
+                        this.refs.toast.show("登录成功", 5000);
+                } else {
+                    ToastAndroid.show("登录成功", ToastAndroid.LONG);
+                }
                 this.props.navigation.navigate(params.from, {
                     from: "Login",
                     message: "success"

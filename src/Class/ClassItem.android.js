@@ -237,7 +237,7 @@ export default class ClassItemAndroid extends Component {
                                     </TouchableNativeFeedback>
                                 ]}
                             >
-                                <DialogContent style={{ flex: 1 }}>
+                                <DialogContent style={{ flex: 1, paddingBottom: 0 }}>
                                     <View
                                         style={{
                                             flex: 1,

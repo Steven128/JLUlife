@@ -212,14 +212,14 @@ export default class SettingsPage extends Component {
                                 <TouchableOpacity
                                     activeOpacity={0.75}
                                     onPress={() => {
-                                        NativeModules.FeedbackModule.openFeedbackActivity(
-                                            {
-                                                platform: "ios"
-                                            }
-                                        );
-                                        // this.props.navigation.navigate(
-                                        //     "FeedBack"
+                                        // NativeModules.FeedbackModule.openFeedbackActivity(
+                                        //     {
+                                        //         platform: "ios"
+                                        //     }
                                         // );
+                                        this.props.navigation.navigate(
+                                            "FeedBack"
+                                        );
                                     }}
                                 >
                                     <View style={styles.item}>
@@ -329,7 +329,7 @@ export default class SettingsPage extends Component {
                     height={0.45 * (width / height)}
                     containerStyle={styles.dialog}
                 >
-                    <DialogContent style={{ flex: 1 }}>
+                    <DialogContent style={{ flex: 1, paddingBottom: 0 }}>
                         <View style={{ flex: 1 }}>
                             <View
                                 style={{
@@ -376,7 +376,7 @@ export default class SettingsPage extends Component {
                     height={0.45 * (width / height)}
                     containerStyle={styles.dialog}
                 >
-                    <DialogContent style={{ flex: 1 }}>
+                    <DialogContent style={{ flex: 1, paddingBottom: 0 }}>
                         <View style={{ flex: 1 }}>
                             <View
                                 style={{

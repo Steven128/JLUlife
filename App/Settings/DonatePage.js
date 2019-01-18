@@ -38,28 +38,38 @@ export default class DonatePage extends Component {
         this.props.navigation.openDrawer();
     }
 
-    goToStore() {
-        Platform.OS === "ios"
-            ? this.refs.toast.show("十分感谢 *\\(๑• ₃ •๑)", 5000)
-            : ToastAndroid.show("十分感谢 *\\(๑• ₃ •๑)", ToastAndroid.LONG);
-        Platform.OS == "ios"
-            ? null
-            : Linking.openURL("https://www.coolapk.com/apk/210060");
+    goToStoreAndroid() {
+        ToastAndroid.show("十分感谢 *\\(๑• ₃ •๑)", ToastAndroid.LONG);
+        Linking.openURL("https://www.coolapk.com/apk/210060");
+    }
+
+    goToStoreIOS() {
+        if (this.refs.toast != undefined)
+            this.refs.toast.show("十分感谢 *\\(๑• ₃ •๑)", 5000);
+        Linking.openURL(
+            "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&id=org.steven.jlulife.ios"
+        );
     }
 
     goToAlipay() {
-        Platform.OS === "ios"
-            ? this.refs.toast.show("十分感谢 *\\(๑• ₃ •๑)", 5000)
-            : ToastAndroid.show("十分感谢 *\\(๑• ₃ •๑)", ToastAndroid.LONG);
+        if (Platform.OS === "ios") {
+            if (this.refs.toast != undefined)
+                this.refs.toast.show("十分感谢 *\\(๑• ₃ •๑)", 5000);
+        } else {
+            ToastAndroid.show("十分感谢 *\\(๑• ₃ •๑)", ToastAndroid.LONG);
+        }
         Linking.openURL(
             "alipayqr://platformapi/startapp?saId=10000007&clientVersion=3.7.0.0718&qrcode=https://qr.alipay.com/fkx07341eimsdrzuwma1t1e?_s=web-other"
         ).catch(err => {
-            Platform.OS === "ios"
-                ? this.refs.toast.show("手机上没有安装支付宝惹 T^T", 2000)
-                : ToastAndroid.show(
-                      "手机上没有安装支付宝惹 T^T",
-                      ToastAndroid.SHORT
-                  );
+            if (Platform.OS === "ios") {
+                if (this.refs.toast != undefined)
+                    this.refs.toast.show("手机上没有安装支付宝惹 T^T", 2000);
+            } else {
+                ToastAndroid.show(
+                    "手机上没有安装支付宝惹 T^T",
+                    ToastAndroid.SHORT
+                );
+            }
         });
     }
 
@@ -136,8 +146,7 @@ export default class DonatePage extends Component {
                             {Platform.OS == "ios" ? (
                                 <TouchableOpacity
                                     activeOpacity={0.75}
-                                    // onPress={this.goToStore.bind(this)}
-                                    onPress={() => {}}
+                                    onPress={this.goToStoreIOS.bind(this)}
                                 >
                                     <View
                                         style={{
@@ -154,7 +163,7 @@ export default class DonatePage extends Component {
                                             如果你认为 JLU Life
                                             还不错，欢迎到应用商店5星好评
                                         </Text>
-                                        {/* <Text
+                                        <Text
                                             style={[
                                                 styles.text,
                                                 {
@@ -166,12 +175,12 @@ export default class DonatePage extends Component {
                                             ]}
                                         >
                                             点此处到商店评价 :)
-                                        </Text> */}
+                                        </Text>
                                     </View>
                                 </TouchableOpacity>
                             ) : (
                                 <TouchableNativeFeedback
-                                    onPress={this.goToStore.bind(this)}
+                                    onPress={this.goToStoreAndroid.bind(this)}
                                 >
                                     <View
                                         style={{

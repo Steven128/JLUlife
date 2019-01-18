@@ -45,12 +45,6 @@ export default class GetMessage extends Component {
                     getMessage: true
                 });
             } else {
-                Platform.OS === "ios"
-                    ? this.refs.toast.show("登录后才可以刷新课表~", 2000)
-                    : ToastAndroid.show(
-                          "登录后才可以刷新课表~",
-                          ToastAndroid.SHORT
-                      );
                 this.props.handleOffline();
             }
         });

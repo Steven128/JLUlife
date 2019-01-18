@@ -62,9 +62,12 @@ export default class AddClassPage extends Component {
 
     onSave() {
         if (this.state.lessonName == "") {
-            Platform.OS === "ios"
-                ? this.refs.toast.show("课程名称不能为空~", 2000)
-                : ToastAndroid.show("课程名称不能为空~", ToastAndroid.SHORT);
+            if (Platform.OS === "ios") {
+                if (this.refs.toast != undefined)
+                    this.refs.toast.show("课程名称不能为空~", 2000);
+            } else {
+                ToastAndroid.show("课程名称不能为空~", ToastAndroid.SHORT);
+            }
             return;
         }
         var dayOfWeek = "";
@@ -137,12 +140,15 @@ export default class AddClassPage extends Component {
             }
         }
         if (flag) {
-            Platform.OS === "ios"
-                ? this.refs.toast.show("课程与当前课表的时间段冲突啦~", 2000)
-                : ToastAndroid.show(
-                      "课程与当前课表的时间段冲突啦~",
-                      ToastAndroid.SHORT
-                  );
+            if (Platform.OS === "ios") {
+                if (this.refs.toast != undefined)
+                    this.refs.toast.show("课程与当前课表的时间段冲突啦~", 2000);
+            } else {
+                ToastAndroid.show(
+                    "课程与当前课表的时间段冲突啦~",
+                    ToastAndroid.SHORT
+                );
+            }
         } else {
             for (
                 var week = singleClass.schedule.beginWeek;
@@ -196,14 +202,22 @@ export default class AddClassPage extends Component {
             >
                 <View style={styles.selectContainerStyle}>
                     <View style={{ marginLeft: 15 }}>{icon}</View>
-                    <Text style={{ flex: 1, paddingLeft: 15 }}>{text}</Text>
+                    <Text
+                        style={{ flex: 1, paddingLeft: 15, color: "#6a6a6a" }}
+                    >
+                        {text}
+                    </Text>
                 </View>
             </TouchableOpacity>
         ) : (
             <TouchableNativeFeedback onPress={callback.bind(this)}>
                 <View style={styles.selectContainerStyle}>
                     <View style={{ marginLeft: 15 }}>{icon}</View>
-                    <Text style={{ flex: 1, paddingLeft: 15 }}>{text}</Text>
+                    <Text
+                        style={{ flex: 1, paddingLeft: 15, color: "#6a6a6a" }}
+                    >
+                        {text}
+                    </Text>
                 </View>
             </TouchableNativeFeedback>
         );
@@ -380,45 +394,41 @@ export default class AddClassPage extends Component {
                             )}
                         </View>
                     </ScrollView>
-                    <AddWeekPicker
-                        ref={ref => (this.WeekPicker = ref)}
-                        itemTextColor="#808080"
-                        itemSelectedColor={
-                            Global.settings.theme.backgroundColor
-                        }
-                        onPickerCancel={() => {}}
-                        onPickerConfirm={value => {
-                            var weekOddEven = "";
-                            if (value.option == "单周") weekOddEven = "O";
-                            else if (value.option == "双周") weekOddEven = "E";
-                            this.setState({
-                                weekOddEven: weekOddEven,
-                                beginWeek: value.begin,
-                                endWeek: value.end
-                            });
-                        }}
-                        itemHeight={50}
-                    />
-                    <ClassPicker
-                        ref={ref => (this.ClassPicker = ref)}
-                        itemTextColor="#808080"
-                        itemSelectedColor={
-                            Global.settings.theme.backgroundColor
-                        }
-                        onPickerCancel={() => {}}
-                        onPickerConfirm={value => {
-                            var time = [];
-                            for (var i = value.begin; i <= value.end; i++) {
-                                time.push(i);
-                            }
-                            this.setState({
-                                dayOfWeek: value.weekDay,
-                                time: time
-                            });
-                        }}
-                        itemHeight={50}
-                    />
                 </View>
+                <AddWeekPicker
+                    ref={ref => (this.WeekPicker = ref)}
+                    itemTextColor="#808080"
+                    itemSelectedColor={Global.settings.theme.backgroundColor}
+                    onPickerCancel={() => {}}
+                    onPickerConfirm={value => {
+                        var weekOddEven = "";
+                        if (value.option == "单周") weekOddEven = "O";
+                        else if (value.option == "双周") weekOddEven = "E";
+                        this.setState({
+                            weekOddEven: weekOddEven,
+                            beginWeek: value.begin,
+                            endWeek: value.end
+                        });
+                    }}
+                    itemHeight={50}
+                />
+                <ClassPicker
+                    ref={ref => (this.ClassPicker = ref)}
+                    itemTextColor="#808080"
+                    itemSelectedColor={Global.settings.theme.backgroundColor}
+                    onPickerCancel={() => {}}
+                    onPickerConfirm={value => {
+                        var time = [];
+                        for (var i = value.begin; i <= value.end; i++) {
+                            time.push(i);
+                        }
+                        this.setState({
+                            dayOfWeek: value.weekDay,
+                            time: time
+                        });
+                    }}
+                    itemHeight={50}
+                />
             </SafeAreaView>
         );
     }

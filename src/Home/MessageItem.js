@@ -28,15 +28,21 @@ export default class MessageItem extends Component {
     changeToRead() {
         readMessage(this.state.messageId, res => {
             if (res.message == "success") {
-                Platform.OS === "ios"
-                    ? this.refs.toast.show("已标为已读~", 2000)
-                    : ToastAndroid.show("已标为已读~", ToastAndroid.SHORT);
+                if (Platform.OS === "ios") {
+                    if (this.refs.toast != undefined)
+                        this.refs.toast.show("标为已读", 2000);
+                } else {
+                    ToastAndroid.show("标为已读", ToastAndroid.SHORT);
+                }
 
                 this.props.refreshList();
             } else {
-                Platform.OS === "ios"
-                    ? this.refs.toast.show("网络开小差啦~", 2000)
-                    : ToastAndroid.show("网络开小差啦~", ToastAndroid.SHORT);
+                if (Platform.OS === "ios") {
+                    if (this.refs.toast != undefined)
+                        this.refs.toast.show("网络开小差啦~", 2000);
+                } else {
+                    ToastAndroid.show("网络开小差啦~", ToastAndroid.SHORT);
+                }
             }
         });
     }

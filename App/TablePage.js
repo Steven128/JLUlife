@@ -108,7 +108,9 @@ export default class TablePage extends Component {
         this.props.navigation.openDrawer();
         this.setState({ pickerOpen: false });
         this.refs.weekPicker.closePicker();
-        this.handleAddButton();
+        if (this.state.classAdditionsOpen) {
+            this.handleAddButton();
+        }
     }
 
     openPicker() {
@@ -166,12 +168,12 @@ export default class TablePage extends Component {
 
     refreshClassTable() {
         if (!Global.isOnline) {
-            Platform.OS === "ios"
-                ? this.refs.toast.show("登录后才可以刷新课表~", 2000)
-                : ToastAndroid.show(
-                      "登录后才可以刷新课表~",
-                      ToastAndroid.SHORT
-                  );
+            if (Platform.OS === "ios") {
+                if (this.refs.toast != undefined)
+                    this.refs.toast.show("登录后才可以刷新课表~", 2000);
+            } else {
+                ToastAndroid.show("登录后才可以刷新课表~", ToastAndroid.SHORT);
+            }
         } else {
             ClassInterface(res => {
                 if (res.message == "success") {
@@ -180,16 +182,22 @@ export default class TablePage extends Component {
                         classJson: res.content,
                         getClassTable: true
                     });
-                    Platform.OS === "ios"
-                        ? this.refs.toast.show("课表已刷新~", 2000)
-                        : ToastAndroid.show("课表已刷新~", ToastAndroid.SHORT);
+                    if (Platform.OS === "ios") {
+                        if (this.refs.toast != undefined)
+                            this.refs.toast.show("课表已刷新~", 2000);
+                    } else {
+                        ToastAndroid.show("课表已刷新~", ToastAndroid.SHORT);
+                    }
                 } else {
-                    Platform.OS === "ios"
-                        ? this.refs.toast.show("登录后才可以刷新课表~", 2000)
-                        : ToastAndroid.show(
-                              "登录后才可以刷新课表~",
-                              ToastAndroid.SHORT
-                          );
+                    if (Platform.OS === "ios") {
+                        if (this.refs.toast != undefined)
+                            this.refs.toast.show("登录后才可以刷新课表~", 2000);
+                    } else {
+                        ToastAndroid.show(
+                            "登录后才可以刷新课表~",
+                            ToastAndroid.SHORT
+                        );
+                    }
                 }
             });
         }

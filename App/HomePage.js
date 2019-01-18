@@ -192,12 +192,15 @@ export default class HomePage extends Component {
                     });
                     //
                     if (!Global.isOnline) {
-                        Platform.OS === "ios"
-                            ? this.refs.toast.show("正在登录，请稍后", 2000)
-                            : ToastAndroid.show(
-                                  "正在登录，请稍后",
-                                  ToastAndroid.SHORT
-                              );
+                        if (Platform.OS === "ios") {
+                            if (this.refs.toast != undefined)
+                                this.refs.toast.show("正在登录，请稍后", 2000);
+                        } else {
+                            ToastAndroid.show(
+                                "正在登录，请稍后",
+                                ToastAndroid.SHORT
+                            );
+                        }
 
                         Global.checkingOnline = true;
                         /**
@@ -211,12 +214,19 @@ export default class HomePage extends Component {
                                     checkingOnline: false
                                 });
                                 if (res.message == "success") {
-                                    Platform.OS === "ios"
-                                        ? this.refs.toast.show("登录成功", 5000)
-                                        : ToastAndroid.show(
-                                              "登录成功",
-                                              ToastAndroid.LONG
-                                          );
+                                    if (Platform.OS === "ios") {
+                                        if (this.refs.toast != undefined)
+                                            this.refs.toast.show(
+                                                "登录成功",
+                                                5000
+                                            );
+                                    } else {
+                                        ToastAndroid.show(
+                                            "登录成功",
+                                            ToastAndroid.LONG
+                                        );
+                                    }
+
                                     Global.isOnline = true;
                                     Global.checkingOnline = false;
                                     this.setState({
@@ -256,15 +266,19 @@ export default class HomePage extends Component {
                                         });
                                     }
                                 } else {
-                                    Platform.OS === "ios"
-                                        ? this.refs.toast.show(
-                                              "网络开小差啦，看看是不是连上校园网了呢~",
-                                              5000
-                                          )
-                                        : ToastAndroid.show(
-                                              "网络开小差啦，看看是不是连上校园网了呢~",
-                                              ToastAndroid.LONG
-                                          );
+                                    if (Platform.OS === "ios") {
+                                        if (this.refs.toast != undefined)
+                                            this.refs.toast.show(
+                                                "网络开小差啦，看看是不是连上校园网了呢~",
+                                                5000
+                                            );
+                                    } else {
+                                        ToastAndroid.show(
+                                            "网络开小差啦，看看是不是连上校园网了呢~",
+                                            ToastAndroid.LONG
+                                        );
+                                    }
+
                                     Global.checkingOnline = false;
                                     this.setState({
                                         checkingOnline: false
@@ -295,9 +309,13 @@ export default class HomePage extends Component {
     }
 
     handleOffline() {
-        Platform.OS === "ios"
-            ? this.refs.toast.show("退出登录", 2000)
-            : ToastAndroid.show("退出登录", ToastAndroid.SHORT);
+        if (Platform.OS === "ios") {
+            if (this.refs.toast != undefined)
+                this.refs.toast.show("退出登录", 2000);
+        } else {
+            ToastAndroid.show("退出登录", ToastAndroid.SHORT);
+        }
+
         this.setState({ isOnline: false });
     }
 

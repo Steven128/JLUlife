@@ -26,12 +26,12 @@ export default class ScoreView extends Component {
 
     onHeaderRefresh() {
         if (!Global.isOnline) {
-            Platform.OS === "ios"
-                ? this.refs.toast.show("登录后才能刷新成绩哟~", 2000)
-                : ToastAndroid.show(
-                      "登录后才能刷新成绩哟~",
-                      ToastAndroid.SHORT
-                  );
+            if (Platform.OS === "ios") {
+                if (this.refs.toast != undefined)
+                    this.refs.toast.show("登录后才能刷新成绩哟~", 2000);
+            } else {
+                ToastAndroid.show("登录后才能刷新成绩哟~", ToastAndroid.SHORT);
+            }
             return;
         }
         this.setState({

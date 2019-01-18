@@ -83,57 +83,6 @@ export default class NotificationDetailPage extends Component {
                     translucent={false}
                 />
                 <View style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
-                    {this.state.showTag ? (
-                        Platform.OS === "ios" ? (
-                            <TouchableOpacity
-                                activeOpacity={0.75}
-                                onPress={this.closeTag.bind(this)}
-                            >
-                                <View style={styles.tagContainer}>
-                                    <TouchableOpacity
-                                        activeOpacity={0.75}
-                                        onPress={this.openBroser.bind(
-                                            this,
-                                            this.props.navigation.state.params
-                                                .href
-                                        )}
-                                    >
-                                        <View style={styles.tag}>
-                                            <Text style={{ color: "#555" }}>
-                                                {"下载附件"}
-                                            </Text>
-                                            <Text style={{ color: "#555" }}>
-                                                {"(在浏览器打开原网页)"}
-                                            </Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-                            </TouchableOpacity>
-                        ) : (
-                            <TouchableNativeFeedback
-                                onPress={this.closeTag.bind(this)}
-                            >
-                                <View style={styles.tagContainer}>
-                                    <TouchableNativeFeedback
-                                        onPress={this.openBroser.bind(
-                                            this,
-                                            this.props.navigation.state.params
-                                                .href
-                                        )}
-                                    >
-                                        <View style={styles.tag}>
-                                            <Text style={{ color: "#555" }}>
-                                                {"下载附件"}
-                                            </Text>
-                                            <Text style={{ color: "#555" }}>
-                                                {"(在浏览器打开原网页)"}
-                                            </Text>
-                                        </View>
-                                    </TouchableNativeFeedback>
-                                </View>
-                            </TouchableNativeFeedback>
-                        )
-                    ) : null}
                     <Header
                         containerStyle={headerStyle}
                         backgroundColor={Global.settings.theme.backgroundColor}
@@ -190,7 +139,7 @@ export default class NotificationDetailPage extends Component {
                                 uri: this.props.navigation.state.params.href
                             }}
                             automaticallyAdjustContentInsets={true}
-                            injectedJavaScript={`document.querySelector('body').innerHTML=document.querySelector('.immmge').innerHTML;document.querySelector('body').style.background='#fff';document.querySelector('html').style.background='#fff';document.querySelector('body').style.padding='15px';window.scrollTo(0,0) `}
+                            injectedJavaScript={`var oMeta=document.createElement('meta');oMeta.name='viewport';oMeta.content='width=device-width,initial-scale=1';document.getElementsByTagName('head')[0].appendChild(oMeta);document.querySelector('body').innerHTML=document.querySelector('.immmge').innerHTML;document.querySelector('body').style.background='#fff';document.querySelector('html').style.background='#fff';document.querySelector('body').style.padding='15px';window.scrollTo(0,0)`}
                             style={{ flex: 1 }}
                         />
                         {this.state.showWebView ? null : (
@@ -216,6 +165,55 @@ export default class NotificationDetailPage extends Component {
                         )}
                     </View>
                 </View>
+                {this.state.showTag ? (
+                    Platform.OS === "ios" ? (
+                        <TouchableOpacity
+                            activeOpacity={0.75}
+                            onPress={this.closeTag.bind(this)}
+                        >
+                            <View style={styles.tagContainer}>
+                                <TouchableOpacity
+                                    activeOpacity={0.75}
+                                    onPress={this.openBroser.bind(
+                                        this,
+                                        this.props.navigation.state.params.href
+                                    )}
+                                >
+                                    <View style={styles.tag}>
+                                        <Text style={{ color: "#555" }}>
+                                            {"下载附件"}
+                                        </Text>
+                                        <Text style={{ color: "#555" }}>
+                                            {"(在浏览器打开原网页)"}
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableNativeFeedback
+                            onPress={this.closeTag.bind(this)}
+                        >
+                            <View style={styles.tagContainer}>
+                                <TouchableNativeFeedback
+                                    onPress={this.openBroser.bind(
+                                        this,
+                                        this.props.navigation.state.params.href
+                                    )}
+                                >
+                                    <View style={styles.tag}>
+                                        <Text style={{ color: "#555" }}>
+                                            {"下载附件"}
+                                        </Text>
+                                        <Text style={{ color: "#555" }}>
+                                            {"(在浏览器打开原网页)"}
+                                        </Text>
+                                    </View>
+                                </TouchableNativeFeedback>
+                            </View>
+                        </TouchableNativeFeedback>
+                    )
+                ) : null}
             </SafeAreaView>
         );
     }

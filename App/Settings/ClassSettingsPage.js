@@ -180,9 +180,12 @@ export default class ClassSettingsPage extends Component {
     clearBgImage() {
         Global.settings.class.backgroundImage = "";
         AppStorage._save("settings", Global.settings);
-        Platform.OS === "ios"
-            ? this.refs.toast.show("背景图片已恢复默认啦~", 2000)
-            : ToastAndroid.show("背景图片已恢复默认啦~", ToastAndroid.SHORT);
+        if (Platform.OS === "ios") {
+            if (this.refs.toast != undefined)
+                this.refs.toast.show("背景图片已恢复默认啦~", 2000);
+        } else {
+            ToastAndroid.show("背景图片已恢复默认啦~", ToastAndroid.SHORT);
+        }
     }
 
     render() {

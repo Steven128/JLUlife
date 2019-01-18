@@ -183,15 +183,19 @@ export default class ClassItemAndroid extends Component {
                                         showDeleteWarning: false
                                     });
                                 }}
-                                width={PixelRatio.get() * 0.25}
+                                // width={PixelRatio.get() * 0.25}
+                                // height={
+                                //     this.state.showDeleteWarning
+                                //         ? PixelRatio.get() *
+                                //           0.33 *
+                                //           (width / height)
+                                //         : PixelRatio.get() *
+                                //           0.28 *
+                                //           (width / height)
+                                // }
+                                width={280}
                                 height={
-                                    this.state.showDeleteWarning
-                                        ? PixelRatio.get() *
-                                          0.33 *
-                                          (width / height)
-                                        : PixelRatio.get() *
-                                          0.28 *
-                                          (width / height)
+                                    this.state.showDeleteWarning ? 350 : 300
                                 }
                                 containerStyle={styles.dialog}
                                 dialogTitle={
@@ -207,40 +211,36 @@ export default class ClassItemAndroid extends Component {
                                 }
                                 actions={[
                                     <TouchableOpacity
+                                        style={[
+                                            styles.dialogButton,
+                                            {
+                                                borderRightColor: "#eee",
+                                                borderRightWidth: 1
+                                            }
+                                        ]}
                                         activeOpacity={0.75}
                                         onPress={this.editClass.bind(this)}
                                     >
-                                        <View
-                                            style={[
-                                                styles.dialogButton,
-                                                {
-                                                    borderRightColor: "#eee",
-                                                    borderRightWidth: 1
-                                                }
-                                            ]}
-                                        >
-                                            <AIcon
-                                                name="edit"
-                                                size={24}
-                                                color="#2070dc"
-                                            />
-                                        </View>
+                                        <AIcon
+                                            name="edit"
+                                            size={24}
+                                            color="#2070dc"
+                                        />
                                     </TouchableOpacity>,
                                     <TouchableOpacity
+                                        style={styles.dialogButton}
                                         activeOpacity={0.75}
                                         onPress={this.deleteClass.bind(this)}
                                     >
-                                        <View style={styles.dialogButton}>
-                                            <AIcon
-                                                name="delete"
-                                                size={24}
-                                                color="#ff0048"
-                                            />
-                                        </View>
+                                        <AIcon
+                                            name="delete"
+                                            size={24}
+                                            color="#ff0048"
+                                        />
                                     </TouchableOpacity>
                                 ]}
                             >
-                                <DialogContent style={{ flex: 1 }}>
+                                <DialogContent style={{ flex: 1, paddingBottom: 0 }}>
                                     <View
                                         style={{
                                             flex: 1,
@@ -248,7 +248,7 @@ export default class ClassItemAndroid extends Component {
                                         }}
                                         centerContent={true}
                                     >
-                                        <View style={styles.dialogInnerWrap}>
+                                        <View style={[styles.dialogInnerWrap]}>
                                             <View
                                                 style={[
                                                     styles.text,
@@ -261,13 +261,7 @@ export default class ClassItemAndroid extends Component {
                                                     size={24}
                                                     color="lightgreen"
                                                 />
-                                                <Text
-                                                    style={{
-                                                        flex: 5,
-                                                        paddingTop: 3,
-                                                        fontSize: 12
-                                                    }}
-                                                >
+                                                <Text style={styles.dialogText}>
                                                     第{this.props.beginWeek} -{" "}
                                                     {this.props.endWeek}周
                                                     {this.props.weekOddEven ==
@@ -292,13 +286,7 @@ export default class ClassItemAndroid extends Component {
                                                     size={24}
                                                     color="orange"
                                                 />
-                                                <Text
-                                                    style={{
-                                                        flex: 5,
-                                                        paddingTop: 3,
-                                                        fontSize: 12
-                                                    }}
-                                                >
+                                                <Text style={styles.dialogText}>
                                                     周
                                                     {this.numToChinese(
                                                         this.props.dayOfWeek
@@ -325,13 +313,7 @@ export default class ClassItemAndroid extends Component {
                                                     size={24}
                                                     color="lightblue"
                                                 />
-                                                <Text
-                                                    style={{
-                                                        flex: 5,
-                                                        paddingTop: 3,
-                                                        fontSize: 12
-                                                    }}
-                                                >
+                                                <Text style={styles.dialogText}>
                                                     {this.printTeachers(
                                                         this.props.teachers
                                                     )}
@@ -356,13 +338,7 @@ export default class ClassItemAndroid extends Component {
                                                     size={24}
                                                     color="red"
                                                 />
-                                                <Text
-                                                    style={{
-                                                        flex: 5,
-                                                        paddingTop: 3,
-                                                        fontSize: 12
-                                                    }}
-                                                >
+                                                <Text style={styles.dialogText}>
                                                     {this.props.classroom}
                                                 </Text>
                                             </View>
@@ -444,18 +420,24 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 15,
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        borderTopColor: "#eee",
+        borderTopWidth: 1
     },
     dialogInnerWrap: {
         flex: 1,
         paddingTop: 5
     },
     textInDialog: {
-        fontSize: 16,
-        color: "#6a6a6a",
         paddingVertical: 10,
         borderBottomWidth: 1,
         borderBottomColor: "#eee",
         flexDirection: "row"
+    },
+    dialogText: {
+        flex: 5,
+        paddingTop: 3,
+        fontSize: 12,
+        color: "#6a6a6a"
     }
 });

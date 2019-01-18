@@ -36,7 +36,6 @@ import WeatherSettingsPage from "./App/Settings/WeatherSettingsPage";
 import FeedBackPage from "./App/Settings/FeedBackPage";
 import LoginPage from "./App/LoginPage";
 import Sidebar from "./App/Sidebar";
-import SidebarIOS from "./App/Sidebar.ios";
 
 const { width, height } = Dimensions.get("window");
 
@@ -359,11 +358,7 @@ const Drawer = createDrawerNavigator(
         drawerWidth: width * 0.75, // 展示的宽度
         drawerPosition: "left", // 抽屉在左边还是右边
         contentComponent: props => {
-            return Platform.OS == "ios" ? (
-                <SidebarIOS items={props} />
-            ) : (
-                <Sidebar items={props} />
-            );
+            return <Sidebar items={props} />;
         },
         contentOptions: {
             items: [],
