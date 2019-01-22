@@ -61,6 +61,7 @@ export default class AddClassPage extends Component {
     }
 
     onSave() {
+        if (this.WeekPicker.state.weekList.length == 0) return;
         if (this.state.lessonName == "") {
             if (Platform.OS === "ios") {
                 if (this.refs.toast != undefined)

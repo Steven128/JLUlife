@@ -36,8 +36,13 @@ export default class WeekPickerIOS extends Component {
     }
 
     handlePickerOpen() {
+        var length = this.state.weekList.length;
+        if (length == 0) return;
         this.refs.flatList.scrollToIndex({
-            index: this.state.currentWeek - 1,
+            index:
+                this.state.currentWeek > this.state.weekList[length - 1]
+                    ? this.state.weekList[length - 1] - 1
+                    : this.state.currentWeek - 1,
             viewPosition: 0.5
         });
         if (this.state.pickerOpen) {
@@ -58,9 +63,14 @@ export default class WeekPickerIOS extends Component {
     }
 
     changeWeek(week) {
+        var length = this.state.weekList.length;
+        if (length == 0) return;
         this.props.changeWeek(week);
         this.refs.flatList.scrollToIndex({
-            index: week - 1,
+            index:
+                week > this.state.weekList[length - 1]
+                    ? this.state.weekList[length - 1] - 1
+                    : week - 1,
             viewPosition: 0.5
         });
         this.setState({ pickerOpen: false, currentWeek: week });
@@ -83,7 +93,6 @@ export default class WeekPickerIOS extends Component {
     }
 
     isPickerOpen() {
-        alert(this.state.pickerOpen);
         return this.state.pickerOpen;
     }
 

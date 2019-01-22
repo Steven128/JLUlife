@@ -15,12 +15,15 @@ import {
     Platform,
     SafeAreaView,
     ScrollView,
+    ToastAndroid,
     NativeModules
 } from "react-native";
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../src/Global";
 import SettingItem from "../src/Setting/SettingItem";
+import Toast from "react-native-easy-toast";
+import LoginHandler from "../src/FetchInterface/LoginHandler";
 import LogoutInterface from "../src/FetchInterface/LogoutInterface";
 import AppStorage from "../src/AppStorage";
 import RNBugly from "react-native-bugly";
@@ -79,6 +82,97 @@ export default class SettingsPage extends Component {
             outOfSchool: value
         });
         AppStorage._save("settings", Global.settings);
+        this.setState({ isOnline: false });
+        if (
+            Global.loginInfo.j_username != "" &&
+            Global.loginInfo.j_password != ""
+        ) {
+            if (Platform.OS === "ios") {
+                if (this.refs.toast != undefined) {
+                    if (value)
+                        this.refs.toast.show(
+                            "已切换到外网模式，需要校园网的功能将被禁用，正在重新登录~",
+                            5000
+                        );
+                    else
+                        this.refs.toast.show(
+                            "已切换到校内模式，正在重新登录，请稍后",
+                            5000
+                        );
+                }
+            } else {
+                if (value)
+                    ToastAndroid.show(
+                        "已切换到外网模式，需要校园网的功能将被禁用，正在重新登录~",
+                        ToastAndroid.LONG
+                    );
+                else
+                    ToastAndroid.show(
+                        "已切换到校内模式，正在重新登录，请稍后",
+                        ToastAndroid.LONG
+                    );
+            }
+            Global.cookie = "";
+            Global.isOnline = false;
+            Global.checkingOnline = true;
+            LoginHandler(
+                Global.loginInfo.j_username,
+                Global.loginInfo.j_password,
+                res => {
+                    if (res.message == "success") {
+                        this.setState({ isOnline: true });
+                        if (Platform.OS === "ios") {
+                            if (this.refs.toast != undefined)
+                                this.refs.toast.show("登录成功", 5000);
+                        } else {
+                            ToastAndroid.show("登录成功", ToastAndroid.LONG);
+                        }
+                        Global.isOnline = true;
+                        Global.checkingOnline = false;
+                    } else {
+                        if (Platform.OS === "ios") {
+                            if (this.refs.toast != undefined) {
+                                if (Global.settings.outOfSchool)
+                                    this.refs.toast.show(
+                                        "网络开小差啦，外网功能一般只有寒暑假可用哟~",
+                                        5000
+                                    );
+                                else
+                                    this.refs.toast.show(
+                                        "网络开小差啦，看看是不是连上校园网了呢~",
+                                        5000
+                                    );
+                            }
+                        } else {
+                            if (Global.settings.outOfSchool)
+                                ToastAndroid.show(
+                                    "网络开小差啦，外网功能一般只有寒暑假可用哟~",
+                                    ToastAndroid.LONG
+                                );
+                            else
+                                ToastAndroid.show(
+                                    "网络开小差啦，看看是不是连上校园网了呢~",
+                                    ToastAndroid.LONG
+                                );
+                        }
+                        Global.checkingOnline = false;
+                    }
+                }
+            );
+        } else {
+            if (Platform.OS === "ios") {
+                if (this.refs.toast != undefined) {
+                    if (value) this.refs.toast.show("已切换到外网模式", 5000);
+                    else this.refs.toast.show("已切换到校内模式", 5000);
+                }
+            } else {
+                if (value)
+                    ToastAndroid.show("已切换到外网模式", ToastAndroid.LONG);
+                else ToastAndroid.show("已切换到校内模式", ToastAndroid.LONG);
+            }
+            Global.cookie = "";
+            Global.isOnline = false;
+        }
     }
 
     checkUpgrade() {
@@ -123,6 +217,7 @@ export default class SettingsPage extends Component {
                     barStyle="light-content"
                     translucent={false}
                 />
+                <Toast ref="toast" />
                 <View style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
                     <Header
                         containerStyle={headerStyle}
@@ -155,7 +250,7 @@ export default class SettingsPage extends Component {
                                 borderTopColor: "#eee"
                             }}
                         />
-                        {/* <View
+                        <View
                             style={[
                                 styles.settingWrap,
                                 {
@@ -167,7 +262,8 @@ export default class SettingsPage extends Component {
                             ]}
                         >
                             <Text style={{ paddingLeft: 15, flex: 4 }}>
-                                我在校外
+                                我在校外：{" "}
+                                {this.state.outOfSchool ? "开" : "关"}
                             </Text>
                             <Switch
                                 style={{ flex: 1 }}
@@ -179,8 +275,9 @@ export default class SettingsPage extends Component {
                                 }
                                 value={this.state.outOfSchool}
                                 onValueChange={this.handleOutOfSchoolChange}
+                                disabled={false}
                             />
-                        </View> */}
+                        </View>
                         <SettingItem
                             navigation={this.props.navigation}
                             title="主题皮肤"
@@ -369,6 +466,9 @@ export default class SettingsPage extends Component {
                             }}
                             onPress={() => {
                                 this.setState({ alertVisible: false });
+                                this.props.navigation.navigate("Login", {
+                                    from: "Settings"
+                                });
                             }}
                         />
                     ]}

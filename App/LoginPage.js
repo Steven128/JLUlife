@@ -21,7 +21,7 @@ import {
 import { Header, Input, Button, CheckBox } from "react-native-elements";
 import Icon from "react-native-vector-icons/AntDesign";
 import Global from "../src/Global";
-import LoginInterface from "../src/FetchInterface/LoginInterface";
+import LoginInterface from "../src/FetchInterface/LoginHandler";
 import Toast from "react-native-easy-toast";
 import AppStorage from "../src/AppStorage";
 import Dialog, {
@@ -175,7 +175,7 @@ export default class LoginPage extends Component {
                                             <Icon
                                                 name="user"
                                                 size={22}
-                                                color="#888"
+                                                color="#808080"
                                             />
                                         }
                                         value={this.state.j_username}
@@ -194,7 +194,7 @@ export default class LoginPage extends Component {
                                             <Icon
                                                 name="lock1"
                                                 size={22}
-                                                color="#888"
+                                                color="#808080"
                                             />
                                         }
                                         value={this.state.j_password}
@@ -203,7 +203,7 @@ export default class LoginPage extends Component {
                                         selectTextOnFocus={true}
                                     />
                                 </View>
-                                {/* <View
+                                <View
                                     style={[
                                         styles.input,
                                         {
@@ -216,7 +216,8 @@ export default class LoginPage extends Component {
                                     ]}
                                 >
                                     <Text style={{ paddingLeft: 15, flex: 4 }}>
-                                        我在校外
+                                        我在校外：{" "}
+                                        {this.state.outOfSchool ? "开" : "关"}
                                     </Text>
                                     <Switch
                                         style={{ flex: 1 }}
@@ -233,7 +234,27 @@ export default class LoginPage extends Component {
                                             this.handleOutOfSchoolChange
                                         }
                                     />
-                                </View> */}
+                                </View>
+                                <View
+                                    style={[
+                                        styles.input,
+                                        {
+                                            paddingHorizontal: 15,
+                                            paddingTop: 0,
+                                            flexDirection: "row",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            textAlignVertical: "center"
+                                        }
+                                    ]}
+                                >
+                                    <Text style={{ paddingLeft: 15, flex: 4 }}>
+                                        {this.state.outOfSchool
+                                            ? "需要校园网的功能将被禁用"
+                                            : null}
+                                    </Text>
+                                    <View style={{ flex: 1 }} />
+                                </View>
                                 <View
                                     style={{
                                         paddingHorizontal: 40,
@@ -354,8 +375,6 @@ export default class LoginPage extends Component {
         this.setState({
             showLoading: !this.state.showLoading
         });
-        var params = this.props.navigation.state.params;
-        if (params.from == "Table") params.from = "Home";
         LoginInterface(this.state.j_username, this.state.j_password, res => {
             if (res.message == "success") {
                 if (Platform.OS === "ios") {
@@ -364,9 +383,10 @@ export default class LoginPage extends Component {
                 } else {
                     ToastAndroid.show("登录成功", ToastAndroid.LONG);
                 }
-                this.props.navigation.navigate(params.from, {
+                this.props.navigation.navigate("Home", {
                     from: "Login",
-                    message: "success"
+                    message: "success",
+                    outOfSchool: Global.settings.outOfSchool
                 });
             } else if (res.message == "error") {
                 this.setState({
@@ -384,7 +404,9 @@ export default class LoginPage extends Component {
                     });
                 } else {
                     this.setState({
-                        alertText: "网络开小差啦，看看是不是连上校园网了呢~",
+                        alertText: Global.settings.outOfSchool
+                            ? "网络开小差啦，只有寒暑假期间才能使用外网功能哟~"
+                            : "网络开小差啦，看看是不是连上校园网了呢~",
                         alertVisible: true
                     });
                 }

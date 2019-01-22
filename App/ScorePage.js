@@ -19,7 +19,7 @@ import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../src/Global";
 import ScoreView from "../src/Score/ScoreView";
 import AppStorage from "../src/AppStorage";
-import ScoreInterface from "../src/FetchInterface/ScoreInterface";
+import ScoreHandler from "../src/FetchInterface/ScoreHandler";
 import Toast from "react-native-easy-toast";
 import Dialog, {
     DialogTitle,
@@ -42,23 +42,26 @@ export default class ScorePage extends Component {
         };
     }
     componentDidMount() {
-        AppStorage._load("scoreJson", res => {
-            if (res.message == "success") {
-                this.setState({
-                    scoreList: res.content,
-                    getScore: true
-                });
-            } else if (
-                res.message == "error" &&
-                !Global.isOnline &&
-                !Global.checkingOnline
-            ) {
-                this.props.navigation.navigate("Login", { from: "Score" });
-            }
-        });
+        if (!Global.settings.outOfSchool) {
+            AppStorage._load("scoreJson", res => {
+                if (res.message == "success") {
+                    this.setState({
+                        scoreList: res.content,
+                        getScore: true
+                    });
+                } else if (
+                    res.message == "error" &&
+                    !Global.isOnline &&
+                    !Global.checkingOnline
+                ) {
+                    this.props.navigation.navigate("Login", { from: "Score" });
+                }
+            });
+        }
+
         if (!this.state.getScore) {
             if (Global.isOnline) {
-                ScoreInterface(res => {
+                ScoreHandler(res => {
                     if (res.message == "success") {
                         this.setState({
                             getScore: false
@@ -73,6 +76,16 @@ export default class ScorePage extends Component {
                             scoreList: res.content,
                             getScore: true
                         });
+                    } else {
+                        if (Platform.OS === "ios") {
+                            if (this.refs.toast != undefined)
+                                this.refs.toast.show("网络开小差啦~", 2000);
+                        } else {
+                            ToastAndroid.show(
+                                "网络开小差啦~",
+                                ToastAndroid.SHORT
+                            );
+                        }
                     }
                 });
             } else {
@@ -85,6 +98,8 @@ export default class ScorePage extends Component {
                         ToastAndroid.SHORT
                     );
                 }
+                if (Global.loginInfo.j_username == "")
+                    this.props.navigation.navigate("Login", { from: "Score" });
             }
         }
     }
@@ -92,7 +107,7 @@ export default class ScorePage extends Component {
     componentWillReceiveProps() {
         var params = this.props.navigation.state.params;
         if (params.from == "Login") {
-            ScoreInterface(res => {
+            ScoreHandler(res => {
                 if (res.message == "success") {
                     this.setState({
                         scoreList: res.content,
@@ -167,11 +182,20 @@ export default class ScorePage extends Component {
                                 title="学分绩点查询"
                                 clear
                                 onPress={() => {
-                                    if (Global.isOnline)
+                                    if (
+                                        Global.isOnline &&
+                                        !Global.settings.outOfSchool
+                                    )
                                         this.props.navigation.navigate("Stat");
-                                    else {
+                                    else if (!Global.settings.outOfSchool) {
                                         this.setState({
                                             alertText: "登录后才能查询哟~",
+                                            alertVisible: true
+                                        });
+                                    } else {
+                                        this.setState({
+                                            alertText:
+                                                "使用外网不能查询学分绩点哟~",
                                             alertVisible: true
                                         });
                                     }

@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     text: {
-        color: "#888",
+        color: "#808080",
         paddingVertical: 1,
         paddingHorizontal: 15
     }

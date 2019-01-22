@@ -51,6 +51,12 @@ export default class EvaluationPage extends Component {
                 alertVisible: true
             });
             return;
+        } else if (Global.settings.outOfSchool) {
+            this.setState({
+                alertText: "使用外网不能评教哟~",
+                alertVisible: true
+            });
+            return;
         } else {
             if (Global.settings.options.firstUseEval) {
                 this.setState({

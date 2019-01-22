@@ -18,7 +18,7 @@ import {
 import { Header, Button } from "react-native-elements";
 import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../src/Global";
-import LoginInterface from "../src/FetchInterface/LoginInterface";
+import LoginHandler from "../src/FetchInterface/LoginHandler";
 import AppStorage from "../src/AppStorage";
 import Weather from "../src/Home/Weather";
 import NextClass from "../src/Home/NextClass";
@@ -37,13 +37,15 @@ export default class HomePage extends Component {
             isOnline: Global.isOnline,
             checkingOnline: Global.checkingOnline,
             backgroundColor: Global.settings.theme.backgroundColor,
-            getClass: false
+            getClass: false,
+            outOfSchool: Global.settings.outOfSchool
         };
     }
 
     componentWillReceiveProps() {
         this.setState({
-            isOnline: Global.isOnline
+            isOnline: Global.isOnline,
+            outOfSchool: Global.settings.outOfSchool
         });
     }
     componentDidUpdate() {
@@ -58,7 +60,10 @@ export default class HomePage extends Component {
                     }
                 }
             } else if (params.from == "Login") {
-                if (Global.classJson.length == 0) {
+                if (
+                    Global.classJson.length == 0 &&
+                    !Global.settings.outOfSchool
+                ) {
                     AppStorage._load("classJson", res => {
                         if (res.message == "success") {
                             Global.classJson = res.content;
@@ -89,7 +94,8 @@ export default class HomePage extends Component {
 
     ComponentWillUpdate() {
         this.setState({
-            isOnline: Global.isOnline
+            isOnline: Global.isOnline,
+            outOfSchool: Global.settings.outOfSchool
         });
     }
 
@@ -101,12 +107,12 @@ export default class HomePage extends Component {
                 if (
                     res.content.splashV210 != undefined &&
                     res.content.splashV220 != undefined &&
-                    res.content.splashV230 != undefined
+                    res.content.splashV240 != undefined
                 ) {
                     if (
                         res.content.splashV210 ||
                         res.content.splashV220 ||
-                        res.content.splashV230
+                        res.content.splashV240
                     ) {
                         flag = true;
                         Global.showTips = false;
@@ -152,7 +158,8 @@ export default class HomePage extends Component {
         }, 1500);
         setTimeout(() => {
             this.setState({
-                backgroundColor: Global.settings.theme.backgroundColor
+                backgroundColor: Global.settings.theme.backgroundColor,
+                outOfSchool: Global.settings.outOfSchool
             });
         }, 1000);
         this.handleShowTips();
@@ -206,7 +213,7 @@ export default class HomePage extends Component {
                         /**
                          * 拿到用户名和密码后自动登录
                          */
-                        LoginInterface(
+                        LoginHandler(
                             Global.loginInfo.j_username,
                             Global.loginInfo.j_password,
                             res => {
@@ -241,17 +248,21 @@ export default class HomePage extends Component {
                                                     getClass: true
                                                 });
                                             } else {
-                                                ClassInterface(res => {
-                                                    if (
-                                                        res.message == "success"
-                                                    ) {
-                                                        Global.classJson =
-                                                            res.content;
-                                                        this.setState({
-                                                            getClass: true
-                                                        });
-                                                    }
-                                                });
+                                                if (
+                                                    !Global.settings.outOfSchool
+                                                )
+                                                    ClassInterface(res => {
+                                                        if (
+                                                            res.message ==
+                                                            "success"
+                                                        ) {
+                                                            Global.classJson =
+                                                                res.content;
+                                                            this.setState({
+                                                                getClass: true
+                                                            });
+                                                        }
+                                                    });
                                             }
                                         });
                                     }
@@ -267,16 +278,29 @@ export default class HomePage extends Component {
                                     }
                                 } else {
                                     if (Platform.OS === "ios") {
-                                        if (this.refs.toast != undefined)
-                                            this.refs.toast.show(
-                                                "网络开小差啦，看看是不是连上校园网了呢~",
-                                                5000
-                                            );
+                                        if (this.refs.toast != undefined) {
+                                            if (Global.settings.outOfSchool)
+                                                this.refs.toast.show(
+                                                    "网络开小差啦，外网功能一般只有寒暑假可用哟~",
+                                                    5000
+                                                );
+                                            else
+                                                this.refs.toast.show(
+                                                    "网络开小差啦，看看是不是连上校园网了呢~",
+                                                    5000
+                                                );
+                                        }
                                     } else {
-                                        ToastAndroid.show(
-                                            "网络开小差啦，看看是不是连上校园网了呢~",
-                                            ToastAndroid.LONG
-                                        );
+                                        if (Global.settings.outOfSchool)
+                                            ToastAndroid.show(
+                                                "网络开小差啦，外网功能一般只有寒暑假可用哟~",
+                                                ToastAndroid.LONG
+                                            );
+                                        else
+                                            ToastAndroid.show(
+                                                "网络开小差啦，看看是不是连上校园网了呢~",
+                                                ToastAndroid.LONG
+                                            );
                                     }
 
                                     Global.checkingOnline = false;
@@ -341,8 +365,11 @@ export default class HomePage extends Component {
                 <View>
                     <Text style={styles.greeting}>
                         {"你好，" + Global.currentStuName}
+                        <Text style={{ color: "#808080", fontSize: 16 }}>
+                            {this.state.outOfSchool ? " （外网模式）" : null}
+                        </Text>
                     </Text>
-                    <Text style={{ color: "#888" }}>
+                    <Text style={{ color: "#808080" }}>
                         {"现在是 " +
                             Global.termName.substring(0, 9) +
                             " 学年度 " +
@@ -362,6 +389,9 @@ export default class HomePage extends Component {
                 <View>
                     <Text style={styles.greeting}>
                         {"你好，" + Global.currentStuName}
+                        <Text style={{ color: "#808080", fontSize: 16 }}>
+                            {this.state.outOfSchool ? " （外网模式）" : null}
+                        </Text>
                     </Text>
                     <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
                         <ActivityIndicator
@@ -370,7 +400,7 @@ export default class HomePage extends Component {
                             color={Global.settings.theme.backgroundColor}
                         />
                         <View>
-                            <Text style={{ color: "#888" }}>正在登录</Text>
+                            <Text style={{ color: "#808080" }}>正在登录</Text>
                         </View>
                     </View>
                 </View>
@@ -384,6 +414,9 @@ export default class HomePage extends Component {
                 <View>
                     <Text style={styles.greeting}>
                         {"你好，" + Global.currentStuName}
+                        <Text style={{ color: "#808080", fontSize: 16 }}>
+                            {this.state.outOfSchool ? " （外网模式）" : null}
+                        </Text>
                     </Text>
                     <Button
                         buttonStyle={[
@@ -408,7 +441,12 @@ export default class HomePage extends Component {
         } else {
             item = (
                 <View>
-                    <Text style={styles.greeting}>{"你好，游客"}</Text>
+                    <Text style={styles.greeting}>
+                        {"你好，游客"}
+                        <Text style={{ color: "#808080", fontSize: 16 }}>
+                            {this.state.outOfSchool ? " （外网模式）" : null}
+                        </Text>
+                    </Text>
                     <Button
                         buttonStyle={[
                             styles.loginBtn,
@@ -484,51 +522,53 @@ export default class HomePage extends Component {
                                 )}
                             </View>
                         </View>
-                        <View>
-                            <View style={styles.greetingWrap}>
-                                {this.state.isOnline ? (
-                                    <GetMessage
-                                        handleOffline={this.handleOffline.bind(
-                                            this
-                                        )}
-                                    />
-                                ) : Global.checkingOnline ? (
-                                    <View>
-                                        <Text
-                                            style={{
-                                                color: "#555",
-                                                fontSize: 18,
-                                                paddingBottom: 15
-                                            }}
-                                        >
-                                            消息通知
-                                        </Text>
+                        {Global.settings.outOfSchool ? null : (
+                            <View>
+                                <View style={styles.greetingWrap}>
+                                    {this.state.isOnline ? (
+                                        <GetMessage
+                                            handleOffline={this.handleOffline.bind(
+                                                this
+                                            )}
+                                        />
+                                    ) : Global.checkingOnline ? (
                                         <View>
-                                            <Text style={styles.text}>
-                                                消息加载中 (・｀ω´・)
+                                            <Text
+                                                style={{
+                                                    color: "#555",
+                                                    fontSize: 18,
+                                                    paddingBottom: 15
+                                                }}
+                                            >
+                                                消息通知
                                             </Text>
+                                            <View>
+                                                <Text style={styles.text}>
+                                                    消息加载中 (・｀ω´・)
+                                                </Text>
+                                            </View>
                                         </View>
-                                    </View>
-                                ) : (
-                                    <View>
-                                        <Text
-                                            style={{
-                                                color: "#555",
-                                                fontSize: 18,
-                                                paddingBottom: 15
-                                            }}
-                                        >
-                                            消息通知
-                                        </Text>
+                                    ) : (
                                         <View>
-                                            <Text style={styles.text}>
-                                                请先登录哟~
+                                            <Text
+                                                style={{
+                                                    color: "#555",
+                                                    fontSize: 18,
+                                                    paddingBottom: 15
+                                                }}
+                                            >
+                                                消息通知
                                             </Text>
+                                            <View>
+                                                <Text style={styles.text}>
+                                                    请先登录哟~
+                                                </Text>
+                                            </View>
                                         </View>
-                                    </View>
-                                )}
+                                    )}
+                                </View>
                             </View>
-                        </View>
+                        )}
                         <View style={{ marginBottom: 15 }}>
                             <View style={styles.greetingWrap}>
                                 <Text style={styles.tipsTitle}>生活小贴士</Text>
@@ -575,7 +615,7 @@ const styles = StyleSheet.create({
         paddingBottom: 15
     },
     text: {
-        color: "#888",
+        color: "#808080",
         paddingVertical: 1,
         paddingHorizontal: 15
     }

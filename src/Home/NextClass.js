@@ -92,7 +92,7 @@ export default class NextClass extends Component {
                         </View>
                     </View>
                 );
-            } else {
+            } else if (!Global.settings.outOfSchool) {
                 return (
                     <View>
                         <Text
@@ -109,7 +109,25 @@ export default class NextClass extends Component {
                         </View>
                     </View>
                 );
-            }
+            } else
+                return (
+                    <View>
+                        <Text
+                            style={{
+                                color: "#555",
+                                fontSize: 18,
+                                paddingBottom: 15
+                            }}
+                        >
+                            接下来
+                        </Text>
+                        <View>
+                            <Text style={styles.text}>
+                                关闭外网功能才可以加载课表~
+                            </Text>
+                        </View>
+                    </View>
+                );
         } else {
             return this.state.getClass ? (
                 <View>
@@ -172,7 +190,7 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     text: {
-        color: "#888",
+        color: "#808080",
         paddingVertical: 1,
         paddingHorizontal: 15
     }

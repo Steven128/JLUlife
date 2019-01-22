@@ -65,6 +65,11 @@ export default class EmptyRoomPage extends Component {
                 alertText: "登录后才能查空教室哟~",
                 alertVisible: true
             });
+        } else if (Global.settings.outOfSchool) {
+            this.setState({
+                alertText: "使用外网不能查询空教室哟~",
+                alertVisible: true
+            });
         }
         var campusNameList = [];
         for (var i in campus) {
@@ -187,301 +192,281 @@ export default class EmptyRoomPage extends Component {
                             style: { color: "#fff", fontSize: 16 }
                         }}
                     />
-                    {Global.isOnline || 1 ? (
-                        <View style={{ flex: 1 }}>
-                            <View style={{ flex: 1, paddingVertical: 10 }}>
-                                {this.renderButton(
-                                    this.state.campusNameList[
-                                        this.state.campusSelected
-                                    ],
-                                    () => {
-                                        this.EmptyRoomPicker1.show();
-                                    }
-                                )}
-                                {this.renderButton(
-                                    this.state.buildingNameList[
-                                        this.state.buildingSelected
-                                    ],
-                                    () => {
-                                        this.EmptyRoomPicker2.show();
-                                    }
-                                )}
-                                {this.renderButton(this.state.date, () => {
-                                    this.DatePicker.show();
-                                })}
-                                {this.renderButton(
-                                    "从第" +
-                                        this.state.classBegin +
-                                        "节    到第" +
-                                        this.state.classEnd +
-                                        "节",
-                                    () => {
-                                        this.ClassPicker.show();
-                                    }
-                                )}
-                                <View
-                                    style={{
-                                        paddingHorizontal: 15,
-                                        paddingVertical: 20
+                    <View style={{ flex: 1 }}>
+                        <View style={{ flex: 1, paddingVertical: 10 }}>
+                            {this.renderButton(
+                                this.state.campusNameList[
+                                    this.state.campusSelected
+                                ],
+                                () => {
+                                    this.EmptyRoomPicker1.show();
+                                }
+                            )}
+                            {this.renderButton(
+                                this.state.buildingNameList[
+                                    this.state.buildingSelected
+                                ],
+                                () => {
+                                    this.EmptyRoomPicker2.show();
+                                }
+                            )}
+                            {this.renderButton(this.state.date, () => {
+                                this.DatePicker.show();
+                            })}
+                            {this.renderButton(
+                                "从第" +
+                                    this.state.classBegin +
+                                    "节    到第" +
+                                    this.state.classEnd +
+                                    "节",
+                                () => {
+                                    this.ClassPicker.show();
+                                }
+                            )}
+                            <View
+                                style={{
+                                    paddingHorizontal: 15,
+                                    paddingVertical: 20
+                                }}
+                            >
+                                <Button
+                                    containerStyle={{
+                                        position: "absolute",
+                                        left: 0,
+                                        right: 0,
+                                        zIndex: 0,
+                                        paddingHorizontal: 30,
+                                        paddingVertical: 30
                                     }}
-                                >
-                                    <Button
-                                        containerStyle={{
-                                            position: "absolute",
-                                            left: 0,
-                                            right: 0,
-                                            zIndex: 0,
-                                            paddingHorizontal: 30,
-                                            paddingVertical: 30
-                                        }}
-                                        title="查询"
-                                        buttonStyle={{
-                                            height: 45,
-                                            backgroundColor:
-                                                Global.settings.theme
-                                                    .backgroundColor
-                                        }}
-                                        loading={this.state.showLoading}
-                                        outline={true}
-                                        onPress={this.getRoomList.bind(this)}
-                                    />
-                                </View>
-                                <Dialog
-                                    visible={this.state.dialogVisible}
-                                    dialogAnimation={new ScaleAnimation()}
-                                    onTouchOutside={() => {
-                                        this.setState({
-                                            dialogVisible: false
-                                        });
+                                    title="查询"
+                                    buttonStyle={{
+                                        height: 45,
+                                        backgroundColor:
+                                            Global.settings.theme
+                                                .backgroundColor
                                     }}
-                                    width={0.9}
-                                    height={0.75}
-                                >
-                                    <DialogContent>
-                                        <View style={{ paddingVertical: 10 }}>
-                                            {this.state.getRoomList ? (
-                                                <FlatList
-                                                    showsVerticalScrollIndicator={
-                                                        false
-                                                    }
-                                                    data={this.state.roomList.slice(
-                                                        0,
-                                                        this.state.roomList
-                                                            .length - 1
-                                                    )}
-                                                    ListHeaderComponent={
-                                                        <View
-                                                            key="listTitle"
-                                                            style={styles.row}
-                                                        >
-                                                            <View
-                                                                style={[
-                                                                    styles.item,
-                                                                    { flex: 3 }
-                                                                ]}
-                                                            >
-                                                                <Text
-                                                                    style={{
-                                                                        textAlign:
-                                                                            "center"
-                                                                    }}
-                                                                >
-                                                                    教室名称
-                                                                </Text>
-                                                            </View>
-                                                            <View
-                                                                style={[
-                                                                    styles.item,
-                                                                    { flex: 2 }
-                                                                ]}
-                                                            >
-                                                                <Text
-                                                                    style={{
-                                                                        textAlign:
-                                                                            "center"
-                                                                    }}
-                                                                >
-                                                                    容量(人)
-                                                                </Text>
-                                                            </View>
-                                                            <View
-                                                                style={[
-                                                                    styles.item,
-                                                                    { flex: 2 }
-                                                                ]}
-                                                            >
-                                                                <Text
-                                                                    style={{
-                                                                        textAlign:
-                                                                            "center"
-                                                                    }}
-                                                                >
-                                                                    注释
-                                                                </Text>
-                                                            </View>
-                                                        </View>
-                                                    }
-                                                    renderItem={({ item }) => (
-                                                        <View
-                                                            key={item.name}
-                                                            style={styles.row}
-                                                        >
-                                                            <View
-                                                                style={[
-                                                                    styles.item,
-                                                                    { flex: 3 }
-                                                                ]}
-                                                            >
-                                                                <Text
-                                                                    style={{
-                                                                        textAlign:
-                                                                            "center"
-                                                                    }}
-                                                                >
-                                                                    {item.name}
-                                                                </Text>
-                                                            </View>
-                                                            <View
-                                                                style={[
-                                                                    styles.item,
-                                                                    { flex: 2 }
-                                                                ]}
-                                                            >
-                                                                <Text
-                                                                    style={{
-                                                                        textAlign:
-                                                                            "center"
-                                                                    }}
-                                                                >
-                                                                    {
-                                                                        item.volume
-                                                                    }
-                                                                </Text>
-                                                            </View>
-                                                            <View
-                                                                style={[
-                                                                    styles.item,
-                                                                    { flex: 2 }
-                                                                ]}
-                                                            >
-                                                                <Text
-                                                                    style={{
-                                                                        textAlign:
-                                                                            "center"
-                                                                    }}
-                                                                >
-                                                                    {item.notes}
-                                                                </Text>
-                                                            </View>
-                                                        </View>
-                                                    )}
-                                                    ListFooterComponent={
+                                    loading={this.state.showLoading}
+                                    outline={true}
+                                    onPress={this.getRoomList.bind(this)}
+                                />
+                            </View>
+                            <Dialog
+                                visible={this.state.dialogVisible}
+                                dialogAnimation={new ScaleAnimation()}
+                                onTouchOutside={() => {
+                                    this.setState({
+                                        dialogVisible: false
+                                    });
+                                }}
+                                width={0.9}
+                                height={0.75}
+                            >
+                                <DialogContent>
+                                    <View style={{ paddingVertical: 10 }}>
+                                        {this.state.getRoomList ? (
+                                            <FlatList
+                                                showsVerticalScrollIndicator={
+                                                    false
+                                                }
+                                                data={this.state.roomList.slice(
+                                                    0,
+                                                    this.state.roomList.length -
+                                                        1
+                                                )}
+                                                ListHeaderComponent={
+                                                    <View
+                                                        key="listTitle"
+                                                        style={styles.row}
+                                                    >
                                                         <View
                                                             style={[
-                                                                styles.row,
-                                                                {
-                                                                    borderBottomWidth: 0
-                                                                }
+                                                                styles.item,
+                                                                { flex: 3 }
                                                             ]}
                                                         >
-                                                            <View
-                                                                style={[
-                                                                    styles.item,
-                                                                    { flex: 3 }
-                                                                ]}
+                                                            <Text
+                                                                style={{
+                                                                    textAlign:
+                                                                        "center"
+                                                                }}
                                                             >
-                                                                <Text
-                                                                    style={{
-                                                                        textAlign:
-                                                                            "center"
-                                                                    }}
-                                                                >
-                                                                    {
-                                                                        this
-                                                                            .state
-                                                                            .roomList[
-                                                                            this
-                                                                                .state
-                                                                                .roomList
-                                                                                .length -
-                                                                                1
-                                                                        ].name
-                                                                    }
-                                                                </Text>
-                                                            </View>
-                                                            <View
-                                                                style={[
-                                                                    styles.item,
-                                                                    { flex: 2 }
-                                                                ]}
-                                                            >
-                                                                <Text
-                                                                    style={{
-                                                                        textAlign:
-                                                                            "center"
-                                                                    }}
-                                                                >
-                                                                    {
-                                                                        this
-                                                                            .state
-                                                                            .roomList[
-                                                                            this
-                                                                                .state
-                                                                                .roomList
-                                                                                .length -
-                                                                                1
-                                                                        ].volume
-                                                                    }
-                                                                </Text>
-                                                            </View>
-                                                            <View
-                                                                style={[
-                                                                    styles.item,
-                                                                    { flex: 2 }
-                                                                ]}
-                                                            >
-                                                                <Text
-                                                                    style={{
-                                                                        textAlign:
-                                                                            "center"
-                                                                    }}
-                                                                >
-                                                                    {
-                                                                        this
-                                                                            .state
-                                                                            .roomList[
-                                                                            this
-                                                                                .state
-                                                                                .roomList
-                                                                                .length -
-                                                                                1
-                                                                        ].notes
-                                                                    }
-                                                                </Text>
-                                                            </View>
+                                                                教室名称
+                                                            </Text>
                                                         </View>
-                                                    }
-                                                />
-                                            ) : null}
-                                        </View>
-                                    </DialogContent>
-                                </Dialog>
-                            </View>
+                                                        <View
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 2 }
+                                                            ]}
+                                                        >
+                                                            <Text
+                                                                style={{
+                                                                    textAlign:
+                                                                        "center"
+                                                                }}
+                                                            >
+                                                                容量(人)
+                                                            </Text>
+                                                        </View>
+                                                        <View
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 2 }
+                                                            ]}
+                                                        >
+                                                            <Text
+                                                                style={{
+                                                                    textAlign:
+                                                                        "center"
+                                                                }}
+                                                            >
+                                                                注释
+                                                            </Text>
+                                                        </View>
+                                                    </View>
+                                                }
+                                                renderItem={({ item }) => (
+                                                    <View
+                                                        key={item.name}
+                                                        style={styles.row}
+                                                    >
+                                                        <View
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 3 }
+                                                            ]}
+                                                        >
+                                                            <Text
+                                                                style={{
+                                                                    textAlign:
+                                                                        "center"
+                                                                }}
+                                                            >
+                                                                {item.name}
+                                                            </Text>
+                                                        </View>
+                                                        <View
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 2 }
+                                                            ]}
+                                                        >
+                                                            <Text
+                                                                style={{
+                                                                    textAlign:
+                                                                        "center"
+                                                                }}
+                                                            >
+                                                                {item.volume}
+                                                            </Text>
+                                                        </View>
+                                                        <View
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 2 }
+                                                            ]}
+                                                        >
+                                                            <Text
+                                                                style={{
+                                                                    textAlign:
+                                                                        "center"
+                                                                }}
+                                                            >
+                                                                {item.notes}
+                                                            </Text>
+                                                        </View>
+                                                    </View>
+                                                )}
+                                                ListFooterComponent={
+                                                    <View
+                                                        style={[
+                                                            styles.row,
+                                                            {
+                                                                borderBottomWidth: 0
+                                                            }
+                                                        ]}
+                                                    >
+                                                        <View
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 3 }
+                                                            ]}
+                                                        >
+                                                            <Text
+                                                                style={{
+                                                                    textAlign:
+                                                                        "center"
+                                                                }}
+                                                            >
+                                                                {
+                                                                    this.state
+                                                                        .roomList[
+                                                                        this
+                                                                            .state
+                                                                            .roomList
+                                                                            .length -
+                                                                            1
+                                                                    ].name
+                                                                }
+                                                            </Text>
+                                                        </View>
+                                                        <View
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 2 }
+                                                            ]}
+                                                        >
+                                                            <Text
+                                                                style={{
+                                                                    textAlign:
+                                                                        "center"
+                                                                }}
+                                                            >
+                                                                {
+                                                                    this.state
+                                                                        .roomList[
+                                                                        this
+                                                                            .state
+                                                                            .roomList
+                                                                            .length -
+                                                                            1
+                                                                    ].volume
+                                                                }
+                                                            </Text>
+                                                        </View>
+                                                        <View
+                                                            style={[
+                                                                styles.item,
+                                                                { flex: 2 }
+                                                            ]}
+                                                        >
+                                                            <Text
+                                                                style={{
+                                                                    textAlign:
+                                                                        "center"
+                                                                }}
+                                                            >
+                                                                {
+                                                                    this.state
+                                                                        .roomList[
+                                                                        this
+                                                                            .state
+                                                                            .roomList
+                                                                            .length -
+                                                                            1
+                                                                    ].notes
+                                                                }
+                                                            </Text>
+                                                        </View>
+                                                    </View>
+                                                }
+                                            />
+                                        ) : null}
+                                    </View>
+                                </DialogContent>
+                            </Dialog>
                         </View>
-                    ) : (
-                        <View
-                            style={{
-                                flex: 1,
-                                backgroundColor: "transparent"
-                            }}
-                        >
-                            <ActivityIndicator
-                                style={{ flex: 1 }}
-                                size="large"
-                                color={Global.settings.theme.backgroundColor}
-                            />
-                        </View>
-                    )}
+                    </View>
                 </View>
                 <EmptyRoomPicker
                     list={this.state.campusNameList}

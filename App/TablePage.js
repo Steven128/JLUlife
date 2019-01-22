@@ -56,8 +56,17 @@ export default class TablePage extends Component {
             this.setState({
                 currentWeek: global.getCurrentWeek(Global.startDate)
             });
+        } else {
+            this.props.navigation.navigate("Login", {
+                from: "Table"
+            });
+            return;
         }
-        if (Global.isOnline && Global.classJson.length == 0) {
+        if (
+            Global.isOnline &&
+            Global.classJson.length == 0 &&
+            !Global.settings.outOfSchool
+        ) {
             ClassInterface(res => {
                 if (res.message == "success") {
                     this.setState({
@@ -81,14 +90,23 @@ export default class TablePage extends Component {
                             classJson: res.content,
                             getClassTable: true
                         });
-                    } else if (
-                        res.message == "error" &&
-                        !Global.isOnline &&
-                        !Global.checkingOnline
-                    ) {
+                    } else if (!Global.isOnline && !Global.checkingOnline) {
                         this.props.navigation.navigate("Login", {
                             from: "Table"
                         });
+                    } else if (Global.settings.outOfSchool) {
+                        if (Platform.OS === "ios") {
+                            if (this.refs.toast != undefined)
+                                this.refs.toast.show(
+                                    "关闭外网功能才可以刷新课表~",
+                                    2000
+                                );
+                        } else {
+                            ToastAndroid.show(
+                                "关闭外网功能才可以刷新课表~",
+                                ToastAndroid.SHORT
+                            );
+                        }
                     }
                 });
             }
@@ -96,11 +114,13 @@ export default class TablePage extends Component {
     }
 
     componentWillReceiveProps() {
-        this.setState({
-            settings: Global.settings.class,
-            classJson: Global.classJson,
-            getClassTable: true
-        });
+        if (Global.startDate != "") {
+            this.setState({
+                settings: Global.settings.class,
+                classJson: Global.classJson,
+                getClassTable: true
+            });
+        }
     }
 
     openDrawer() {
@@ -114,6 +134,7 @@ export default class TablePage extends Component {
     }
 
     openPicker() {
+        if (this.refs.weekPicker.state.weekList.length == 0) return;
         this.refs.weekPicker.handlePickerOpen();
         this.setState({ pickerOpen: !this.state.pickerOpen });
     }
@@ -167,6 +188,15 @@ export default class TablePage extends Component {
     }
 
     refreshClassTable() {
+        if (Global.settings.outOfSchool) {
+            if (Platform.OS === "ios") {
+                if (this.refs.toast != undefined)
+                    this.refs.toast.show("外网模式不能刷新课表~", 2000);
+            } else {
+                ToastAndroid.show("外网模式不能刷新课表~", ToastAndroid.SHORT);
+            }
+            return;
+        }
         if (!Global.isOnline) {
             if (Platform.OS === "ios") {
                 if (this.refs.toast != undefined)
@@ -348,7 +378,7 @@ export default class TablePage extends Component {
                                             />
                                         }
                                         clear
-                                        onPress={this.openPicker}
+                                        onPress={this.openPicker.bind(this)}
                                     />
                                 </View>
                             </View>
@@ -392,7 +422,8 @@ export default class TablePage extends Component {
                                         backgroundColor: "transparent"
                                     }}
                                 >
-                                    {Global.isOnline ? (
+                                    {Global.isOnline &&
+                                    !Global.settings.outOfSchool ? (
                                         <ActivityIndicator
                                             style={{ flex: 1 }}
                                             size="large"

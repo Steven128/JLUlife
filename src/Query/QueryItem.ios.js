@@ -35,7 +35,7 @@ export default class QueryItemIOS extends Component {
                         >
                             {this.props.title}
                         </Text>
-                        <Text style={{ color: "#888" }}>
+                        <Text style={{ color: "#808080" }}>
                             {this.props.subTitle}
                         </Text>
                     </View>

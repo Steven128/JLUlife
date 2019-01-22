@@ -101,7 +101,6 @@ export default class ClassAdditions extends Component {
     }
 
     isPickerOpen() {
-        alert(this.state.pickerOpen);
         return this.state.pickerOpen;
     }
 

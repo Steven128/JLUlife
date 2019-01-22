@@ -256,6 +256,12 @@ const SettingsStack = createStackNavigator({
         navigationOptions: {
             header: null
         }
+    },
+    Login: {
+        screen: LoginPage,
+        navigationOptions: {
+            header: null
+        }
     }
 });
 

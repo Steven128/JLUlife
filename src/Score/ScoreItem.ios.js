@@ -55,12 +55,14 @@ export default class ScoreItemIOS extends Component {
             >
                 <View style={styles.container}>
                     <Text style={styles.title}>{this.props.courName}</Text>
-                    <Text style={styles.text}>
-                        {this.props.dateScore.substring(0, 4)}年
-                        {this.props.dateScore.substring(5, 7)}月
-                        {this.props.dateScore.substring(8, 10)}日发布，
-                        {this.props.isPass == "Y" ? "已通过" : "未通过"}
-                    </Text>
+                    {Global.settings.outOfSchool ? null : (
+                        <Text style={styles.text}>
+                            {this.props.dateScore.substring(0, 4)}年
+                            {this.props.dateScore.substring(5, 7)}月
+                            {this.props.dateScore.substring(8, 10)}日发布，
+                            {this.props.isPass == "Y" ? "已通过" : "未通过"}
+                        </Text>
+                    )}
                     <Text style={styles.text}>
                         分数：{this.props.score}，绩点：{this.props.gpoint}
                     </Text>
@@ -70,8 +72,8 @@ export default class ScoreItemIOS extends Component {
                         onTouchOutside={() => {
                             this.setState({ dialogVisible: false });
                         }}
-                        width={0.9}
-                        height={0.75}
+                        width={Global.settings.outOfSchool ? 0.75 : 0.9}
+                        height={Global.settings.outOfSchool ? 0.4 : 0.75}
                         containerStyle={styles.dialog}
                     >
                         <DialogContent style={{ flex: 1, paddingBottom: 0 }}>
@@ -92,15 +94,27 @@ export default class ScoreItemIOS extends Component {
                                     height: height * 0.7 - 100
                                 }}
                             >
-                                <View style={styles.dialogInnerWrap}>
-                                    <Text
-                                        style={[
-                                            styles.text,
-                                            styles.textInDialog
-                                        ]}
-                                    >
-                                        类型： {lessonType}
-                                    </Text>
+                                <View
+                                    style={[
+                                        styles.dialogInnerWrap,
+                                        {
+                                            borderBottomWidth: Global.settings
+                                                .outOfSchool
+                                                ? 0
+                                                : 1
+                                        }
+                                    ]}
+                                >
+                                    {Global.settings.outOfSchool ? null : (
+                                        <Text
+                                            style={[
+                                                styles.text,
+                                                styles.textInDialog
+                                            ]}
+                                        >
+                                            类型： {lessonType}
+                                        </Text>
+                                    )}
                                     <Text
                                         style={[
                                             styles.text,
@@ -109,23 +123,36 @@ export default class ScoreItemIOS extends Component {
                                     >
                                         学期：{this.props.termName}
                                     </Text>
-                                    <Text
-                                        style={[
-                                            styles.text,
-                                            styles.textInDialog
-                                        ]}
-                                    >
-                                        发布时间：
-                                        {this.props.dateScore.substring(0, 4)}年
-                                        {this.props.dateScore.substring(5, 7)}月
-                                        {this.props.dateScore.substring(8, 10)}
-                                        日
-                                        {" " +
-                                            this.props.dateScore.substring(
-                                                11,
-                                                this.props.dateScore.length
+                                    {Global.settings.outOfSchool ? null : (
+                                        <Text
+                                            style={[
+                                                styles.text,
+                                                styles.textInDialog
+                                            ]}
+                                        >
+                                            发布时间：
+                                            {this.props.dateScore.substring(
+                                                0,
+                                                4
                                             )}
-                                    </Text>
+                                            年
+                                            {this.props.dateScore.substring(
+                                                5,
+                                                7
+                                            )}
+                                            月
+                                            {this.props.dateScore.substring(
+                                                8,
+                                                10
+                                            )}
+                                            日
+                                            {" " +
+                                                this.props.dateScore.substring(
+                                                    11,
+                                                    this.props.dateScore.length
+                                                )}
+                                        </Text>
+                                    )}
                                     <Text
                                         style={[
                                             styles.text,
@@ -151,17 +178,19 @@ export default class ScoreItemIOS extends Component {
                                         绩点：
                                         {this.props.gpoint}
                                     </Text>
-                                    <Text
-                                        style={[
-                                            styles.text,
-                                            styles.textInDialog
-                                        ]}
-                                    >
-                                        是否通过：
-                                        {this.props.isPass == "Y"
-                                            ? "已通过"
-                                            : "未通过"}
-                                    </Text>
+                                    {Global.settings.outOfSchool ? null : (
+                                        <Text
+                                            style={[
+                                                styles.text,
+                                                styles.textInDialog
+                                            ]}
+                                        >
+                                            是否通过：
+                                            {this.props.isPass == "Y"
+                                                ? "已通过"
+                                                : "未通过"}
+                                        </Text>
+                                    )}
                                     <Text
                                         style={[
                                             styles.text,
@@ -174,15 +203,17 @@ export default class ScoreItemIOS extends Component {
                                             : "否"}
                                     </Text>
                                 </View>
-                                <View style={{ paddingTop: 10 }}>
-                                    {this.state.getStat ? (
-                                        <ScoreChart
-                                            scoreStat={this.state.scoreStat}
-                                        />
-                                    ) : (
-                                        <View />
-                                    )}
-                                </View>
+                                {Global.settings.outOfSchool ? null : (
+                                    <View style={{ paddingTop: 10 }}>
+                                        {this.state.getStat ? (
+                                            <ScoreChart
+                                                scoreStat={this.state.scoreStat}
+                                            />
+                                        ) : (
+                                            <View />
+                                        )}
+                                    </View>
+                                )}
                             </ScrollView>
                         </DialogContent>
                     </Dialog>
@@ -201,13 +232,13 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1
     },
     title: {
-        color: "#888",
+        color: "#808080",
         fontSize: 16,
         fontWeight: "normal",
         paddingBottom: 5
     },
     text: {
-        color: "#888",
+        color: "#808080",
         fontSize: 12
     },
     dialog: {

@@ -87,7 +87,7 @@ function loginMain(j_username, j_password, cookie, callback) {
         .then(response => {
             if (response.url.indexOf("ntms/index.do") > -1) {
                 Global.loginInfo.j_username = j_username;
-                Global.j_password = j_password;
+                Global.loginInfo.j_password = j_password;
                 //存入缓存
                 AppStorage._save("loginInfo", {
                     jUsername: j_username,

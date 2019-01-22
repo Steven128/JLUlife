@@ -28,7 +28,7 @@ export default class SplashTips extends Component {
             currentPage: 0,
             splashV210: true,
             splashV220: true,
-            splashV230: true
+            splashV240: true
         };
     }
 
@@ -52,10 +52,10 @@ export default class SplashTips extends Component {
                 });
             }
         }
-        if (params.tips.splashV230 != undefined) {
-            if (params.tips.splashV230) {
+        if (params.tips.splashV240 != undefined) {
+            if (params.tips.splashV240) {
                 this.setState({
-                    splashV230: false
+                    splashV240: false
                 });
             }
         }
@@ -135,7 +135,7 @@ export default class SplashTips extends Component {
             AppStorage._save("showTips", {
                 splashV210: true,
                 splashV220: true,
-                splashV230: true
+                splashV240: true
             });
             this.props.navigation.navigate("Home", { from: "SplashTips" });
         } else {
@@ -152,7 +152,7 @@ export default class SplashTips extends Component {
     }
 
     render() {
-        var pageNumber = 1;
+        var pageNumber = 2;
         if (this.state.splashV210) pageNumber += 1;
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: "#f4f9fd" }}>
@@ -195,12 +195,42 @@ export default class SplashTips extends Component {
                                         点击右上角箭头可以切换到其他周~
                                     </Text>
                                     <Text style={styles.text}>
-                                        点击标题栏可以返回本周~
+                                        {"点击标题栏可以返回本周~\n"}
                                     </Text>
                                 </View>
                             </View>
                         </View>
                     ) : null}
+                    <View style={{ flex: 1, width: width }}>
+                        <View style={styles.container}>
+                            <View>
+                                {Platform.OS === "ios" ? (
+                                    <Image
+                                        style={[
+                                            styles.image,
+                                            { height: width * 1.3 }
+                                        ]}
+                                        source={require("../assets/Screenshots/ios/ios-3.png")}
+                                    />
+                                ) : (
+                                    <Image
+                                        style={styles.image}
+                                        source={require("../assets/Screenshots/android/android-3.png")}
+                                    />
+                                )}
+                            </View>
+                            <View style={styles.textWrap}>
+                                <Text style={styles.text}>
+                                    在校外也可以查成绩啦（只能在寒暑假使用哟~）
+                                </Text>
+                                <Text style={styles.text}>
+                                    {
+                                        "请在设置中开启 我在校外 按钮，\n回到学校后不要忘记关闭哟~"
+                                    }
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
                     <View style={{ flex: 1, width: width }}>
                         <View style={styles.container}>
                             <View>
@@ -225,50 +255,18 @@ export default class SplashTips extends Component {
                                         设置中有多种自定义选项
                                     </Text>
                                     <Text style={styles.text}>
-                                        快来打造自己的个性化课程表吧~
+                                        {"快来打造自己的个性化课程表吧~\n"}
                                     </Text>
                                 </View>
                             ) : (
                                 <View style={styles.textWrap}>
                                     <Text style={styles.text}>
-                                        课表自定义设置移到这里啦~
+                                        {"课表自定义设置移到这里啦~\n\n"}
                                     </Text>
                                 </View>
                             )}
                         </View>
                     </View>
-                    {/* {this.state.splashV220 ? (
-                        <View style={{ flex: 1, width: width }}>
-                            <View style={styles.container}>
-                                <View>
-                                    {Platform.OS === "ios" ? (
-                                        <Image
-                                            style={[
-                                                styles.image,
-                                                { height: width * 1.3 }
-                                            ]}
-                                            source={require("../assets/Screenshots/ios/ios-3.png")}
-                                        />
-                                    ) : (
-                                        <Image
-                                            style={styles.image}
-                                            source={require("../assets/Screenshots/android/android-3.png")}
-                                        />
-                                    )}
-                                </View>
-                                <View style={styles.textWrap}>
-                                    <Text style={styles.text}>
-                                        在校外也可以查成绩啦
-                                    </Text>
-                                    <Text style={styles.text}>
-                                        {
-                                            "请在设置中开启 我在校外 按钮，\n回到学校后不要忘记关闭哟~"
-                                        }
-                                    </Text>
-                                </View>
-                            </View>
-                        </View>
-                    ) : null} */}
                 </ScrollView>
                 <View style={styles.bottomContainer}>
                     {this.renderPoints(pageNumber)}
