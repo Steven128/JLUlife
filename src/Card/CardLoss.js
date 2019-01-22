@@ -185,7 +185,7 @@ export default class CardLoss extends Component {
                         inputStyle={styles.inputStyle}
                         placeholder="请输入查询密码"
                         secureTextEntry={true}
-                        leftIcon={<Icon name="lock1" size={22} color="#888" />}
+                        leftIcon={<Icon name="lock1" size={22} color="#808080" />}
                         value={this.state.password}
                         onChangeText={this.handlePwdChange.bind(this)}
                         maxLength={6}

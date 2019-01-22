@@ -50,7 +50,7 @@ export default class LibraryPage extends Component {
     _goBackPage = () => {
         //  官网中描述:backButtonEnabled: false,表示webView中没有返回事件，为true则表示该webView有回退事件
         if (this.state.backButtonEnabled) {
-            this.refs["webView"].goBack();
+            this.refs.webView.goBack();
         } else {
             //否则返回到上一个页面
             this.nav.navigate("Main");
@@ -69,7 +69,7 @@ export default class LibraryPage extends Component {
 
     onBackAndroid = () => {
         if (this.state.backButtonEnabled) {
-            this.refs["webView"].goBack();
+            this.refs.webView.goBack();
             return true;
         } else {
             return false;
@@ -81,7 +81,7 @@ export default class LibraryPage extends Component {
      */
     backButtonTapped() {
         if (this.state.backButtonEnabled) {
-            this.refs["webView"].goBack();
+            this.refs.webView.goBack();
         } else {
             //否则返回到上一个页面
             this.nav.navigate("Main");

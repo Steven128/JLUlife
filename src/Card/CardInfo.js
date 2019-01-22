@@ -192,6 +192,6 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     subTitle: {
-        color: "#888"
+        color: "#808080"
     }
 });

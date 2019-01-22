@@ -105,13 +105,13 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1
     },
     title: {
-        color: "#888",
+        color: "#808080",
         fontSize: 16,
         fontWeight: "normal",
         paddingBottom: 10
     },
     text: {
-        color: "#888",
+        color: "#808080",
         fontSize: 12
     }
 });

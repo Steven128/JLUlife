@@ -347,7 +347,7 @@ export default class CardLoginPage extends Component {
                                             <Icon
                                                 name="user"
                                                 size={22}
-                                                color="#888"
+                                                color="#808080"
                                             />
                                         }
                                         value={this.state.username}
@@ -366,7 +366,7 @@ export default class CardLoginPage extends Component {
                                             <Icon
                                                 name="lock1"
                                                 size={22}
-                                                color="#888"
+                                                color="#808080"
                                             />
                                         }
                                         value={this.state.password}
@@ -388,7 +388,7 @@ export default class CardLoginPage extends Component {
                                                 <Icon
                                                     name="key"
                                                     size={22}
-                                                    color="#888"
+                                                    color="#808080"
                                                 />
                                             }
                                             value={this.state.code}

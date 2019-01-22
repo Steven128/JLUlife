@@ -1715,13 +1715,13 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1
     },
     title: {
-        color: "#888",
+        color: "#808080",
         fontSize: 14,
         fontWeight: "normal",
         paddingBottom: 5
     },
     text: {
-        color: "#888",
+        color: "#808080",
         fontSize: 12
     },
     evalOuterWrap: {

@@ -151,7 +151,7 @@ export default class CardTransfer extends Component {
                         containerStyle={styles.input}
                         inputStyle={styles.inputStyle}
                         placeholder="请输入金额"
-                        leftIcon={<Icon name="rmb" size={22} color="#888" />}
+                        leftIcon={<Icon name="rmb" size={22} color="#808080" />}
                         value={this.state.amount}
                         onChangeText={this.handleAmountChange}
                         maxLength={6}
@@ -161,11 +161,11 @@ export default class CardTransfer extends Component {
                     />
                 </View>
                 <View style={{ paddingHorizontal: 30, paddingTop: 15 }}>
-                    <Text style={{ color: "#888", paddingBottom: 10 }}>
+                    <Text style={{ color: "#808080", paddingBottom: 10 }}>
                         •
                         向校园卡转账成功后所转金额将显示在过渡余额中，在餐厅等处的卡机上进行刷卡操作后，过渡余额即会转入校园卡
                     </Text>
-                    <Text style={{ color: "#888" }}>
+                    <Text style={{ color: "#808080" }}>
                         • 单笔转账最大限额 200 元
                     </Text>
                 </View>

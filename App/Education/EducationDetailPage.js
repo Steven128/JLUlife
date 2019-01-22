@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     },
     subTitle: {
         fontSize: 14,
-        color: "#888",
+        color: "#808080",
         paddingTop: 5
     },
     tagContainer: {

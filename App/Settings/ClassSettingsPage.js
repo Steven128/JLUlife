@@ -326,7 +326,7 @@ export default class ClassSettingsPage extends Component {
                                             styles.settingText,
                                             {
                                                 paddingTop: 5,
-                                                color: "#888",
+                                                color: "#808080",
                                                 fontSize: 12
                                             }
                                         ]}
@@ -349,7 +349,7 @@ export default class ClassSettingsPage extends Component {
                                             styles.settingText,
                                             {
                                                 paddingTop: 5,
-                                                color: "#888",
+                                                color: "#808080",
                                                 fontSize: 12
                                             }
                                         ]}
@@ -439,5 +439,5 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         color: "#555"
     },
-    sliderSubText: { color: "#888" }
+    sliderSubText: { color: "#808080" }
 });

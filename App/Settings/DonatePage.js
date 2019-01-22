@@ -47,7 +47,7 @@ export default class DonatePage extends Component {
         if (this.refs.toast != undefined)
             this.refs.toast.show("十分感谢 *\\(๑• ₃ •๑)", 5000);
         Linking.openURL(
-            "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&id=org.steven.jlulife.ios"
+            "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&id=1449566000"
         );
     }
 

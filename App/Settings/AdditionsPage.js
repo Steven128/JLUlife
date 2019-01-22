@@ -105,7 +105,7 @@ export default class AdditionsPage extends Component {
                                     >
                                         天气城市设置
                                     </Text>
-                                    <Text style={{ color: "#888" }}>
+                                    <Text style={{ color: "#808080" }}>
                                         当前所在城市： {this.state.location}
                                     </Text>
                                 </View>
@@ -131,7 +131,7 @@ export default class AdditionsPage extends Component {
                                     >
                                         天气城市设置
                                     </Text>
-                                    <Text style={{ color: "#888" }}>
+                                    <Text style={{ color: "#808080" }}>
                                         当前所在城市：{" "}
                                         {Global.settings.weather.name}
                                     </Text>

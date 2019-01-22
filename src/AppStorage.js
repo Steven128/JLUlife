@@ -88,7 +88,7 @@ export default class AppStorage extends Component {
                 err = { message: "error", content: err };
                 callBack(err);
                 if (__DEV__) {
-                    console.log("warn in AppStorage （" + key + "）");
+                    // console.log("warn in AppStorage （" + key + "）");
                 }
                 switch (err.name) {
                     case "NotFoundError":
