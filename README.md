@@ -8,16 +8,15 @@
 
 [酷安](https://www.coolapk.com/apk/210060)
 
-[华为应用市场](http://appstore.huawei.com/app/C100513429)
+### iOS
 
-[应用宝](https://sj.qq.com/myapp/detail.htm?apkName=com.brady.jlulife)
-
+[App Store](https://itunes.apple.com/cn/app/jlu-life/id1449566000?mt=8)
 
 ## 简介
 
 JLU Life 是一款面向吉林大学学生的服务型APP。此应用并非官方应用，为个人开发，使用的接口均为学校官方开放接口，旨在帮助到同学们，为同学们的学习、生活提供便利。
 
-v2.x 使用 React Native 全新开发，目前支持 Android(4.1+)、iOS(9.0+), 欢迎有对RN感兴趣的小伙伴可以加入进来
+v2.x 使用 React Native 全新开发，目前支持 Android(4.1+)、iOS(8.0+), 欢迎有对RN感兴趣的小伙伴可以加入进来
 
 1.0版本地址 [GitHub@bradywwang/JLUlife](https://github.com/bradywwang/JLUlife)
 
