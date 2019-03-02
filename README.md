@@ -10,7 +10,7 @@
 
 ### iOS
 
-[App Store](https://itunes.apple.com/cn/app/jlu-life/id1449566000?mt=8)
+[App Store](https://itunes.apple.com/cn/app/jlu-life/id1449566000)
 
 ## 简介
 
@@ -98,7 +98,7 @@ v2.x 使用 React Native 全新开发，目前支持 Android(4.1+)、iOS(8.0+), 
 
 ## Build Setup
 
-```
+```shell
 1. npm install && react-native link
 
 2. react-native run-android || react-native run-ios
