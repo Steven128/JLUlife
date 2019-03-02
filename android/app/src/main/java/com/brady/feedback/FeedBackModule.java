@@ -109,4 +109,52 @@ public class FeedBackModule extends ReactContextBaseJavaModule {
         FeedbackAPI.setTitleBarHeight(80);
     }
 
+    public class Callback {
+        private JSONObject unreadJson;
+
+        public Callback() {
+            unreadJson = new JSONObject();
+        }
+
+        public void setUnreadCount(JSONObject unreadJson) {
+            this.unreadJson = unreadJson;
+        }
+
+        public String getUnreadCount() {
+            return this.unreadJson.toString();
+        }
+    }
+
+    @ReactMethod
+    public String getFeedbackUnreadCount(JSONObject json) {
+        final Callback callback = new Callback();
+        FeedbackAPI.getFeedbackUnreadCount(new IUnreadCountCallback() {
+            @Override
+            public void onSuccess(final int unreadCount) {
+                JSONObject returnJson = new JSONObject();
+                try {
+                    returnJson.put("message", "success");
+                    returnJson.put("unreadCount", unreadCount);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                callback.setUnreadCount(returnJson);
+            }
+
+            @Override
+            public void onError(final int i, final String s) {
+                JSONObject returnJson = new JSONObject();
+                try {
+                    returnJson.put("message", "error");
+                    returnJson.put("code", i);
+                    returnJson.put("msg", s);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                callback.setUnreadCount(returnJson);
+            }
+        });
+        return callback.getUnreadCount();
+    }
+
 }

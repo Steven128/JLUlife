@@ -4,7 +4,7 @@
 		<!-- Customize your theme here. -->
 		<item name="android:windowBackground">
 			@drawable/launch_screen
-		</item>
+		</item><item name="android:windowTranslucentStatus">true</item>
 	</style>
 	<style name="Base.App.Theme" parent="AppTheme">
 		<item name="windowNoTitle">

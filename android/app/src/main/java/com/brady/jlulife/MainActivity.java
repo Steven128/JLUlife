@@ -26,7 +26,7 @@ public class MainActivity extends ReactActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Show the js-controlled splash screen
-        SplashScreen.show(this, getReactInstanceManager()); // **********需要添加的************
+        SplashScreen.show(this, getReactInstanceManager());
         RNBuglyModule.init(this, "be7918c35a", true);
 
         super.onCreate(savedInstanceState);

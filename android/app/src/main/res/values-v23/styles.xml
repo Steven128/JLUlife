@@ -1,0 +1,55 @@
+<resources>
+	<!-- Base application theme. -->
+	<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+		<!-- Customize your theme here. -->
+		<item name="android:statusBarColor">
+			#00000000
+		</item>
+		<item name="android:windowTranslucentStatus">
+			true
+		</item>
+		<item name="android:windowBackground">
+			@drawable/launch_screen
+		</item>
+		<item name="android:colorPrimaryDark">
+			#2089dc
+		</item>
+		<item name="android:navigationBarColor">
+			#f5f5f5
+		</item>
+		<item name="android:windowLightStatusBar">
+			true
+		</item>
+	</style>
+	<style name="Base.App.Theme" parent="AppTheme">
+		<item name="android:statusBarColor">
+			@android:color/transparent
+		</item>
+		<item name="windowNoTitle">
+			true
+		</item>
+		<item name="android:windowLightStatusBar">
+			true
+		</item>
+	</style>
+	<style name="App.Theme.Launch" parent="Base.App.Theme">
+		<item name="android:statusBarColor">
+			@android:color/transparent
+		</item>
+		<item name="android:windowTranslucentStatus">
+			true
+		</item>
+		<item name="android:windowBackground">
+			@drawable/launch_screen
+		</item>
+		<item name="android:windowNoTitle">
+			true
+		</item>
+		<item name="android:windowContentOverlay">
+			@null
+		</item>
+		<item name="android:windowLightStatusBar">
+			true
+		</item>
+	</style>
+</resources>

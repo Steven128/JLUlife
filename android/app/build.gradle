@@ -101,8 +101,8 @@ android {
         applicationId "com.brady.jlulife"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 204001000
-        versionName "2.4.0"
+        versionCode 204011001
+        versionName "2.4.1"
         ndk {
             abiFilters "armeabi-v7a"
         }
@@ -147,18 +147,17 @@ android {
     }
 }
 
-dependencies {
-    compile project(':react-native-update')
-    compile project(':react-native-bugly')
-    compile project(':react-native-image-crop-picker')
-    compile project(':react-native-svg')
-    compile project(':rn-splash-screen')
-    compile project(':react-native-webview')
-    compile project(':react-native-vector-icons')
+dependencies {    
+    implementation project(':rn-splash-screen')
+    implementation project(':react-native-webview')
+    implementation project(':react-native-vector-icons')
+    implementation project(':react-native-update')
+    implementation project(':react-native-svg')
+    implementation project(':react-native-image-crop-picker')
+    implementation project(':react-native-bugly')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    implementation "com.facebook.react:react-native:+"  // From node_modules
-    implementation 'com.facebook.fresco:animated-gif:+'
+    implementation "com.facebook.react:react-native:+"
     compile(name: 'alisdk-feedback-3.1.8', ext: 'aar')
     compile files('libs/alicloud-android-ut-5.3.0.jar')
     compile files('libs/utdid4all-1.1.5.3_proguard.jar')
