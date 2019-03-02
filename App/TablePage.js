@@ -114,7 +114,7 @@ export default class TablePage extends Component {
     }
 
     componentWillReceiveProps() {
-        if (Global.startDate != "") {
+        if (Global.startDate != "" && Global.classJson.length > 0) {
             this.setState({
                 settings: Global.settings.class,
                 classJson: Global.classJson,
@@ -231,7 +231,6 @@ export default class TablePage extends Component {
                 }
             });
         }
-        this.refs.classAdditions.handlePickerOpen();
         if (this.state.classAdditionsOpen) {
             Animated.timing(this.state.addButtonDeg, {
                 toValue: 0,
@@ -285,16 +284,10 @@ export default class TablePage extends Component {
                         backgroundColor={Global.settings.theme.backgroundColor}
                         placement="left"
                         leftComponent={
-                            <Button
-                                title=""
-                                icon={
-                                    <EIcon
-                                        name="menu"
-                                        size={28}
-                                        color="white"
-                                    />
-                                }
-                                clear
+                            <EIcon
+                                name="menu"
+                                size={28}
+                                color="#ffffff"
                                 onPress={this.openDrawer}
                             />
                         }
@@ -307,7 +300,8 @@ export default class TablePage extends Component {
                                     <Text
                                         style={{
                                             color: "#fff",
-                                            fontSize: 16
+                                            fontSize: 16,
+                                            lineHeight: 20
                                         }}
                                     >
                                         课程表 {weekNotice}
@@ -320,7 +314,8 @@ export default class TablePage extends Component {
                                     <Text
                                         style={{
                                             color: "#fff",
-                                            fontSize: 16
+                                            fontSize: 16,
+                                            lineHeight: 20
                                         }}
                                     >
                                         课程表 {weekNotice}
@@ -332,7 +327,8 @@ export default class TablePage extends Component {
                             <View style={{ flexDirection: "row" }}>
                                 <Animated.View
                                     style={{
-                                        marginRight: 15,
+                                        marginRight:
+                                            Platform.OS == "ios" ? 0 : 15,
                                         transform: [
                                             {
                                                 rotateZ: this.state.addButtonDeg.interpolate(
@@ -348,36 +344,24 @@ export default class TablePage extends Component {
                                         ]
                                     }}
                                 >
-                                    <Button
-                                        title=""
-                                        icon={
-                                            <EIcon
-                                                name="plus"
-                                                size={28}
-                                                color="white"
-                                            />
-                                        }
-                                        clear
+                                    <EIcon
+                                        name="plus"
+                                        size={28}
+                                        color="#ffffff"
                                         onPress={this.handleAddButton.bind(
                                             this
                                         )}
                                     />
                                 </Animated.View>
                                 <View>
-                                    <Button
-                                        title=""
-                                        icon={
-                                            <EIcon
-                                                name={
-                                                    this.state.pickerOpen
-                                                        ? "chevron-up"
-                                                        : "chevron-down"
-                                                }
-                                                size={28}
-                                                color="white"
-                                            />
+                                    <EIcon
+                                        name={
+                                            this.state.pickerOpen
+                                                ? "chevron-up"
+                                                : "chevron-down"
                                         }
-                                        clear
+                                        size={28}
+                                        color="#ffffff"
                                         onPress={this.openPicker.bind(this)}
                                     />
                                 </View>
@@ -409,6 +393,7 @@ export default class TablePage extends Component {
                                     navigation={this.props.navigation}
                                     classList={this.state.classJson}
                                     week={this.state.currentWeek}
+                                    classLength={11}
                                     settings={this.state.settings}
                                     onScroll={this.handleWeekPicker.bind(this)}
                                     handleDeleteClass={this.handleDeleteClass.bind(

@@ -62,7 +62,7 @@ function login(j_username, j_password, callback) {
                 reason = unescape(
                     reason.replace(/&#x/g, "%u").replace(/;/g, "")
                 );
-                callback({ message: "error", reason: "wrong_password" });
+                callback({ message: "error", reason: "outside_wrong" });
             }
         })
         .catch(error => {
@@ -163,7 +163,7 @@ function getTermInfo(j_username, j_password, cookie, callback) {
         .then(response => response.json())
         .then(responseJson => {
             responseJson = responseJson.items;
-            var termJson = [];
+            var terms = [];
             for (var i in responseJson) {
                 var item = {};
                 item.termId = responseJson[i].termId;
@@ -173,18 +173,23 @@ function getTermInfo(j_username, j_password, cookie, callback) {
                     responseJson[i].startDate == undefined
                         ? undefined
                         : responseJson[i].startDate.substring(0, 10);
-                termJson.push(item);
+                terms.push(item);
             }
-            Global.termJson = termJson;
-            for (var i in termJson) {
-                if (termJson[i].termId == Global.defRes.teachingTerm) {
-                    Global.termName = termJson[i].termName;
-                    Global.startDate = termJson[i].startDate;
-                    console.log(Global);
+            Global.terms = terms;
+            for (var i in terms) {
+                if (terms[i].termId == Global.defRes.teachingTerm) {
+                    Global.termName = terms[i].termName;
+                    Global.startDate = terms[i].startDate;
                 }
             }
             Global.cookie = cookie;
             Global.isOnline = true;
+            if (
+                Global.settings.class.currentTermId == undefined ||
+                Global.settings.class.currentTermId == ""
+            )
+                Global.settings.class.currentTermId =
+                    Global.defRes.teachingTerm;
             callback({ message: "success", termChanged: false });
         })
         .catch(error => {

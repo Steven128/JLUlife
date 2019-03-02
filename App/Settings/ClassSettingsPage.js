@@ -25,7 +25,7 @@ import ImagePicker from "react-native-image-crop-picker";
 import Global from "../../src/Global";
 import AppStorage from "../../src/AppStorage";
 import Toast from "react-native-easy-toast";
-import ClassInterface from "../../src/FetchInterface/ClassInterface";
+import TermPicker from "../../src/Class/TermPicker";
 
 const { width, height } = Dimensions.get("window");
 
@@ -51,7 +51,9 @@ export default class ClassSettingsPage extends Component {
             classItemHeight: 70,
             classFontSize: 14,
             classBgOpacity: 0,
-            classItemOpacity: 1
+            classItemOpacity: 1,
+            currentTermId: "",
+            termChanged: false
         };
     }
 
@@ -63,8 +65,10 @@ export default class ClassSettingsPage extends Component {
             classItemHeight: Global.settings.class.itemHeight,
             classFontSize: Global.settings.class.fontSize,
             classBgOpacity: Global.settings.class.backgroundOpacity,
-            classItemOpacity: 1 - Global.settings.class.itemOpacity
+            classItemOpacity: 1 - Global.settings.class.itemOpacity,
+            currentTermId: Global.settings.class.currentTermId
         });
+        console.log(Global.settings.class.currentTermId);
     }
 
     componentWillMount() {
@@ -76,6 +80,10 @@ export default class ClassSettingsPage extends Component {
             "hardwareBackPress",
             this.onBackAndroid
         );
+        if (this.state.termChanged) {
+            var params = this.props.navigation.state.params;
+            params.refreshClassTable();
+        }
     }
 
     onBackAndroid = () => {
@@ -85,6 +93,18 @@ export default class ClassSettingsPage extends Component {
         );
         return true;
     };
+
+    getSelectedIndex() {
+        var index = 0;
+        for (var i in Global.terms) {
+            if (Global.terms[i].termId == Global.settings.class.currentTermId) {
+                index = i;
+                break;
+            }
+        }
+        console.log(index);
+        return index;
+    }
 
     handleNavColorChange(value) {
         this.setState({
@@ -197,6 +217,12 @@ export default class ClassSettingsPage extends Component {
             headerStyle.paddingTop = 0;
             headerStyle.height = 44;
         }
+        var currentTermName = "";
+        for (var i in Global.terms) {
+            if (Global.terms[i].termId == this.state.currentTermId) {
+                currentTermName = Global.terms[i].termName;
+            }
+        }
         return (
             <SafeAreaView
                 style={{
@@ -216,20 +242,17 @@ export default class ClassSettingsPage extends Component {
                         backgroundColor={Global.settings.theme.backgroundColor}
                         placement="left"
                         leftComponent={
-                            <Button
-                                title=""
-                                icon={
-                                    <EIcon
-                                        name="chevron-left"
-                                        size={28}
-                                        color="white"
-                                    />
-                                }
-                                clear
+                            <EIcon
+                                name="chevron-left"
+                                size={28}
+                                color="#ffffff"
                                 onPress={() =>
                                     this.props.navigation.navigate(
                                         this.props.navigation.state.params.from,
-                                        { from: "ClassSettings" }
+                                        {
+                                            from: "ClassSettings",
+                                            termChanged: this.state.termChanged
+                                        }
                                     )
                                 }
                             />
@@ -240,6 +263,54 @@ export default class ClassSettingsPage extends Component {
                         }}
                     />
                     <ScrollView style={{ flex: 1 }}>
+                        {Platform.OS === "ios" ? (
+                            <TouchableOpacity
+                                activeOpacity={0.75}
+                                onPress={() => this.termPicker.show()}
+                            >
+                                <View style={styles.settingWrap}>
+                                    <Text style={styles.settingText}>
+                                        课程表当前学期
+                                    </Text>
+                                    <Text
+                                        style={[
+                                            styles.settingText,
+                                            {
+                                                paddingTop: 5,
+                                                color: "#808080",
+                                                fontSize: 12,
+                                                lineHeight: 16
+                                            }
+                                        ]}
+                                    >
+                                        {currentTermName}
+                                    </Text>
+                                </View>
+                            </TouchableOpacity>
+                        ) : (
+                            <TouchableNativeFeedback
+                                onPress={() => this.termPicker.show()}
+                            >
+                                <View style={styles.settingWrap}>
+                                    <Text style={styles.settingText}>
+                                        课程表当前学期
+                                    </Text>
+                                    <Text
+                                        style={[
+                                            styles.settingText,
+                                            {
+                                                paddingTop: 5,
+                                                color: "#808080",
+                                                fontSize: 12,
+                                                lineHeight: 16
+                                            }
+                                        ]}
+                                    >
+                                        {currentTermName}
+                                    </Text>
+                                </View>
+                            </TouchableNativeFeedback>
+                        )}
                         <View
                             style={[
                                 styles.settingWrap,
@@ -251,10 +322,18 @@ export default class ClassSettingsPage extends Component {
                                 }
                             ]}
                         >
-                            <Text style={{ paddingLeft: 15, flex: 4 }}>
-                                课程表主题：{" "}
-                                <Text style={styles.sliderSubText}>
-                                    {this.state.navColor ? "浅色" : "深色"}
+                            <Text
+                                style={{
+                                    paddingLeft: 15,
+                                    flex: 4,
+                                    lineHeight: 18
+                                }}
+                            >
+                                <Text style={styles.settingText}>
+                                    课程表主题：{" "}
+                                    <Text style={styles.sliderSubText}>
+                                        {this.state.navColor ? "浅色" : "深色"}
+                                    </Text>
                                 </Text>
                             </Text>
                             <Switch
@@ -327,7 +406,8 @@ export default class ClassSettingsPage extends Component {
                                             {
                                                 paddingTop: 5,
                                                 color: "#808080",
-                                                fontSize: 12
+                                                fontSize: 12,
+                                                lineHeight: 16
                                             }
                                         ]}
                                     >
@@ -350,7 +430,8 @@ export default class ClassSettingsPage extends Component {
                                             {
                                                 paddingTop: 5,
                                                 color: "#808080",
-                                                fontSize: 12
+                                                fontSize: 12,
+                                                lineHeight: 16
                                             }
                                         ]}
                                     >
@@ -408,6 +489,26 @@ export default class ClassSettingsPage extends Component {
                         </View>
                     </ScrollView>
                 </View>
+                <TermPicker
+                    ref={ref => (this.termPicker = ref)}
+                    itemTextColor="#808080"
+                    itemSelectedColor={Global.settings.theme.backgroundColor}
+                    onPickerCancel={() => {}}
+                    onPickerConfirm={value => {
+                        this.setState({
+                            currentTermId: Global.terms[value.index].termId,
+                            termChanged: true
+                        });
+                        Global.settings.class.currentTermId =
+                            Global.terms[value.index].termId;
+                        AppStorage._save("settings", Global.settings);
+                    }}
+                    itemHeight={50}
+                    selectedIndex={this.getSelectedIndex(
+                        Global.settings.class.currentTermId
+                    )}
+                    confirmTextColor={Global.settings.theme.backgroundColor}
+                />
             </SafeAreaView>
         );
     }
@@ -437,7 +538,8 @@ const styles = StyleSheet.create({
     settingText: {
         paddingLeft: 15,
         paddingTop: 10,
-        color: "#555"
+        color: "#555",
+        lineHeight: 18
     },
-    sliderSubText: { color: "#808080" }
+    sliderSubText: { color: "#808080", lineHeight: 18 }
 });

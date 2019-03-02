@@ -2,7 +2,6 @@ import md5, { hex_md5 } from "react-native-md5";
 import Global from "../Global";
 import AppStorage from "../AppStorage";
 import cheerio from "cheerio";
-import ClassInterface from "./ClassInterface";
 
 var setCookieURL = "http://10.60.65.8/ntms/userLogin.jsp";
 var loginURL = "http://10.60.65.8/ntms/j_spring_security_check";
@@ -146,8 +145,14 @@ function getStuInfo(j_username, cookie, callback) {
         .then(response => response.json())
         .then(responseJson => {
             var flag = false;
-            if (Global.defRes.teachingTerm != responseJson.defRes.teachingTerm)
+            if (
+                Global.defRes.teachingTerm != responseJson.defRes.teachingTerm
+            ) {
+                Global.settings.class.currentTermId =
+                    responseJson.defRes.teachingTerm;
+                AppStorage._save("settings", Global.settings);
                 flag = true;
+            }
             Global.defRes.adcId = responseJson.defRes.adcId;
             Global.defRes.campus = responseJson.defRes.campus;
             Global.defRes.department = responseJson.defRes.department;
@@ -223,6 +228,59 @@ function getTermInfo(j_username, cookie, teachingTerm, callback, termChanged) {
             AppStorage._save("startDate", Global.startDate);
             AppStorage._save("weekLength", Global.weekLength);
             Global.isOnline = true;
+            if (
+                Global.settings.class.currentTermId == undefined ||
+                Global.settings.class.currentTermId == ""
+            )
+                Global.settings.class.currentTermId = teachingTerm;
+            getTerms(j_username, cookie, callback, termChanged);
+        })
+        .catch(error => {
+            if (__DEV__) {
+                console.log("getTermInfo error");
+                console.error(error);
+            }
+            callback({ message: "error" });
+        });
+}
+
+function getTerms(j_username, cookie, callback, termChanged) {
+    fetch(getResURL, {
+        method: "POST",
+        headers: {
+            Accept: "*/*",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept-Language": "zh-CN,zh;q=0.9",
+            Connection: "keep-alive",
+            "Content-Type": "application/json",
+            Cookie:
+                "loginPage=userLogin.jsp; pwdStrength=1; alu=" +
+                j_username +
+                "; " +
+                cookie,
+            Host: "10.60.65.8",
+            Origin: "http://10.60.65.8",
+            Referer: "http://10.60.65.8/ntms/index.do"
+        },
+        body: JSON.stringify({
+            tag: "search@teachingTerm",
+            branch: "default",
+            params: {}
+        })
+    })
+        .then(response => response.json())
+        .then(responseJson => {
+            var terms = [];
+            for (var i = 0; i < 8; i++) {
+                var item = {};
+                item.termId = responseJson.value[i].termId;
+                item.termName = responseJson.value[i].termName;
+                item.startDate = responseJson.value[i].startDate;
+                item.examDate = responseJson.value[i].examDate;
+                item.vacationDate = responseJson.value[i].vacationDate;
+                terms.push(item);
+            }
+            Global.terms = terms;
             callback({ message: "success", termChanged: termChanged });
         })
         .catch(error => {

@@ -87,7 +87,6 @@ export default class ClassTable extends Component {
                             ? ""
                             : "@" + dayList[j].schedule.classroom;
                     innerText = dayList[j].lessonName + innerText + weekOddEven;
-
                     dayItem.push(
                         <ClassItem
                             navigation={this.props.navigation}

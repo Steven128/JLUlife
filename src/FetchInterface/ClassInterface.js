@@ -2,6 +2,9 @@ import Global from "../Global";
 import AppStorage from "../AppStorage";
 
 export default function getInfo(callback) {
+    var termId = Global.settings.class.currentTermId;
+    if (termId == undefined || termId == "")
+        termId = Global.defRes.teachingTerm;
     let loginURL = "http://10.60.65.8/ntms/service/res.do";
     fetch(loginURL, {
         method: "POST",
@@ -24,7 +27,7 @@ export default function getInfo(callback) {
             tag: "teachClassStud@schedule",
             branch: "default",
             params: {
-                termId: Global.defRes.teachingTerm,
+                termId: termId,
                 studId: Global.defRes.personId
             }
         })
