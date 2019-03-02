@@ -12,6 +12,7 @@
 #import <RCTSplashScreen/RCTSplashScreen.h>
 #import "RNBugly.h"
 #import "RCTHotUpdate.h"
+#import <AliCloudMobileAnalitics/ALBBMAN.h>
 
 @implementation AppDelegate
 
@@ -23,7 +24,7 @@
     jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
   #else
     jsCodeLocation=[RCTHotUpdate bundleURL];
-  #endif
+  #endif	
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"jlulife"
@@ -32,7 +33,12 @@
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 
   [RCTSplashScreen show:rootView];
+  
   [RNBugly startWithAppId];
+  
+  ALBBMANAnalytics *man = [ALBBMANAnalytics getInstance];
+  [man autoInit];
+  [man setAppVersion:@"2.4.1"];
   
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];

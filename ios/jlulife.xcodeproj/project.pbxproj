@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -52,22 +53,30 @@
 		8AF4FC8B2988432986E70D57 /* libRNCWebView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 918887D2C8174696BD2A6591 /* libRNCWebView.a */; };
 		95E338D67DE24E91BBC5224C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FCCEC46892547DBA8AA61AE /* SystemConfiguration.framework */; };
 		9B5C8CBD3DAC4EC1AEB88B18 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1084AD6479DA4B49884BD234 /* Zocial.ttf */; };
-		A1C0C97180EC413DB5FD0701 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6032166DE2AD4CB4AAC94165 /* Security.framework */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		ADED3F62D3874AF59128B559 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC23F30AEC4B4CCCA22A834E /* AntDesign.ttf */; };
-		B02C088221E4B7CC0044EC04 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B02C088021E4B7CC0044EC04 /* QBImagePicker.framework */; };
-		B02C088321E4B7CC0044EC04 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B02C088121E4B7CC0044EC04 /* RSKImageCropper.framework */; };
-		B02C088421E4B7D80044EC04 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B02C088021E4B7CC0044EC04 /* QBImagePicker.framework */; };
-		B02C088521E4B7D80044EC04 /* QBImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B02C088021E4B7CC0044EC04 /* QBImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B02C088721E4B7DD0044EC04 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B02C088121E4B7CC0044EC04 /* RSKImageCropper.framework */; };
-		B02C088821E4B7DD0044EC04 /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B02C088121E4B7CC0044EC04 /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B0011C7521F1F3C000E7728B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6032166DE2AD4CB4AAC94165 /* Security.framework */; };
 		B035520821EF7CC700AB07F8 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B035520721EF7CC700AB07F8 /* libresolv.tbd */; };
 		B035520A21EF7CD200AB07F8 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B035520921EF7CD200AB07F8 /* libsqlite3.tbd */; };
 		B035520C21EF7CDE00AB07F8 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B035520B21EF7CDD00AB07F8 /* CoreMotion.framework */; };
 		B035520E21EF7CEA00AB07F8 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B035520D21EF7CEA00AB07F8 /* CoreTelephony.framework */; };
-		B035521221EF7DD200AB07F8 /* AliyunEmasServices-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B035521121EF7DD200AB07F8 /* AliyunEmasServices-Info.plist */; };
-		B035522621EF801A00AB07F8 /* AliFeedback in Resources */ = {isa = PBXBuildFile; fileRef = B035522521EF801A00AB07F8 /* AliFeedback */; };
-		B035522821EF803400AB07F8 /* feedback in Resources */ = {isa = PBXBuildFile; fileRef = B035522721EF803300AB07F8 /* feedback */; };
+		B03CB151221E359D00733D30 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B03CB11A221E359C00733D30 /* JavaScriptCore.framework */; };
+		B0AE9D03221CEE5200D32E44 /* UTDID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0AE9CCD221CEE5000D32E44 /* UTDID.framework */; };
+		B0AE9D04221CEE5200D32E44 /* AlicloudUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0AE9CFC221CEE5000D32E44 /* AlicloudUtils.framework */; };
+		B0AE9D05221CEE5200D32E44 /* YWFeedbackFMWK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0AE9CFD221CEE5000D32E44 /* YWFeedbackFMWK.framework */; };
+		B0AE9D06221CEE5200D32E44 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0AE9CFE221CEE5100D32E44 /* CrashReporter.framework */; };
+		B0AE9D07221CEE5200D32E44 /* BCHybridWebViewFMWK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0AE9CFF221CEE5100D32E44 /* BCHybridWebViewFMWK.framework */; };
+		B0AE9D08221CEE5200D32E44 /* UTMini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0AE9D00221CEE5100D32E44 /* UTMini.framework */; };
+		B0AE9D09221CEE5200D32E44 /* BCConnectorBundle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0AE9D01221CEE5200D32E44 /* BCConnectorBundle.framework */; };
+		B0AE9D0A221CEE5200D32E44 /* AlicloudMobileAnalitics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0AE9D02221CEE5200D32E44 /* AlicloudMobileAnalitics.framework */; };
+		B0AE9D12221CF51900D32E44 /* TWMessageBarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AE9D0D221CF51800D32E44 /* TWMessageBarManager.m */; };
+		B0AE9D13221CF51900D32E44 /* YWFeedbackBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B0AE9D0F221CF51900D32E44 /* YWFeedbackBundle.bundle */; };
+		B0AE9D14221CF51900D32E44 /* feedbackModule.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AE9D10221CF51900D32E44 /* feedbackModule.m */; };
+		B0AE9D18221D02E100D32E44 /* AliyunEmasServices-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B0AE9D17221D02E100D32E44 /* AliyunEmasServices-Info.plist */; };
+		B0DD92C021F1FB3300A12C89 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0669E8721F1DCF9006D7118 /* RSKImageCropper.framework */; };
+		B0DD92C121F1FB3300A12C89 /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B0669E8721F1DCF9006D7118 /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B0DD92C221F1FB3C00A12C89 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0669E8521F1DCD4006D7118 /* QBImagePicker.framework */; };
+		B0DD92C321F1FB3C00A12C89 /* QBImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B0669E8521F1DCD4006D7118 /* QBImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B0FF149721F0A8F900CCF23A /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B0FF149621F0A8F900CCF23A /* libbz2.1.0.tbd */; };
 		B0FF149921F0AD0C00CCF23A /* assets in Resources */ = {isa = PBXBuildFile; fileRef = B0FF149821F0AD0C00CCF23A /* assets */; };
 		B0FF149B21F0AD1700CCF23A /* index.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = B0FF149A21F0AD1600CCF23A /* index.jsbundle */; };
@@ -217,20 +226,6 @@
 			remoteGlobalIDString = 3D383D621EBD27B9005632C8;
 			remoteInfo = "double-conversion-tvOS";
 		};
-		2DF0FFEA2056DD460020B375 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9936F3131F5F2E4B0010BF04;
-			remoteInfo = privatedata;
-		};
-		2DF0FFEC2056DD460020B375 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9936F32F1F5F2E5B0010BF04;
-			remoteInfo = "privatedata-tvOS";
-		};
 		3DAD3E831DF850E9000B6D8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */;
@@ -307,20 +302,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 3D3CD9321DE5FBEE00167DC4;
 			remoteInfo = "cxxreact-tvOS";
-		};
-		3DAD3EAC1DF850E9000B6D8A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3D3CD90B1DE5FBD600167DC4;
-			remoteInfo = jschelpers;
-		};
-		3DAD3EAE1DF850E9000B6D8A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3D3CD9181DE5FBD800167DC4;
-			remoteInfo = "jschelpers-tvOS";
 		};
 		5E9157321DD0AC6500FF2AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -413,6 +394,34 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNBugly;
 		};
+		B03CB143221E359C00733D30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EDEBC6D6214B3E7000DD5AC8;
+			remoteInfo = jsi;
+		};
+		B03CB145221E359C00733D30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EDEBC73B214B45A300DD5AC8;
+			remoteInfo = jsiexecutor;
+		};
+		B03CB147221E359C00733D30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ED296FB6214C9A0900B7C4FE;
+			remoteInfo = "jsi-tvOS";
+		};
+		B03CB149221E359C00733D30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ED296FEE214C9CF800B7C4FE;
+			remoteInfo = "jsiexecutor-tvOS";
+		};
 		B0FF149421F0A86B00CCF23A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BBB8729347284AF9A4E7FD5B /* RCTHotUpdate.xcodeproj */;
@@ -423,14 +432,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B02C088621E4B7D80044EC04 /* Embed Frameworks */ = {
+		B0DD927A21F1F83B00A12C89 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B02C088521E4B7D80044EC04 /* QBImagePicker.framework in Embed Frameworks */,
-				B02C088821E4B7DD0044EC04 /* RSKImageCropper.framework in Embed Frameworks */,
+				B0DD92C121F1FB3300A12C89 /* RSKImageCropper.framework in Embed Frameworks */,
+				B0DD92C321F1FB3C00A12C89 /* QBImagePicker.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -438,7 +447,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "../node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
 		00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTGeolocation.xcodeproj; path = "../node_modules/react-native/Libraries/Geolocation/RCTGeolocation.xcodeproj"; sourceTree = "<group>"; };
 		00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImage.xcodeproj; path = "../node_modules/react-native/Libraries/Image/RCTImage.xcodeproj"; sourceTree = "<group>"; };
@@ -491,15 +499,27 @@
 		A38D30763AAC45E3A50B26EB /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		A6214525B75444798ACAA1D2 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
-		B02C088021E4B7CC0044EC04 /* QBImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QBImagePicker.framework; path = ImageCropPickerSDK/QBImagePicker.framework; sourceTree = "<group>"; };
-		B02C088121E4B7CC0044EC04 /* RSKImageCropper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RSKImageCropper.framework; path = ImageCropPickerSDK/RSKImageCropper.framework; sourceTree = "<group>"; };
 		B035520721EF7CC700AB07F8 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		B035520921EF7CD200AB07F8 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		B035520B21EF7CDD00AB07F8 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		B035520D21EF7CEA00AB07F8 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		B035521121EF7DD200AB07F8 /* AliyunEmasServices-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AliyunEmasServices-Info.plist"; sourceTree = "<group>"; };
-		B035522521EF801A00AB07F8 /* AliFeedback */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AliFeedback; path = jlulife/AliFeedback; sourceTree = "<group>"; };
-		B035522721EF803300AB07F8 /* feedback */ = {isa = PBXFileReference; lastKnownFileType = folder; name = feedback; path = jlulife/feedback; sourceTree = "<group>"; };
+		B03CB11A221E359C00733D30 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		B0669E8521F1DCD4006D7118 /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0669E8721F1DCF9006D7118 /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0AE9CCD221CEE5000D32E44 /* UTDID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UTDID.framework; sourceTree = "<group>"; };
+		B0AE9CFC221CEE5000D32E44 /* AlicloudUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlicloudUtils.framework; sourceTree = "<group>"; };
+		B0AE9CFD221CEE5000D32E44 /* YWFeedbackFMWK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YWFeedbackFMWK.framework; sourceTree = "<group>"; };
+		B0AE9CFE221CEE5100D32E44 /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CrashReporter.framework; sourceTree = "<group>"; };
+		B0AE9CFF221CEE5100D32E44 /* BCHybridWebViewFMWK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BCHybridWebViewFMWK.framework; sourceTree = "<group>"; };
+		B0AE9D00221CEE5100D32E44 /* UTMini.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UTMini.framework; sourceTree = "<group>"; };
+		B0AE9D01221CEE5200D32E44 /* BCConnectorBundle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BCConnectorBundle.framework; sourceTree = "<group>"; };
+		B0AE9D02221CEE5200D32E44 /* AlicloudMobileAnalitics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlicloudMobileAnalitics.framework; sourceTree = "<group>"; };
+		B0AE9D0D221CF51800D32E44 /* TWMessageBarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWMessageBarManager.m; sourceTree = "<group>"; };
+		B0AE9D0E221CF51800D32E44 /* feedbackModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = feedbackModule.h; sourceTree = "<group>"; };
+		B0AE9D0F221CF51900D32E44 /* YWFeedbackBundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = YWFeedbackBundle.bundle; sourceTree = "<group>"; };
+		B0AE9D10221CF51900D32E44 /* feedbackModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = feedbackModule.m; sourceTree = "<group>"; };
+		B0AE9D11221CF51900D32E44 /* TWMessageBarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWMessageBarManager.h; sourceTree = "<group>"; };
+		B0AE9D17221D02E100D32E44 /* AliyunEmasServices-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AliyunEmasServices-Info.plist"; path = "jlulife/AliyunEmasServices-Info.plist"; sourceTree = "<group>"; };
 		B0FF149621F0A8F900CCF23A /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = usr/lib/libbz2.1.0.tbd; sourceTree = SDKROOT; };
 		B0FF149821F0AD0C00CCF23A /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = bundle/assets; sourceTree = "<group>"; };
 		B0FF149A21F0AD1600CCF23A /* index.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = index.jsbundle; path = bundle/index.jsbundle; sourceTree = "<group>"; };
@@ -526,37 +546,44 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0FF149721F0A8F900CCF23A /* libbz2.1.0.tbd in Frameworks */,
-				6C681CC72FFE470295E9A1FF /* libz.tbd in Frameworks */,
+				B03CB151221E359D00733D30 /* JavaScriptCore.framework in Frameworks */,
 				95E338D67DE24E91BBC5224C /* SystemConfiguration.framework in Frameworks */,
 				B035520E21EF7CEA00AB07F8 /* CoreTelephony.framework in Frameworks */,
 				B035520C21EF7CDE00AB07F8 /* CoreMotion.framework in Frameworks */,
 				B035520A21EF7CD200AB07F8 /* libsqlite3.tbd in Frameworks */,
 				B035520821EF7CC700AB07F8 /* libresolv.tbd in Frameworks */,
+				6C681CC72FFE470295E9A1FF /* libz.tbd in Frameworks */,
+				B0AE9D06221CEE5200D32E44 /* CrashReporter.framework in Frameworks */,
+				B0AE9D09221CEE5200D32E44 /* BCConnectorBundle.framework in Frameworks */,
+				B0DD92C221F1FB3C00A12C89 /* QBImagePicker.framework in Frameworks */,
+				B0011C7521F1F3C000E7728B /* Security.framework in Frameworks */,
+				B0DD92C021F1FB3300A12C89 /* RSKImageCropper.framework in Frameworks */,
+				B0FF149721F0A8F900CCF23A /* libbz2.1.0.tbd in Frameworks */,
+				B0AE9D03221CEE5200D32E44 /* UTDID.framework in Frameworks */,
+				B0AE9D05221CEE5200D32E44 /* YWFeedbackFMWK.framework in Frameworks */,
+				B0AE9D04221CEE5200D32E44 /* AlicloudUtils.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				11D1A2F320CAFA9E000508D9 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
+				B0AE9D08221CEE5200D32E44 /* UTMini.framework in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
-				B02C088321E4B7CC0044EC04 /* RSKImageCropper.framework in Frameworks */,
+				B0AE9D07221CEE5200D32E44 /* BCHybridWebViewFMWK.framework in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
-				B02C088721E4B7DD0044EC04 /* RSKImageCropper.framework in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				59ADCA2E70D542C592B75A78 /* libRNSVG.a in Frameworks */,
 				E20BE58CBC9E4ECCBE3FE4D5 /* libRNVectorIcons.a in Frameworks */,
-				B02C088421E4B7D80044EC04 /* QBImagePicker.framework in Frameworks */,
 				8AF4FC8B2988432986E70D57 /* libRNCWebView.a in Frameworks */,
 				F402F7714F534ADE9793FF6A /* libRCTSplashScreen.a in Frameworks */,
 				6B2C394BC8A54AA1BED794C1 /* libimageCropPicker.a in Frameworks */,
-				B02C088221E4B7CC0044EC04 /* QBImagePicker.framework in Frameworks */,
 				044D57BEA8FF45ADAB16F4A2 /* libRNBugly.a in Frameworks */,
+				B0AE9D0A221CEE5200D32E44 /* AlicloudMobileAnalitics.framework in Frameworks */,
 				665423F86C71487980CFF7D0 /* libc++.tbd in Frameworks */,
-				A1C0C97180EC413DB5FD0701 /* Security.framework in Frameworks */,
 				436350DE46B34FDA885A683A /* Bugly.framework in Frameworks */,
 				5AA3E82A832A4170A5A94397 /* libRCTHotUpdate.a in Frameworks */,
 			);
@@ -672,13 +699,16 @@
 		13B07FAE1A68108700A75B9A /* jlulife */ = {
 			isa = PBXGroup;
 			children = (
+				B0AE9D0E221CF51800D32E44 /* feedbackModule.h */,
+				B0AE9D10221CF51900D32E44 /* feedbackModule.m */,
+				B0AE9D11221CF51900D32E44 /* TWMessageBarManager.h */,
+				B0AE9D0D221CF51800D32E44 /* TWMessageBarManager.m */,
+				B0AE9D0F221CF51900D32E44 /* YWFeedbackBundle.bundle */,
 				B0FF149A21F0AD1600CCF23A /* index.jsbundle */,
-				B035522721EF803300AB07F8 /* feedback */,
-				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
-				B035521121EF7DD200AB07F8 /* AliyunEmasServices-Info.plist */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				B0AE9D17221D02E100D32E44 /* AliyunEmasServices-Info.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -694,16 +724,16 @@
 				3DAD3EA71DF850E9000B6D8A /* libyoga.a */,
 				3DAD3EA91DF850E9000B6D8A /* libcxxreact.a */,
 				3DAD3EAB1DF850E9000B6D8A /* libcxxreact.a */,
-				3DAD3EAD1DF850E9000B6D8A /* libjschelpers.a */,
-				3DAD3EAF1DF850E9000B6D8A /* libjschelpers.a */,
 				2DF0FFDF2056DD460020B375 /* libjsinspector.a */,
 				2DF0FFE12056DD460020B375 /* libjsinspector-tvOS.a */,
 				2DF0FFE32056DD460020B375 /* libthird-party.a */,
 				2DF0FFE52056DD460020B375 /* libthird-party.a */,
 				2DF0FFE72056DD460020B375 /* libdouble-conversion.a */,
 				2DF0FFE92056DD460020B375 /* libdouble-conversion.a */,
-				2DF0FFEB2056DD460020B375 /* libprivatedata.a */,
-				2DF0FFED2056DD460020B375 /* libprivatedata-tvOS.a */,
+				B03CB144221E359C00733D30 /* libjsi.a */,
+				B03CB146221E359C00733D30 /* libjsiexecutor.a */,
+				B03CB148221E359C00733D30 /* libjsi-tvOS.a */,
+				B03CB14A221E359C00733D30 /* libjsiexecutor-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -733,6 +763,9 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B03CB11A221E359C00733D30 /* JavaScriptCore.framework */,
+				B0669E8721F1DCF9006D7118 /* RSKImageCropper.framework */,
+				B0669E8521F1DCD4006D7118 /* QBImagePicker.framework */,
 				B0FF149621F0A8F900CCF23A /* libbz2.1.0.tbd */,
 				B035520D21EF7CEA00AB07F8 /* CoreTelephony.framework */,
 				B035520B21EF7CDD00AB07F8 /* CoreMotion.framework */,
@@ -804,10 +837,15 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				B0AE9D02221CEE5200D32E44 /* AlicloudMobileAnalitics.framework */,
+				B0AE9CFC221CEE5000D32E44 /* AlicloudUtils.framework */,
+				B0AE9D01221CEE5200D32E44 /* BCConnectorBundle.framework */,
+				B0AE9CFF221CEE5100D32E44 /* BCHybridWebViewFMWK.framework */,
+				B0AE9CFE221CEE5100D32E44 /* CrashReporter.framework */,
+				B0AE9CCD221CEE5000D32E44 /* UTDID.framework */,
+				B0AE9D00221CEE5100D32E44 /* UTMini.framework */,
+				B0AE9CFD221CEE5000D32E44 /* YWFeedbackFMWK.framework */,
 				B0FF149821F0AD0C00CCF23A /* assets */,
-				B035522521EF801A00AB07F8 /* AliFeedback */,
-				B02C088021E4B7CC0044EC04 /* QBImagePicker.framework */,
-				B02C088121E4B7CC0044EC04 /* RSKImageCropper.framework */,
 				13B07FAE1A68108700A75B9A /* jlulife */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* jlulifeTests */,
@@ -944,7 +982,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				B02C088621E4B7D80044EC04 /* Embed Frameworks */,
+				B0DD927A21F1F83B00A12C89 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1002,14 +1040,20 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = KPU8XAGBQG;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = KPU8XAGBQG;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = KPU8XAGBQG;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E48F1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = KPU8XAGBQG;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
@@ -1234,20 +1278,6 @@
 			remoteRef = 2DF0FFE82056DD460020B375 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2DF0FFEB2056DD460020B375 /* libprivatedata.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libprivatedata.a;
-			remoteRef = 2DF0FFEA2056DD460020B375 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2DF0FFED2056DD460020B375 /* libprivatedata-tvOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libprivatedata-tvOS.a";
-			remoteRef = 2DF0FFEC2056DD460020B375 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		3DAD3E841DF850E9000B6D8A /* libRCTImage-tvOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1323,20 +1353,6 @@
 			fileType = archive.ar;
 			path = libcxxreact.a;
 			remoteRef = 3DAD3EAA1DF850E9000B6D8A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3DAD3EAD1DF850E9000B6D8A /* libjschelpers.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libjschelpers.a;
-			remoteRef = 3DAD3EAC1DF850E9000B6D8A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3DAD3EAF1DF850E9000B6D8A /* libjschelpers.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libjschelpers.a;
-			remoteRef = 3DAD3EAE1DF850E9000B6D8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */ = {
@@ -1430,6 +1446,34 @@
 			remoteRef = B03551C021EF729500AB07F8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		B03CB144221E359C00733D30 /* libjsi.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjsi.a;
+			remoteRef = B03CB143221E359C00733D30 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B03CB146221E359C00733D30 /* libjsiexecutor.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjsiexecutor.a;
+			remoteRef = B03CB145221E359C00733D30 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B03CB148221E359C00733D30 /* libjsi-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libjsi-tvOS.a";
+			remoteRef = B03CB147221E359C00733D30 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B03CB14A221E359C00733D30 /* libjsiexecutor-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libjsiexecutor-tvOS.a";
+			remoteRef = B03CB149221E359C00733D30 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		B0FF149521F0A86B00CCF23A /* libRCTHotUpdate.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1451,14 +1495,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0AE9D18221D02E100D32E44 /* AliyunEmasServices-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				ADED3F62D3874AF59128B559 /* AntDesign.ttf in Resources */,
+				B0AE9D13221CF51900D32E44 /* YWFeedbackBundle.bundle in Resources */,
 				103E4B52251243E791624CEC /* Entypo.ttf in Resources */,
 				C35909246E6748BAA36BEDBA /* EvilIcons.ttf in Resources */,
 				F94D1098C9D14C419F06E913 /* Feather.ttf in Resources */,
 				B0FF149921F0AD0C00CCF23A /* assets in Resources */,
 				04A616AC56D54F958FE7B933 /* FontAwesome.ttf in Resources */,
-				B035521221EF7DD200AB07F8 /* AliyunEmasServices-Info.plist in Resources */,
 				D0455EA25CFE414A806C0128 /* FontAwesome5_Brands.ttf in Resources */,
 				B0FF149B21F0AD1700CCF23A /* index.jsbundle in Resources */,
 				F0934BFDDB494E428AAE70AE /* FontAwesome5_Regular.ttf in Resources */,
@@ -1467,8 +1512,6 @@
 				409998E9C4A04A9D8B2FAB05 /* Ionicons.ttf in Resources */,
 				0E8CB9155A644B8AB9836C73 /* MaterialCommunityIcons.ttf in Resources */,
 				669581075B2D45A5A197E109 /* MaterialIcons.ttf in Resources */,
-				B035522621EF801A00AB07F8 /* AliFeedback in Resources */,
-				B035522821EF803400AB07F8 /* feedback in Resources */,
 				D8B07843F9F14EF0894F9EC6 /* Octicons.ttf in Resources */,
 				FEED0A90EF9745D9BEC8443A /* SimpleLineIcons.ttf in Resources */,
 				9B5C8CBD3DAC4EC1AEB88B18 /* Zocial.ttf in Resources */,
@@ -1505,7 +1548,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1536,7 +1579,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0AE9D12221CF51900D32E44 /* TWMessageBarManager.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				B0AE9D14221CF51900D32E44 /* feedbackModule.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1578,6 +1623,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = KPU8XAGBQG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-bugly/ios/RNBugly/**",
@@ -1626,6 +1672,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = KPU8XAGBQG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-bugly/ios/RNBugly/**",
@@ -1672,11 +1719,13 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = KPU8XAGBQG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ImageCropPickerSDK",
 					"$(SRCROOT)/../node_modules/react-native-bugly/ios/RNBugly/**",
 					"$(PROJECT_DIR)/jlulife/AliFeedback",
+					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1696,7 +1745,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.steven.jlulife;
+				PRODUCT_BUNDLE_IDENTIFIER = org.steven.jlulife.ios;
 				PRODUCT_NAME = jlulife;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1708,11 +1757,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KPU8XAGBQG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ImageCropPickerSDK",
 					"$(SRCROOT)/../node_modules/react-native-bugly/ios/RNBugly/**",
 					"$(PROJECT_DIR)/jlulife/AliFeedback",
+					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1732,7 +1783,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.steven.jlulife;
+				PRODUCT_BUNDLE_IDENTIFIER = org.steven.jlulife.ios;
 				PRODUCT_NAME = jlulife;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1748,6 +1799,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = KPU8XAGBQG;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1801,6 +1853,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = KPU8XAGBQG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-bugly/ios/RNBugly/**",
@@ -1851,6 +1904,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = KPU8XAGBQG;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1903,6 +1957,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = KPU8XAGBQG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-bugly/ios/RNBugly/**",
