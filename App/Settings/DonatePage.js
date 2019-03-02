@@ -47,7 +47,7 @@ export default class DonatePage extends Component {
         if (this.refs.toast != undefined)
             this.refs.toast.show("十分感谢 *\\(๑• ₃ •๑)", 5000);
         Linking.openURL(
-            "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&id=1449566000"
+            "https://itunes.apple.com/cn/app/jlu-life/id1449566000"
         );
     }
 
@@ -101,16 +101,10 @@ export default class DonatePage extends Component {
                     backgroundColor={Global.settings.theme.backgroundColor}
                     placement="left"
                     leftComponent={
-                        <Button
-                            title=""
-                            icon={
-                                <EIcon
-                                    name="chevron-left"
-                                    size={28}
-                                    color="white"
-                                />
-                            }
-                            clear
+                        <EIcon
+                            name="chevron-left"
+                            size={28}
+                            color="#ffffff"
                             onPress={() =>
                                 this.props.navigation.navigate("Settings")
                             }
@@ -140,7 +134,9 @@ export default class DonatePage extends Component {
                                 }
                             ]}
                         >
-                            <Text style={{ color: "#fff" }}>评分</Text>
+                            <Text style={{ color: "#fff", lineHeight: 18 }}>
+                                评分
+                            </Text>
                         </View>
                         <View style={styles.box}>
                             {Platform.OS == "ios" ? (
@@ -227,7 +223,9 @@ export default class DonatePage extends Component {
                                 }
                             ]}
                         >
-                            <Text style={{ color: "#fff" }}>捐赠开发者</Text>
+                            <Text style={{ color: "#fff", lineHeight: 18 }}>
+                                捐赠开发者
+                            </Text>
                         </View>
                         <View style={styles.box}>
                             {Platform.OS == "ios" ? (
@@ -327,9 +325,5 @@ const styles = StyleSheet.create({
         color: "#777",
         lineHeight: 24,
         fontWeight: "100"
-    },
-    title: {
-        fontSize: 18,
-        paddingBottom: 5
     }
 });

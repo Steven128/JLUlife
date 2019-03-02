@@ -264,7 +264,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="A"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     优
                                                 </Text>
                                             </RadioButton>
@@ -272,7 +277,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="B"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     良
                                                 </Text>
                                             </RadioButton>
@@ -280,7 +290,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="C"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     中
                                                 </Text>
                                             </RadioButton>
@@ -288,7 +303,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="D"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     差
                                                 </Text>
                                             </RadioButton>
@@ -322,7 +342,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="A"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     优
                                                 </Text>
                                             </RadioButton>
@@ -330,7 +355,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="B"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     良
                                                 </Text>
                                             </RadioButton>
@@ -338,7 +368,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="C"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     中
                                                 </Text>
                                             </RadioButton>
@@ -346,7 +381,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="D"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     差
                                                 </Text>
                                             </RadioButton>
@@ -380,7 +420,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="Y"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     有
                                                 </Text>
                                             </RadioButton>
@@ -388,7 +433,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="N"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     没有
                                                 </Text>
                                             </RadioButton>
@@ -422,7 +472,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="A"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     优
                                                 </Text>
                                             </RadioButton>
@@ -430,7 +485,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="B"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     良
                                                 </Text>
                                             </RadioButton>
@@ -438,7 +498,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="C"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     中
                                                 </Text>
                                             </RadioButton>
@@ -446,7 +511,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="D"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     差
                                                 </Text>
                                             </RadioButton>
@@ -480,7 +550,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="A"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     优
                                                 </Text>
                                             </RadioButton>
@@ -488,7 +563,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="B"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     良
                                                 </Text>
                                             </RadioButton>
@@ -496,7 +576,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="C"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     中
                                                 </Text>
                                             </RadioButton>
@@ -504,7 +589,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="D"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     差
                                                 </Text>
                                             </RadioButton>
@@ -544,7 +634,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="A"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     优
                                                 </Text>
                                             </RadioButton>
@@ -552,7 +647,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="B"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     良
                                                 </Text>
                                             </RadioButton>
@@ -560,7 +660,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="C"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     中
                                                 </Text>
                                             </RadioButton>
@@ -568,7 +673,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="D"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     差
                                                 </Text>
                                             </RadioButton>
@@ -602,7 +712,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="A"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     优
                                                 </Text>
                                             </RadioButton>
@@ -610,7 +725,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="B"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     良
                                                 </Text>
                                             </RadioButton>
@@ -618,7 +738,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="C"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     中
                                                 </Text>
                                             </RadioButton>
@@ -626,7 +751,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="D"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     差
                                                 </Text>
                                             </RadioButton>
@@ -660,7 +790,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="A"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     优
                                                 </Text>
                                             </RadioButton>
@@ -668,7 +803,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="B"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     良
                                                 </Text>
                                             </RadioButton>
@@ -676,7 +816,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="C"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     中
                                                 </Text>
                                             </RadioButton>
@@ -684,7 +829,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="D"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     差
                                                 </Text>
                                             </RadioButton>
@@ -724,7 +874,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="A"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     优
                                                 </Text>
                                             </RadioButton>
@@ -732,7 +887,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="B"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     良
                                                 </Text>
                                             </RadioButton>
@@ -740,7 +900,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="C"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     中
                                                 </Text>
                                             </RadioButton>
@@ -748,7 +913,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="D"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     差
                                                 </Text>
                                             </RadioButton>
@@ -782,7 +952,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="A"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     优
                                                 </Text>
                                             </RadioButton>
@@ -790,7 +965,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="B"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     良
                                                 </Text>
                                             </RadioButton>
@@ -798,7 +978,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="C"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     中
                                                 </Text>
                                             </RadioButton>
@@ -806,7 +991,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="D"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     差
                                                 </Text>
                                             </RadioButton>
@@ -840,7 +1030,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="A"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     优
                                                 </Text>
                                             </RadioButton>
@@ -848,7 +1043,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="B"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     良
                                                 </Text>
                                             </RadioButton>
@@ -856,7 +1056,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="C"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     中
                                                 </Text>
                                             </RadioButton>
@@ -864,7 +1069,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="D"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     差
                                                 </Text>
                                             </RadioButton>
@@ -904,7 +1114,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="A"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     优
                                                 </Text>
                                             </RadioButton>
@@ -912,7 +1127,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="B"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     良
                                                 </Text>
                                             </RadioButton>
@@ -920,7 +1140,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="C"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     中
                                                 </Text>
                                             </RadioButton>
@@ -928,7 +1153,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="D"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     差
                                                 </Text>
                                             </RadioButton>
@@ -962,7 +1192,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="A"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     优
                                                 </Text>
                                             </RadioButton>
@@ -970,7 +1205,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="B"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     良
                                                 </Text>
                                             </RadioButton>
@@ -978,7 +1218,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="C"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     中
                                                 </Text>
                                             </RadioButton>
@@ -986,7 +1231,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="D"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     差
                                                 </Text>
                                             </RadioButton>
@@ -1020,7 +1270,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="A"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     优
                                                 </Text>
                                             </RadioButton>
@@ -1028,7 +1283,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="B"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     良
                                                 </Text>
                                             </RadioButton>
@@ -1036,7 +1296,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="C"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     中
                                                 </Text>
                                             </RadioButton>
@@ -1044,7 +1309,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="D"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     差
                                                 </Text>
                                             </RadioButton>
@@ -1084,7 +1354,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="A"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     优
                                                 </Text>
                                             </RadioButton>
@@ -1092,7 +1367,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="B"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     良
                                                 </Text>
                                             </RadioButton>
@@ -1100,7 +1380,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="C"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     中
                                                 </Text>
                                             </RadioButton>
@@ -1108,7 +1393,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="D"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     差
                                                 </Text>
                                             </RadioButton>
@@ -1142,7 +1432,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="A"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     优
                                                 </Text>
                                             </RadioButton>
@@ -1150,7 +1445,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="B"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     良
                                                 </Text>
                                             </RadioButton>
@@ -1158,7 +1458,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="C"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     中
                                                 </Text>
                                             </RadioButton>
@@ -1166,7 +1471,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="D"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     差
                                                 </Text>
                                             </RadioButton>
@@ -1189,7 +1499,6 @@ export default class EvaluationItemAndroid extends Component {
                                                     .backgroundColor
                                             }
                                             size={15}
-                                            // style={styles.radioGruop}
                                             selectedIndex={
                                                 this.state.sat6.index
                                             }
@@ -1206,7 +1515,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="A"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     满意
                                                 </Text>
                                             </RadioButton>
@@ -1214,7 +1528,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="B"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     基本满意
                                                 </Text>
                                             </RadioButton>
@@ -1222,7 +1541,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="C"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     一般
                                                 </Text>
                                             </RadioButton>
@@ -1230,7 +1554,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="D"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     不满意
                                                 </Text>
                                             </RadioButton>
@@ -1522,7 +1851,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="Y"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     会
                                                 </Text>
                                             </RadioButton>
@@ -1530,7 +1864,12 @@ export default class EvaluationItemAndroid extends Component {
                                                 style={styles.radioButton}
                                                 value="N"
                                             >
-                                                <Text style={{ flex: 1 }}>
+                                                <Text
+                                                    style={{
+                                                        flex: 1,
+                                                        lineHeight: 18
+                                                    }}
+                                                >
                                                     不会
                                                 </Text>
                                             </RadioButton>
@@ -1581,7 +1920,13 @@ export default class EvaluationItemAndroid extends Component {
                                     flex: 1
                                 }}
                             >
-                                <Text style={{ flex: 1, color: "#6a6a6a" }}>
+                                <Text
+                                    style={{
+                                        flex: 1,
+                                        color: "#6a6a6a",
+                                        lineHeight: 18
+                                    }}
+                                >
                                     {this.state.alertText}
                                 </Text>
                             </View>
@@ -1656,25 +2001,25 @@ export default class EvaluationItemAndroid extends Component {
                 },
                 clicks: {
                     _boot_: 0,
-                    prob11: 9641,
-                    prob12: 14808,
-                    prob13: 18801,
-                    prob14: 28249,
-                    prob15: 31641,
-                    prob21: 37225,
-                    prob22: 38497,
-                    prob23: 40170,
-                    prob31: 42129,
-                    prob32: 44162,
-                    prob33: 45337,
-                    prob41: 51345,
-                    prob42: 52522,
-                    prob43: 53729,
-                    prob51: 55306,
-                    prob52: 60449,
-                    sat6: 61657,
-                    mulsel71: 47767259,
-                    prob73: 79145
+                    prob11: 10000 + Math.floor(Math.random() * 1000),
+                    prob12: 15000 + Math.floor(Math.random() * 1000),
+                    prob13: 20000 + Math.floor(Math.random() * 1000),
+                    prob14: 25000 + Math.floor(Math.random() * 1000),
+                    prob15: 30000 + Math.floor(Math.random() * 1000),
+                    prob21: 35000 + Math.floor(Math.random() * 1000),
+                    prob22: 40000 + Math.floor(Math.random() * 1000),
+                    prob23: 45000 + Math.floor(Math.random() * 1000),
+                    prob31: 50000 + Math.floor(Math.random() * 1000),
+                    prob32: 55000 + Math.floor(Math.random() * 1000),
+                    prob33: 60000 + Math.floor(Math.random() * 1000),
+                    prob41: 65000 + Math.floor(Math.random() * 1000),
+                    prob42: 70000 + Math.floor(Math.random() * 1000),
+                    prob43: 75000 + Math.floor(Math.random() * 1000),
+                    prob51: 80000 + Math.floor(Math.random() * 1000),
+                    prob52: 85000 + Math.floor(Math.random() * 1000),
+                    sat6: 90000 + Math.floor(Math.random() * 1000),
+                    mulsel71: 10000000 + Math.floor(Math.random() * 1000000),
+                    prob73: 95000 + Math.floor(Math.random() * 1000)
                 }
             },
             this.state.evalItemId,
@@ -1696,6 +2041,8 @@ export default class EvaluationItemAndroid extends Component {
                         });
                         this.props.refreshList();
                     }
+                } else {
+                    ToastAndroid.show("出错啦T^T", ToastAndroid.SHORT);
                 }
             }
         );
@@ -1715,23 +2062,27 @@ const styles = StyleSheet.create({
         color: "#808080",
         fontSize: 14,
         fontWeight: "normal",
-        paddingBottom: 5
+        paddingBottom: 5,
+        lineHeight: 18
     },
     text: {
         color: "#808080",
-        fontSize: 12
+        fontSize: 12,
+        lineHeight: 16
     },
     evalOuterWrap: {
         paddingVertical: 5
     },
     evalOuterTitle: {
-        fontSize: 16
+        fontSize: 16,
+        lineHeight: 20
     },
     evalGroup: {
         paddingVertical: 5
     },
     evalTitle: {
-        color: "#808080"
+        color: "#808080",
+        lineHeight: 18
     },
     radioGruop: { flexDirection: "row" },
     radioButton: {

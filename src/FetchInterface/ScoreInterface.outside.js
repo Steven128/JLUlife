@@ -75,9 +75,9 @@ function parseScoreData(scoreJson) {
 }
 
 function termIdToName(termId) {
-    for (var i in Global.termJson) {
-        if (termId == Global.termJson[i].termId) {
-            return Global.termJson[i].termName;
+    for (var i in Global.terms) {
+        if (termId == Global.terms[i].termId) {
+            return Global.terms[i].termName;
         }
     }
 }

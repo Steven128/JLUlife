@@ -20,7 +20,6 @@ import Global from "../../src/Global";
 import { RadioGroup, RadioButton } from "react-native-flexi-radio-button";
 import AppStorage from "../../src/AppStorage";
 import SlidersColorPicker from "../../src/Setting/SlidersColorPicker";
-import tinycolor from "tinycolor2";
 
 const { width, height } = Dimensions.get("window");
 export default class ClassSettingsPage extends Component {
@@ -46,10 +45,6 @@ export default class ClassSettingsPage extends Component {
         Global.settings.theme.color = "#ffffff";
         Global.settings.theme.backgroundColor = this.state.backgroundColor;
         AppStorage._save("settings", Global.settings);
-        BackHandler.removeEventListener(
-            "hardwareBackPress",
-            this.onBackAndroid
-        );
         this.props.navigation.navigate("Settings", {
             backgroundColor: this.state.backgroundColor
         });
@@ -89,16 +84,10 @@ export default class ClassSettingsPage extends Component {
                         backgroundColor={this.state.backgroundColor}
                         placement="left"
                         leftComponent={
-                            <Button
-                                title=""
-                                icon={
-                                    <EIcon
-                                        name="chevron-left"
-                                        size={28}
-                                        color="white"
-                                    />
-                                }
-                                clear
+                            <EIcon
+                                name="chevron-left"
+                                size={28}
+                                color="#ffffff"
                                 onPress={() => this.props.navigation.goBack()}
                             />
                         }
@@ -116,10 +105,11 @@ export default class ClassSettingsPage extends Component {
                                 titleStyle={{
                                     fontSize: 12,
                                     paddingHorizontal: 5,
-                                    paddingVertical: 4
+                                    paddingVertical: 4,
+                                    color: "#ffffff"
                                 }}
+                                type="outline"
                                 title="保存"
-                                clear
                                 onPress={this.onSave.bind(this)}
                             />
                         }
@@ -133,7 +123,7 @@ export default class ClassSettingsPage extends Component {
                             borderBottomWidth: 1
                         }}
                     >
-                        <Text style={{ color: "#808080" }}>
+                        <Text style={{ color: "#808080", lineHeight: 18 }}>
                             提示： 点击右上角保存后生效哦~
                         </Text>
                     </View>
@@ -150,84 +140,132 @@ export default class ClassSettingsPage extends Component {
                                 color="#2089dc"
                                 value="#2089dc"
                             >
-                                <Text style={{ color: "#2089dc" }}>默认蓝</Text>
+                                <Text
+                                    style={{ color: "#2089dc", lineHeight: 18 }}
+                                >
+                                    默认蓝
+                                </Text>
                             </RadioButton>
                             <RadioButton
                                 style={styles.radioButton}
                                 color="#f44336"
                                 value="#f44336"
                             >
-                                <Text style={{ color: "#f44336" }}>姨妈红</Text>
+                                <Text
+                                    style={{ color: "#f44336", lineHeight: 18 }}
+                                >
+                                    姨妈红
+                                </Text>
                             </RadioButton>
                             <RadioButton
                                 style={styles.radioButton}
                                 color="#ff96b4"
                                 value="#ff96b4"
                             >
-                                <Text style={{ color: "#ff96b4" }}>少女粉</Text>
+                                <Text
+                                    style={{ color: "#ff96b4", lineHeight: 18 }}
+                                >
+                                    少女粉
+                                </Text>
                             </RadioButton>
                             <RadioButton
                                 style={styles.radioButton}
                                 color="#0f9d58"
                                 value="#0f9d58"
                             >
-                                <Text style={{ color: "#0f9d58" }}>原谅绿</Text>
+                                <Text
+                                    style={{ color: "#0f9d58", lineHeight: 18 }}
+                                >
+                                    原谅绿
+                                </Text>
                             </RadioButton>
                             <RadioButton
                                 style={styles.radioButton}
                                 color="#ffc107"
                                 value="#ffc107"
                             >
-                                <Text style={{ color: "#ffc107" }}>咸蛋黄</Text>
+                                <Text
+                                    style={{ color: "#ffc107", lineHeight: 18 }}
+                                >
+                                    咸蛋黄
+                                </Text>
                             </RadioButton>
                             <RadioButton
                                 style={styles.radioButton}
                                 color="#3f51b5"
                                 value="#3f51b5"
                             >
-                                <Text style={{ color: "#3f51b5" }}>颐堤蓝</Text>
+                                <Text
+                                    style={{ color: "#3f51b5", lineHeight: 18 }}
+                                >
+                                    颐堤蓝
+                                </Text>
                             </RadioButton>
                             <RadioButton
                                 style={styles.radioButton}
                                 color="#ff9800"
                                 value="#ff9800"
                             >
-                                <Text style={{ color: "#ff9800" }}>果粒橙</Text>
+                                <Text
+                                    style={{ color: "#ff9800", lineHeight: 18 }}
+                                >
+                                    果粒橙
+                                </Text>
                             </RadioButton>
                             <RadioButton
                                 style={styles.radioButton}
                                 color="#673ab7"
                                 value="#673ab7"
                             >
-                                <Text style={{ color: "#673ab7" }}>基佬紫</Text>
+                                <Text
+                                    style={{ color: "#673ab7", lineHeight: 18 }}
+                                >
+                                    基佬紫
+                                </Text>
                             </RadioButton>
                             <RadioButton
                                 style={styles.radioButton}
                                 color="#795548"
                                 value="#795548"
                             >
-                                <Text style={{ color: "#795548" }}>古铜棕</Text>
+                                <Text
+                                    style={{ color: "#795548", lineHeight: 18 }}
+                                >
+                                    古铜棕
+                                </Text>
                             </RadioButton>
                             <RadioButton
                                 style={styles.radioButton}
                                 color="#009688"
                                 value="#009688"
                             >
-                                <Text style={{ color: "#009688" }}>水鸭青</Text>
+                                <Text
+                                    style={{ color: "#009688", lineHeight: 18 }}
+                                >
+                                    水鸭青
+                                </Text>
                             </RadioButton>
                             <RadioButton
                                 style={styles.radioButton}
                                 color="#607d8b"
                                 value="#607d8b"
                             >
-                                <Text style={{ color: "#607d8b" }}>低调灰</Text>
+                                <Text
+                                    style={{ color: "#607d8b", lineHeight: 18 }}
+                                >
+                                    低调灰
+                                </Text>
                             </RadioButton>
                             <RadioButton
                                 style={styles.radioButton}
                                 color="#212121"
                                 value="#212121"
                             >
-                                <Text style={{ color: "#212121" }}>高级黑</Text>
+                                <Text
+                                    style={{ color: "#212121", lineHeight: 18 }}
+                                >
+                                    高级黑
+                                </Text>
                             </RadioButton>
                         </RadioGroup>
                         <View
@@ -263,7 +301,8 @@ export default class ClassSettingsPage extends Component {
                                         <Text
                                             style={{
                                                 color: this.state
-                                                    .backgroundColor
+                                                    .backgroundColor,
+                                                lineHeight: 18
                                             }}
                                         >
                                             自定义
@@ -285,8 +324,8 @@ export default class ClassSettingsPage extends Component {
                             backgroundColor: colorHex,
                             selectedIndex: 12
                         });
-                        Global.settings.theme.index = 12;
-                        Global.settings.theme.backgroundColor = colorHex;
+                        // Global.settings.theme.index = 12;
+                        // Global.settings.theme.backgroundColor = colorHex;
                     }}
                     value={Global.settings.theme.backgroundColor}
                     okLabel="确定"

@@ -185,7 +185,9 @@ export default class CardLoss extends Component {
                         inputStyle={styles.inputStyle}
                         placeholder="请输入查询密码"
                         secureTextEntry={true}
-                        leftIcon={<Icon name="lock1" size={22} color="#808080" />}
+                        leftIcon={
+                            <Icon name="lock1" size={22} color="#808080" />
+                        }
                         value={this.state.password}
                         onChangeText={this.handlePwdChange.bind(this)}
                         maxLength={6}
@@ -266,7 +268,13 @@ export default class CardLoss extends Component {
                                     flex: 1
                                 }}
                             >
-                                <Text style={{ flex: 1, color: "#6a6a6a" }}>
+                                <Text
+                                    style={{
+                                        flex: 1,
+                                        color: "#6a6a6a",
+                                        lineHeight: 18
+                                    }}
+                                >
                                     确定要挂失吗？
                                 </Text>
                             </View>
@@ -313,7 +321,13 @@ export default class CardLoss extends Component {
                                     flex: 1
                                 }}
                             >
-                                <Text style={{ flex: 1, color: "#6a6a6a" }}>
+                                <Text
+                                    style={{
+                                        flex: 1,
+                                        color: "#6a6a6a",
+                                        lineHeight: 18
+                                    }}
+                                >
                                     {this.state.alertText}
                                 </Text>
                             </View>

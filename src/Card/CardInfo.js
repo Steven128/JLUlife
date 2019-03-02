@@ -189,9 +189,11 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 16,
         color: "#555",
-        paddingBottom: 5
+        paddingBottom: 5,
+        lineHeight: 20
     },
     subTitle: {
-        color: "#808080"
+        color: "#808080",
+        lineHeight: 18
     }
 });

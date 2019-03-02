@@ -63,7 +63,13 @@ export default class NotificationSearchPage extends Component {
                         flex: 1
                     }}
                 >
-                    <Text style={{ textAlign: "center", color: "#6a6a6a" }}>
+                    <Text
+                        style={{
+                            textAlign: "center",
+                            color: "#6a6a6a",
+                            lineHeight: 18
+                        }}
+                    >
                         {text}
                     </Text>
                     <EIcon size={18} name="chevron-small-down" />
@@ -125,16 +131,10 @@ export default class NotificationSearchPage extends Component {
                         backgroundColor={Global.settings.theme.backgroundColor}
                         placement="left"
                         leftComponent={
-                            <Button
-                                title=""
-                                icon={
-                                    <EIcon
-                                        name="chevron-left"
-                                        size={28}
-                                        color="white"
-                                    />
-                                }
-                                clear
+                            <EIcon
+                                name="chevron-left"
+                                size={28}
+                                color="#ffffff"
                                 onPress={() => this.props.navigation.goBack()}
                             />
                         }

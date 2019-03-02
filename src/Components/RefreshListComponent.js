@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#f5f5f5"
     },
     footerText: {
-        fontSize: 14
+        fontSize: 14,
+        lineHeight: 18
     }
 });

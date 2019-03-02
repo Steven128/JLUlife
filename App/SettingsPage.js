@@ -176,7 +176,7 @@ export default class SettingsPage extends Component {
     }
 
     checkUpgrade() {
-        RNBugly.checkUpgrade();
+        RNBugly.checkUpgrade(true, false);
     }
 
     logoutTapped() {
@@ -224,16 +224,10 @@ export default class SettingsPage extends Component {
                         backgroundColor={Global.settings.theme.backgroundColor}
                         placement="left"
                         leftComponent={
-                            <Button
-                                title=""
-                                icon={
-                                    <EIcon
-                                        name="menu"
-                                        size={28}
-                                        color="white"
-                                    />
-                                }
-                                clear
+                            <EIcon
+                                name="menu"
+                                size={28}
+                                color="#ffffff"
                                 onPress={this.openDrawer}
                             />
                         }
@@ -261,7 +255,13 @@ export default class SettingsPage extends Component {
                                 }
                             ]}
                         >
-                            <Text style={{ paddingLeft: 15, flex: 4 }}>
+                            <Text
+                                style={{
+                                    paddingLeft: 15,
+                                    flex: 4,
+                                    lineHeight: 18
+                                }}
+                            >
                                 我在校外：{" "}
                                 {this.state.outOfSchool ? "开" : "关"}
                             </Text>
@@ -309,14 +309,14 @@ export default class SettingsPage extends Component {
                                 <TouchableOpacity
                                     activeOpacity={0.75}
                                     onPress={() => {
-                                        // NativeModules.FeedbackModule.openFeedbackActivity(
-                                        //     {
-                                        //         platform: "ios"
-                                        //     }
-                                        // );
-                                        this.props.navigation.navigate(
-                                            "FeedBack"
+                                        NativeModules.feedbackModule.openFeedbackActivity(
+                                            Global.loginInfo.j_username +
+                                                " " +
+                                                Global.currentStuName
                                         );
+                                        // this.props.navigation.navigate(
+                                        //     "FeedBack"
+                                        // );
                                     }}
                                 >
                                     <View style={styles.item}>
@@ -435,7 +435,13 @@ export default class SettingsPage extends Component {
                                     flex: 1
                                 }}
                             >
-                                <Text style={{ flex: 1, color: "#6a6a6a" }}>
+                                <Text
+                                    style={{
+                                        flex: 1,
+                                        color: "#6a6a6a",
+                                        lineHeight: 18
+                                    }}
+                                >
                                     退出登录会清空你的一切信息
                                 </Text>
                             </View>
@@ -485,7 +491,13 @@ export default class SettingsPage extends Component {
                                     flex: 1
                                 }}
                             >
-                                <Text style={{ flex: 1, color: "#6a6a6a" }}>
+                                <Text
+                                    style={{
+                                        flex: 1,
+                                        color: "#6a6a6a",
+                                        lineHeight: 18
+                                    }}
+                                >
                                     你已退出登录啦，换个账号吧~
                                 </Text>
                             </View>

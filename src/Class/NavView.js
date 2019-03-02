@@ -18,10 +18,10 @@ export class TopNav extends Component {
         for (var i = 0; i < 7; i++) {
             container.push(
                 <View style={[styles.topNav, { opacity: this.props.opacity }]}>
-                    <Text style={{ color: this.props.color }}>
+                    <Text style={{ color: this.props.color, lineHeight: 18 }}>
                         {this.state.weekList[i]}
                     </Text>
-                    <Text style={{ color: this.props.color }}>
+                    <Text style={{ color: this.props.color, lineHeight: 18 }}>
                         {this.props.weekDayList.date[i]}
                     </Text>
                 </View>
@@ -43,10 +43,12 @@ export class TopNav extends Component {
                         }
                     ]}
                 >
-                    <Text style={{ color: this.props.color }}>
+                    <Text style={{ color: this.props.color, lineHeight: 18 }}>
                         {this.props.weekDayList.month}
                     </Text>
-                    <Text style={{ color: this.props.color }}>月</Text>
+                    <Text style={{ color: this.props.color, lineHeight: 18 }}>
+                        月
+                    </Text>
                 </View>
                 {container}
             </View>
@@ -74,7 +76,7 @@ export class LeftNav extends Component {
                         }
                     ]}
                 >
-                    <Text style={{ color: this.props.color }}>
+                    <Text style={{ color: this.props.color, lineHeight: 18 }}>
                         {this.state.classList[i]}
                     </Text>
                 </View>

@@ -16,7 +16,7 @@ export default function handleNewSettings() {
         Global.settings.theme.backgroundColor = "#2089dc";
     if (settings.theme.nightMode == undefined)
         Global.settings.theme.nightMode = false;
-    //ClassTable
+    //Class
     if (settings.class == undefined) Global.settings.class = {};
     if (settings.class.classLength == undefined)
         Global.settings.class.classLength = 11;
@@ -32,9 +32,13 @@ export default function handleNewSettings() {
         Global.settings.class.fontSize = 14;
     if (settings.class.backgroundImage == undefined)
         Global.settings.class.backgroundImage = "";
+    if (settings.class.currentTermId == undefined)
+        Global.settings.class.currentTermId = "";
+    //Options
     if (settings.options == undefined) Global.settings.options = {};
     if (settings.options.firstUseEval == undefined)
         Global.settings.options.firstUseEval = true;
+    //Weather
     if (settings.weather == undefined) Global.settings.weather = {};
     if (settings.weather.city == undefined)
         Global.settings.weather.city = "CN101060101";

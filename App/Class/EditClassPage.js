@@ -286,7 +286,7 @@ export default class EditClassPage extends Component {
                 week <= singleClass.schedule.endWeek;
                 week++
             ) {
-                    // console.log(Global.classJson[week - 1][day - 1]);
+                // console.log(Global.classJson[week - 1][day - 1]);
                 if (
                     (singleClass.schedule.weekOddEven == "O" &&
                         week % 2 != 1) ||
@@ -335,7 +335,12 @@ export default class EditClassPage extends Component {
                 <View style={styles.selectContainerStyle}>
                     <View style={{ marginLeft: 15 }}>{icon}</View>
                     <Text
-                        style={{ flex: 1, paddingLeft: 15, color: "#6a6a6a" }}
+                        style={{
+                            flex: 1,
+                            paddingLeft: 15,
+                            color: "#6a6a6a",
+                            lineHeight: 18
+                        }}
                     >
                         {text}
                     </Text>
@@ -346,7 +351,12 @@ export default class EditClassPage extends Component {
                 <View style={styles.selectContainerStyle}>
                     <View style={{ marginLeft: 15 }}>{icon}</View>
                     <Text
-                        style={{ flex: 1, paddingLeft: 15, color: "#6a6a6a" }}
+                        style={{
+                            flex: 1,
+                            paddingLeft: 15,
+                            color: "#6a6a6a",
+                            lineHeight: 18
+                        }}
                     >
                         {text}
                     </Text>
@@ -386,16 +396,10 @@ export default class EditClassPage extends Component {
                         backgroundColor={Global.settings.theme.backgroundColor}
                         placement="left"
                         leftComponent={
-                            <Button
-                                title=""
-                                icon={
-                                    <EIcon
-                                        name="chevron-left"
-                                        size={28}
-                                        color="white"
-                                    />
-                                }
-                                clear
+                            <EIcon
+                                name="chevron-left"
+                                size={28}
+                                color="#ffffff"
                                 onPress={() => this.props.navigation.goBack()}
                             />
                         }
@@ -413,10 +417,11 @@ export default class EditClassPage extends Component {
                                 titleStyle={{
                                     fontSize: 12,
                                     paddingHorizontal: 5,
-                                    paddingVertical: 4
+                                    paddingVertical: 4,
+                                    color: "#fff"
                                 }}
                                 title="保存"
-                                clear
+                                type="outline"
                                 onPress={this.onSave.bind(this)}
                             />
                         }
@@ -488,7 +493,11 @@ export default class EditClassPage extends Component {
                                 }}
                             >
                                 <Text
-                                    style={{ color: "#808080", fontSize: 12 }}
+                                    style={{
+                                        color: "#808080",
+                                        fontSize: 12,
+                                        lineHeight: 18
+                                    }}
                                 >
                                     时间段
                                 </Text>

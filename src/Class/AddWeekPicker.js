@@ -107,11 +107,11 @@ export default class AddWeekPicker extends BaseDialog {
                     itemSelectedColor={this.props.itemSelectedColor}
                     onPickerSelected={toValue => {
                         this.setState({
-                            weekBegin: toValue
+                            weekBegin: parseInt(toValue)
                         });
                         if (toValue > this.state.weekEnd) {
                             this.setState({
-                                weekEnd: toValue
+                                weekEnd: parseInt(toValue)
                             });
                         }
                     }}
@@ -127,11 +127,11 @@ export default class AddWeekPicker extends BaseDialog {
                     itemSelectedColor={this.props.itemSelectedColor}
                     onPickerSelected={toValue => {
                         this.setState({
-                            weekEnd: toValue
+                            weekEnd: parseInt(toValue)
                         });
                         if (toValue < this.state.weekBegin) {
                             this.setState({
-                                weekBegin: toValue
+                                weekBegin: parseInt(toValue)
                             });
                         }
                     }}
@@ -175,7 +175,8 @@ export default class AddWeekPicker extends BaseDialog {
                             style={{
                                 fontSize: this.props.cancelTextSize,
                                 fontWeight: "400",
-                                color: this.props.cancelTextColor
+                                color: this.props.cancelTextColor,
+                                lineHeight: this.props.cancelTextSize + 2
                             }}
                         >
                             {this.props.cancelText}
@@ -205,7 +206,8 @@ export default class AddWeekPicker extends BaseDialog {
                             style={{
                                 fontSize: this.props.confirmTextSize,
                                 fontWeight: "400",
-                                color: this.props.confirmTextColor
+                                color: this.props.confirmTextColor,
+                                lineHeight: this.props.confirmTextSize + 2
                             }}
                         >
                             {this.props.confirmText}

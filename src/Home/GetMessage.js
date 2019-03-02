@@ -57,7 +57,8 @@ export default class GetMessage extends Component {
                     style={{
                         color: "#555",
                         fontSize: 18,
-                        paddingBottom: 15
+                        paddingBottom: 15,
+                        lineHeight: 22
                     }}
                 >
                     消息通知
@@ -107,7 +108,8 @@ export default class GetMessage extends Component {
                     style={{
                         color: "#555",
                         fontSize: 18,
-                        paddingBottom: 15
+                        paddingBottom: 15,
+                        lineHeight: 22
                     }}
                 >
                     消息通知
@@ -128,6 +130,7 @@ const styles = StyleSheet.create({
     text: {
         color: "#808080",
         paddingVertical: 1,
-        paddingHorizontal: 15
+        paddingHorizontal: 15,
+        lineHeight: 18
     }
 });

@@ -130,7 +130,11 @@ export class SlidersColorPicker extends Component {
                                     paddingVertical: 15
                                 }}
                             >
-                                <Text>
+                                <Text
+                                    style={{
+                                        lineHeight: 18
+                                    }}
+                                >
                                     温馨提示：
                                     为了保护视力，强烈建议不要使用亮瞎眼的主题色哦~
                                 </Text>
@@ -187,6 +191,7 @@ const styles = StyleSheet.create({
     headerButton: {
         lineHeight: 22,
         fontSize: 17,
+        lineHeight: 21,
         ...Platform.select({
             android: {
                 fontFamily: "sans-serif-medium"
@@ -204,7 +209,7 @@ const styles = StyleSheet.create({
     lightText: {
         lineHeight: 22,
         fontSize: 17,
-        color: "white",
+        color: "#ffffff",
         ...Platform.select({
             android: {
                 fontFamily: "sans-serif-medium"
@@ -268,7 +273,7 @@ const styles = StyleSheet.create({
         })
     },
     modeTextActive: {
-        color: "white"
+        color: "#ffffff"
     },
     sliders: {
         marginTop: 16

@@ -65,16 +65,10 @@ export default class AdditionsPage extends Component {
                     backgroundColor={Global.settings.theme.backgroundColor}
                     placement="left"
                     leftComponent={
-                        <Button
-                            title=""
-                            icon={
-                                <EIcon
-                                    name="chevron-left"
-                                    size={28}
-                                    color="white"
-                                />
-                            }
-                            clear
+                        <EIcon
+                            name="chevron-left"
+                            size={28}
+                            color="#ffffff"
                             onPress={() => this.props.navigation.goBack()}
                         />
                     }
@@ -100,12 +94,18 @@ export default class AdditionsPage extends Component {
                                         style={{
                                             fontSize: 16,
                                             color: "#555",
-                                            paddingBottom: 10
+                                            paddingBottom: 10,
+                                            lineHeight: 20
                                         }}
                                     >
                                         天气城市设置
                                     </Text>
-                                    <Text style={{ color: "#808080" }}>
+                                    <Text
+                                        style={{
+                                            color: "#808080",
+                                            lineHeight: 18
+                                        }}
+                                    >
                                         当前所在城市： {this.state.location}
                                     </Text>
                                 </View>
@@ -126,12 +126,18 @@ export default class AdditionsPage extends Component {
                                         style={{
                                             fontSize: 16,
                                             color: "#555",
-                                            paddingBottom: 10
+                                            paddingBottom: 10,
+                                            lineHeight: 20
                                         }}
                                     >
                                         天气城市设置
                                     </Text>
-                                    <Text style={{ color: "#808080" }}>
+                                    <Text
+                                        style={{
+                                            color: "#808080",
+                                            lineHeight: 18
+                                        }}
+                                    >
                                         当前所在城市：{" "}
                                         {Global.settings.weather.name}
                                     </Text>

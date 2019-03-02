@@ -28,7 +28,9 @@ export default class ScoreStatItemIOS extends Component {
                 }
             >
                 <View style={styles.container}>
-                    <Text style={{ color: "#6a6a6a" }}>{this.props.title}</Text>
+                    <Text style={{ color: "#6a6a6a", lineHeight: 18 }}>
+                        {this.props.title}
+                    </Text>
                 </View>
             </TouchableOpacity>
         );

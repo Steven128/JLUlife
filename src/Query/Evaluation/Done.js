@@ -99,7 +99,8 @@ export default class Done extends Component {
                                     <Text
                                         style={{
                                             fontSize: 16,
-                                            color: "#808080"
+                                            color: "#808080",
+                                            lineHeight: 20
                                         }}
                                     >
                                         好像什么东西都没有ヽ(ー_ー)ノ

@@ -144,16 +144,10 @@ export default class WeatherSettingsPage extends Component {
                     backgroundColor={Global.settings.theme.backgroundColor}
                     placement="left"
                     leftComponent={
-                        <Button
-                            title=""
-                            icon={
-                                <EIcon
-                                    name="chevron-left"
-                                    size={28}
-                                    color="white"
-                                />
-                            }
-                            clear
+                        <EIcon
+                            name="chevron-left"
+                            size={28}
+                            color="#ffffff"
                             onPress={() =>
                                 this.props.navigation.navigate(
                                     this.props.navigation.state.params.from
@@ -175,10 +169,11 @@ export default class WeatherSettingsPage extends Component {
                             titleStyle={{
                                 fontSize: 12,
                                 paddingHorizontal: 5,
-                                paddingVertical: 4
+                                paddingVertical: 4,
+                                color: "#ffffff"
                             }}
                             title="保存"
-                            clear
+                            type="outline"
                             onPress={this.onSave.bind(this)}
                         />
                     }
@@ -192,10 +187,10 @@ export default class WeatherSettingsPage extends Component {
                             zIndex: 0
                         }}
                     >
-                        <Text style={{ color: "#6a6a6a" }}>
+                        <Text style={{ color: "#6a6a6a", lineHeight: 18 }}>
                             在输入框中输入你想要切换的城市，然后在列表中选择一个~
                         </Text>
-                        <Text style={{ color: "#6a6a6a" }}>
+                        <Text style={{ color: "#6a6a6a", lineHeight: 18 }}>
                             点击保存后生效哟~
                         </Text>
                     </View>

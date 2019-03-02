@@ -33,7 +33,6 @@ import PrivacyPage from "./App/Settings/PrivacyPage";
 import DonatePage from "./App/Settings/DonatePage";
 import AdditionsPage from "./App/Settings/AdditionsPage";
 import WeatherSettingsPage from "./App/Settings/WeatherSettingsPage";
-import FeedBackPage from "./App/Settings/FeedBackPage";
 import LoginPage from "./App/LoginPage";
 import Sidebar from "./App/Sidebar";
 
@@ -251,12 +250,6 @@ const SettingsStack = createStackNavigator({
             header: null
         }
     },
-    FeedBack: {
-        screen: FeedBackPage,
-        navigationOptions: {
-            header: null
-        }
-    },
     Login: {
         screen: LoginPage,
         navigationOptions: {
@@ -376,30 +369,6 @@ const Drawer = createDrawerNavigator(
 );
 
 export default Drawer;
+
 //定义storage
 global.storage = AppStorage._getStorage();
-
-//计算当前为本学期第几周
-function getCurrentWeek(startDate) {
-    var today = new Date().toJSON().substring(0, 10);
-    var startDateStr = startDate.split("-"); //将日期字符串分隔为数组,数组元素分别为年.月.日
-    //根据年 . 月 . 日的值创建Date对象
-    var startDateObj = new Date(
-        startDateStr[0],
-        startDateStr[1] - 1,
-        startDateStr[2]
-    );
-    var todayStr = today.split("-");
-    var todayObj = new Date(
-        todayStr[0],
-        todayStr[1] - 1,
-        parseInt(todayStr[2]) + 1
-    );
-    var t1 = startDateObj.getTime();
-    var t2 = todayObj.getTime();
-    var dateTime = 1000 * 60 * 60 * 24; //每一天的毫秒数
-    var minusDays = Math.floor((t2 - t1) / dateTime); //计算出两个日期的天数差
-    var days = Math.abs(minusDays); //取绝对值
-    return Math.ceil(days / 7); //返回周数
-}
-global.getCurrentWeek = getCurrentWeek;

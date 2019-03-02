@@ -115,7 +115,8 @@ export default class EmptyRoomPage extends Component {
                             style={{
                                 flex: 8,
                                 paddingLeft: 15,
-                                color: "#6a6a6a"
+                                color: "#6a6a6a",
+                                lineHeight: 18
                             }}
                         >
                             {text}
@@ -132,7 +133,11 @@ export default class EmptyRoomPage extends Component {
             <View style={styles.buttomContainer}>
                 <TouchableNativeFeedback onPress={callback.bind(this)}>
                     <View style={styles.button}>
-                        <Text style={{ flex: 8, paddingLeft: 15 }}>{text}</Text>
+                        <Text
+                            style={{ flex: 8, paddingLeft: 15, lineHeight: 18 }}
+                        >
+                            {text}
+                        </Text>
                         <EIcon
                             style={{ flex: 1 }}
                             size={18}
@@ -172,16 +177,10 @@ export default class EmptyRoomPage extends Component {
                         backgroundColor={Global.settings.theme.backgroundColor}
                         placement="left"
                         leftComponent={
-                            <Button
-                                title=""
-                                icon={
-                                    <EIcon
-                                        name="chevron-left"
-                                        size={28}
-                                        color="white"
-                                    />
-                                }
-                                clear
+                            <EIcon
+                                name="chevron-left"
+                                size={28}
+                                color="#ffffff"
                                 onPress={() =>
                                     this.props.navigation.navigate("Main")
                                 }
@@ -246,7 +245,6 @@ export default class EmptyRoomPage extends Component {
                                                 .backgroundColor
                                     }}
                                     loading={this.state.showLoading}
-                                    outline={true}
                                     onPress={this.getRoomList.bind(this)}
                                 />
                             </View>
@@ -287,7 +285,8 @@ export default class EmptyRoomPage extends Component {
                                                             <Text
                                                                 style={{
                                                                     textAlign:
-                                                                        "center"
+                                                                        "center",
+                                                                    lineHeight: 18
                                                                 }}
                                                             >
                                                                 教室名称
@@ -302,7 +301,8 @@ export default class EmptyRoomPage extends Component {
                                                             <Text
                                                                 style={{
                                                                     textAlign:
-                                                                        "center"
+                                                                        "center",
+                                                                    lineHeight: 18
                                                                 }}
                                                             >
                                                                 容量(人)
@@ -317,7 +317,8 @@ export default class EmptyRoomPage extends Component {
                                                             <Text
                                                                 style={{
                                                                     textAlign:
-                                                                        "center"
+                                                                        "center",
+                                                                    lineHeight: 18
                                                                 }}
                                                             >
                                                                 注释
@@ -339,7 +340,8 @@ export default class EmptyRoomPage extends Component {
                                                             <Text
                                                                 style={{
                                                                     textAlign:
-                                                                        "center"
+                                                                        "center",
+                                                                    lineHeight: 18
                                                                 }}
                                                             >
                                                                 {item.name}
@@ -354,7 +356,8 @@ export default class EmptyRoomPage extends Component {
                                                             <Text
                                                                 style={{
                                                                     textAlign:
-                                                                        "center"
+                                                                        "center",
+                                                                    lineHeight: 18
                                                                 }}
                                                             >
                                                                 {item.volume}
@@ -369,7 +372,8 @@ export default class EmptyRoomPage extends Component {
                                                             <Text
                                                                 style={{
                                                                     textAlign:
-                                                                        "center"
+                                                                        "center",
+                                                                    lineHeight: 18
                                                                 }}
                                                             >
                                                                 {item.notes}
@@ -395,19 +399,22 @@ export default class EmptyRoomPage extends Component {
                                                             <Text
                                                                 style={{
                                                                     textAlign:
-                                                                        "center"
+                                                                        "center",
+                                                                    lineHeight: 18
                                                                 }}
                                                             >
-                                                                {
-                                                                    this.state
-                                                                        .roomList[
-                                                                        this
-                                                                            .state
-                                                                            .roomList
-                                                                            .length -
-                                                                            1
-                                                                    ].name
-                                                                }
+                                                                {this.state
+                                                                    .roomList
+                                                                    .length == 0
+                                                                    ? ""
+                                                                    : this.state
+                                                                          .roomList[
+                                                                          this
+                                                                              .state
+                                                                              .roomList
+                                                                              .length -
+                                                                              1
+                                                                      ].name}
                                                             </Text>
                                                         </View>
                                                         <View
@@ -419,19 +426,22 @@ export default class EmptyRoomPage extends Component {
                                                             <Text
                                                                 style={{
                                                                     textAlign:
-                                                                        "center"
+                                                                        "center",
+                                                                    lineHeight: 18
                                                                 }}
                                                             >
-                                                                {
-                                                                    this.state
-                                                                        .roomList[
-                                                                        this
-                                                                            .state
-                                                                            .roomList
-                                                                            .length -
-                                                                            1
-                                                                    ].volume
-                                                                }
+                                                                {this.state
+                                                                    .roomList
+                                                                    .length == 0
+                                                                    ? ""
+                                                                    : this.state
+                                                                          .roomList[
+                                                                          this
+                                                                              .state
+                                                                              .roomList
+                                                                              .length -
+                                                                              1
+                                                                      ].volume}
                                                             </Text>
                                                         </View>
                                                         <View
@@ -443,19 +453,22 @@ export default class EmptyRoomPage extends Component {
                                                             <Text
                                                                 style={{
                                                                     textAlign:
-                                                                        "center"
+                                                                        "center",
+                                                                    lineHeight: 18
                                                                 }}
                                                             >
-                                                                {
-                                                                    this.state
-                                                                        .roomList[
-                                                                        this
-                                                                            .state
-                                                                            .roomList
-                                                                            .length -
-                                                                            1
-                                                                    ].notes
-                                                                }
+                                                                {this.state
+                                                                    .roomList
+                                                                    .length == 0
+                                                                    ? ""
+                                                                    : this.state
+                                                                          .roomList[
+                                                                          this
+                                                                              .state
+                                                                              .roomList
+                                                                              .length -
+                                                                              1
+                                                                      ].notes}
                                                             </Text>
                                                         </View>
                                                     </View>
@@ -537,13 +550,18 @@ export default class EmptyRoomPage extends Component {
                         } else {
                             month = value[1].substring(0, 2);
                         }
-                        var day = value[2].substring(0, 2);
+                        var day = value[2];
+                        day = day.replace("日", "");
+                        if (day.length == 1) day = "0" + day;
+                        console.log(day);
                         this.setState({
                             date: year + "-" + month + "-" + day
                         });
                     }}
                     onPickerCancel={() => {}}
                     ref={ref => (this.DatePicker = ref)}
+                    startYear={new Date().getFullYear()}
+                    endYear={parseInt(new Date().getFullYear()) + 1}
                 />
                 <ClassPicker
                     ref={ref => (this.ClassPicker = ref)}
@@ -599,7 +617,13 @@ export default class EmptyRoomPage extends Component {
                                     flex: 1
                                 }}
                             >
-                                <Text style={{ flex: 1, color: "#6a6a6a" }}>
+                                <Text
+                                    style={{
+                                        flex: 1,
+                                        color: "#6a6a6a",
+                                        lineHeight: 18
+                                    }}
+                                >
                                     {this.state.alertText}
                                 </Text>
                             </View>

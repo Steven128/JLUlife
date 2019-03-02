@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
         textAlignVertical: "center"
     },
     weekText: {
-        fontSize: 16
+        fontSize: 16,
+        lineHeight: 20
     }
 });

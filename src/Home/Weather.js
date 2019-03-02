@@ -214,7 +214,13 @@ export default class Weather extends Component {
                         <View>
                             <Text style={[styles.subTitle]}>现在</Text>
                             <View>
-                                <Text style={[styles.text]}>
+                                <Text
+                                    style={{
+                                        color: "#808080",
+                                        paddingVertical: 1,
+                                        paddingHorizontal: 15
+                                    }}
+                                >
                                     <Text
                                         style={{
                                             fontSize: 36,
@@ -360,11 +366,13 @@ const styles = StyleSheet.create({
         color: "#555",
         paddingTop: 10,
         paddingBottom: 5,
-        fontSize: 16
+        fontSize: 16,
+        lineHeight: 20
     },
     text: {
         color: "#808080",
         paddingVertical: 1,
-        paddingHorizontal: 15
+        paddingHorizontal: 15,
+        lineHeight: 18
     }
 });

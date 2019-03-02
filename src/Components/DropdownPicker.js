@@ -100,7 +100,7 @@ class PickerItem extends Component {
                         paddingHorizontal: 30
                     }}
                 >
-                    <Text style={{ color: "#6a6a6a" }}>
+                    <Text style={{ color: "#6a6a6a", lineHeight: 18 }}>
                         {this.props.location} - {this.props.admin_area}
                     </Text>
                 </View>
@@ -118,7 +118,7 @@ class PickerItem extends Component {
                         paddingHorizontal: 30
                     }}
                 >
-                    <Text style={{ color: "#6a6a6a" }}>
+                    <Text style={{ color: "#6a6a6a", lineHeight: 18 }}>
                         {this.props.location} - {this.props.admin_area}
                     </Text>
                 </View>

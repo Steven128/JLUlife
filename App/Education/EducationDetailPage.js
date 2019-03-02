@@ -66,16 +66,10 @@ export default class EducationDetailPage extends Component {
                         backgroundColor={Global.settings.theme.backgroundColor}
                         placement="left"
                         leftComponent={
-                            <Button
-                                title=""
-                                icon={
-                                    <EIcon
-                                        name="chevron-left"
-                                        size={28}
-                                        color="white"
-                                    />
-                                }
-                                clear
+                            <EIcon
+                                name="chevron-left"
+                                size={28}
+                                color="#ffffff"
                                 onPress={() =>
                                     this.props.navigation.navigate("List")
                                 }
@@ -145,12 +139,14 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
-        paddingBottom: 10
+        paddingBottom: 10,
+        lineHeight: 24
     },
     subTitle: {
         fontSize: 14,
         color: "#808080",
-        paddingTop: 5
+        paddingTop: 5,
+        lineHeight: 18
     },
     tagContainer: {
         position: "absolute",

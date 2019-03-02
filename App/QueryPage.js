@@ -58,16 +58,10 @@ export default class QueryPage extends Component {
                         backgroundColor={Global.settings.theme.backgroundColor}
                         placement="left"
                         leftComponent={
-                            <Button
-                                title=""
-                                icon={
-                                    <EIcon
-                                        name="menu"
-                                        size={28}
-                                        color="white"
-                                    />
-                                }
-                                clear
+                            <EIcon
+                                name="menu"
+                                size={28}
+                                color="#ffffff"
                                 onPress={this.openDrawer}
                             />
                         }

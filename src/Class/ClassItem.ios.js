@@ -167,7 +167,10 @@ export default class ClassItemAndroid extends Component {
                                 <Text
                                     style={[
                                         styles.innerItemText,
-                                        { fontSize: this.props.fontSize }
+                                        {
+                                            fontSize: this.props.fontSize,
+                                            lineHeight: this.props.fontSize + 2
+                                        }
                                     ]}
                                 >
                                     {this.props.innerText}
@@ -240,7 +243,9 @@ export default class ClassItemAndroid extends Component {
                                     </TouchableOpacity>
                                 ]}
                             >
-                                <DialogContent style={{ flex: 1, paddingBottom: 0 }}>
+                                <DialogContent
+                                    style={{ flex: 1, paddingBottom: 0 }}
+                                >
                                     <View
                                         style={{
                                             flex: 1,
@@ -347,7 +352,8 @@ export default class ClassItemAndroid extends Component {
                                                     <Text
                                                         style={{
                                                             color: "#ff0042",
-                                                            fontSize: 12
+                                                            fontSize: 12,
+                                                            lineHeight: 16
                                                         }}
                                                     >
                                                         再按一次确定删除
@@ -355,7 +361,8 @@ export default class ClassItemAndroid extends Component {
                                                     <Text
                                                         style={{
                                                             color: "#ff0042",
-                                                            fontSize: 12
+                                                            fontSize: 12,
+                                                            lineHeight: 16
                                                         }}
                                                     >
                                                         将删除所有周当天的这门课程哟~
@@ -438,6 +445,7 @@ const styles = StyleSheet.create({
         flex: 5,
         paddingTop: 3,
         fontSize: 12,
-        color: "#6a6a6a"
+        color: "#6a6a6a",
+        lineHeight: 16
     }
 });

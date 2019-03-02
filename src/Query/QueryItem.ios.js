@@ -30,12 +30,13 @@ export default class QueryItemIOS extends Component {
                             style={{
                                 fontSize: 16,
                                 color: "#555",
-                                paddingBottom: 10
+                                paddingBottom: 10,
+                                lineHeight: 20
                             }}
                         >
                             {this.props.title}
                         </Text>
-                        <Text style={{ color: "#808080" }}>
+                        <Text style={{ color: "#808080", lineHeight: 18 }}>
                             {this.props.subTitle}
                         </Text>
                     </View>

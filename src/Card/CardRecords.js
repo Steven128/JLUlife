@@ -282,10 +282,12 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 16,
         color: "#6f6f6f",
-        paddingBottom: 5
+        paddingBottom: 5,
+        lineHeight: 20
     },
     subTitle: {
         color: "#808080",
-        fontSize: 12
+        fontSize: 12,
+        lineHeight: 16
     }
 });

@@ -88,16 +88,10 @@ export default class NotificationDetailPage extends Component {
                         backgroundColor={Global.settings.theme.backgroundColor}
                         placement="left"
                         leftComponent={
-                            <Button
-                                title=""
-                                icon={
-                                    <EIcon
-                                        name="chevron-left"
-                                        size={28}
-                                        color="white"
-                                    />
-                                }
-                                clear
+                            <EIcon
+                                name="chevron-left"
+                                size={28}
+                                color="#ffffff"
                                 onPress={() => this.props.navigation.goBack()}
                             />
                         }
@@ -106,16 +100,10 @@ export default class NotificationDetailPage extends Component {
                             style: { color: "#fff", fontSize: 16 }
                         }}
                         rightComponent={
-                            <Button
-                                title=""
-                                icon={
-                                    <FIcon
-                                        name="more-vertical"
-                                        size={24}
-                                        color="white"
-                                    />
-                                }
-                                clear
+                            <FIcon
+                                name="more-vertical"
+                                size={24}
+                                color="#ffffff"
                                 onPress={this.showTag.bind(this)}
                             />
                         }
@@ -180,10 +168,20 @@ export default class NotificationDetailPage extends Component {
                                     )}
                                 >
                                     <View style={styles.tag}>
-                                        <Text style={{ color: "#555" }}>
+                                        <Text
+                                            style={{
+                                                color: "#555",
+                                                lineHeight: 18
+                                            }}
+                                        >
                                             {"下载附件"}
                                         </Text>
-                                        <Text style={{ color: "#555" }}>
+                                        <Text
+                                            style={{
+                                                color: "#555",
+                                                lineHeight: 18
+                                            }}
+                                        >
                                             {"(在浏览器打开原网页)"}
                                         </Text>
                                     </View>
@@ -202,10 +200,20 @@ export default class NotificationDetailPage extends Component {
                                     )}
                                 >
                                     <View style={styles.tag}>
-                                        <Text style={{ color: "#555" }}>
+                                        <Text
+                                            style={{
+                                                color: "#555",
+                                                lineHeight: 18
+                                            }}
+                                        >
                                             {"下载附件"}
                                         </Text>
-                                        <Text style={{ color: "#555" }}>
+                                        <Text
+                                            style={{
+                                                color: "#555",
+                                                lineHeight: 18
+                                            }}
+                                        >
                                             {"(在浏览器打开原网页)"}
                                         </Text>
                                     </View>
@@ -231,12 +239,14 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
-        paddingBottom: 10
+        paddingBottom: 10,
+        lineHeight: 24
     },
     subTitle: {
         fontSize: 14,
         color: "#808080",
-        paddingTop: 5
+        paddingTop: 5,
+        lineHeight: 18
     },
     tagContainer: {
         position: "absolute",

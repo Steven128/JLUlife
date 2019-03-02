@@ -20,8 +20,9 @@ import {
 } from "react-native";
 import { Header, Input, Button, CheckBox } from "react-native-elements";
 import Icon from "react-native-vector-icons/AntDesign";
+import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../src/Global";
-import LoginInterface from "../src/FetchInterface/LoginHandler";
+import LoginHandler from "../src/FetchInterface/LoginHandler";
 import Toast from "react-native-easy-toast";
 import AppStorage from "../src/AppStorage";
 import Dialog, {
@@ -97,7 +98,9 @@ export default class LoginPage extends Component {
     render() {
         const { navigate } = this.props.navigation;
         var headerStyle = {
-            borderBottomColor: Global.settings.theme.backgroundColor
+            borderBottomColor: Global.settings.theme.backgroundColor,
+            position: "relative",
+            zIndex: 1
         };
         if (Platform.OS == "ios") {
             headerStyle.paddingTop = 0;
@@ -123,9 +126,9 @@ export default class LoginPage extends Component {
                         backgroundColor={Global.settings.theme.backgroundColor}
                         placement="left"
                         leftComponent={
-                            <Icon
-                                name="left"
-                                size={20}
+                            <EIcon
+                                name="chevron-left"
+                                size={28}
                                 color="#ffffff"
                                 onPress={() => this.props.navigation.goBack()}
                             />
@@ -148,7 +151,8 @@ export default class LoginPage extends Component {
                             <Text
                                 style={{
                                     color: "#fff",
-                                    textAlign: "center"
+                                    textAlign: "center",
+                                    lineHeight: 18
                                 }}
                             >
                                 {this.state.errMsgList[0]}
@@ -158,7 +162,9 @@ export default class LoginPage extends Component {
                     <KeyboardAvoidingView behavior="position">
                         <ScrollView
                             style={{
-                                height: this.state.scrollViewHeight
+                                height: this.state.scrollViewHeight,
+                                position: "relative",
+                                zIndex: 0
                             }}
                             keyboardShouldPersistTaps="handled"
                         >
@@ -248,7 +254,13 @@ export default class LoginPage extends Component {
                                         }
                                     ]}
                                 >
-                                    <Text style={{ paddingLeft: 15, flex: 4 }}>
+                                    <Text
+                                        style={{
+                                            paddingLeft: 15,
+                                            flex: 4,
+                                            lineHeight: 18
+                                        }}
+                                    >
                                         {this.state.outOfSchool
                                             ? "需要校园网的功能将被禁用"
                                             : null}
@@ -271,7 +283,7 @@ export default class LoginPage extends Component {
                                         }}
                                         titleStyle={{ fontWeight: "700" }}
                                         buttonStyle={{
-                                            height: 40,
+                                            height: 45,
                                             backgroundColor:
                                                 Global.settings.theme
                                                     .backgroundColor
@@ -323,7 +335,13 @@ export default class LoginPage extends Component {
                                     flex: 1
                                 }}
                             >
-                                <Text style={{ flex: 1, color: "#6a6a6a" }}>
+                                <Text
+                                    style={{
+                                        flex: 1,
+                                        color: "#6a6a6a",
+                                        lineHeight: 18
+                                    }}
+                                >
                                     {this.state.alertText}
                                 </Text>
                             </View>
@@ -375,7 +393,7 @@ export default class LoginPage extends Component {
         this.setState({
             showLoading: !this.state.showLoading
         });
-        LoginInterface(this.state.j_username, this.state.j_password, res => {
+        LoginHandler(this.state.j_username, this.state.j_password, res => {
             if (res.message == "success") {
                 if (Platform.OS === "ios") {
                     if (this.refs.toast != undefined)
@@ -402,10 +420,16 @@ export default class LoginPage extends Component {
                         alertText: "貌似超时啦，再试一次吧~",
                         alertVisible: true
                     });
+                } else if (res.reason == "outside_wrong") {
+                    this.setState({
+                        alertText:
+                            "登录失败，可能是因为用户名或密码错误，或外网服务器关闭",
+                        alertVisible: true
+                    });
                 } else {
                     this.setState({
                         alertText: Global.settings.outOfSchool
-                            ? "网络开小差啦，只有寒暑假期间才能使用外网功能哟~"
+                            ? "网络开小差啦，可能是因为外网服务器关闭"
                             : "网络开小差啦，看看是不是连上校园网了呢~",
                         alertVisible: true
                     });

@@ -4,7 +4,7 @@ import { AsyncStorage } from "react-native";
 import Global from "./Global";
 
 var storage;
-var defaultExpires = 1000 * 30 * 3600 * 24;
+var defaultExpires = null;
 var size = 1000;
 
 export default class AppStorage extends Component {
@@ -35,7 +35,7 @@ export default class AppStorage extends Component {
     static _save_with_expires(key, object, expires) {
         this.isInit();
         storage.save({
-            key: key, // 注意:请不要在key中使用_下划线符号!
+            key: key,
             data: object,
             // 如果不指定过期时间，则会使用defaultExpires参数
             // 如果设为null，则永不过期
@@ -100,10 +100,4 @@ export default class AppStorage extends Component {
                 }
             });
     }
-
-    /**
-     * 获取数据并写入全局变量
-     * @param {string} key key值
-     * @param {string} globalValueName 全局变量名称（Global.*）
-     */
 }

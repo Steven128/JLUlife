@@ -1,52 +1,52 @@
 {
-    "name": "jlulife",
-    "version": "2.1.0",
-    "private": true,
-    "scripts": {
-        "start": "node node_modules/react-native/local-cli/cli.js start",
-        "test": "jest",
-        "devtools": "react-devtools",
-        "bundle-ios": "node node_modules/react-native/local-cli/cli.js bundle --entry-file index.js --platform ios --dev false --bundle-output ./ios/bundle/index.jsbundle --assets-dest ./ios/bundle"
-    },
-    "dependencies": {
-        "asap": "^2.0.6",
-        "babel-preset-react-native": "^4.0.1",
-        "base-64": "^0.1.0",
-        "buffer": "^5.2.1",
-        "cheerio": "0.22.0",
-        "events": "^3.0.0",
-        "native-echarts":"github:Steven128/react-native-echarts",
-        "peer": "^0.2.10",
-        "react": "16.6.3",
-        "react-native": "0.57.8",
-        "react-native-bugly": "github:walkOnly/react-native-bugly",
-        "react-native-check-box": "^2.1.7",
-        "react-native-color": "^0.0.10",
-        "react-native-easy-toast": "^1.1.0",
-        "react-native-elements": "^1.0.0-beta7",
-        "react-native-flexi-radio-button": "^0.2.2",
-        "react-native-image-crop-picker": "^0.21.3",
-        "react-native-md5": "^1.0.0",
-        "react-native-pickers": "github:Steven128/react-native-picker",
-        "react-native-popup-dialog": "github:Steven128/react-native-popup-dialog",
-        "react-native-refresh-list-view": "^1.0.10",
-        "react-native-scrollable-tab-view": "^0.10.0",
-        "react-native-storage": "^0.2.3",
-        "react-native-svg": "^8.0.8",
-        "react-native-update": "^5.1.4",
-        "react-native-vector-icons": "^6.0.2",
-        "react-native-webview": "^2.5.0",
-        "react-navigation": "^2.18.2",
-        "rn-splash-screen": "^5.2.0"
-    },
-    "devDependencies": {
-        "babel-jest": "23.6.0",
-        "jest": "23.6.0",
-        "metro-react-native-babel-preset": "0.49.0",
-        "react-test-renderer": "16.6.0-alpha.8af6728"
-    },
-    "jest": {
-        "preset": "react-native"
-    },
-    "optionalDependencies": {}
+  "name": "jlulife",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "devtools": "react-devtools",
+    "bundle-ios": "node node_modules/react-native/local-cli/cli.js bundle --entry-file index.js --platform ios --dev false --bundle-output ./ios/bundle/index.jsbundle --assets-dest ./ios/bundle"
+  },
+  "dependencies": {
+    "asap": "^2.0.6",
+    "babel-preset-react-native": "^4.0.1",
+    "base-64": "^0.1.0",
+    "buffer": "^5.2.1",
+    "cheerio": "0.22.0",
+    "events": "^3.0.0",
+    "native-echarts": "github:Steven128/react-native-echarts",
+    "peer": "^0.2.10",
+    "react": "16.6.3",
+    "react-native": "0.58.6",
+    "react-native-bugly": "github:Steven128/react-native-bugly",
+    "react-native-check-box": "^2.1.7",
+    "react-native-color": "^0.0.10",
+    "react-native-easy-toast": "^1.1.0",
+    "react-native-elements": "^1.0.0",
+    "react-native-flexi-radio-button": "^0.2.2",
+    "react-native-image-crop-picker": "^0.23.0",
+    "react-native-md5": "^1.0.0",
+    "react-native-pickers": "github:Steven128/react-native-picker",
+    "react-native-popup-dialog": "github:Steven128/react-native-popup-dialog",
+    "react-native-refresh-list-view": "^1.0.10",
+    "react-native-scrollable-tab-view": "^0.10.0",
+    "react-native-storage": "^0.2.3",
+    "react-native-svg": "^8.0.8",
+    "react-native-update": "^5.1.4",
+    "react-native-vector-icons": "^6.0.2",
+    "react-native-webview": "^5.2.3",
+    "react-navigation": "^2.18.2",
+    "rn-splash-screen": "github:Steven128/rn-splash-screen"
+  },
+  "devDependencies": {
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "24.1.0",
+    "jest": "24.1.0",
+    "metro-react-native-babel-preset": "0.52.0",
+    "react-test-renderer": "16.6.3"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
 }

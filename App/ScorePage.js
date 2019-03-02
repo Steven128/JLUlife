@@ -150,16 +150,10 @@ export default class ScorePage extends Component {
                         backgroundColor={Global.settings.theme.backgroundColor}
                         placement="left"
                         leftComponent={
-                            <Button
-                                title=""
-                                icon={
-                                    <EIcon
-                                        name="menu"
-                                        size={28}
-                                        color="white"
-                                    />
-                                }
-                                clear
+                            <EIcon
+                                name="menu"
+                                size={28}
+                                color="#ffffff"
                                 onPress={this.openDrawer}
                             />
                         }
@@ -177,10 +171,11 @@ export default class ScorePage extends Component {
                                 titleStyle={{
                                     fontSize: 12,
                                     paddingHorizontal: 5,
-                                    paddingVertical: 4
+                                    paddingVertical: 4,
+                                    color: "#ffffff"
                                 }}
                                 title="学分绩点查询"
-                                clear
+                                type="outline"
                                 onPress={() => {
                                     if (
                                         Global.isOnline &&
@@ -261,7 +256,13 @@ export default class ScorePage extends Component {
                                         flex: 1
                                     }}
                                 >
-                                    <Text style={{ flex: 1, color: "#6a6a6a" }}>
+                                    <Text
+                                        style={{
+                                            flex: 1,
+                                            color: "#6a6a6a",
+                                            lineHeight: 18
+                                        }}
+                                    >
                                         {this.state.alertText}
                                     </Text>
                                 </View>

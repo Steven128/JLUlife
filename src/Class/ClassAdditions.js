@@ -189,7 +189,12 @@ export default class ClassAdditions extends Component {
                             onPress={() => {
                                 this.props.navigation.navigate(
                                     "ClassSettings",
-                                    { from: "Table" }
+                                    {
+                                        from: "Table",
+                                        refreshClassTable: this.props.refreshClassTable.bind(
+                                            this
+                                        )
+                                    }
                                 );
                                 this.closePicker();
                             }}
@@ -243,6 +248,7 @@ export default class ClassAdditions extends Component {
                             onPress={() => {
                                 this.setState({ alertVisible: false });
                                 this.props.refreshClassTable();
+                                this.closePicker();
                             }}
                         />
                     ]}
@@ -259,7 +265,13 @@ export default class ClassAdditions extends Component {
                                     flex: 1
                                 }}
                             >
-                                <Text style={{ flex: 1, color: "#6a6a6a" }}>
+                                <Text
+                                    style={{
+                                        flex: 1,
+                                        color: "#6a6a6a",
+                                        lineHeight: 18
+                                    }}
+                                >
                                     手动刷新课表会清除你此前对课表的添加和修改
                                 </Text>
                             </View>
@@ -283,6 +295,7 @@ const styles = StyleSheet.create({
     },
     text: {
         marginTop: 15,
-        color: "#6a6a6a"
+        color: "#6a6a6a",
+        lineHeight: 18
     }
 });

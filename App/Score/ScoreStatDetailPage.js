@@ -187,16 +187,10 @@ export default class ScoreStatDetailPage extends Component {
                         backgroundColor={Global.settings.theme.backgroundColor}
                         placement="left"
                         leftComponent={
-                            <Button
-                                title=""
-                                icon={
-                                    <EIcon
-                                        name="chevron-left"
-                                        size={28}
-                                        color="white"
-                                    />
-                                }
-                                clear
+                            <EIcon
+                                name="chevron-left"
+                                size={28}
+                                color="#ffffff"
                                 onPress={() => this.props.navigation.goBack()}
                             />
                         }
@@ -248,7 +242,8 @@ export default class ScoreStatDetailPage extends Component {
                                                 >
                                                     <Text
                                                         style={{
-                                                            color: "#6a6a6a"
+                                                            color: "#6a6a6a",
+                                                            lineHeight: 24
                                                         }}
                                                     >
                                                         获得总学分：{" "}
@@ -259,7 +254,8 @@ export default class ScoreStatDetailPage extends Component {
                                                                         .settings
                                                                         .theme
                                                                         .backgroundColor,
-                                                                fontSize: 22
+                                                                fontSize: 22,
+                                                                lineHeight: 26
                                                             }}
                                                         >
                                                             {sumCredit}
@@ -287,7 +283,8 @@ export default class ScoreStatDetailPage extends Component {
                                                     <Text
                                                         style={{
                                                             fontSize: 16,
-                                                            color: "#808080"
+                                                            color: "#808080",
+                                                            lineHeight: 20
                                                         }}
                                                     >
                                                         好像什么东西都没有ヽ(ー_ー)ノ
@@ -855,6 +852,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         justifyContent: "center",
         textAlignVertical: "center",
-        color: "#808080"
+        color: "#808080",
+        lineHeight: 18
     }
 });

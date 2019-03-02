@@ -32,7 +32,7 @@ export default class EducationItem extends Component {
                 }}
             >
                 <View style={styles.container}>
-                    <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+                    <View style={{}}>
                         <Text style={styles.title}>{this.props.title}</Text>
                     </View>
 
@@ -91,10 +91,12 @@ const styles = StyleSheet.create({
         color: "#808080",
         fontSize: 16,
         fontWeight: "normal",
-        paddingBottom: 10
+        paddingBottom: 10,
+        lineHeight: 20
     },
     text: {
         color: "#808080",
-        fontSize: 12
+        fontSize: 12,
+        lineHeight: 16
     }
 });

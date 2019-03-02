@@ -42,6 +42,8 @@ export default class ClassPicker extends BaseDialog {
         };
     }
 
+    getClassList() {}
+
     _getContentPosition() {
         return { justifyContent: "flex-end", alignItems: "center" };
     }
@@ -61,13 +63,14 @@ export default class ClassPicker extends BaseDialog {
                     itemSelectedColor={this.props.itemSelectedColor}
                     onPickerSelected={toValue => {
                         this.setState({
-                            classBegin: toValue
+                            classBegin: (toValue)
                         });
                         if (toValue > this.state.classEnd) {
                             this.setState({
-                                classEnd: toValue
+                                classEnd: parseInt(toValue)
                             });
                         }
+                        this.props.selectedIndex = toValue;
                     }}
                     selectedIndex={this.state.classBegin - 1}
                     fontSize={this.getSize(14)}
@@ -81,13 +84,14 @@ export default class ClassPicker extends BaseDialog {
                     itemSelectedColor={this.props.itemSelectedColor}
                     onPickerSelected={toValue => {
                         this.setState({
-                            classEnd: toValue
+                            classEnd: parseInt(toValue)
                         });
                         if (toValue < this.state.classBegin) {
                             this.setState({
-                                classBegin: toValue
+                                classBegin: parseInt(toValue)
                             });
                         }
+                        this.props.selectedIndex = toValue;
                     }}
                     selectedIndex={this.state.classEnd - 1}
                     fontSize={this.getSize(14)}

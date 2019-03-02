@@ -98,16 +98,10 @@ export default class EvaluationPage extends Component {
                         backgroundColor={Global.settings.theme.backgroundColor}
                         placement="left"
                         leftComponent={
-                            <Button
-                                title=""
-                                icon={
-                                    <EIcon
-                                        name="chevron-left"
-                                        size={28}
-                                        color="white"
-                                    />
-                                }
-                                clear
+                            <EIcon
+                                name="chevron-left"
+                                size={28}
+                                color="#ffffff"
                                 onPress={() => this.props.navigation.goBack()}
                             />
                         }
@@ -126,10 +120,11 @@ export default class EvaluationPage extends Component {
                                     titleStyle={{
                                         fontSize: 12,
                                         paddingHorizontal: 5,
-                                        paddingVertical: 4
+                                        paddingVertical: 4,
+                                        color: "#ffffff"
                                     }}
                                     title="一键教评"
-                                    clear
+                                    type="outline"
                                     onPress={() => {
                                         this.refs.blankList.evalAll();
                                     }}
@@ -222,23 +217,43 @@ export default class EvaluationPage extends Component {
                             showsVerticalScrollIndicator={false}
                         >
                             <View style={{ paddingVertical: 10 }}>
-                                <Text style={{ fontSize: 16 }}>
+                                <Text style={{ fontSize: 16, lineHeight: 20 }}>
                                     欢迎使用教学评价功能~
                                 </Text>
                             </View>
                             <View style={{ paddingVertical: 10 }}>
-                                <Text style={{ paddingVertical: 5 }}>
+                                <Text
+                                    style={{
+                                        paddingVertical: 5,
+                                        lineHeight: 18
+                                    }}
+                                >
                                     • 点击未评记录中的每一项可对该项单独评价
                                 </Text>
-                                <Text style={{ paddingVertical: 5 }}>
+                                <Text
+                                    style={{
+                                        paddingVertical: 5,
+                                        lineHeight: 18
+                                    }}
+                                >
                                     •
                                     点击一键教评可自动完成未评记录中剩余项的评价
                                 </Text>
-                                <Text style={{ paddingVertical: 5 }}>
+                                <Text
+                                    style={{
+                                        paddingVertical: 5,
+                                        lineHeight: 18
+                                    }}
+                                >
                                     •
                                     使用一键评教功能将默认对所有选项好评，如不认可默认的评价内容，可点击每一项未评记录手动评价
                                 </Text>
-                                <Text style={{ paddingVertical: 5 }}>
+                                <Text
+                                    style={{
+                                        paddingVertical: 5,
+                                        lineHeight: 18
+                                    }}
+                                >
                                     •
                                     此功能仅为方便大家，对日后因任何原因（如学校相关接口变动）造成的功能失效或其他问题不负责
                                 </Text>
@@ -287,7 +302,13 @@ export default class EvaluationPage extends Component {
                                     flex: 1
                                 }}
                             >
-                                <Text style={{ flex: 1, color: "#6a6a6a" }}>
+                                <Text
+                                    style={{
+                                        flex: 1,
+                                        color: "#6a6a6a",
+                                        lineHeight: 18
+                                    }}
+                                >
                                     {this.state.alertText}
                                 </Text>
                             </View>

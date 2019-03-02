@@ -83,7 +83,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: "#6a6a6a",
         borderBottomColor: "#eee",
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
+        lineHeight: 20
     },
     row: {
         flexDirection: "row",
@@ -91,9 +92,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10
     },
     text: {
-        color: "#808080"
+        color: "#808080",
+        lineHeight: 18
     },
     textTitle: {
-        paddingRight: 20
+        paddingRight: 20,
+        lineHeight: 18
     }
 });

@@ -235,11 +235,13 @@ const styles = StyleSheet.create({
         color: "#808080",
         fontSize: 16,
         fontWeight: "normal",
-        paddingBottom: 5
+        paddingBottom: 5,
+        lineHeight: 20
     },
     text: {
         color: "#808080",
-        fontSize: 12
+        fontSize: 12,
+        lineHeight: 16
     },
     dialog: {
         borderRadius: 0,
@@ -250,7 +252,8 @@ const styles = StyleSheet.create({
         fontSize: 22,
         color: "#555",
         paddingTop: 25,
-        paddingBottom: 15
+        paddingBottom: 15,
+        lineHeight: 24
     },
     dialogInnerWrap: {
         paddingTop: 10,
@@ -262,6 +265,7 @@ const styles = StyleSheet.create({
     textInDialog: {
         fontSize: 16,
         color: "#555",
-        paddingVertical: 2
+        paddingVertical: 2,
+        lineHeight: 20
     }
 });

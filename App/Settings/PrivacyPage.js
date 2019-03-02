@@ -61,16 +61,10 @@ export default class PrivacyPage extends Component {
                         backgroundColor={Global.settings.theme.backgroundColor}
                         placement="left"
                         leftComponent={
-                            <Button
-                                title=""
-                                icon={
-                                    <EIcon
-                                        name="chevron-left"
-                                        size={28}
-                                        color="white"
-                                    />
-                                }
-                                clear
+                            <EIcon
+                                name="chevron-left"
+                                size={28}
+                                color="#ffffff"
                                 onPress={() =>
                                     this.props.navigation.navigate("Settings")
                                 }
@@ -196,6 +190,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 18,
-        paddingBottom: 5
+        paddingBottom: 5,
+        lineHeight: 22
     }
 });

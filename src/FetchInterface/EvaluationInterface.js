@@ -105,7 +105,6 @@ export function evalWithAnswer(body, evalItemId, callback) {
     })
         .then(response => response.json())
         .then(responseJson => {
-            console.log(responseJson);
             callback({ message: "success", content: responseJson });
         })
         .catch(error => {

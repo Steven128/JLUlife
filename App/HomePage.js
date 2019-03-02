@@ -365,13 +365,24 @@ export default class HomePage extends Component {
                 <View>
                     <Text style={styles.greeting}>
                         {"你好，" + Global.currentStuName}
-                        <Text style={{ color: "#808080", fontSize: 16 }}>
+                        <Text
+                            style={{
+                                color: "#808080",
+                                fontSize: 16,
+                                lineHeight: 20
+                            }}
+                        >
                             {this.state.outOfSchool ? " （外网模式）" : null}
                         </Text>
                     </Text>
-                    <Text style={{ color: "#808080" }}>
-                        {"现在是 " +
-                            Global.termName.substring(0, 9) +
+                    <Text
+                        style={{
+                            color: "#808080",
+                            marginTop: 5,
+                            lineHeight: 18
+                        }}
+                    >
+                        {Global.termName.substring(0, 9) +
                             " 学年度 " +
                             Global.termName.substring(
                                 9,
@@ -379,6 +390,17 @@ export default class HomePage extends Component {
                             )}{" "}
                         第{global.getCurrentWeek(Global.startDate)}周
                     </Text>
+                    {global.handleTopTips() == "" ? null : (
+                        <Text
+                            style={{
+                                color: "#808080",
+                                marginTop: 5,
+                                lineHeight: 18
+                            }}
+                        >
+                            {global.handleTopTips()}
+                        </Text>
+                    )}
                 </View>
             );
         } else if (
@@ -389,7 +411,13 @@ export default class HomePage extends Component {
                 <View>
                     <Text style={styles.greeting}>
                         {"你好，" + Global.currentStuName}
-                        <Text style={{ color: "#808080", fontSize: 16 }}>
+                        <Text
+                            style={{
+                                color: "#808080",
+                                fontSize: 16,
+                                lineHeight: 20
+                            }}
+                        >
                             {this.state.outOfSchool ? " （外网模式）" : null}
                         </Text>
                     </Text>
@@ -400,7 +428,9 @@ export default class HomePage extends Component {
                             color={Global.settings.theme.backgroundColor}
                         />
                         <View>
-                            <Text style={{ color: "#808080" }}>正在登录</Text>
+                            <Text style={{ color: "#808080", lineHeight: 18 }}>
+                                正在登录
+                            </Text>
                         </View>
                     </View>
                 </View>
@@ -414,7 +444,13 @@ export default class HomePage extends Component {
                 <View>
                     <Text style={styles.greeting}>
                         {"你好，" + Global.currentStuName}
-                        <Text style={{ color: "#808080", fontSize: 16 }}>
+                        <Text
+                            style={{
+                                color: "#808080",
+                                fontSize: 16,
+                                lineHeight: 20
+                            }}
+                        >
                             {this.state.outOfSchool ? " （外网模式）" : null}
                         </Text>
                     </Text>
@@ -443,7 +479,13 @@ export default class HomePage extends Component {
                 <View>
                     <Text style={styles.greeting}>
                         {"你好，游客"}
-                        <Text style={{ color: "#808080", fontSize: 16 }}>
+                        <Text
+                            style={{
+                                color: "#808080",
+                                fontSize: 16,
+                                lineHeight: 20
+                            }}
+                        >
                             {this.state.outOfSchool ? " （外网模式）" : null}
                         </Text>
                     </Text>
@@ -487,16 +529,10 @@ export default class HomePage extends Component {
                         backgroundColor={Global.settings.theme.backgroundColor}
                         placement="left"
                         leftComponent={
-                            <Button
-                                title=""
-                                icon={
-                                    <EIcon
-                                        name="menu"
-                                        size={28}
-                                        color="white"
-                                    />
-                                }
-                                clear
+                            <EIcon
+                                name="menu"
+                                size={28}
+                                color="#ffffff"
                                 onPress={this.openDrawer}
                             />
                         }
@@ -602,7 +638,8 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "300",
         paddingTop: 10,
-        paddingBottom: 10
+        paddingBottom: 10,
+        lineHeight: 24
     },
     loginBtn: {
         backgroundColor: "#fff",
@@ -612,7 +649,8 @@ const styles = StyleSheet.create({
     tipsTitle: {
         color: "#555",
         fontSize: 18,
-        paddingBottom: 15
+        paddingBottom: 15,
+        lineHeight: 20
     },
     text: {
         color: "#808080",

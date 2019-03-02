@@ -70,16 +70,10 @@ export default class NotificationPage extends Component {
                         backgroundColor={Global.settings.theme.backgroundColor}
                         placement="left"
                         leftComponent={
-                            <Button
-                                title=""
-                                icon={
-                                    <EIcon
-                                        name="menu"
-                                        size={28}
-                                        color="white"
-                                    />
-                                }
-                                clear
+                            <EIcon
+                                name="menu"
+                                size={28}
+                                color="#ffffff"
                                 onPress={this.openDrawer}
                             />
                         }
@@ -88,22 +82,10 @@ export default class NotificationPage extends Component {
                             style: { color: "#fff", fontSize: 16 }
                         }}
                         rightComponent={
-                            <Button
-                                buttonStyle={{
-                                    borderColor: "#ffffff",
-                                    // borderWidth: 1,
-                                    borderRadius: 3,
-                                    padding: 3
-                                }}
-                                title=""
-                                icon={
-                                    <EIcon
-                                        name="magnifying-glass"
-                                        size={22}
-                                        color="white"
-                                    />
-                                }
-                                clear
+                            <EIcon
+                                name="magnifying-glass"
+                                size={22}
+                                color="#ffffff"
                                 onPress={() => {
                                     this.props.navigation.navigate("Search");
                                 }}

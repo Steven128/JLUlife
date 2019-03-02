@@ -166,7 +166,10 @@ export default class ClassItemAndroid extends Component {
                                 <Text
                                     style={[
                                         styles.innerItemText,
-                                        { fontSize: this.props.fontSize }
+                                        {
+                                            fontSize: this.props.fontSize,
+                                            lineHeight: this.props.fontSize + 4
+                                        }
                                     ]}
                                 >
                                     {this.props.innerText}
@@ -237,7 +240,9 @@ export default class ClassItemAndroid extends Component {
                                     </TouchableNativeFeedback>
                                 ]}
                             >
-                                <DialogContent style={{ flex: 1, paddingBottom: 0 }}>
+                                <DialogContent
+                                    style={{ flex: 1, paddingBottom: 0 }}
+                                >
                                     <View
                                         style={{
                                             flex: 1,
@@ -262,7 +267,8 @@ export default class ClassItemAndroid extends Component {
                                                     style={{
                                                         flex: 5,
                                                         paddingTop: 3,
-                                                        fontSize: 12
+                                                        fontSize: 12,
+                                                        lineHeight: 16
                                                     }}
                                                 >
                                                     第{this.props.beginWeek} -{" "}
@@ -293,7 +299,8 @@ export default class ClassItemAndroid extends Component {
                                                     style={{
                                                         flex: 5,
                                                         paddingTop: 3,
-                                                        fontSize: 12
+                                                        fontSize: 12,
+                                                        lineHeight: 16
                                                     }}
                                                 >
                                                     周
@@ -326,7 +333,8 @@ export default class ClassItemAndroid extends Component {
                                                     style={{
                                                         flex: 5,
                                                         paddingTop: 3,
-                                                        fontSize: 12
+                                                        fontSize: 12,
+                                                        lineHeight: 16
                                                     }}
                                                 >
                                                     {this.printTeachers(
@@ -357,7 +365,8 @@ export default class ClassItemAndroid extends Component {
                                                     style={{
                                                         flex: 5,
                                                         paddingTop: 3,
-                                                        fontSize: 12
+                                                        fontSize: 12,
+                                                        lineHeight: 16
                                                     }}
                                                 >
                                                     {this.props.classroom}
@@ -368,7 +377,8 @@ export default class ClassItemAndroid extends Component {
                                                     <Text
                                                         style={{
                                                             color: "#ff0042",
-                                                            fontSize: 12
+                                                            fontSize: 12,
+                                                            lineHeight: 16
                                                         }}
                                                     >
                                                         再按一次确定删除
@@ -376,7 +386,8 @@ export default class ClassItemAndroid extends Component {
                                                     <Text
                                                         style={{
                                                             color: "#ff0042",
-                                                            fontSize: 12
+                                                            fontSize: 12,
+                                                            lineHeight: 16
                                                         }}
                                                     >
                                                         将删除所有周当天的这门课程哟~
@@ -405,7 +416,7 @@ export default class ClassItemAndroid extends Component {
     printTeachers(teachers) {
         var teacherStr = "";
         for (var i in teachers) {
-            teacherStr = teachers[i] + " ";
+            teacherStr += teachers[i] + "  ";
         }
         return teacherStr;
     }

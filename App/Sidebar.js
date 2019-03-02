@@ -102,24 +102,41 @@ export default class Sidebar extends Component {
                                 {
                                     backgroundColor:
                                         Global.settings.theme.backgroundColor,
-                                    height: height * 0.3,
-                                    paddingTop: height * 0.3 - 70
+                                    height: height * 0.35,
+                                    flexDirection: "row"
                                 }
                             ]}
                         >
-                            <Text style={styles.greeting}>
-                                {"你好，" +
-                                    (Global.currentStuName == ""
-                                        ? "游客"
-                                        : Global.currentStuName)}
-                            </Text>
-                            <Text style={[styles.greeting, { fontSize: 14 }]}>
-                                {Global.currentStuName == ""
-                                    ? "请登录"
-                                    : "现在是 第" +
-                                      global.getCurrentWeek(Global.startDate) +
-                                      "周"}
-                            </Text>
+                            <View
+                                style={{
+                                    alignSelf: "flex-end",
+                                    paddingBottom: 10
+                                }}
+                            >
+                                <Text style={styles.greeting}>
+                                    {"你好，" +
+                                        (Global.currentStuName == ""
+                                            ? "游客"
+                                            : Global.currentStuName)}
+                                </Text>
+                                <Text
+                                    style={{ color: "#ffffff", lineHeight: 18 }}
+                                >
+                                    {Global.currentStuName == ""
+                                        ? "请登录"
+                                        : Global.termName.substring(0, 9) +
+                                          " 学年度 " +
+                                          Global.termName.substring(
+                                              9,
+                                              Global.termName.length
+                                          ) +
+                                          "  第" +
+                                          global.getCurrentWeek(
+                                              Global.startDate
+                                          ) +
+                                          "周"}
+                                </Text>
+                            </View>
                         </View>
                         <ScrollView style={{ flex: 1 }}>
                             <DrawerItems {...this.props.items} />
@@ -144,7 +161,8 @@ const styles = StyleSheet.create({
     greeting: {
         fontSize: 20,
         color: "#fff",
-        paddingBottom: 10
+        paddingBottom: 10,
+        lineHeight: 24
     },
     loginBtn: {
         backgroundColor: "#fff",

@@ -299,7 +299,8 @@ const styles = StyleSheet.create({
     },
     text: {
         paddingBottom: 5,
-        color: "#808080"
+        color: "#808080",
+        lineHeight: 18
     },
     bottomContainer: {
         paddingBottom: 30,

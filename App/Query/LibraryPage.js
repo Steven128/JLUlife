@@ -33,6 +33,15 @@ export default class LibraryPage extends Component {
         });
     }
 
+    componentWillUnmount() {
+        if (Platform.OS === "android") {
+            BackHandler.removeEventListener(
+                "hardwareBackPress",
+                this.onBackAndroid
+            );
+        }
+    }
+
     openDrawer() {
         this.props.navigation.openDrawer();
     }
@@ -115,16 +124,10 @@ export default class LibraryPage extends Component {
                         backgroundColor={Global.settings.theme.backgroundColor}
                         placement="left"
                         leftComponent={
-                            <Button
-                                title=""
-                                icon={
-                                    <EIcon
-                                        name="chevron-left"
-                                        size={28}
-                                        color="white"
-                                    />
-                                }
-                                clear
+                            <EIcon
+                                name="chevron-left"
+                                size={28}
+                                color="#ffffff"
                                 onPress={this.backButtonTapped.bind(this)}
                             />
                         }

@@ -32,7 +32,9 @@ export default class SettingsItem extends Component {
             >
                 <View style={styles.container}>
                     <View style={{ flexDirection: "row" }}>
-                        <Text style={{ flex: 9 }}>{this.props.title}</Text>
+                        <Text style={{ flex: 9, lineHeight: 18 }}>
+                            {this.props.title}
+                        </Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -47,7 +49,9 @@ export default class SettingsItem extends Component {
             >
                 <View style={styles.container}>
                     <View style={{ flexDirection: "row" }}>
-                        <Text style={{ flex: 9 }}>{this.props.title}</Text>
+                        <Text style={{ flex: 9, lineHeight: 18 }}>
+                            {this.props.title}
+                        </Text>
                     </View>
                 </View>
             </TouchableNativeFeedback>

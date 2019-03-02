@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     text: {
         color: "#808080",
         paddingVertical: 1,
-        paddingHorizontal: 15
+        paddingHorizontal: 15,
+        lineHeight: 18
     }
 });

@@ -63,16 +63,10 @@ export default class AboutPage extends Component {
                     backgroundColor={Global.settings.theme.backgroundColor}
                     placement="left"
                     leftComponent={
-                        <Button
-                            title=""
-                            icon={
-                                <EIcon
-                                    name="chevron-left"
-                                    size={28}
-                                    color="white"
-                                />
-                            }
-                            clear
+                        <EIcon
+                            name="chevron-left"
+                            size={28}
+                            color="#ffffff"
                             onPress={() =>
                                 this.props.navigation.navigate("Settings")
                             }
@@ -106,7 +100,7 @@ export default class AboutPage extends Component {
                             <Text
                                 style={[styles.text, { textAlign: "center" }]}
                             >
-                                版本号 2.4.0
+                                版本号 2.4.1
                             </Text>
                         </View>
                         <Text style={[styles.text, { width: width * 0.8 }]}>
@@ -163,9 +157,7 @@ export default class AboutPage extends Component {
                         )}
                     </View>
 
-                    <View style={{ padding: 15 }}>
-                        <Text style={[styles.text, { width: width * 0.8 }]} />
-                    </View>
+                    <View style={{ padding: 15 }} />
                 </ScrollView>
             </SafeAreaView>
         );
@@ -187,7 +179,8 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 18,
-        paddingBottom: 5
+        paddingBottom: 5,
+        lineHeight: 22
     },
     link: {
         textDecorationLine: "underline"

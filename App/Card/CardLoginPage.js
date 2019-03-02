@@ -15,10 +15,12 @@ import {
     StatusBar,
     Platform,
     SafeAreaView,
-    Keyboard
+    Keyboard,
+    ActivityIndicator
 } from "react-native";
 import { Header, Input, Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/AntDesign";
+import EIcon from "react-native-vector-icons/Entypo";
 import Global from "../../src/Global";
 import AppStorage from "../../src/AppStorage";
 import Base64 from "base-64";
@@ -280,7 +282,9 @@ export default class CardLoginPage extends Component {
             <SafeAreaView
                 style={{
                     flex: 1,
-                    backgroundColor: Global.settings.theme.backgroundColor
+                    backgroundColor: Global.settings.theme.backgroundColor,
+                    position: "relative",
+                    zIndex: 1
                 }}
             >
                 <StatusBar
@@ -295,9 +299,9 @@ export default class CardLoginPage extends Component {
                         backgroundColor={Global.settings.theme.backgroundColor}
                         placement="left"
                         leftComponent={
-                            <Icon
-                                name="left"
-                                size={20}
+                            <EIcon
+                                name="chevron-left"
+                                size={28}
                                 color="#ffffff"
                                 onPress={() => this.props.navigation.goBack()}
                             />
@@ -320,7 +324,8 @@ export default class CardLoginPage extends Component {
                             <Text
                                 style={{
                                     color: "#fff",
-                                    textAlign: "center"
+                                    textAlign: "center",
+                                    lineHeight: 18
                                 }}
                             >
                                 {this.state.errMsgList[0]}
@@ -330,7 +335,9 @@ export default class CardLoginPage extends Component {
                     <KeyboardAvoidingView behavior="position">
                         <ScrollView
                             style={{
-                                height: this.state.scrollViewHeight
+                                height: this.state.scrollViewHeight,
+                                position: "relative",
+                                zIndex: 0
                             }}
                             keyboardShouldPersistTaps="handled"
                         >
@@ -401,16 +408,37 @@ export default class CardLoginPage extends Component {
                                         <TouchableWithoutFeedback
                                             onPress={this.refreshCode}
                                         >
-                                            <Image
-                                                style={styles.image}
-                                                source={{
-                                                    uri: this.state.uri,
-                                                    headers: {
-                                                        Cookie: this.state
-                                                            .cookie
-                                                    }
+                                            <View
+                                                style={{
+                                                    width: 90,
+                                                    height: 30,
+                                                    marginTop: 25,
+                                                    marginBottom: 5,
+                                                    justifyContent: "center",
+                                                    alignItems: "center"
                                                 }}
-                                            />
+                                            >
+                                                <Image
+                                                    style={styles.image}
+                                                    source={{
+                                                        uri: this.state.uri,
+                                                        headers: {
+                                                            Cookie: this.state
+                                                                .cookie
+                                                        }
+                                                    }}
+                                                />
+                                                <ActivityIndicator
+                                                    color={
+                                                        Global.settings.theme
+                                                            .backgroundColor
+                                                    }
+                                                    style={{
+                                                        position: "absolute",
+                                                        zIndex: 0
+                                                    }}
+                                                />
+                                            </View>
                                         </TouchableWithoutFeedback>
                                     </View>
                                     <View
@@ -485,7 +513,8 @@ export default class CardLoginPage extends Component {
                                 >
                                     <Text
                                         style={{
-                                            paddingVertical: 5
+                                            paddingVertical: 5,
+                                            lineHeight: 18
                                         }}
                                     >
                                         {this.state.alertText}
@@ -520,7 +549,7 @@ const styles = StyleSheet.create({
     image: {
         width: 90,
         height: 30,
-        marginTop: 25,
-        marginLeft: 10
+        position: "relative",
+        zIndex: 1
     }
 });

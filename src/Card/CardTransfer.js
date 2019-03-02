@@ -161,11 +161,17 @@ export default class CardTransfer extends Component {
                     />
                 </View>
                 <View style={{ paddingHorizontal: 30, paddingTop: 15 }}>
-                    <Text style={{ color: "#808080", paddingBottom: 10 }}>
+                    <Text
+                        style={{
+                            color: "#808080",
+                            paddingBottom: 10,
+                            lineHeight: 18
+                        }}
+                    >
                         •
                         向校园卡转账成功后所转金额将显示在过渡余额中，在餐厅等处的卡机上进行刷卡操作后，过渡余额即会转入校园卡
                     </Text>
-                    <Text style={{ color: "#808080" }}>
+                    <Text style={{ color: "#808080", lineHeight: 18 }}>
                         • 单笔转账最大限额 200 元
                     </Text>
                 </View>
@@ -242,7 +248,8 @@ export default class CardTransfer extends Component {
                             >
                                 <Text
                                     style={{
-                                        paddingVertical: 5
+                                        paddingVertical: 5,
+                                        lineHeight: 18
                                     }}
                                 >
                                     {this.state.confirmText}
@@ -291,7 +298,13 @@ export default class CardTransfer extends Component {
                                     flex: 1
                                 }}
                             >
-                                <Text style={{ flex: 1, color: "#6a6a6a" }}>
+                                <Text
+                                    style={{
+                                        flex: 1,
+                                        color: "#6a6a6a",
+                                        lineHeight: 18
+                                    }}
+                                >
                                     {this.state.alertText}
                                 </Text>
                             </View>
