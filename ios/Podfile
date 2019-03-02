@@ -1,0 +1,7 @@
+# 指定 Master 仓库和阿里云仓库
+source 'https://github.com/CocoaPods/Specs.git'
+source 'https://github.com/aliyun/aliyun-specs.git'
+# 添加依赖
+target 'jlulife' do
+    pod 'AlicloudFeedback', '~> 3.2.0'
+end
